@@ -1,4 +1,6 @@
-![Mnemos — Algorithmic Reasoning Agent for LLMs](graphics/mnemos4.png)
+<p align="center">
+  <img src="graphics/mnemos4.png" alt="Mnemos — Algorithmic Reasoning Agent for LLMs" width="100%">
+</p>
 
 <h1 align="center">Mnemos</h1>
 
