@@ -1,0 +1,380 @@
+{
+  "version": "1.0.0",
+  "generated": "2026-03-15",
+  "source": "ds-algorithm-primer + authored",
+
+  "data_structure_operations": {
+    "array": {
+      "access": "O(1)",
+      "search": "O(n)",
+      "insert_end": "O(1) amortized",
+      "insert_at": "O(n)",
+      "delete_end": "O(1)",
+      "delete_at": "O(n)",
+      "iterate": "O(n)"
+    },
+    "linked_list": {
+      "access_head": "O(1)",
+      "access_at": "O(n)",
+      "insert_head": "O(1)",
+      "insert_at": "O(n)",
+      "delete_head": "O(1)",
+      "delete_at": "O(n)",
+      "search": "O(n)"
+    },
+    "doubly_linked_list": {
+      "access_head_tail": "O(1)",
+      "access_at": "O(n)",
+      "insert_head_tail": "O(1)",
+      "insert_at": "O(n)",
+      "delete_head_tail": "O(1)",
+      "delete_at": "O(n)",
+      "search": "O(n)"
+    },
+    "stack": {
+      "push": "O(1)",
+      "pop": "O(1)",
+      "peek": "O(1)",
+      "search": "O(n)"
+    },
+    "queue": {
+      "enqueue": "O(1)",
+      "dequeue": "O(1)",
+      "peek": "O(1)",
+      "search": "O(n)"
+    },
+    "deque": {
+      "push_front": "O(1)",
+      "push_back": "O(1)",
+      "pop_front": "O(1)",
+      "pop_back": "O(1)",
+      "peek_front": "O(1)",
+      "peek_back": "O(1)"
+    },
+    "hashmap": {
+      "get": "O(1) average, O(n) worst",
+      "put": "O(1) average, O(n) worst",
+      "remove": "O(1) average, O(n) worst",
+      "contains_key": "O(1) average, O(n) worst",
+      "iterate": "O(n)"
+    },
+    "hashset": {
+      "add": "O(1) average",
+      "remove": "O(1) average",
+      "contains": "O(1) average",
+      "iterate": "O(n)"
+    },
+    "treemap_treeset": {
+      "get": "O(log n)",
+      "put": "O(log n)",
+      "remove": "O(log n)",
+      "first_last": "O(log n)",
+      "floor_ceiling": "O(log n)",
+      "iterate_sorted": "O(n)"
+    },
+    "binary_search_tree": {
+      "search": "O(h), O(log n) balanced, O(n) skewed",
+      "insert": "O(h)",
+      "delete": "O(h)",
+      "min_max": "O(h)",
+      "inorder": "O(n)"
+    },
+    "avl_tree": {
+      "search": "O(log n)",
+      "insert": "O(log n)",
+      "delete": "O(log n)",
+      "rotate": "O(1)"
+    },
+    "red_black_tree": {
+      "search": "O(log n)",
+      "insert": "O(log n)",
+      "delete": "O(log n)"
+    },
+    "heap_priority_queue": {
+      "insert": "O(log n)",
+      "extract_min_max": "O(log n)",
+      "peek": "O(1)",
+      "heapify": "O(n)",
+      "decrease_key": "O(log n)"
+    },
+    "trie": {
+      "insert": "O(m)",
+      "search": "O(m)",
+      "prefix_search": "O(m)",
+      "delete": "O(m)",
+      "note": "m = length of word"
+    },
+    "segment_tree": {
+      "build": "O(n)",
+      "query": "O(log n)",
+      "update": "O(log n)",
+      "space": "O(n)"
+    },
+    "fenwick_tree": {
+      "build": "O(n log n)",
+      "prefix_query": "O(log n)",
+      "point_update": "O(log n)",
+      "space": "O(n)"
+    },
+    "disjoint_set": {
+      "find": "O(alpha(n))",
+      "union": "O(alpha(n))",
+      "connected": "O(alpha(n))"
+    },
+    "bloom_filter": {
+      "add": "O(k)",
+      "query": "O(k)",
+      "note": "k = number of hash functions"
+    },
+    "skip_list": {
+      "search": "O(log n) expected",
+      "insert": "O(log n) expected",
+      "delete": "O(log n) expected"
+    },
+    "b_tree": {
+      "search": "O(log n)",
+      "insert": "O(log n)",
+      "delete": "O(log n)",
+      "note": "log base B, minimizes disk seeks"
+    },
+    "suffix_array": {
+      "build": "O(n log n)",
+      "substring_search": "O(m log n)",
+      "lcp_query": "O(1) with RMQ"
+    },
+    "circular_buffer": {
+      "enqueue": "O(1)",
+      "dequeue": "O(1)",
+      "peek": "O(1)",
+      "is_full": "O(1)"
+    }
+  },
+
+  "sorting_algorithms": {
+    "bubble_sort": {
+      "time_best": "O(n)",
+      "time_average": "O(n^2)",
+      "time_worst": "O(n^2)",
+      "space": "O(1)",
+      "stable": true,
+      "in_place": true,
+      "notes": "Best case O(n) with early termination when no swaps"
+    },
+    "selection_sort": {
+      "time_best": "O(n^2)",
+      "time_average": "O(n^2)",
+      "time_worst": "O(n^2)",
+      "space": "O(1)",
+      "stable": false,
+      "in_place": true,
+      "notes": "Always O(n^2) regardless of input; minimum swaps"
+    },
+    "insertion_sort": {
+      "time_best": "O(n)",
+      "time_average": "O(n^2)",
+      "time_worst": "O(n^2)",
+      "space": "O(1)",
+      "stable": true,
+      "in_place": true,
+      "notes": "Best for small or nearly-sorted arrays; used in Tim Sort for small runs"
+    },
+    "merge_sort": {
+      "time_best": "O(n log n)",
+      "time_average": "O(n log n)",
+      "time_worst": "O(n log n)",
+      "space": "O(n)",
+      "stable": true,
+      "in_place": false,
+      "notes": "Guaranteed O(n log n); good for linked lists (O(1) space); used for external sort"
+    },
+    "quick_sort": {
+      "time_best": "O(n log n)",
+      "time_average": "O(n log n)",
+      "time_worst": "O(n^2)",
+      "space": "O(log n)",
+      "stable": false,
+      "in_place": true,
+      "notes": "Fastest in practice; O(n^2) worst with bad pivot; use random/median-of-3 pivot"
+    },
+    "heap_sort": {
+      "time_best": "O(n log n)",
+      "time_average": "O(n log n)",
+      "time_worst": "O(n log n)",
+      "space": "O(1)",
+      "stable": false,
+      "in_place": true,
+      "notes": "Guaranteed O(n log n) with O(1) space; poor cache locality"
+    },
+    "counting_sort": {
+      "time_best": "O(n+k)",
+      "time_average": "O(n+k)",
+      "time_worst": "O(n+k)",
+      "space": "O(k)",
+      "stable": true,
+      "in_place": false,
+      "notes": "k = range of values; only for integers in known range"
+    },
+    "radix_sort": {
+      "time_best": "O(d*(n+k))",
+      "time_average": "O(d*(n+k))",
+      "time_worst": "O(d*(n+k))",
+      "space": "O(n+k)",
+      "stable": true,
+      "in_place": false,
+      "notes": "d = digits, k = base; sort by least significant digit first using stable sort"
+    },
+    "bucket_sort": {
+      "time_best": "O(n+k)",
+      "time_average": "O(n+k)",
+      "time_worst": "O(n^2)",
+      "space": "O(n)",
+      "stable": true,
+      "in_place": false,
+      "notes": "Best for uniformly distributed data; scatter into buckets, sort each, gather"
+    },
+    "tim_sort": {
+      "time_best": "O(n)",
+      "time_average": "O(n log n)",
+      "time_worst": "O(n log n)",
+      "space": "O(n)",
+      "stable": true,
+      "in_place": false,
+      "notes": "Hybrid merge+insertion sort; default in Java/Kotlin/Python; exploits natural runs"
+    }
+  },
+
+  "input_size_guidelines": {
+    "O(1)": {
+      "max_n": "any",
+      "description": "Constant time — mathematical formula or direct lookup"
+    },
+    "O(log n)": {
+      "max_n": 1000000000000,
+      "description": "Binary search, balanced BST operations; handles enormous inputs"
+    },
+    "O(sqrt(n))": {
+      "max_n": 1000000000000,
+      "description": "Square root decomposition; trial division"
+    },
+    "O(n)": {
+      "max_n": 100000000,
+      "description": "Single pass — linear scan, two pointers, sliding window, counting sort"
+    },
+    "O(n log n)": {
+      "max_n": 10000000,
+      "description": "Sorting-based solutions; divide and conquer"
+    },
+    "O(n * sqrt(n))": {
+      "max_n": 100000,
+      "description": "Mo's algorithm, some block decomposition"
+    },
+    "O(n^2)": {
+      "max_n": 10000,
+      "description": "Nested loops — brute force pairs, simple DP, 2D matrix traversal"
+    },
+    "O(n^2 log n)": {
+      "max_n": 5000,
+      "description": "Sorting within quadratic loop"
+    },
+    "O(n^3)": {
+      "max_n": 500,
+      "description": "Triple nested loops — Floyd-Warshall, interval DP, matrix multiplication"
+    },
+    "O(2^n)": {
+      "max_n": 25,
+      "description": "Subset enumeration, bitmask DP"
+    },
+    "O(n!)": {
+      "max_n": 12,
+      "description": "Permutation generation, brute-force TSP"
+    },
+    "O(n^n)": {
+      "max_n": 8,
+      "description": "Unrestricted backtracking; almost never acceptable"
+    }
+  },
+
+  "constraint_to_complexity_guide": [
+    {
+      "constraint": "n <= 12",
+      "likely_complexity": "O(n!)",
+      "typical_patterns": ["permutations-generation", "constraint-satisfaction"],
+      "reasoning": "Small n allows factorial exploration; likely permutation/backtracking"
+    },
+    {
+      "constraint": "n <= 20-25",
+      "likely_complexity": "O(2^n) or O(2^n * n)",
+      "typical_patterns": ["state-compression-bitmask", "subsets-generation", "inclusion-exclusion", "sprague-grundy"],
+      "reasoning": "2^20 ~ 1M, 2^25 ~ 33M; bitmask DP, subset enumeration, inclusion-exclusion, or game theory Grundy values"
+    },
+    {
+      "constraint": "n = 25-40 with large values",
+      "likely_complexity": "O(2^(n/2) * n)",
+      "typical_patterns": ["meet-in-middle"],
+      "reasoning": "2^N too slow but 2^(N/2) ~ 32K-1M is feasible; split into halves, enumerate each, combine with sorting + binary search. Key signal: N~30 AND values too large for DP array"
+    },
+    {
+      "constraint": "n <= 500",
+      "likely_complexity": "O(n^3)",
+      "typical_patterns": ["floyd-warshall", "interval-dp", "hungarian-algorithm", "knuth-dp-optimization"],
+      "reasoning": "500^3 = 125M, borderline for 1s; interval DP, all-pairs shortest path, Hungarian assignment, or Knuth-optimized interval DP"
+    },
+    {
+      "constraint": "n <= 5000-10000",
+      "likely_complexity": "O(n^2)",
+      "typical_patterns": ["longest-common-subsequence", "edit-distance", "knapsack-01", "dp-palindromic"],
+      "reasoning": "10K^2 = 100M; 2D DP, nested loops, palindromic DP"
+    },
+    {
+      "constraint": "n <= 100000",
+      "likely_complexity": "O(n * sqrt(n)) or O(n log n)",
+      "typical_patterns": ["sorting", "binary-search", "merge-intervals", "convex-hull", "closest-pair-of-points", "slope-trick"],
+      "reasoning": "100K * log(100K) ~ 1.7M; sorting-based approaches, geometric algorithms, slope trick DP"
+    },
+    {
+      "constraint": "n <= 1000000",
+      "likely_complexity": "O(n log n) or O(n)",
+      "typical_patterns": ["two-pointer-convergent", "sliding-window-variable", "prefix-sum", "z-function", "kmp-string-matching"],
+      "reasoning": "Must be near-linear; no nested loops; linear string matching"
+    },
+    {
+      "constraint": "n <= 10^8",
+      "likely_complexity": "O(n)",
+      "typical_patterns": ["kadanes-algorithm", "two-pointer-same-direction"],
+      "reasoning": "Must be single pass; constant factor matters"
+    },
+    {
+      "constraint": "n <= 10^12 or larger",
+      "likely_complexity": "O(log n) or O(sqrt(n)) or O(1)",
+      "typical_patterns": ["binary-search", "mathematical-formula"],
+      "reasoning": "Cannot even read all input; must use mathematical insight or binary search"
+    },
+    {
+      "constraint": "n <= 10^5 and operations are online",
+      "likely_complexity": "O(n log n) total or O(log n) per query",
+      "typical_patterns": ["segment-tree", "fenwick-tree", "binary-search-tree-ops"],
+      "reasoning": "Online queries need efficient per-query handling"
+    },
+    {
+      "constraint": "V+E <= 10^6",
+      "likely_complexity": "O(V+E)",
+      "typical_patterns": ["bfs-traversal", "dfs-graph-traversal", "topological-sort"],
+      "reasoning": "Standard graph traversal; linear in graph size"
+    },
+    {
+      "constraint": "V <= 10^5, weighted edges",
+      "likely_complexity": "O((V+E) log V)",
+      "typical_patterns": ["dijkstra", "prim-mst"],
+      "reasoning": "Priority queue based graph algorithms"
+    }
+  ],
+
+  "complexity_comparison_notes": [
+    "O(1) < O(log n) < O(sqrt(n)) < O(n) < O(n log n) < O(n^2) < O(n^3) < O(2^n) < O(n!)",
+    "For n = 10^6: O(n) takes ~0.01s, O(n log n) ~0.2s, O(n^2) ~10000s (too slow)",
+    "HashMap O(1) is average case; worst case O(n) from hash collisions",
+    "Amortized O(1) for dynamic array append includes rare O(n) resizes",
+    "BST operations are O(h): O(log n) balanced, O(n) degenerate",
+    "Union-Find alpha(n) <= 5 for all practical n; treat as O(1)"
+  ]
+}

@@ -1,0 +1,2597 @@
+{
+  "version": "1.0.0-extracted",
+  "source": "ds-algorithm-primer",
+  "rules": [
+    {
+      "structural_signal": "Sorted order means L+R too small → L++, too big → R--. Eliminates brute-force O(n²) pair scanning into a single O(n) pas",
+      "code_indicators": [
+        "sorted-input"
+      ],
+      "recommended_structure": "array",
+      "card_title": "Two Pointers — Convergent",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Symmetric structure — compare char at L with char at R, move inward. If they always match, it's a palindrome. Natural fi",
+      "code_indicators": [
+        "convergent"
+      ],
+      "recommended_structure": "array",
+      "card_title": "Two Pointers — Convergent",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Width decreases as pointers converge, so you must move the shorter wall inward — it's the only pointer that could yield ",
+      "code_indicators": [
+        "convergent",
+        "greedy"
+      ],
+      "recommended_structure": "array",
+      "card_title": "Two Pointers — Convergent",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Fix one element, then two-pointer the sorted remainder. Sorting enables skipping duplicates and the L/R convergence redu",
+      "code_indicators": [
+        "convergent"
+      ],
+      "recommended_structure": "array",
+      "card_title": "Two Pointers — Convergent",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Negative numbers have large squares on the left, positives on the right. Converge from both ends, picking the larger squ",
+      "code_indicators": [
+        "single-pass",
+        "convergent"
+      ],
+      "recommended_structure": "array",
+      "card_title": "Two Pointers — Convergent",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Slow pointer tracks where the next non-zero should go. Fast scans all elements. Non-zeros get written at slow; remaining",
+      "code_indicators": [
+        "in-place"
+      ],
+      "recommended_structure": "array",
+      "card_title": "Two Pointers — Same Direction",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "An anagram of pattern p has exactly length p. Slide a window of size |p| over s, maintaining a frequency map. When windo",
+      "code_indicators": [
+        "frequency-counting"
+      ],
+      "recommended_structure": "array",
+      "card_title": "Sliding Window — Fixed Size",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Check if any value appears twice within a window of size k. Sliding window + set.",
+      "code_indicators": [
+        "sliding-window"
+      ],
+      "recommended_structure": "array",
+      "card_title": "Sliding Window — Fixed Size",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Fixed window of size k, check if average meets threshold. Direct sliding window sum check.",
+      "code_indicators": [
+        "sliding-window"
+      ],
+      "recommended_structure": "array",
+      "card_title": "Sliding Window — Fixed Size",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Expand right to satisfy the constraint (contain all target chars). Once satisfied, shrink left to minimize length. Frequ",
+      "code_indicators": [
+        "frequency-counting"
+      ],
+      "recommended_structure": "array",
+      "card_title": "Sliding Window — Variable Size",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Expand right freely. When distinct count exceeds K, shrink left until it drops back to K. A frequency map tracks counts;",
+      "code_indicators": [
+        "frequency-counting"
+      ],
+      "recommended_structure": "array",
+      "card_title": "Sliding Window — Variable Size",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Window tracks char frequencies. Valid if windowLen - maxFreq ≤ k (can replace the rest). Expand right always, shrink lef",
+      "code_indicators": [
+        "frequency-counting"
+      ],
+      "recommended_structure": "array",
+      "card_title": "Sliding Window — Variable Size",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Longest subarray with at most 2 distinct values. Variable window with a frequency map — shrink left when distinct count ",
+      "code_indicators": [
+        "frequency-counting"
+      ],
+      "recommended_structure": "array",
+      "card_title": "Sliding Window — Variable Size",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "If prefixSum[j] - prefixSum[i] = k, then subarray [i,j) sums to k. Store prefix sum counts in a HashMap — check if (curr",
+      "code_indicators": [
+        "hash-based-lookup",
+        "prefix-sum"
+      ],
+      "recommended_structure": "array",
+      "card_title": "Prefix Sums",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Extension to 2D: build a prefix sum matrix using inclusion-exclusion. Any rectangle sum becomes O(1) with four lookups: ",
+      "code_indicators": [
+        "prefix-sum"
+      ],
+      "recommended_structure": "array",
+      "card_title": "Prefix Sums",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Find index where left sum equals right sum. Total prefix sum lets you check leftSum == totalSum - leftSum - nums[i] at e",
+      "code_indicators": [
+        "single-pass",
+        "prefix-sum"
+      ],
+      "recommended_structure": "array",
+      "card_title": "Prefix Sums",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Replace 0→-1, then longest subarray with sum 0 = equal 0s and 1s. Use prefix sum + HashMap: if same prefix sum seen befo",
+      "code_indicators": [
+        "hash-based-lookup",
+        "prefix-sum"
+      ],
+      "recommended_structure": "array",
+      "card_title": "Prefix Sums",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "At each position, decide: extend the current subarray or start fresh. If the running sum goes negative, it can only hurt",
+      "code_indicators": [
+        "greedy",
+        "dynamic-programming"
+      ],
+      "recommended_structure": "array",
+      "card_title": "Kadane's Algorithm",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Sorted = monotonic. Compare middle element to target: if smaller, discard left half; if larger, discard right half. Halv",
+      "code_indicators": [
+        "monotonic-invariant"
+      ],
+      "recommended_structure": "array",
+      "card_title": "Binary Search",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Standard binary search stops at any match. To find the first: on match, record it but keep searching left (R=mid-1). For",
+      "code_indicators": [
+        "binary-search"
+      ],
+      "recommended_structure": "array",
+      "card_title": "Binary Search",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "When the answer space is monotonic (\"is X feasible?\" flips from false→true), binary search over the answer itself. Test ",
+      "code_indicators": [
+        "monotonic-invariant",
+        "binary-search",
+        "dynamic-programming"
+      ],
+      "recommended_structure": "array",
+      "card_title": "Binary Search",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Not fully sorted, but locally monotonic. If mid < mid+1, a peak exists to the right; otherwise to the left. Binary searc",
+      "code_indicators": [
+        "monotonic-invariant",
+        "binary-search"
+      ],
+      "recommended_structure": "array",
+      "card_title": "Binary Search",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Classic \"search on answer\" — binary search over eating speed k. For each k, check if Koko finishes in time (feasibility ",
+      "code_indicators": [
+        "monotonic-invariant",
+        "binary-search"
+      ],
+      "recommended_structure": "array",
+      "card_title": "Binary Search",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Binary search on capacity [max(w)..sum(w)]. For each candidate, greedily pack weights into days. Monotonic: higher capac",
+      "code_indicators": [
+        "monotonic-invariant",
+        "binary-search"
+      ],
+      "recommended_structure": "array",
+      "card_title": "Binary Search",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Find index where target would be inserted in sorted array. Classic binary search returning lo when not found.",
+      "code_indicators": [
+        "binary-search"
+      ],
+      "recommended_structure": "array",
+      "card_title": "Binary Search",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Only 3 distinct values — don't need a full sort. Three pointers carve out regions for 0s, 1s, and 2s in a single pass. O",
+      "code_indicators": [
+        "single-pass",
+        "constant-space",
+        "linear-time"
+      ],
+      "recommended_structure": "array",
+      "card_title": "Dutch National Flag",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Two categories (even/odd) = simplified Dutch flag with just 2 groups. One pointer tracks the boundary, other scans — swa",
+      "code_indicators": [
+        "single-pass",
+        "constant-space"
+      ],
+      "recommended_structure": "array",
+      "card_title": "Dutch National Flag",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Anagrams have identical character frequencies. Count chars for string s (increment), then for string t (decrement). If a",
+      "code_indicators": [
+        "constant-space",
+        "linear-time"
+      ],
+      "recommended_structure": "array",
+      "card_title": "Frequency Counting",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "First pass: build frequency map. Second pass: scan left-to-right, return first char with count=1. Two O(n) passes. The m",
+      "code_indicators": [
+        "frequency-counting"
+      ],
+      "recommended_structure": "array",
+      "card_title": "Frequency Counting",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Boyer-Moore Voting: maintain a candidate and count. Same element → count++, different → count--. When count hits 0, swit",
+      "code_indicators": [
+        "constant-space"
+      ],
+      "recommended_structure": "array",
+      "card_title": "Frequency Counting",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "All anagrams share the same sorted-character key (or frequency signature). Use that as a HashMap key to bucket strings. ",
+      "code_indicators": [
+        "hash-based-lookup"
+      ],
+      "recommended_structure": "array",
+      "card_title": "Frequency Counting",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Build frequency map in O(n), then extract top K by sorting entries by count or using a min-heap of size K. The counting ",
+      "code_indicators": [
+        "frequency-counting"
+      ],
+      "recommended_structure": "array",
+      "card_title": "Frequency Counting",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "For each element, you need the first larger element to its right. A decreasing stack keeps candidates. When a new elemen",
+      "code_indicators": [
+        "stack-based"
+      ],
+      "recommended_structure": "array",
+      "card_title": "Monotonic Stack",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "\"How many days until warmer?\" = next greater element by index difference. Stack stores indices of unresolved days. When ",
+      "code_indicators": [
+        "stack-based"
+      ],
+      "recommended_structure": "array",
+      "card_title": "Monotonic Stack",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Water is trapped between taller bars. A decreasing stack tracks bars. When a taller bar arrives, pop shorter bars — wate",
+      "code_indicators": [
+        "stack-based"
+      ],
+      "recommended_structure": "array",
+      "card_title": "Monotonic Stack",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "For each bar, you need the nearest shorter bar on both sides. An increasing stack tracks bars. When a shorter bar arrive",
+      "code_indicators": [
+        "stack-based"
+      ],
+      "recommended_structure": "array",
+      "card_title": "Monotonic Stack",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "\"How many consecutive days was price ≤ today?\" = distance to previous greater element. Decreasing stack of indices; when",
+      "code_indicators": [
+        "stack-based"
+      ],
+      "recommended_structure": "array",
+      "card_title": "Monotonic Stack",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Greedily remove digits that break non-decreasing order (left to right). Monotonic increasing stack: if incoming digit < ",
+      "code_indicators": [
+        "monotonic-invariant",
+        "stack-based"
+      ],
+      "recommended_structure": "array",
+      "card_title": "Monotonic Stack",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Find next smaller element for each position. Monotonic increasing stack — mirror of next greater element.",
+      "code_indicators": [
+        "monotonic-invariant",
+        "stack-based"
+      ],
+      "recommended_structure": "array",
+      "card_title": "Monotonic Stack",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Median = element at index n/2 in sorted order. Quick Select finds this in O(n) average without sorting the entire array.",
+      "code_indicators": [
+        "sorted-input"
+      ],
+      "recommended_structure": "array",
+      "card_title": "Quick Select (Kth Element)",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Array has values in range [0,n] or [1,n] — each value has a \"home\" index. Place each number at its home, then scan for t",
+      "code_indicators": [
+        "constant-space",
+        "linear-time"
+      ],
+      "recommended_structure": "array",
+      "card_title": "Cyclic Sort",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Ignore negatives and values > n. Place valid positives at index (val-1). After placement, the first index where nums[i] ",
+      "code_indicators": [
+        "constant-space",
+        "linear-time"
+      ],
+      "recommended_structure": "array",
+      "card_title": "Cyclic Sort",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Triple reversal trick: reverse all, reverse first k, reverse rest. Each reversal is O(n) in-place. Avoids the naive O(n·",
+      "code_indicators": [
+        "in-place"
+      ],
+      "recommended_structure": "array",
+      "card_title": "In-Place Rotation & Reversal",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Reverse the entire string, then reverse each word individually. The double reversal cancels out within each word but fli",
+      "code_indicators": [
+        "in-place"
+      ],
+      "recommended_structure": "array",
+      "card_title": "In-Place Rotation & Reversal",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Transpose (swap rows↔cols) then reverse each row = 90° clockwise. Both operations are in-place O(n²). Decomposing rotati",
+      "code_indicators": [
+        "in-place"
+      ],
+      "recommended_structure": "array",
+      "card_title": "In-Place Rotation & Reversal",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Find rightmost ascending pair (i, i+1), swap nums[i] with the smallest larger element to its right, then reverse the suf",
+      "code_indicators": [
+        "in-place"
+      ],
+      "recommended_structure": "array",
+      "card_title": "In-Place Rotation & Reversal",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Sorting by start time groups overlapping intervals adjacently. Then a single greedy pass merges: if current.start ≤ last",
+      "code_indicators": [
+        "greedy"
+      ],
+      "recommended_structure": "array",
+      "card_title": "Merge Intervals",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Already sorted list: add all intervals before the new one, merge all that overlap with it, then add all after. Three pha",
+      "code_indicators": [
+        "single-pass"
+      ],
+      "recommended_structure": "array",
+      "card_title": "Merge Intervals",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Merge all busy intervals, then the gaps between merged intervals are the free slots. Same merge pattern, just extract th",
+      "code_indicators": [
+        "complement-lookup"
+      ],
+      "recommended_structure": "array",
+      "card_title": "Merge Intervals",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Naive search is O(n·m) — backtracking on mismatch. KMP uses the failure function to skip ahead: partial matches tell you",
+      "code_indicators": [
+        "backtracking"
+      ],
+      "recommended_structure": "string",
+      "card_title": "KMP & Rabin-Karp — String Matching",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Map stores char→count in O(n). Query any character's count in O(1). For lowercase only, IntArray(26) is faster; for Unic",
+      "code_indicators": [
+        "hash-based-lookup"
+      ],
+      "recommended_structure": "hashmap",
+      "card_title": "Frequency Counting & Anagrams",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Two strings are anagrams iff they have identical frequency maps. Build both maps in O(n), compare in O(k) where k = dist",
+      "code_indicators": [
+        "frequency-counting"
+      ],
+      "recommended_structure": "hashmap",
+      "card_title": "Frequency Counting & Anagrams",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Build frequency map in O(n), then sort entries by value and take top K. Or use a min-heap of size K for O(n log K). Buck",
+      "code_indicators": [
+        "frequency-counting"
+      ],
+      "recommended_structure": "hashmap",
+      "card_title": "Frequency Counting & Anagrams",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Build frequency map, then sort entries by count descending. Reconstruct string by repeating each char by its count. Buck",
+      "code_indicators": [
+        "hash-based-lookup",
+        "frequency-counting"
+      ],
+      "recommended_structure": "hashmap",
+      "card_title": "Frequency Counting & Anagrams",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Three HashSets per row/col/box track seen digits. For each cell, check if digit already in row set, col set, or box set.",
+      "code_indicators": [
+        "constant-space"
+      ],
+      "recommended_structure": "hashmap",
+      "card_title": "Frequency Counting & Anagrams",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Instead of O(n²) brute force checking all pairs, store each number's index in a HashMap. For each new number, check if i",
+      "code_indicators": [
+        "single-pass",
+        "complement-lookup",
+        "hash-based-lookup"
+      ],
+      "recommended_structure": "hashmap",
+      "card_title": "Two-Sum & Complement Lookup",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Use frequency map instead of index map. For each number, add freq[target - num] to count, then increment freq[num]. Hand",
+      "code_indicators": [
+        "frequency-counting"
+      ],
+      "recommended_structure": "hashmap",
+      "card_title": "Two-Sum & Complement Lookup",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Sort the array O(n log n), then for each element, use two-sum (via two pointers or HashMap) on the remainder. Skip dupli",
+      "code_indicators": [
+        "hash-based-lookup",
+        "two-pointer"
+      ],
+      "recommended_structure": "hashmap",
+      "card_title": "Two-Sum & Complement Lookup",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Four arrays A,B,C,D — count tuples where a+b+c+d=0. Store all a+b sums in a HashMap, then for each c+d pair check if -(c",
+      "code_indicators": [
+        "complement-lookup",
+        "hash-based-lookup"
+      ],
+      "recommended_structure": "hashmap",
+      "card_title": "Two-Sum & Complement Lookup",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Prefix sum + HashMap: store prefix_sum → count. At each index, check if (currentSum - k) exists in map → those are subar",
+      "code_indicators": [
+        "hash-based-lookup",
+        "sliding-window",
+        "prefix-sum"
+      ],
+      "recommended_structure": "hashmap",
+      "card_title": "Two-Sum & Complement Lookup",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Fixed-size sliding window (size = pattern length). Compare window's frequency map to pattern's frequency map at each pos",
+      "code_indicators": [
+        "sliding-window",
+        "frequency-counting"
+      ],
+      "recommended_structure": "hashmap",
+      "card_title": "Sliding Window with Maps/Sets",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Fixed-size window (size = pattern length) with frequency map comparison. Slide window, maintain char counts. When window",
+      "code_indicators": [
+        "frequency-counting"
+      ],
+      "recommended_structure": "hashmap",
+      "card_title": "Sliding Window with Maps/Sets",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Recursive problems where the same inputs are computed repeatedly (Fibonacci, grid paths, knapsack). HashMap caches resul",
+      "code_indicators": [
+        "hash-based-lookup",
+        "recursive"
+      ],
+      "recommended_structure": "hashmap",
+      "card_title": "Caching & Memoization",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Any pure function (same input → same output) with costly computation benefits from caching. Store input→result in a Hash",
+      "code_indicators": [
+        "hash-based-lookup"
+      ],
+      "recommended_structure": "hashmap",
+      "card_title": "Caching & Memoization",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "DFS on graphs or trees with shared subtrees. Memoize (node, state) → result to avoid re-exploring. Use a data class key ",
+      "code_indicators": [
+        "depth-first",
+        "memoization"
+      ],
+      "recommended_structure": "hashmap",
+      "card_title": "Caching & Memoization",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Classic DP: how many ways to reach step n / minimum coins for amount. Overlapping subproblems → HashMap cache turns O(2ⁿ",
+      "code_indicators": [
+        "hash-based-lookup",
+        "dynamic-programming"
+      ],
+      "recommended_structure": "hashmap",
+      "card_title": "Caching & Memoization",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Can string s be segmented into dictionary words? Memoize index → boolean. At each position, try all dictionary words as ",
+      "code_indicators": [
+        "memoization"
+      ],
+      "recommended_structure": "hashmap",
+      "card_title": "Caching & Memoization",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Evict the least frequently used (ties broken by least recent). HashMap + frequency buckets (each a LinkedHashSet). More ",
+      "code_indicators": [
+        "hash-based-lookup"
+      ],
+      "recommended_structure": "hashmap",
+      "card_title": "LRU Cache",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Insert/delete/getMax/getMin all in O(1). HashMap for key→node lookup, doubly linked list of frequency buckets. Each buck",
+      "code_indicators": [
+        "hash-based-lookup"
+      ],
+      "recommended_structure": "hashmap",
+      "card_title": "LRU Cache",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Maintain a sliding window HashSet of size K. As you iterate, add the current element. If add() returns false → duplicate",
+      "code_indicators": [
+        "sliding-window"
+      ],
+      "recommended_structure": "hashset",
+      "card_title": "Duplicate Detection",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Use two sets: \"seen\" and \"duplicates\". For each element, if seen.add() returns false, add to duplicates set. O(n) time, ",
+      "code_indicators": [
+        "linear-time"
+      ],
+      "recommended_structure": "hashset",
+      "card_title": "Duplicate Detection",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "LinkedHashMap preserves insertion order. Build frequency map in one pass, then iterate entries — first with count 1 is t",
+      "code_indicators": [
+        "hash-based-lookup",
+        "frequency-counting",
+        "linear-time"
+      ],
+      "recommended_structure": "hashset",
+      "card_title": "First Unique / Non-Repeating Element",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Every element appears twice except one. XOR approach is O(1) space, but set approach works too: add if unseen, remove if",
+      "code_indicators": [
+        "constant-space"
+      ],
+      "recommended_structure": "hashset",
+      "card_title": "First Unique / Non-Repeating Element",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Find middle with fast/slow, reverse second half, compare with first half. Uses reversal as a sub-routine for O(1) space ",
+      "code_indicators": [
+        "constant-space"
+      ],
+      "recommended_structure": "linked-list",
+      "card_title": "Reversing a Linked List",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "If there's a cycle, fast and slow must meet (gap shrinks by 1 each step). If no cycle, fast reaches null first. O(n) tim",
+      "code_indicators": [
+        "constant-space",
+        "linear-time"
+      ],
+      "recommended_structure": "linked-list",
+      "card_title": "Fast & Slow Pointers (Floyd's)",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Sum of squared digits eventually loops or reaches 1. Use fast/slow on the digit-sum sequence instead of a HashSet — O(1)",
+      "code_indicators": [
+        "constant-space"
+      ],
+      "recommended_structure": "linked-list",
+      "card_title": "Fast & Slow Pointers (Floyd's)",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Dummy head + two pointers. Compare heads, attach smaller, advance that pointer. When one is exhausted, attach the remain",
+      "code_indicators": [
+        "two-pointer",
+        "constant-space"
+      ],
+      "recommended_structure": "linked-list",
+      "card_title": "Merging Sorted Lists",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Merge sort is ideal for linked lists — find middle (fast/slow), split, recursively sort, merge. O(n log n) time, O(log n",
+      "code_indicators": [
+        "recursive"
+      ],
+      "recommended_structure": "linked-list",
+      "card_title": "Merging Sorted Lists",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Advance fast n+1 steps ahead of slow (starting from dummy). When fast reaches null, slow is just before the target. One ",
+      "code_indicators": [
+        "constant-space"
+      ],
+      "recommended_structure": "linked-list",
+      "card_title": "Remove Nth Node from End",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Virtual concatenation (A+B and B+A) aligns both pointers at the intersection. When one reaches null, redirect to the oth",
+      "code_indicators": [
+        "constant-space"
+      ],
+      "recommended_structure": "linked-list",
+      "card_title": "Intersection of Two Lists",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Find middle (fast/slow), reverse second half, compare with first half. O(n) time, O(1) space. The classic three-pattern ",
+      "code_indicators": [
+        "constant-space",
+        "linear-time"
+      ],
+      "recommended_structure": "linked-list",
+      "card_title": "Palindrome Linked List",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Same middle + reverse + compare approach works whenever you need to verify the first half mirrors the second half. Stack",
+      "code_indicators": [
+        "stack-based"
+      ],
+      "recommended_structure": "linked-list",
+      "card_title": "Palindrome Linked List",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Three-step combo: find middle (fast/slow), reverse second half, interleave both halves. O(n) time, O(1) space. The inter",
+      "code_indicators": [
+        "constant-space",
+        "linear-time"
+      ],
+      "recommended_structure": "linked-list",
+      "card_title": "Reorder List",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Use stacks to process digits from least significant, or reverse both lists first, add, then reverse the result. Stack ap",
+      "code_indicators": [
+        "stack-based"
+      ],
+      "recommended_structure": "linked-list",
+      "card_title": "Add Two Numbers",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Two dummy heads collect nodes into less-than and greater-than-or-equal chains. Connect them at the end. Preserves relati",
+      "code_indicators": [
+        "constant-space",
+        "linear-time"
+      ],
+      "recommended_structure": "linked-list",
+      "card_title": "Partition List",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Find length and tail, normalize k (k % length), make circular, walk to new tail at (length - k - 1), break the circle. O",
+      "code_indicators": [
+        "constant-space",
+        "linear-time"
+      ],
+      "recommended_structure": "linked-list",
+      "card_title": "Rotate List",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "First check if k nodes remain (return as-is if not). Reverse k nodes with the standard three-pointer technique. Recursiv",
+      "code_indicators": [
+        "stack-based",
+        "recursive",
+        "linear-time"
+      ],
+      "recommended_structure": "linked-list",
+      "card_title": "Reverse Nodes in k-Group",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "HashMap maps old→new nodes. Pass 1: create copies. Pass 2: wire next and random via the map. O(n) time, O(n) space. Inte",
+      "code_indicators": [
+        "hash-based-lookup",
+        "linear-time"
+      ],
+      "recommended_structure": "linked-list",
+      "card_title": "Copy List with Random Pointer",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Same HashMap (old→clone) pattern generalizes to any structure with arbitrary pointers. Two passes: create all nodes, the",
+      "code_indicators": [
+        "hash-based-lookup"
+      ],
+      "recommended_structure": "linked-list",
+      "card_title": "Copy List with Random Pointer",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "HashMap for O(1) key lookup, DLL for O(1) access-order tracking. On get: move to front. On put: add to front, evict tail",
+      "code_indicators": [
+        "hash-based-lookup"
+      ],
+      "recommended_structure": "linked-list",
+      "card_title": "LRU Cache (HashMap + Doubly Linked List)",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Extend LRU with frequency buckets. Each frequency has its own DLL. HashMap maps key → node. On access, move node to the ",
+      "code_indicators": [
+        "hash-based-lookup"
+      ],
+      "recommended_structure": "linked-list",
+      "card_title": "LRU Cache (HashMap + Doubly Linked List)",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Push openers, pop when closer matches top. If mismatch or stack not empty at end, invalid. Classic stack problem.",
+      "code_indicators": [
+        "stack-based"
+      ],
+      "recommended_structure": "stack",
+      "card_title": "Valid Parentheses",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Push indices onto stack. Use a sentinel index (-1) to calculate lengths. When matched, length = i - stack.top.",
+      "code_indicators": [
+        "stack-based"
+      ],
+      "recommended_structure": "stack",
+      "card_title": "Valid Parentheses",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Track unmatched positions in a stack. After processing, stack size = number of removals needed.",
+      "code_indicators": [
+        "stack-based"
+      ],
+      "recommended_structure": "stack",
+      "card_title": "Valid Parentheses",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Parallel min stack tracks the minimum at each level. Push mirrors main stack with min(current, prevMin). Pop both togeth",
+      "code_indicators": [
+        "stack-based"
+      ],
+      "recommended_structure": "stack",
+      "card_title": "Min Stack",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Same pattern with max instead of min. Parallel max stack tracks running maximum at each level.",
+      "code_indicators": [
+        "stack-based"
+      ],
+      "recommended_structure": "stack",
+      "card_title": "Min Stack",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Generalize to any associative operation — sum, GCD, etc. Maintain a parallel stack with the running aggregate.",
+      "code_indicators": [
+        "stack-based"
+      ],
+      "recommended_structure": "stack",
+      "card_title": "Min Stack",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Convert infix to postfix (Shunting Yard), then evaluate with a stack. Clean separation of parsing and evaluation.",
+      "code_indicators": [
+        "stack-based"
+      ],
+      "recommended_structure": "stack",
+      "card_title": "Evaluate Reverse Polish Notation",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Stack-based evaluation handles arbitrary expression depth naturally. Each operator consumes exactly two operands.",
+      "code_indicators": [
+        "stack-based"
+      ],
+      "recommended_structure": "stack",
+      "card_title": "Evaluate Reverse Polish Notation",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Monotonic stack maintains sorted invariant. When an element violates the invariant, pop and assign — each element pushed",
+      "code_indicators": [
+        "monotonic-invariant",
+        "stack-based"
+      ],
+      "recommended_structure": "stack",
+      "card_title": "Monotonic Stack",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Decreasing stack of indices. When a warmer day appears, pop all cooler days and compute distance.",
+      "code_indicators": [
+        "stack-based"
+      ],
+      "recommended_structure": "stack",
+      "card_title": "Monotonic Stack",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Decreasing stack tracks previous greater element. Span = distance to that element.",
+      "code_indicators": [
+        "stack-based"
+      ],
+      "recommended_structure": "stack",
+      "card_title": "Monotonic Stack",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Increasing stack finds left and right boundaries for each bar — the first smaller bar on each side.",
+      "code_indicators": [
+        "stack-based"
+      ],
+      "recommended_structure": "stack",
+      "card_title": "Monotonic Stack",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Monotonic increasing stack. When a shorter bar is encountered, pop taller bars and compute area. Sentinel at end forces ",
+      "code_indicators": [
+        "monotonic-invariant",
+        "stack-based"
+      ],
+      "recommended_structure": "stack",
+      "card_title": "Largest Rectangle in Histogram",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Decreasing stack. When a taller bar appears, pop and calculate water trapped between current bar and the bar below the p",
+      "code_indicators": [
+        "stack-based"
+      ],
+      "recommended_structure": "stack",
+      "card_title": "Trapping Rain Water",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Two-pointer approach is more common, but stack-based thinking helps understand the bounding walls concept.",
+      "code_indicators": [
+        "stack-based"
+      ],
+      "recommended_structure": "stack",
+      "card_title": "Trapping Rain Water",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Classic monotonic decreasing stack. Push indices of unresolved days. When a warmer day appears, pop and compute distance",
+      "code_indicators": [
+        "monotonic-invariant",
+        "stack-based"
+      ],
+      "recommended_structure": "stack",
+      "card_title": "Daily Temperatures",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Generalization: any \"how far until condition X\" maps to a monotonic stack with distance calculation.",
+      "code_indicators": [
+        "monotonic-invariant",
+        "stack-based"
+      ],
+      "recommended_structure": "stack",
+      "card_title": "Daily Temperatures",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Split by \"/\", push directory names, \"..\" pops (go up), \".\" and \"\" are no-ops. Join stack with \"/\" for canonical path.",
+      "code_indicators": [
+        "stack-based"
+      ],
+      "recommended_structure": "stack",
+      "card_title": "Simplify Path",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Stack naturally models directory hierarchy — push to descend, pop to ascend.",
+      "code_indicators": [
+        "stack-based"
+      ],
+      "recommended_structure": "stack",
+      "card_title": "Simplify Path",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Two stacks (counts + strings) handle nesting. '[' pushes current state, ']' pops and repeats. Natural recursive structur",
+      "code_indicators": [
+        "stack-based",
+        "recursive"
+      ],
+      "recommended_structure": "stack",
+      "card_title": "Decode String",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Each '[' starts a new scope. Stack depth = nesting level. Inner patterns resolve first (LIFO matches nesting).",
+      "code_indicators": [
+        "stack-based"
+      ],
+      "recommended_structure": "stack",
+      "card_title": "Decode String",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "'(' pushes current result + sign onto stack, ')' pops and combines. Parentheses create scopes that the stack manages nat",
+      "code_indicators": [
+        "stack-based"
+      ],
+      "recommended_structure": "stack",
+      "card_title": "Basic Calculator",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "* and / process immediately (pop, compute, push). + and - defer by pushing. Final sum of stack gives result. Higher prec",
+      "code_indicators": [
+        "stack-based"
+      ],
+      "recommended_structure": "stack",
+      "card_title": "Basic Calculator",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Stack simulates collisions: positive = right, negative = left. Collision only when top is positive and current is negati",
+      "code_indicators": [
+        "stack-based"
+      ],
+      "recommended_structure": "stack",
+      "card_title": "Asteroid Collision",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Any problem where elements moving in opposite directions cancel each other. Stack tracks surviving elements.",
+      "code_indicators": [
+        "stack-based"
+      ],
+      "recommended_structure": "stack",
+      "card_title": "Asteroid Collision",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Monotonic increasing stack. Greedily remove digits that are greater than the next digit — this produces the smallest pos",
+      "code_indicators": [
+        "monotonic-invariant",
+        "stack-based"
+      ],
+      "recommended_structure": "stack",
+      "card_title": "Remove K Digits",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Generalization: build the lexicographically smallest/largest sequence by greedily maintaining monotonic order with a rem",
+      "code_indicators": [
+        "monotonic-invariant"
+      ],
+      "recommended_structure": "stack",
+      "card_title": "Remove K Digits",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Explicit stack replaces the call stack. Avoids StackOverflowError on deep graphs/trees. Same time complexity as recursiv",
+      "code_indicators": [
+        "stack-based",
+        "depth-first",
+        "recursive"
+      ],
+      "recommended_structure": "stack",
+      "card_title": "DFS with Explicit Stack",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "JVM default stack depth ~5000-10000 frames. For trees with depth > 5000, iterative DFS is required.",
+      "code_indicators": [
+        "stack-based",
+        "depth-first"
+      ],
+      "recommended_structure": "stack",
+      "card_title": "DFS with Explicit Stack",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Heap memory is much larger than stack memory. Explicit stack uses heap, supporting millions of elements.",
+      "code_indicators": [
+        "stack-based"
+      ],
+      "recommended_structure": "stack",
+      "card_title": "DFS with Explicit Stack",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Monotonic decreasing stack. Span = number of consecutive days with price ≤ today's price. Pop all smaller/equal, span = ",
+      "code_indicators": [
+        "monotonic-invariant",
+        "stack-based"
+      ],
+      "recommended_structure": "stack",
+      "card_title": "Stock Span",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "The element remaining on top of the stack after popping is the previous greater element. Span = distance to it.",
+      "code_indicators": [
+        "stack-based"
+      ],
+      "recommended_structure": "stack",
+      "card_title": "Stock Span",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "BFS explores by distance. All neighbors at distance d are visited before d+1, so the first time you reach a node is the ",
+      "code_indicators": [
+        "breadth-first"
+      ],
+      "recommended_structure": "queue",
+      "card_title": "BFS — Breadth-First Search",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Start BFS from each unvisited land cell to flood-fill the entire island. Each BFS = one connected component.",
+      "code_indicators": [
+        "breadth-first"
+      ],
+      "recommended_structure": "queue",
+      "card_title": "BFS — Breadth-First Search",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Each BFS level = one move. First arrival at target = fewest moves. Works for grid puzzles, state-space search.",
+      "code_indicators": [
+        "breadth-first"
+      ],
+      "recommended_structure": "queue",
+      "card_title": "BFS — Breadth-First Search",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "BFS radiates outward uniformly. The first target found is guaranteed to be the closest one.",
+      "code_indicators": [
+        "breadth-first"
+      ],
+      "recommended_structure": "queue",
+      "card_title": "BFS — Breadth-First Search",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "BFS visits every node exactly once. Use a HashMap to map original→clone, wiring neighbors as you go.",
+      "code_indicators": [
+        "hash-based-lookup",
+        "breadth-first"
+      ],
+      "recommended_structure": "queue",
+      "card_title": "BFS — Breadth-First Search",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "BFS with 2-coloring. Alternate colors at each level. If a neighbor has the same color → not bipartite.",
+      "code_indicators": [
+        "breadth-first"
+      ],
+      "recommended_structure": "queue",
+      "card_title": "BFS — Breadth-First Search",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Process all nodes at depth d before depth d+1 using queue.size snapshot per level.",
+      "code_indicators": [
+        "queue-based"
+      ],
+      "recommended_structure": "queue",
+      "card_title": "Level-Order Tree Traversal",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "BFS finds the first leaf node — that's the shallowest leaf = minimum depth. Faster than DFS which must explore all paths",
+      "code_indicators": [
+        "breadth-first",
+        "depth-first"
+      ],
+      "recommended_structure": "queue",
+      "card_title": "Level-Order Tree Traversal",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "All rotten oranges start spreading simultaneously. Enqueue all rotten cells, BFS radiates in parallel — each level = 1 m",
+      "code_indicators": [
+        "queue-based",
+        "breadth-first"
+      ],
+      "recommended_structure": "queue",
+      "card_title": "Multi-Source BFS",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Enqueue all gates, BFS fills each empty room with distance to nearest gate. Multi-source = all gates radiate simultaneou",
+      "code_indicators": [
+        "queue-based",
+        "breadth-first"
+      ],
+      "recommended_structure": "queue",
+      "card_title": "Multi-Source BFS",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Virtual super-source connected to all start points with 0-weight edges. One BFS covers all.",
+      "code_indicators": [
+        "breadth-first"
+      ],
+      "recommended_structure": "queue",
+      "card_title": "Multi-Source BFS",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Enqueue all 0-cells, BFS outward. Each 1-cell gets filled with its distance to the nearest 0 on first visit.",
+      "code_indicators": [
+        "queue-based",
+        "breadth-first"
+      ],
+      "recommended_structure": "queue",
+      "card_title": "Multi-Source BFS",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Reverse multi-source BFS from each ocean border inward. Cells reachable from both oceans are the answer.",
+      "code_indicators": [
+        "breadth-first"
+      ],
+      "recommended_structure": "queue",
+      "card_title": "Multi-Source BFS",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Implicit graph: words are nodes, edges connect words differing by 1 letter. BFS finds shortest transformation.",
+      "code_indicators": [
+        "breadth-first"
+      ],
+      "recommended_structure": "queue",
+      "card_title": "Word Ladder",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "State = lock combination (4-digit string). Each turn = 1 edge. BFS from \"0000\" to target avoiding deadends.",
+      "code_indicators": [
+        "breadth-first"
+      ],
+      "recommended_structure": "queue",
+      "card_title": "Word Ladder",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Same as word ladder but with gene strings (ACGT). BFS through valid mutations in the gene bank.",
+      "code_indicators": [
+        "breadth-first"
+      ],
+      "recommended_structure": "queue",
+      "card_title": "Word Ladder",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "State = board configuration. Each move = swap blank with neighbor. BFS through state space for shortest solution.",
+      "code_indicators": [
+        "breadth-first"
+      ],
+      "recommended_structure": "queue",
+      "card_title": "Word Ladder",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Monotonic decreasing deque: front = window max. Remove expired from front, remove smaller from back. O(n) total.",
+      "code_indicators": [
+        "monotonic-invariant"
+      ],
+      "recommended_structure": "queue",
+      "card_title": "Sliding Window Maximum (Monotonic Deque)",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Same pattern but monotonic increasing deque. Front = window min.",
+      "code_indicators": [
+        "monotonic-invariant"
+      ],
+      "recommended_structure": "queue",
+      "card_title": "Sliding Window Maximum (Monotonic Deque)",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Identical to sliding window maximum. Output result when window reaches size k.",
+      "code_indicators": [
+        "sliding-window"
+      ],
+      "recommended_structure": "queue",
+      "card_title": "Sliding Window Maximum (Monotonic Deque)",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Monotonic deque on prefix sums. Remove from front when valid, from back when not useful. Handles negative numbers.",
+      "code_indicators": [
+        "prefix-sum",
+        "monotonic-invariant"
+      ],
+      "recommended_structure": "queue",
+      "card_title": "Sliding Window Maximum (Monotonic Deque)",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "DP + monotonic deque: dp[i] = nums[i] + max(dp[j]) for j in window. Deque tracks max dp value in sliding window.",
+      "code_indicators": [
+        "sliding-window",
+        "monotonic-invariant",
+        "dynamic-programming"
+      ],
+      "recommended_structure": "queue",
+      "card_title": "Sliding Window Maximum (Monotonic Deque)",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Classic design question. Tests amortized analysis. Two-stack lazy transfer achieves O(1) amortized per operation.",
+      "code_indicators": [
+        "stack-based"
+      ],
+      "recommended_structure": "queue",
+      "card_title": "Implement Queue Using Stacks",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Queue holds the last k values. On each new value: enqueue, dequeue oldest if over k. Running sum gives O(1) average.",
+      "code_indicators": [
+        "queue-based"
+      ],
+      "recommended_structure": "queue",
+      "card_title": "Moving Average from Data Stream",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Queue of timestamps. Dequeue expired hits (older than 5 minutes). Queue size = hit count in window.",
+      "code_indicators": [
+        "queue-based"
+      ],
+      "recommended_structure": "queue",
+      "card_title": "Moving Average from Data Stream",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Queue of request timestamps. If queue size ≥ limit within time window → reject. Dequeue expired entries.",
+      "code_indicators": [
+        "queue-based"
+      ],
+      "recommended_structure": "queue",
+      "card_title": "Moving Average from Data Stream",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Queue stores call timestamps. On each call, dequeue entries older than 3000ms. Queue size = count.",
+      "code_indicators": [
+        "queue-based"
+      ],
+      "recommended_structure": "queue",
+      "card_title": "Moving Average from Data Stream",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Grid cells have direction arrows. Following costs 0, changing costs 1. 0/1 weights → 01-BFS instead of Dijkstra.",
+      "code_indicators": [
+        "breadth-first"
+      ],
+      "recommended_structure": "queue",
+      "card_title": "01-BFS (Deque-Based)",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "When movement costs are 0 (same terrain) or 1 (obstacle bypass), 01-BFS is O(V+E) vs Dijkstra's O((V+E) log V).",
+      "code_indicators": [
+        "breadth-first"
+      ],
+      "recommended_structure": "queue",
+      "card_title": "01-BFS (Deque-Based)",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Deque replaces priority queue: 0-weight → front (same distance), 1-weight → back (one more). Linear time.",
+      "code_indicators": [
+        "queue-based"
+      ],
+      "recommended_structure": "queue",
+      "card_title": "01-BFS (Deque-Based)",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Greedy: always run the most frequent available task. Max-heap picks it, cooldown queue holds it until ready. Minimizes i",
+      "code_indicators": [
+        "queue-based",
+        "greedy"
+      ],
+      "recommended_structure": "queue",
+      "card_title": "Task Scheduler",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Place most frequent char, wait k positions before reusing. Max-heap + cooldown queue enforces the gap.",
+      "code_indicators": [
+        "queue-based"
+      ],
+      "recommended_structure": "queue",
+      "card_title": "Task Scheduler",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Min-heap of (a[i]+b[j], i, j). Poll and expand neighbors. Lazily explores pairs in sorted order.",
+      "code_indicators": [
+        "sorted-input"
+      ],
+      "recommended_structure": "queue",
+      "card_title": "Kth Largest / Merge K Lists",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Modified Dijkstra/Bellman-Ford with stop limit. Track (cost, node, stops) in priority queue.",
+      "code_indicators": [
+        "queue-based"
+      ],
+      "recommended_structure": "queue",
+      "card_title": "Dijkstra's Shortest Path",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Grid cells have elevation. Min-heap BFS: always expand the cell with lowest elevation. First to reach (n-1,n-1) = answer",
+      "code_indicators": [
+        "breadth-first"
+      ],
+      "recommended_structure": "queue",
+      "card_title": "Dijkstra's Shortest Path",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Shortest root-to-leaf path. Must handle single-child nodes (not leaves). BFS is more efficient — stops at first leaf.",
+      "code_indicators": [
+        "breadth-first"
+      ],
+      "recommended_structure": "tree",
+      "card_title": "Max & Min Depth",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Diameter = farthest pair. One DFS computes all heights and tracks max left+right sum.",
+      "code_indicators": [
+        "depth-first"
+      ],
+      "recommended_structure": "tree",
+      "card_title": "Diameter of Binary Tree",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Return height or -1 (unbalanced). One DFS, O(n). Avoids the naive O(n²) of computing height separately at each node.",
+      "code_indicators": [
+        "depth-first"
+      ],
+      "recommended_structure": "tree",
+      "card_title": "Balanced & Symmetric",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Compare left subtree with mirror of right. Recursive: left.left↔right.right AND left.right↔right.left.",
+      "code_indicators": [
+        "recursive"
+      ],
+      "recommended_structure": "tree",
+      "card_title": "Balanced & Symmetric",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "BFS level-order: once a non-full node is seen, all subsequent nodes must be leaves.",
+      "code_indicators": [
+        "breadth-first"
+      ],
+      "recommended_structure": "tree",
+      "card_title": "Balanced & Symmetric",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Two trees are flip-equivalent if one can become the other by swapping children at some nodes. Recursive check with both ",
+      "code_indicators": [
+        "recursive"
+      ],
+      "recommended_structure": "tree",
+      "card_title": "Invert Binary Tree",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Same as path sum but collect ALL paths. Backtrack: add node to path, recurse, remove after.",
+      "code_indicators": [
+        "backtracking"
+      ],
+      "recommended_structure": "tree",
+      "card_title": "Path Sum Problems",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Prefix sum + HashMap on tree paths. If currentSum - target exists in map → valid subpath. Backtrack map entry after subt",
+      "code_indicators": [
+        "hash-based-lookup",
+        "prefix-sum",
+        "backtracking"
+      ],
+      "recommended_structure": "tree",
+      "card_title": "Path Sum Problems",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Like intersection of two linked lists: walk both pointers up, they meet at LCA. O(h) time, O(1) space.",
+      "code_indicators": [
+        "constant-space"
+      ],
+      "recommended_structure": "tree",
+      "card_title": "Lowest Common Ancestor",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Preorder[0] = root. Find root in inorder → everything left = left subtree, right = right subtree. Recurse. O(n) with Has",
+      "code_indicators": [
+        "hash-based-lookup"
+      ],
+      "recommended_structure": "tree",
+      "card_title": "Construct from Traversals",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "BFS: last node in each level is the rightmost visible. Or DFS right-first: first node at each new depth is the answer.",
+      "code_indicators": [
+        "breadth-first",
+        "depth-first"
+      ],
+      "recommended_structure": "tree",
+      "card_title": "Right Side View & Zigzag",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "BFS level-by-level, reverse every other level. Queue.size snapshot separates levels cleanly.",
+      "code_indicators": [
+        "queue-based",
+        "breadth-first"
+      ],
+      "recommended_structure": "tree",
+      "card_title": "Right Side View & Zigzag",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "BFS level snapshot: track max per level. Single pass, no sorting needed.",
+      "code_indicators": [
+        "single-pass",
+        "breadth-first"
+      ],
+      "recommended_structure": "tree",
+      "card_title": "Right Side View & Zigzag",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Convert tree to right-pointer-only chain in preorder. Morris-style: find rightmost of left subtree, link to right subtre",
+      "code_indicators": [
+        "constant-space"
+      ],
+      "recommended_structure": "tree",
+      "card_title": "Flatten to Linked List",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Inorder traversal of BST = sorted order. Stop at kth element. O(h + k) time.",
+      "code_indicators": [
+        "sorted-input"
+      ],
+      "recommended_structure": "tree",
+      "card_title": "Kth Smallest & BST Iterator",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Controlled inorder using a stack: pushAllLeft, then pop+process+pushAllLeft(right). O(h) space, O(1) amortized next().",
+      "code_indicators": [
+        "stack-based"
+      ],
+      "recommended_structure": "tree",
+      "card_title": "Kth Smallest & BST Iterator",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Binary search down the tree tracking closest so far. O(h) — no need for full traversal.",
+      "code_indicators": [
+        "binary-search"
+      ],
+      "recommended_structure": "tree",
+      "card_title": "Kth Smallest & BST Iterator",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "DP on tree: each node returns (rob, skip). Rob = val + skip(left) + skip(right). Skip = max of children's rob/skip.",
+      "code_indicators": [
+        "dynamic-programming"
+      ],
+      "recommended_structure": "tree",
+      "card_title": "Max Path Sum & Good Nodes",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Recursively compare: both null → true. One null → false. Values equal AND both subtrees same → true. O(min(n,m)).",
+      "code_indicators": [
+        "recursive"
+      ],
+      "recommended_structure": "tree",
+      "card_title": "Same Tree, Subtree, Merge Trees",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Overlapping nodes: sum values. Non-overlapping: take whichever exists. Natural recursive structure.",
+      "code_indicators": [
+        "recursive"
+      ],
+      "recommended_structure": "tree",
+      "card_title": "Same Tree, Subtree, Merge Trees",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Collect leaf sequences via DFS on both trees, compare the sequences. Uses same isSameTree building block.",
+      "code_indicators": [
+        "depth-first"
+      ],
+      "recommended_structure": "tree",
+      "card_title": "Same Tree, Subtree, Merge Trees",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Assign column to each node (root=0, left=col-1, right=col+1). BFS + TreeMap groups by column. Sort by row within column.",
+      "code_indicators": [
+        "breadth-first"
+      ],
+      "recommended_structure": "tree",
+      "card_title": "Vertical Order & Sorted Array → BST",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Left boundary (top-down) + leaves (DFS) + right boundary (bottom-up). Combines vertical/level thinking.",
+      "code_indicators": [
+        "depth-first"
+      ],
+      "recommended_structure": "tree",
+      "card_title": "Vertical Order & Sorted Array → BST",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "startsWith(prefix) in O(L). Then DFS from prefix node to enumerate all completions. Foundation of search bars.",
+      "code_indicators": [
+        "depth-first"
+      ],
+      "recommended_structure": "tree",
+      "card_title": "Trie (Prefix Tree)",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Build trie from word list, DFS the board following trie edges. Prune branches not in trie — dramatically faster than che",
+      "code_indicators": [
+        "depth-first"
+      ],
+      "recommended_structure": "tree",
+      "card_title": "Trie (Prefix Tree)",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "O(log n) update + O(log n) prefix sum query. Simpler and faster constant than segment tree for sum-only problems.",
+      "code_indicators": [
+        "prefix-sum"
+      ],
+      "recommended_structure": "tree",
+      "card_title": "Fenwick Tree (BIT)",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Process right-to-left, BIT indexed by value. Query prefix sum up to current value = count of smaller elements to the rig",
+      "code_indicators": [
+        "prefix-sum"
+      ],
+      "recommended_structure": "tree",
+      "card_title": "Fenwick Tree (BIT)",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "BFS naturally finds shortest paths because it explores layer by layer. Each level = one more edge.",
+      "code_indicators": [
+        "breadth-first"
+      ],
+      "recommended_structure": "graph",
+      "card_title": "BFS — Breadth-First Search",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Queue processes one complete layer before the next. Perfect for tree level-order, minimum moves.",
+      "code_indicators": [
+        "queue-based"
+      ],
+      "recommended_structure": "graph",
+      "card_title": "BFS — Breadth-First Search",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "BFS finds the closest target first. Stop as soon as target is dequeued.",
+      "code_indicators": [
+        "queue-based",
+        "breadth-first"
+      ],
+      "recommended_structure": "graph",
+      "card_title": "BFS — Breadth-First Search",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Back edges in DFS tree indicate cycles. Use three-color for directed graphs.",
+      "code_indicators": [
+        "depth-first"
+      ],
+      "recommended_structure": "graph",
+      "card_title": "DFS — Depth-First Search",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "DFS reverse postorder gives topological ordering of a DAG.",
+      "code_indicators": [
+        "depth-first"
+      ],
+      "recommended_structure": "graph",
+      "card_title": "DFS — Depth-First Search",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Each DFS from an unvisited vertex discovers one component.",
+      "code_indicators": [
+        "depth-first"
+      ],
+      "recommended_structure": "graph",
+      "card_title": "DFS — Depth-First Search",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "DFS explores full paths. Good for \"can we reach X from Y?\"",
+      "code_indicators": [
+        "depth-first"
+      ],
+      "recommended_structure": "graph",
+      "card_title": "DFS — Depth-First Search",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "DFS naturally explores, undoes, and tries alternatives.",
+      "code_indicators": [
+        "depth-first"
+      ],
+      "recommended_structure": "graph",
+      "card_title": "DFS — Depth-First Search",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Each BFS/DFS from an unvisited vertex = one component. O(V+E).",
+      "code_indicators": [
+        "breadth-first",
+        "depth-first"
+      ],
+      "recommended_structure": "graph",
+      "card_title": "Connected Components",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "DFS parent check or Union-Find. Visited non-parent neighbor = cycle.",
+      "code_indicators": [
+        "depth-first"
+      ],
+      "recommended_structure": "graph",
+      "card_title": "Cycle Detection",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Three-color DFS (back edge to GRAY node) or Kahn's topological sort (processed < n means cycle).",
+      "code_indicators": [
+        "depth-first"
+      ],
+      "recommended_structure": "graph",
+      "card_title": "Cycle Detection",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Greedy with min-heap. Process each vertex once. Standard for weighted graphs.",
+      "code_indicators": [
+        "greedy"
+      ],
+      "recommended_structure": "graph",
+      "card_title": "Shortest Path — Dijkstra’s Algorithm",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Grow MST from a starting node using a priority queue. Best for dense graphs.",
+      "code_indicators": [
+        "queue-based"
+      ],
+      "recommended_structure": "graph",
+      "card_title": "Minimum Spanning Tree — Kruskal & Prim",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Each DFS/BFS from unvisited '1' discovers one island. Mark visited to avoid re-counting.",
+      "code_indicators": [
+        "breadth-first",
+        "depth-first"
+      ],
+      "recommended_structure": "graph",
+      "card_title": "Number of Islands (Grid BFS/DFS)",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Same DFS, but return the count of cells visited. Track maximum.",
+      "code_indicators": [
+        "depth-first"
+      ],
+      "recommended_structure": "graph",
+      "card_title": "Number of Islands (Grid BFS/DFS)",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "dp[n] = dp[n-1] + dp[n-2]. The canonical DP example. Memo turns O(2^n) → O(n). Rolling vars → O(1) space.",
+      "code_indicators": [
+        "dynamic-programming",
+        "constant-space"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "Fibonacci & Climbing Stairs",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Identical to fibonacci: ways to reach step n = ways to reach n-1 + ways to reach n-2. dp[i] = dp[i-1] + dp[i-2].",
+      "code_indicators": [
+        "dynamic-programming"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "Fibonacci & Climbing Stairs",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "dp[i] = cost[i] + min(dp[i-1], dp[i-2]). Same recurrence but with a cost layer on top.",
+      "code_indicators": [
+        "dynamic-programming"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "Fibonacci & Climbing Stairs",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Generalize: dp[i] = sum of previous k values. Inner loop over step sizes.",
+      "code_indicators": [
+        "dynamic-programming"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "Fibonacci & Climbing Stairs",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Can't pick adjacent elements. dp[i] = max(skip, take). Classic \"include/exclude with adjacency constraint.\"",
+      "code_indicators": [
+        "dynamic-programming"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "House Robber",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "DP on tree: return (rob, skip) pair per node. Rob = val + skip(children). Skip = max(rob, skip) per child.",
+      "code_indicators": [
+        "dynamic-programming"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "House Robber",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Same take/skip pattern with constraint. dp tracks best ending with include vs exclude.",
+      "code_indicators": [
+        "dynamic-programming"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "House Robber",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "dp[amount] = min over coins of dp[amount - coin] + 1. Unbounded knapsack variant — each coin reusable.",
+      "code_indicators": [
+        "dynamic-programming"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "Coin Change",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "dp[day] = min cost to cover travel through day. Try 1-day, 7-day, 30-day passes at each travel day.",
+      "code_indicators": [
+        "dynamic-programming"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "Coin Change",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "dp[i] = LIS ending at i. O(n²) DP or O(n log n) with patience sorting (tails + binary search).",
+      "code_indicators": [
+        "binary-search",
+        "dynamic-programming"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "Longest Increasing Subsequence",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Track both length and count at each position. When dp[j]+1 == dp[i], add count[j] to count[i].",
+      "code_indicators": [
+        "dynamic-programming"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "Longest Increasing Subsequence",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Sort by second element, then LIS on first elements. Or greedy like activity selection.",
+      "code_indicators": [
+        "greedy"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "Longest Increasing Subsequence",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Same as LIS but use ≤ instead of <. Binary search uses upper_bound instead of lower_bound.",
+      "code_indicators": [
+        "binary-search"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "Longest Increasing Subsequence",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Kadane's: dp[i] = max(nums[i], dp[i-1]+nums[i]). Extend current subarray or start fresh. O(n), O(1) space.",
+      "code_indicators": [
+        "dynamic-programming",
+        "constant-space"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "Maximum Subarray (Kadane's)",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Like climbing stairs but only valid 1-2 digit codes (1-26). dp[i] += dp[i-1] if single valid, += dp[i-2] if double valid",
+      "code_indicators": [
+        "dynamic-programming"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "Decode Ways & Word Break",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "dp[i] = can s[0..i-1] be segmented? Check all j: dp[j] && s[j..i] in dict. O(n² × L).",
+      "code_indicators": [
+        "dynamic-programming"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "Decode Ways & Word Break",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Same DP + backtracking to collect all valid segmentations. Memoize to avoid re-exploring.",
+      "code_indicators": [
+        "backtracking",
+        "dynamic-programming",
+        "memoization"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "Decode Ways & Word Break",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Partition string into 4 valid octets (0-255). DP/backtracking with validity constraints at each split.",
+      "code_indicators": [
+        "backtracking",
+        "dynamic-programming"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "Decode Ways & Word Break",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Greedy: track farthest reachable. If current index > farthest → stuck. O(n), O(1).",
+      "code_indicators": [
+        "greedy"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "Jump Game",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "BFS-level greedy: each \"level\" = one jump. Track currentEnd and farthest. Increment jumps when i == currentEnd.",
+      "code_indicators": [
+        "breadth-first",
+        "greedy"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "Jump Game",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "DP with HashSet per stone: track which jump sizes can reach it. For each stone, try k-1, k, k+1.",
+      "code_indicators": [
+        "dynamic-programming"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "Jump Game",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "dp[n] = min(dp[n-k²]+1). Identical to coin change where \"coins\" are 1,4,9,16,... O(n√n).",
+      "code_indicators": [
+        "dynamic-programming"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "Perfect Squares",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "DP generating sequence: track pointers for ×2, ×3, ×5. Next ugly = min of three candidates.",
+      "code_indicators": [
+        "dynamic-programming"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "Perfect Squares",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "dp[n] = max(j × (n-j), j × dp[n-j]) for all j. Break n into parts that maximize product.",
+      "code_indicators": [
+        "dynamic-programming"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "Perfect Squares",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Count paths from top-left to bottom-right (right/down only). dp[i][j] = dp[i-1][j] + dp[i][j-1]. O(m×n), optimizable to ",
+      "code_indicators": [
+        "dynamic-programming"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "Grid Paths & Min Path Sum",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Same recurrence but dp[i][j] = 0 if grid[i][j] is obstacle.",
+      "code_indicators": [
+        "dynamic-programming"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "Grid Paths & Min Path Sum",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "dp[i][j] = grid[i][j] + min(dp[i-1][j], dp[i][j-1]). Same grid, minimize instead of count.",
+      "code_indicators": [
+        "dynamic-programming"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "Grid Paths & Min Path Sum",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Bottom-up: dp[i][j] += min(dp[i+1][j], dp[i+1][j+1]). Triangular grid DP.",
+      "code_indicators": [
+        "dynamic-programming"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "Grid Paths & Min Path Sum",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "dp[i][j] = min(left, top, diagonal) + 1 if cell is '1'. Track largest square of all 1s.",
+      "code_indicators": [
+        "dynamic-programming"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "Grid Paths & Min Path Sum",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Min insert/delete/replace to transform s1→s2. dp[i][j] = cost for s1[0..i-1]↔s2[0..j-1]. O(m×n).",
+      "code_indicators": [
+        "dynamic-programming"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "Edit Distance",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Same DP structure but cost = ASCII values of deleted chars instead of count.",
+      "code_indicators": [
+        "dynamic-programming"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "Edit Distance",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Count ways s contains t as subsequence. Match → dp[i-1][j-1]+dp[i-1][j], skip → dp[i-1][j].",
+      "code_indicators": [
+        "dynamic-programming"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "Edit Distance",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Each item used at most once. dp[w] iterated RIGHT-TO-LEFT so each item isn't reused within the same pass.",
+      "code_indicators": [
+        "dynamic-programming"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "0/1 Knapsack",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Items reusable. dp[w] iterated LEFT-TO-RIGHT — allows same item to contribute multiple times.",
+      "code_indicators": [
+        "dynamic-programming"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "0/1 Knapsack",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "LPS(s) = LCS(s, reverse(s)). Or interval DP: dp[i][j] = LPS of s[i..j]. If s[i]==s[j] → dp[i+1][j-1]+2.",
+      "code_indicators": [
+        "dynamic-programming"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "Palindromic Subsequence & Substring",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "DP: dp[i][j] = true if s[i..j] is palindrome. Or expand-around-center: O(n²) time, O(1) space.",
+      "code_indicators": [
+        "dynamic-programming",
+        "constant-space"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "Palindromic Subsequence & Substring",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "dp[i] = min cuts for s[0..i]. Precompute isPalin[i][j], then dp[i] = min(dp[j-1]+1) for palindromic s[j..i].",
+      "code_indicators": [
+        "dynamic-programming"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "Palindromic Subsequence & Substring",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "'.' = any char, '*' = zero+ of preceding. dp[i][j] = does s[0..i-1] match p[0..j-1]? Handle '*' as zero or more.",
+      "code_indicators": [
+        "dynamic-programming"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "Regex & Wildcard Matching",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "'?' = any single char, '*' = any sequence. dp[i][j]: '*' → dp[i-1][j] || dp[i][j-1].",
+      "code_indicators": [
+        "dynamic-programming"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "Regex & Wildcard Matching",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Can s3 be formed by interleaving s1 and s2? dp[i][j] = s3[i+j-1] matches s1[i-1] or s2[j-1] from valid state.",
+      "code_indicators": [
+        "dynamic-programming"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "Regex & Wildcard Matching",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Can a subset sum to target? dp[j] = dp[j] || dp[j-num]. Boolean 0/1 knapsack. O(n × target).",
+      "code_indicators": [
+        "dynamic-programming"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "Subset Sum & Partition",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Bitmask DP or backtracking. Track which elements used (mask) and current bucket sum modulo target.",
+      "code_indicators": [
+        "backtracking",
+        "dynamic-programming"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "Subset Sum & Partition",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "dp[i][j] = min cost to multiply matrices i..j. Try all split points k. O(n³).",
+      "code_indicators": [
+        "dynamic-programming"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "Interval DP",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Think about which balloon to burst LAST in range [i,j]. dp[i][j] = max coins from range. O(n³).",
+      "code_indicators": [
+        "dynamic-programming"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "Interval DP",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Merge k consecutive piles. dp[i][j] = min cost. Only mergeable when (j-i) % (k-1) == 0.",
+      "code_indicators": [
+        "dynamic-programming"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "Interval DP",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "dp[i][j] = min cuts for s[i..j]. Interval DP with palindrome precomputation.",
+      "code_indicators": [
+        "dynamic-programming"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "Interval DP",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Given search frequencies, minimize expected search cost. Try each key as root in range [i..j]. Classic interval DP.",
+      "code_indicators": [
+        "dynamic-programming"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "Interval DP",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Track min price so far. Profit = price - minSoFar. O(n), O(1). Not really DP — just greedy scan.",
+      "code_indicators": [
+        "greedy",
+        "dynamic-programming"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "State Machine DP — Stock Problems",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Capture every upward move. Greedy: profit += max(0, price[i] - price[i-1]).",
+      "code_indicators": [
+        "greedy"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "State Machine DP — Stock Problems",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "dp[t][i] = max profit using t transactions by day i. Track maxDiff for O(k×n) optimization.",
+      "code_indicators": [
+        "dynamic-programming"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "State Machine DP — Stock Problems",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "dp[mask][i] = min cost visiting cities in mask, ending at i. O(2^n × n²). Only feasible for n ≤ 20.",
+      "code_indicators": [
+        "dynamic-programming"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "Bitmask DP",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "dp[mask] = sum of elements in mask. Valid if bucket sums work modulo target. O(n × 2^n).",
+      "code_indicators": [
+        "dynamic-programming"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "Bitmask DP",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "dp[mask][i] = shortest string using words in mask, ending with word i. Precompute overlaps between all pairs.",
+      "code_indicators": [
+        "dynamic-programming"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "Bitmask DP",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Bitmask tracks chosen numbers. dp[mask] = can current player force a win? Minimax with memoization.",
+      "code_indicators": [
+        "dynamic-programming",
+        "memoization"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "Bitmask DP",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Bitmask tracks completed tasks. dp[mask] = min time to complete tasks in mask respecting dependencies.",
+      "code_indicators": [
+        "dynamic-programming"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "Bitmask DP",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Each root i splits into left (i-1 nodes) × right (n-i nodes). dp[n] = Σ dp[i-1]×dp[n-i]. Catalan numbers.",
+      "code_indicators": [
+        "dynamic-programming"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "Counting DP — Catalan Numbers",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Same recurrence but build actual trees. For each root, recursively generate all left and right subtrees.",
+      "code_indicators": [
+        "recursive"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "Counting DP — Catalan Numbers",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Return (rob, skip) per node. rob = val + skip(children). skip = max(rob, skip) per child. DP on tree structure.",
+      "code_indicators": [
+        "dynamic-programming"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "DP on Trees",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "DP on tree: each node tracks best path going left vs going right. Swap direction at each level.",
+      "code_indicators": [
+        "dynamic-programming"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "DP on Trees",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Work BACKWARDS: dp[i][j] = min health needed entering (i,j). Forward doesn't work because you need to survive every step",
+      "code_indicators": [
+        "dynamic-programming"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "Multi-Dimensional DP",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Two paths simultaneously: dp[r1][c1][r2], c2 derived. Both collectors move in sync, share cherries at same cell.",
+      "code_indicators": [
+        "dynamic-programming"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "Multi-Dimensional DP",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Two robots from top corners, moving down. dp[row][c1][c2] = max cherries. 3D DP, O(m×n²).",
+      "code_indicators": [
+        "dynamic-programming"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "Multi-Dimensional DP",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "dp[steps][r][c] = number of paths that exit grid. 3D DP with modular arithmetic.",
+      "code_indicators": [
+        "dynamic-programming"
+      ],
+      "recommended_structure": "dp",
+      "card_title": "Multi-Dimensional DP",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Two-branch recursion: fib(n) = fib(n-1) + fib(n-2). MUST memoize — naive is O(2^n).",
+      "code_indicators": [
+        "memoization"
+      ],
+      "recommended_structure": "recursion-backtracking",
+      "card_title": "Factorial, Fibonacci, Power",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "reverse(s) = reverse(s[1..]) + s[0]. Base case: empty or single char. O(n) calls, O(n) stack.",
+      "code_indicators": [
+        "stack-based"
+      ],
+      "recommended_structure": "recursion-backtracking",
+      "card_title": "Recursion on Strings",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Compare s[left] with s[right], recurse inward. Base case: left ≥ right → true. Converging recursion.",
+      "code_indicators": [
+        "convergent"
+      ],
+      "recommended_structure": "recursion-backtracking",
+      "card_title": "Recursion on Strings",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Fix each char at position 0, recursively permute the rest. n! results.",
+      "code_indicators": [
+        "recursive"
+      ],
+      "recommended_structure": "recursion-backtracking",
+      "card_title": "Recursion on Strings",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Recurse to tail, then rewire: head.next.next = head, head.next = null. Builds reversed list on unwind. O(n) stack.",
+      "code_indicators": [
+        "stack-based"
+      ],
+      "recommended_structure": "recursion-backtracking",
+      "card_title": "Recursion on Linked Lists",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Pick smaller head, recurse on remaining. Base case: either list null. Natural recursive structure.",
+      "code_indicators": [
+        "recursive"
+      ],
+      "recommended_structure": "recursion-backtracking",
+      "card_title": "Recursion on Linked Lists",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Partition around pivot, recurse on each side. O(n log n) average. In-place but O(n²) worst case.",
+      "code_indicators": [
+        "in-place"
+      ],
+      "recommended_structure": "recursion-backtracking",
+      "card_title": "Divide and Conquer",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Max subarray is in left half, right half, or crosses the midpoint. Combine by checking crossing sum.",
+      "code_indicators": [
+        "dynamic-programming"
+      ],
+      "recommended_structure": "recursion-backtracking",
+      "card_title": "Divide and Conquer",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Not backtracking — use the algorithmic approach (find rightmost ascent, swap, reverse suffix). O(n).",
+      "code_indicators": [
+        "backtracking"
+      ],
+      "recommended_structure": "recursion-backtracking",
+      "card_title": "Permutations",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Try digits 1-9 in each empty cell, check row/col/box validity, backtrack on failure. Template 2 (find ANY solution).",
+      "code_indicators": [
+        "backtracking"
+      ],
+      "recommended_structure": "recursion-backtracking",
+      "card_title": "Sudoku Solver",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Same pattern: try words in each slot, check constraints (intersecting letters), backtrack on conflict.",
+      "code_indicators": [
+        "backtracking"
+      ],
+      "recommended_structure": "recursion-backtracking",
+      "card_title": "Sudoku Solver",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Match word letter-by-letter on a 2D board. DFS with visited marking + restore. 4-directional. O(m×n×4^L).",
+      "code_indicators": [
+        "depth-first"
+      ],
+      "recommended_structure": "recursion-backtracking",
+      "card_title": "Word Search (Grid)",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Build Trie from word list, DFS the board following Trie edges. Prune branches not in Trie.",
+      "code_indicators": [
+        "depth-first"
+      ],
+      "recommended_structure": "recursion-backtracking",
+      "card_title": "Word Search (Grid)",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Find all paths from start to end. Mark visited, try 4 directions, backtrack. Collect valid paths.",
+      "code_indicators": [
+        "backtracking"
+      ],
+      "recommended_structure": "recursion-backtracking",
+      "card_title": "Word Search (Grid)",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Split digit string into exactly 4 valid octets (0-255, no leading zeros). Fixed-depth backtracking, bounded O(1).",
+      "code_indicators": [
+        "backtracking"
+      ],
+      "recommended_structure": "recursion-backtracking",
+      "card_title": "Restore IP Addresses",
+      "source": "extracted"
+    },
+    {
+      "structural_signal": "Similar: split digit string into valid 1-2 digit codes (1-26). DP version more efficient, backtracking enumerates all.",
+      "code_indicators": [
+        "backtracking",
+        "dynamic-programming"
+      ],
+      "recommended_structure": "recursion-backtracking",
+      "card_title": "Restore IP Addresses",
+      "source": "extracted"
+    }
+  ]
+}

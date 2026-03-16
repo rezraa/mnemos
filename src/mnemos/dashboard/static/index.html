@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mnemos Dashboard</title>
+  <link rel="stylesheet" href="/static/css/dashboard.css">
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+</head>
+<body>
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon">M</div>
+      <span class="brand-text">Mnemos</span>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="#" class="nav-item active" data-section="dashboard">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        <span>Dashboard</span>
+      </a>
+      <a href="#" class="nav-item" data-section="decisions">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        <span>Decisions</span>
+      </a>
+      <a href="#" class="nav-item" data-section="patterns">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+        <span>Patterns</span>
+      </a>
+      <a href="#" class="nav-item" data-section="projects">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>
+        <span>Projects</span>
+      </a>
+      <a href="#" class="nav-item" data-section="memory">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22 6 12 13 2 6"/></svg>
+        <span>Memory</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="ws-status" id="wsStatus">
+        <span class="ws-dot"></span>
+        <span class="ws-label">Connecting...</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main content -->
+  <main class="main-content">
+    <!-- Top bar -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <h1 class="page-title" id="pageTitle">Dashboard</h1>
+      </div>
+      <div class="topbar-right">
+        <div class="time-range-selector" id="timeRangeSelector">
+          <button class="time-btn" data-range="1D">1D</button>
+          <button class="time-btn" data-range="1W">1W</button>
+          <button class="time-btn" data-range="1M">1M</button>
+          <button class="time-btn active" data-range="All">All</button>
+        </div>
+        <div class="topbar-info">
+          <span class="client-count" id="clientCount" title="Connected clients">0 clients</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Section: Dashboard -->
+    <section class="content-section active" id="section-dashboard">
+      <!-- KPI Cards -->
+      <div class="kpi-row">
+        <div class="kpi-card">
+          <div class="kpi-label">Total Recommendations</div>
+          <div class="kpi-value" id="kpiTotal">--</div>
+          <div class="kpi-trend neutral" id="kpiTotalTrend"></div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Pattern Accuracy</div>
+          <div class="kpi-value" id="kpiAccuracy">--%</div>
+          <div class="kpi-trend neutral" id="kpiAccuracyTrend"></div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Regressions Avoided</div>
+          <div class="kpi-value" id="kpiRegressions">--</div>
+          <div class="kpi-trend neutral" id="kpiRegressionsTrend"></div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Active Projects</div>
+          <div class="kpi-value" id="kpiProjects">--</div>
+          <div class="kpi-trend neutral" id="kpiProjectsTrend"></div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Avg Response Time</div>
+          <div class="kpi-value" id="kpiResponseTime">-- ms</div>
+          <div class="kpi-trend neutral" id="kpiResponseTrend"></div>
+        </div>
+      </div>
+
+      <!-- Charts row -->
+      <div class="chart-row">
+        <div class="card chart-card wide">
+          <div class="card-header">
+            <h3>Recommendation Volume</h3>
+          </div>
+          <div class="card-body">
+            <div id="volumeChart"></div>
+          </div>
+        </div>
+        <div class="card chart-card narrow">
+          <div class="card-header">
+            <h3>Pattern Distribution</h3>
+          </div>
+          <div class="card-body">
+            <div id="patternDonut"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tables row -->
+      <div class="chart-row">
+        <div class="card wide">
+          <div class="card-header">
+            <h3>Recent Decisions</h3>
+          </div>
+          <div class="card-body">
+            <table class="data-table" id="decisionsTable">
+              <thead>
+                <tr>
+                  <th>Time</th>
+                  <th>Pattern</th>
+                  <th>Data Structure</th>
+                  <th>Mode</th>
+                  <th>Outcome</th>
+                  <th>Project</th>
+                </tr>
+              </thead>
+              <tbody id="decisionsBody"></tbody>
+            </table>
+            <div class="empty-state" id="decisionsEmpty">No decisions recorded yet.</div>
+          </div>
+        </div>
+        <div class="card narrow">
+          <div class="card-header">
+            <h3>Live Activity</h3>
+            <span class="live-dot"></span>
+          </div>
+          <div class="card-body">
+            <div class="activity-feed" id="activityFeed">
+              <div class="empty-state">Waiting for activity...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Heatmap row -->
+      <div class="chart-row">
+        <div class="card full-width">
+          <div class="card-header">
+            <h3>Data Structure Usage Heatmap</h3>
+          </div>
+          <div class="card-body">
+            <div id="heatmapChart"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: Decisions -->
+    <section class="content-section" id="section-decisions">
+      <div class="section-toolbar">
+        <select id="decFilterOutcome" class="filter-select">
+          <option value="">All Outcomes</option>
+          <option value="accepted">Accepted</option>
+          <option value="rejected">Rejected</option>
+          <option value="regressed">Regressed</option>
+        </select>
+        <select id="decFilterPattern" class="filter-select">
+          <option value="">All Patterns</option>
+        </select>
+      </div>
+      <div class="card full-width">
+        <div class="card-body">
+          <table class="data-table" id="fullDecisionsTable">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Time</th>
+                <th>Problem</th>
+                <th>Pattern</th>
+                <th>DS</th>
+                <th>Mode</th>
+                <th>Outcome</th>
+                <th>Project</th>
+              </tr>
+            </thead>
+            <tbody id="fullDecisionsBody"></tbody>
+          </table>
+          <div class="empty-state" id="fullDecisionsEmpty">No decisions found.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: Patterns -->
+    <section class="content-section" id="section-patterns">
+      <div class="chart-row">
+        <div class="card wide">
+          <div class="card-header"><h3>Pattern Accuracy Over Time</h3></div>
+          <div class="card-body"><div id="accuracyTrendChart"></div></div>
+        </div>
+        <div class="card narrow">
+          <div class="card-header"><h3>DS Distribution</h3></div>
+          <div class="card-body"><div id="dsDonut"></div></div>
+        </div>
+      </div>
+      <div class="card full-width">
+        <div class="card-header"><h3>Pattern Performance</h3></div>
+        <div class="card-body">
+          <table class="data-table" id="patternsTable">
+            <thead>
+              <tr>
+                <th>Pattern</th>
+                <th>Uses</th>
+                <th>Accepted</th>
+                <th>Rejected</th>
+                <th>Regressed</th>
+                <th>Accuracy</th>
+              </tr>
+            </thead>
+            <tbody id="patternsBody"></tbody>
+          </table>
+          <div class="empty-state" id="patternsEmpty">No pattern data yet.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: Projects -->
+    <section class="content-section" id="section-projects">
+      <div class="card full-width">
+        <div class="card-header"><h3>Active Projects</h3></div>
+        <div class="card-body">
+          <table class="data-table" id="projectsTable">
+            <thead>
+              <tr>
+                <th>Project</th>
+                <th>Language</th>
+                <th>Decisions</th>
+                <th>Structures</th>
+                <th>Patterns</th>
+                <th>Last Updated</th>
+              </tr>
+            </thead>
+            <tbody id="projectsBody"></tbody>
+          </table>
+          <div class="empty-state" id="projectsEmpty">No projects found.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: Memory -->
+    <section class="content-section" id="section-memory">
+      <div class="kpi-row">
+        <div class="kpi-card">
+          <div class="kpi-label">Health Status</div>
+          <div class="kpi-value" id="memHealth">--</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Decisions Stored</div>
+          <div class="kpi-value" id="memDecisions">--</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Regressions</div>
+          <div class="kpi-value" id="memRegressions">--</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Corrections</div>
+          <div class="kpi-value" id="memCorrections">--</div>
+        </div>
+      </div>
+      <div class="chart-row">
+        <div class="card full-width">
+          <div class="card-header"><h3>Knowledge Coverage</h3></div>
+          <div class="card-body">
+            <div class="coverage-grid" id="coverageGrid"></div>
+            <div class="empty-state" id="coverageEmpty">No knowledge data yet.</div>
+          </div>
+        </div>
+      </div>
+      <div class="chart-row">
+        <div class="card wide">
+          <div class="card-header"><h3>Regressions Log</h3></div>
+          <div class="card-body">
+            <table class="data-table" id="regressionsTable">
+              <thead>
+                <tr>
+                  <th>Time</th>
+                  <th>Pattern</th>
+                  <th>DS</th>
+                  <th>Severity</th>
+                  <th>Description</th>
+                  <th>Project</th>
+                </tr>
+              </thead>
+              <tbody id="regressionsBody"></tbody>
+            </table>
+            <div class="empty-state" id="regressionsEmpty">No regressions recorded.</div>
+          </div>
+        </div>
+        <div class="card narrow">
+          <div class="card-header"><h3>Corrections Log</h3></div>
+          <div class="card-body">
+            <table class="data-table" id="correctionsTable">
+              <thead>
+                <tr>
+                  <th>Time</th>
+                  <th>From</th>
+                  <th>To</th>
+                  <th>Reason</th>
+                </tr>
+              </thead>
+              <tbody id="correctionsBody"></tbody>
+            </table>
+            <div class="empty-state" id="correctionsEmpty">No corrections recorded.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="/static/js/charts.js"></script>
+  <script src="/static/js/dashboard.js"></script>
+</body>
+</html>

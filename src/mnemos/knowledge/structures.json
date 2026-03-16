@@ -1,0 +1,5420 @@
+{
+  "version": "1.0.0",
+  "generated": "2026-03-15",
+  "source": "ds-algorithm-primer + authored",
+  "structures": [
+    {
+      "id": "array",
+      "name": "Array",
+      "properties": [
+        "contiguous-memory",
+        "fixed-size",
+        "random-access",
+        "cache-friendly",
+        "index-addressable"
+      ],
+      "operations": {
+        "access": {
+          "time": "O(1)",
+          "space": "O(1)"
+        },
+        "search": {
+          "time": "O(n)",
+          "space": "O(1)"
+        },
+        "insert_end": {
+          "time": "O(1) amortized",
+          "space": "O(1)"
+        },
+        "insert_at": {
+          "time": "O(n)",
+          "space": "O(1)"
+        },
+        "delete_end": {
+          "time": "O(1)",
+          "space": "O(1)"
+        },
+        "delete_at": {
+          "time": "O(n)",
+          "space": "O(1)"
+        },
+        "iterate": {
+          "time": "O(n)",
+          "space": "O(1)"
+        }
+      },
+      "source": "extracted",
+      "patterns": [
+        {
+          "id": "two-pointer-convergent",
+          "name": "Two Pointers — Convergent",
+          "structural_signals": [
+            "sorted-input-with-pair-search",
+            "symmetric-comparison-from-ends",
+            "monotonic-elimination-of-candidates"
+          ],
+          "applies_when": [
+            "input is sorted or has monotonic property",
+            "searching for pair satisfying a constraint",
+            "checking symmetry from both ends",
+            "need to eliminate candidates from extremes"
+          ],
+          "avoid_when": [
+            "input is unsorted and sorting would lose information",
+            "need to find all pairs, not just one",
+            "constraint involves more than two elements without reduction"
+          ],
+          "complexity": {
+            "time": "O(n)",
+            "space": "O(1)"
+          },
+          "constraints": "requires sorted input or monotonic property",
+          "alternatives": [
+            "single-pass-complement-lookup",
+            "binary-search"
+          ]
+        },
+        {
+          "id": "two-pointer-same-direction",
+          "name": "Two Pointers — Same Direction",
+          "structural_signals": [
+            "in-place-partitioning",
+            "read-write-head-separation",
+            "conditional-element-retention",
+            "order-preserving-filter"
+          ],
+          "applies_when": [
+            "need in-place removal or partitioning",
+            "slow pointer marks write position, fast scans",
+            "elements pass/fail a filter condition",
+            "must preserve relative order"
+          ],
+          "avoid_when": [
+            "need stable partition with equal-key ordering",
+            "removal criteria depend on future elements"
+          ],
+          "complexity": {
+            "time": "O(n)",
+            "space": "O(1)"
+          },
+          "constraints": "in-place modification required",
+          "alternatives": [
+            "dutch-national-flag"
+          ]
+        },
+        {
+          "id": "sliding-window-fixed",
+          "name": "Sliding Window — Fixed Size",
+          "structural_signals": [
+            "contiguous-subarray-of-fixed-length",
+            "rolling-aggregate-over-window",
+            "incremental-add-remove-at-boundaries"
+          ],
+          "applies_when": [
+            "window size is given or determined",
+            "need aggregate (sum, max, count) over fixed-length subarray",
+            "can compute next window by adding right and removing left"
+          ],
+          "avoid_when": [
+            "window size varies based on content",
+            "non-contiguous elements contribute to answer"
+          ],
+          "complexity": {
+            "time": "O(n)",
+            "space": "O(1)"
+          },
+          "constraints": "subarray must be contiguous",
+          "alternatives": [
+            "prefix-sum",
+            "sliding-window-variable"
+          ]
+        },
+        {
+          "id": "sliding-window-variable",
+          "name": "Sliding Window — Variable Size",
+          "structural_signals": [
+            "contiguous-subarray-satisfying-constraint",
+            "expand-right-shrink-left-optimization",
+            "dynamic-window-boundary-adjustment"
+          ],
+          "applies_when": [
+            "find longest/shortest contiguous subarray meeting a condition",
+            "window expands to explore, contracts to satisfy constraint",
+            "condition can be checked incrementally"
+          ],
+          "avoid_when": [
+            "non-contiguous elements contribute",
+            "constraint requires global context, not local window",
+            "elements can be negative and constraint involves sums"
+          ],
+          "complexity": {
+            "time": "O(n)",
+            "space": "O(1)"
+          },
+          "constraints": "elements must be non-negative for sum-based constraints; use prefix-sum + hashmap for negative values",
+          "alternatives": [
+            "prefix-sum-with-hashmap",
+            "sliding-window-fixed"
+          ]
+        },
+        {
+          "id": "binary-search",
+          "name": "Binary Search",
+          "structural_signals": [
+            "sorted-input-with-target-lookup",
+            "monotonic-predicate-boundary-finding",
+            "search-space-halving"
+          ],
+          "applies_when": [
+            "input is sorted",
+            "searching for exact value or boundary",
+            "answer has monotonic property (all true then all false)",
+            "minimizing/maximizing over a searchable range"
+          ],
+          "avoid_when": [
+            "input is unsorted and cannot be sorted",
+            "need to find all occurrences, not just one",
+            "search space is not monotonically partitioned"
+          ],
+          "complexity": {
+            "time": "O(log n)",
+            "space": "O(1)"
+          },
+          "constraints": "requires sorted or monotonic structure",
+          "alternatives": [
+            "two-pointer-convergent",
+            "linear-scan",
+            "binary-search-on-answer"
+          ]
+        },
+        {
+          "id": "prefix-sum",
+          "name": "Prefix Sum",
+          "structural_signals": [
+            "range-sum-queries",
+            "cumulative-aggregate-precomputation",
+            "subarray-sum-via-difference"
+          ],
+          "applies_when": [
+            "multiple range sum queries on static array",
+            "need O(1) subarray sum after O(n) precomputation",
+            "subarray sum equals target (with hashmap for negative values)"
+          ],
+          "avoid_when": [
+            "array is frequently modified between queries",
+            "single query only (just iterate)"
+          ],
+          "complexity": {
+            "time": "O(n) build, O(1) query",
+            "space": "O(n)"
+          },
+          "constraints": "static array; for dynamic updates use segment tree or BIT",
+          "alternatives": [
+            "sliding-window-variable",
+            "segment-tree",
+            "fenwick-tree",
+            "sparse-table",
+            "sqrt-decomposition"
+          ]
+        },
+        {
+          "id": "kadanes-algorithm",
+          "name": "Kadane's Algorithm",
+          "structural_signals": [
+            "maximum-contiguous-subarray-aggregate",
+            "running-sum-with-reset",
+            "local-vs-global-optimum-tracking"
+          ],
+          "applies_when": [
+            "find maximum sum contiguous subarray",
+            "local decision: extend current subarray or start new",
+            "values can be negative"
+          ],
+          "avoid_when": [
+            "need the actual subarray indices (need slight modification)",
+            "non-contiguous selection allowed (use DP or greedy)",
+            "circular array (need wrapper logic)"
+          ],
+          "complexity": {
+            "time": "O(n)",
+            "space": "O(1)"
+          },
+          "constraints": "contiguous subarray only",
+          "alternatives": [
+            "prefix-sum",
+            "divide-and-conquer-max-subarray"
+          ]
+        },
+        {
+          "id": "dutch-national-flag",
+          "name": "Dutch National Flag",
+          "structural_signals": [
+            "three-way-in-place-partitioning",
+            "three-region-boundary-tracking",
+            "single-pass-classification"
+          ],
+          "applies_when": [
+            "partition array into exactly three groups",
+            "elements have three categories (low, mid, high)",
+            "must be in-place and single pass"
+          ],
+          "avoid_when": [
+            "more than three categories",
+            "order within categories matters"
+          ],
+          "complexity": {
+            "time": "O(n)",
+            "space": "O(1)"
+          },
+          "constraints": "exactly three categories",
+          "alternatives": [
+            "two-pointer-same-direction",
+            "counting-sort"
+          ]
+        },
+        {
+          "id": "merge-intervals",
+          "name": "Merge Intervals",
+          "structural_signals": [
+            "overlapping-range-consolidation",
+            "sort-by-start-then-merge",
+            "interval-endpoint-comparison"
+          ],
+          "applies_when": [
+            "input is a collection of intervals that may overlap",
+            "need to merge, insert, or find gaps between intervals",
+            "scheduling or range consolidation"
+          ],
+          "avoid_when": [
+            "intervals are points, not ranges",
+            "need dynamic interval updates (use interval tree)"
+          ],
+          "complexity": {
+            "time": "O(n log n)",
+            "space": "O(n)"
+          },
+          "constraints": "sort by start coordinate first",
+          "alternatives": [
+            "sweep-line",
+            "interval-tree"
+          ]
+        },
+        {
+          "id": "cyclic-sort",
+          "name": "Cyclic Sort",
+          "structural_signals": [
+            "values-in-known-range-1-to-n",
+            "place-each-element-at-its-index",
+            "in-place-positioning-by-value"
+          ],
+          "applies_when": [
+            "values are in range [1, n] or [0, n-1]",
+            "find missing, duplicate, or first missing positive",
+            "O(1) space required for finding missing/duplicate"
+          ],
+          "avoid_when": [
+            "values are not in a known bounded range",
+            "values are not integers"
+          ],
+          "complexity": {
+            "time": "O(n)",
+            "space": "O(1)"
+          },
+          "constraints": "values must be in range [1, n] or similar bounded range",
+          "alternatives": [
+            "hashset-membership",
+            "bit-manipulation"
+          ]
+        },
+        {
+          "id": "in-place-rotation",
+          "name": "In-Place Rotation (Reversal)",
+          "structural_signals": [
+            "cyclic-shift-of-elements",
+            "triple-reversal-technique",
+            "rotate-subarray-by-k-positions"
+          ],
+          "applies_when": [
+            "rotate array by k positions in-place",
+            "rearrange segments of array"
+          ],
+          "avoid_when": [
+            "k is 0 or equals array length",
+            "copy is acceptable (just slice)"
+          ],
+          "complexity": {
+            "time": "O(n)",
+            "space": "O(1)"
+          },
+          "constraints": "in-place required",
+          "alternatives": [
+            "extra-array-copy"
+          ]
+        },
+        {
+          "id": "quick-select",
+          "name": "Quick Select (Kth Element)",
+          "structural_signals": [
+            "kth-order-statistic",
+            "partial-partitioning",
+            "expected-linear-selection"
+          ],
+          "applies_when": [
+            "find kth smallest/largest element",
+            "O(n) expected time acceptable",
+            "full sort is unnecessary"
+          ],
+          "avoid_when": [
+            "worst-case O(n) needed (use median of medians)",
+            "k is close to n (just sort)",
+            "need top-k elements in sorted order"
+          ],
+          "complexity": {
+            "time": "O(n) average, O(n^2) worst",
+            "space": "O(1)"
+          },
+          "constraints": "modifies input array; use random pivot for expected O(n)",
+          "alternatives": [
+            "heap-top-k",
+            "sorting"
+          ]
+        },
+        {
+          "id": "binary-search-on-answer",
+          "name": "Binary Search on Answer",
+          "structural_signals": [
+            "minimize-the-maximum-value",
+            "maximize-the-minimum-value",
+            "monotonic-feasibility-over-answer-space"
+          ],
+          "applies_when": [
+            "minimize the maximum or maximize the minimum of some metric",
+            "answer space is monotonic — if D is feasible then D-1 is also feasible",
+            "feasibility for a given answer can be checked efficiently (O(N) or O(N log N))"
+          ],
+          "avoid_when": [
+            "answer space is not monotonic",
+            "feasibility check is expensive (exponential)",
+            "exact answer can be computed directly without search"
+          ],
+          "complexity": {
+            "time": "O(N log D * f(N)) where f(N) is feasibility check cost",
+            "space": "O(N)"
+          },
+          "constraints": "requires monotonic answer space — all values below threshold are feasible (or infeasible), all above are not",
+          "alternatives": [
+            "binary-search",
+            "greedy",
+            "task-scheduling",
+            "frequency-aggregation",
+            "hungarian-algorithm",
+            "bipartite-matching"
+          ]
+        },
+        {
+          "id": "meet-in-middle",
+          "name": "Meet in the Middle",
+          "structural_signals": [
+            "subset-optimization-with-moderate-N",
+            "split-into-two-halves-and-combine",
+            "values-too-large-for-DP-array"
+          ],
+          "applies_when": [
+            "N is moderate (20-40) making 2^N too slow but 2^(N/2) feasible",
+            "item values/weights too large for pseudo-polynomial DP",
+            "problem involves selecting a subset to optimize a metric",
+            "two halves can be enumerated independently then combined"
+          ],
+          "avoid_when": [
+            "N is small enough for full enumeration (N <= 20)",
+            "values are small enough for standard DP (W <= 10^6)",
+            "subsets from two halves cannot be meaningfully combined"
+          ],
+          "complexity": {
+            "time": "O(2^(N/2) * N)",
+            "space": "O(2^(N/2))"
+          },
+          "constraints": "split input into two halves of ~N/2; enumerate all subsets of each half; combine with sorting + binary search or two pointers",
+          "alternatives": [
+            "knapsack-01",
+            "subsets-generation"
+          ]
+        },
+        {
+          "id": "greedy",
+          "name": "Greedy",
+          "structural_signals": [
+            "locally-optimal-choice-leads-to-global-optimum",
+            "sorting-then-sequential-selection",
+            "exchange-argument-provable"
+          ],
+          "applies_when": [
+            "greedy choice property: local optimum leads to global optimum",
+            "optimal substructure without overlapping subproblems",
+            "activity selection, fractional knapsack, Huffman coding"
+          ],
+          "avoid_when": [
+            "constraints carry forward across decisions (need DP)",
+            "greedy leads to suboptimal: 0/1 knapsack, shortest path with negative edges",
+            "problem has coupled choices where taking one item affects later options"
+          ],
+          "complexity": {
+            "time": "O(n log n) typical (sorting + scan)",
+            "space": "O(1) to O(n)"
+          },
+          "constraints": "must prove greedy choice property holds; common proof: exchange argument",
+          "alternatives": [
+            "tabulation-bottom-up",
+            "memoization-top-down"
+          ]
+        },
+        {
+          "id": "linear-scan",
+          "name": "Linear Scan",
+          "structural_signals": [
+            "sequential-search-through-unsorted-data",
+            "single-pass-existence-check",
+            "predicate-based-first-match"
+          ],
+          "applies_when": [
+            "data is unsorted and one-time lookup needed",
+            "dataset is small (n < 100)",
+            "searching for first element satisfying a predicate"
+          ],
+          "avoid_when": [
+            "data is sorted (use binary search)",
+            "repeated queries on same dataset (build hashmap or sort first)",
+            "large dataset where O(n) per query is too slow"
+          ],
+          "complexity": {
+            "time": "O(n)",
+            "space": "O(1)"
+          },
+          "constraints": "simplest search; no preprocessing needed",
+          "alternatives": [
+            "binary-search",
+            "hashset-membership"
+          ]
+        },
+        {
+          "id": "counting-sort",
+          "name": "Counting Sort",
+          "structural_signals": [
+            "integer-keys-in-bounded-range",
+            "stable-sort-needed-for-bounded-values",
+            "frequency-based-rearrangement"
+          ],
+          "applies_when": [
+            "integer keys in small bounded range k where k is O(n)",
+            "stability required",
+            "as subroutine inside radix sort"
+          ],
+          "avoid_when": [
+            "range k >> n",
+            "floating-point or string keys",
+            "k > n log n (comparison sort is better)"
+          ],
+          "complexity": {
+            "time": "O(n+k)",
+            "space": "O(n+k)"
+          },
+          "constraints": "k = range of input values; only for integers in known range",
+          "alternatives": [
+            "sorting",
+            "radix-sort"
+          ]
+        },
+        {
+          "id": "radix-sort",
+          "name": "Radix Sort",
+          "structural_signals": [
+            "sort-integers-by-digit-position",
+            "multi-pass-stable-sort-by-digit",
+            "linear-time-integer-sort"
+          ],
+          "applies_when": [
+            "integer or fixed-length string keys",
+            "range too large for counting sort but digits are bounded",
+            "need stable O(d*(n+k)) sort where d=digits, k=base"
+          ],
+          "avoid_when": [
+            "variable-length keys without padding",
+            "d * (n+k) > n log n (comparison sort is faster)",
+            "keys are floating-point or complex objects"
+          ],
+          "complexity": {
+            "time": "O(d*(n+k))",
+            "space": "O(n+k)"
+          },
+          "constraints": "d = number of digits, k = radix (base); uses stable counting sort as subroutine per digit; LSD (least significant digit first) is most common",
+          "alternatives": [
+            "counting-sort",
+            "sorting"
+          ]
+        },
+        {
+          "id": "bitmask-enumeration",
+          "name": "Bitmask Enumeration",
+          "structural_signals": [
+            "enumerate-all-subsets-via-bitmask",
+            "state-compression-iteration",
+            "power-set-generation"
+          ],
+          "applies_when": [
+            "n <= 20-22 and need all subsets",
+            "bitmask DP (TSP in O(n^2 * 2^n))",
+            "SOS (Sum over Subsets) DP"
+          ],
+          "avoid_when": [
+            "n > 23 (2^n infeasible)",
+            "problem has polynomial structure",
+            "meet-in-middle can split the work"
+          ],
+          "complexity": {
+            "time": "O(2^n)",
+            "space": "O(2^n) for DP table"
+          },
+          "constraints": "n must be small; each subset accessed in O(1) via bitmask",
+          "alternatives": [
+            "subsets-generation",
+            "meet-in-middle"
+          ]
+        },
+        {
+          "id": "sqrt-decomposition",
+          "name": "Sqrt Decomposition / Mo's Algorithm",
+          "structural_signals": [
+            "block-decomposition-for-range-queries",
+            "offline-range-queries-with-reordering",
+            "sqrt-n-blocks"
+          ],
+          "applies_when": [
+            "offline range queries where add/remove is O(1)",
+            "problems where segment tree merge is hard (count distinct, mode)",
+            "simpler alternative to persistent data structures"
+          ],
+          "avoid_when": [
+            "online queries required (Mo's is offline)",
+            "segment tree or BIT solves it in O(n log n + Q log n)",
+            "updates between queries needed"
+          ],
+          "complexity": {
+            "time": "O((n + Q) * sqrt(n))",
+            "space": "O(n)"
+          },
+          "constraints": "Mo's algorithm: sort queries by (block of left endpoint, right endpoint); Hilbert curve ordering reduces constant by ~2x",
+          "alternatives": [
+            "segment-tree",
+            "fenwick-tree",
+            "prefix-sum",
+            "sparse-table"
+          ]
+        },
+        {
+          "id": "bit-manipulation",
+          "name": "Bit Manipulation",
+          "structural_signals": [
+            "xor-for-missing-duplicate-detection",
+            "power-of-two-check",
+            "bitmask-subset-operations"
+          ],
+          "applies_when": [
+            "find single missing/duplicate number in O(1) space via XOR",
+            "power-of-2 check: n > 0 && (n & (n-1)) == 0",
+            "isolate/clear lowest set bit, count set bits"
+          ],
+          "avoid_when": [
+            "multiple missing/duplicate values",
+            "values are not integers",
+            "readability matters more than micro-optimization"
+          ],
+          "complexity": {
+            "time": "O(1) per operation",
+            "space": "O(1)"
+          },
+          "constraints": "XOR: a^a=0, a^0=a; Brian Kernighan popcount: O(k) where k=set bits; lowest set bit: n&(-n)",
+          "alternatives": [
+            "cyclic-sort",
+            "hashset-membership",
+            "boolean-array"
+          ]
+        },
+        {
+          "id": "sweep-line",
+          "name": "Sweep Line",
+          "structural_signals": [
+            "process-events-left-to-right",
+            "interval-overlap-counting",
+            "geometric-event-processing"
+          ],
+          "applies_when": [
+            "interval scheduling, counting overlaps at any point",
+            "line segment intersection detection (Bentley-Ottmann)",
+            "rectangle union area/perimeter",
+            "closest pair of points in 2D"
+          ],
+          "avoid_when": [
+            "simple interval merge suffices (greedy sort-and-merge is simpler)",
+            "no natural ordering axis",
+            "online/streaming events arriving out of order"
+          ],
+          "complexity": {
+            "time": "O(n log n)",
+            "space": "O(n)"
+          },
+          "constraints": "sort events by x-coordinate; maintain active set in balanced BST; Bentley-Ottmann: O((n+k) log n) for k intersections",
+          "alternatives": [
+            "merge-intervals",
+            "segment-tree"
+          ]
+        },
+        {
+          "id": "sorting",
+          "name": "Sort-First-Then-Process",
+          "structural_signals": [
+            "sort-then-scan-for-pattern",
+            "ordering-enables-efficient-processing",
+            "prerequisite-sorting-step"
+          ],
+          "applies_when": [
+            "need ordered data for subsequent operations",
+            "finding duplicates, grouping neighbors",
+            "enabling binary search or two-pointer techniques"
+          ],
+          "avoid_when": [
+            "already sorted",
+            "order doesn't help the problem",
+            "hashmap gives O(n) without sorting"
+          ],
+          "complexity": {
+            "time": "O(n log n)",
+            "space": "O(n)"
+          },
+          "constraints": "dominated by the sort step; subsequent processing is typically O(n)",
+          "alternatives": [
+            "frequency-aggregation",
+            "hashset-membership"
+          ]
+        },
+        {
+          "id": "brute-force-nested-loop",
+          "name": "Brute Force Nested Loop",
+          "structural_signals": [
+            "exhaustive-pairwise-comparison",
+            "all-pairs-check",
+            "quadratic-scan"
+          ],
+          "applies_when": [
+            "n is small (< 5000)",
+            "need to check all pairs",
+            "no exploitable structure (unsorted, no monotonicity)"
+          ],
+          "avoid_when": [
+            "n > 10000",
+            "sorted/monotonic structure exists",
+            "single-pass or hash-based approach works"
+          ],
+          "complexity": {
+            "time": "O(n^2)",
+            "space": "O(1)"
+          },
+          "constraints": "baseline approach; always correct but often too slow",
+          "alternatives": [
+            "two-pointer-convergent",
+            "single-pass-complement-lookup",
+            "monotonic-stack"
+          ]
+        },
+        {
+          "id": "sorted-array-binary-search",
+          "name": "Sorted Array + Binary Search",
+          "structural_signals": [
+            "static-sorted-collection-with-lookups",
+            "read-heavy-sorted-data",
+            "predecessor-successor-queries"
+          ],
+          "applies_when": [
+            "read-heavy workload on sorted data",
+            "rarely insert or delete",
+            "need floor/ceiling/rank queries"
+          ],
+          "avoid_when": [
+            "frequent insertions (use balanced BST)",
+            "data changes dynamically"
+          ],
+          "complexity": {
+            "time": "O(log n) search, O(n) insert",
+            "space": "O(n)"
+          },
+          "constraints": "keep array sorted; use bisect/lower_bound for O(log n) lookups",
+          "alternatives": [
+            "binary-search-tree-ops",
+            "treemap"
+          ]
+        },
+        {
+          "id": "sorted-array-with-binary-insert",
+          "name": "Sorted Array with Binary Insert",
+          "structural_signals": [
+            "maintain-sorted-order-on-insert",
+            "small-collection-sorted-insert",
+            "median-tracking-via-sorted-array"
+          ],
+          "applies_when": [
+            "small collection needing sorted order",
+            "alternative to heap for median tracking on small n"
+          ],
+          "avoid_when": [
+            "large n with frequent inserts (O(n) shifting)",
+            "use heap or balanced BST instead"
+          ],
+          "complexity": {
+            "time": "O(n) per insert, O(log n) search",
+            "space": "O(n)"
+          },
+          "constraints": "insertion requires shifting elements; only practical for small n",
+          "alternatives": [
+            "two-heaps-median",
+            "binary-search-tree-ops"
+          ]
+        },
+        {
+          "id": "extra-array-copy",
+          "name": "Extra Array Copy",
+          "structural_signals": [
+            "copy-then-rearrange",
+            "non-in-place-transformation"
+          ],
+          "applies_when": [
+            "in-place constraint not required",
+            "simpler logic with separate output array"
+          ],
+          "avoid_when": [
+            "O(1) space required",
+            "array is very large and memory is tight"
+          ],
+          "complexity": {
+            "time": "O(n)",
+            "space": "O(n)"
+          },
+          "constraints": "trade space for simplicity",
+          "alternatives": [
+            "in-place-rotation"
+          ]
+        },
+        {
+          "id": "boolean-array",
+          "name": "Boolean/Visited Array",
+          "structural_signals": [
+            "track-seen-elements-by-index",
+            "small-integer-membership-check",
+            "visited-marking"
+          ],
+          "applies_when": [
+            "elements are small non-negative integers in bounded range",
+            "O(1) membership check needed",
+            "marking visited nodes in graph traversal"
+          ],
+          "avoid_when": [
+            "elements are large or sparse (use hashset)",
+            "elements are non-integer"
+          ],
+          "complexity": {
+            "time": "O(1) per check",
+            "space": "O(k) where k is range"
+          },
+          "constraints": "faster than hashset when key range is small and dense",
+          "alternatives": [
+            "hashset-membership"
+          ]
+        },
+        {
+          "id": "sorting-then-scanning",
+          "name": "Sort Then Scan",
+          "structural_signals": [
+            "sort-to-bring-duplicates-adjacent",
+            "consecutive-element-detection-after-sort"
+          ],
+          "applies_when": [
+            "detect duplicates by sorting then checking neighbors",
+            "find consecutive sequences after sorting"
+          ],
+          "avoid_when": [
+            "hashset gives O(n) without sorting",
+            "order of original array matters"
+          ],
+          "complexity": {
+            "time": "O(n log n)",
+            "space": "O(1) extra"
+          },
+          "constraints": "modifies array order; use copy if original order needed",
+          "alternatives": [
+            "longest-consecutive-sequence",
+            "hashset-membership"
+          ]
+        },
+        {
+          "id": "sorting-then-grouping",
+          "name": "Sort Then Group",
+          "structural_signals": [
+            "sort-by-key-then-group-consecutive-equals",
+            "ordered-grouping"
+          ],
+          "applies_when": [
+            "need groups by value in sorted order",
+            "no hash function available",
+            "want deterministic ordering"
+          ],
+          "avoid_when": [
+            "hashmap grouping is O(n) and sufficient",
+            "sorted order not needed"
+          ],
+          "complexity": {
+            "time": "O(n log n)",
+            "space": "O(n)"
+          },
+          "constraints": "sort by grouping key; then single pass to collect groups",
+          "alternatives": [
+            "grouping-by-key",
+            "frequency-aggregation"
+          ]
+        },
+        {
+          "id": "sorting-then-merging",
+          "name": "Sort Then Merge (Set Operations)",
+          "structural_signals": [
+            "sort-two-collections-then-two-pointer-merge",
+            "set-intersection-via-sorting"
+          ],
+          "applies_when": [
+            "set intersection/union/difference on sortable data",
+            "both arrays can be sorted"
+          ],
+          "avoid_when": [
+            "hashset is faster for single operation",
+            "arrays already sorted (just use two pointers)"
+          ],
+          "complexity": {
+            "time": "O(n log n + m log m)",
+            "space": "O(1) extra"
+          },
+          "constraints": "sort both, then two-pointer merge",
+          "alternatives": [
+            "set-algebra-operations",
+            "hashset-membership"
+          ]
+        },
+        {
+          "id": "two-pointer-on-sorted",
+          "name": "Two Pointers on Sorted Arrays",
+          "structural_signals": [
+            "merge-two-sorted-sequences",
+            "intersection-of-sorted-arrays",
+            "parallel-scan-two-sorted-lists"
+          ],
+          "applies_when": [
+            "both arrays already sorted",
+            "intersection/union/merge of two sorted sequences"
+          ],
+          "avoid_when": [
+            "arrays not sorted (sort first or use hashset)",
+            "single array problem"
+          ],
+          "complexity": {
+            "time": "O(n + m)",
+            "space": "O(1)"
+          },
+          "constraints": "both inputs must be sorted",
+          "alternatives": [
+            "set-algebra-operations",
+            "sorting-then-merging"
+          ]
+        },
+        {
+          "id": "divide-and-conquer-max-subarray",
+          "name": "Divide and Conquer Max Subarray",
+          "structural_signals": [
+            "split-array-find-max-crossing-subarray",
+            "recursive-max-subarray"
+          ],
+          "applies_when": [
+            "pedagogical D&C example",
+            "parallel computing where D&C parallelizes well",
+            "2D max subarray extensions"
+          ],
+          "avoid_when": [
+            "standard 1D max subarray (Kadane's is O(n))",
+            "memory is tight (recursion stack)",
+            "streaming/online setting"
+          ],
+          "complexity": {
+            "time": "O(n log n)",
+            "space": "O(log n)"
+          },
+          "constraints": "strictly worse than Kadane's for basic 1D problem; T(n) = 2T(n/2) + O(n)",
+          "alternatives": [
+            "kadanes-algorithm",
+            "prefix-sum"
+          ]
+        },
+        {
+          "id": "convex-hull",
+          "name": "Convex Hull (Andrew's Monotone Chain)",
+          "structural_signals": [
+            "smallest-convex-polygon-enclosing-points",
+            "rubber-band-around-nails",
+            "geometric-boundary-computation"
+          ],
+          "applies_when": [
+            "find convex hull of 2D point set",
+            "farthest pair of points (rotating calipers on hull)",
+            "geometric optimization (max area triangle, min enclosing shape)"
+          ],
+          "avoid_when": [
+            "3D convex hull needed (different algorithms)",
+            "online/streaming points (use online convex hull)",
+            "only need closest pair (simpler algorithms exist)"
+          ],
+          "complexity": {
+            "time": "O(N log N)",
+            "space": "O(N)"
+          },
+          "constraints": "Andrew's monotone chain: sort by (x,y), build upper+lower hull separately; asymptotically optimal (proven lower bound)",
+          "alternatives": [
+            "sweep-line"
+          ]
+        },
+        {
+          "id": "closest-pair-of-points",
+          "name": "Closest Pair of Points",
+          "structural_signals": [
+            "minimum-distance-between-any-two-points",
+            "nearest-neighbor-in-point-set"
+          ],
+          "applies_when": [
+            "find minimum Euclidean distance between N points in 2D",
+            "spatial clustering",
+            "collision detection preprocessing"
+          ],
+          "avoid_when": [
+            "need nearest neighbor for many query points (use KD-tree)",
+            "dynamic point sets",
+            "higher dimensions (strip constant grows exponentially)"
+          ],
+          "complexity": {
+            "time": "O(N log N)",
+            "space": "O(N)"
+          },
+          "constraints": "divide and conquer: split by x, recurse, merge checking strip of width 2d; each point checks at most 7 neighbors in strip",
+          "alternatives": [
+            "sweep-line",
+            "brute-force-nested-loop"
+          ]
+        },
+        {
+          "id": "sieve-of-eratosthenes",
+          "name": "Sieve of Eratosthenes",
+          "structural_signals": [
+            "find-all-primes-up-to-n",
+            "prime-number-precomputation",
+            "bulk-primality-testing"
+          ],
+          "applies_when": [
+            "generate all primes up to N (~10^7 practical limit)",
+            "precompute smallest prime factor for factorization",
+            "bulk prime checking for many numbers"
+          ],
+          "avoid_when": [
+            "checking single large number (use Miller-Rabin)",
+            "primes in range [L,R] with R > 10^7 (use segmented sieve)",
+            "memory constrained for very large N"
+          ],
+          "complexity": {
+            "time": "O(N log log N)",
+            "space": "O(N)"
+          },
+          "constraints": "mark multiples starting from 2; only sieve up to sqrt(N); skip even numbers to halve work",
+          "alternatives": [
+            "bit-manipulation"
+          ]
+        },
+        {
+          "id": "inclusion-exclusion",
+          "name": "Inclusion-Exclusion Principle",
+          "structural_signals": [
+            "count-union-of-overlapping-sets",
+            "complementary-counting",
+            "at-least-one-condition-counting"
+          ],
+          "applies_when": [
+            "count elements in union of overlapping sets",
+            "derangements (permutations with no fixed points)",
+            "count integers coprime to set of primes",
+            "exactly-k-conditions-satisfied counting"
+          ],
+          "avoid_when": [
+            "number of sets > 20-25 (exponential blowup)",
+            "direct counting formula or DP exists",
+            "Mobius inversion is more natural"
+          ],
+          "complexity": {
+            "time": "O(2^N * f) where N=sets, f=intersection cost",
+            "space": "O(2^N)"
+          },
+          "constraints": "|A∪B∪C| = |A|+|B|+|C| - |A∩B| - |A∩C| - |B∩C| + |A∩B∩C|; alternate sign with subset size",
+          "alternatives": [
+            "bitmask-enumeration",
+            "dp-n-squared"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "string",
+      "name": "String",
+      "properties": [
+        "immutable",
+        "character-sequence",
+        "index-addressable",
+        "comparable"
+      ],
+      "operations": {
+        "access_char": {
+          "time": "O(1)",
+          "space": "O(1)"
+        },
+        "search_substring": {
+          "time": "O(n*m)",
+          "space": "O(1)"
+        },
+        "concatenate": {
+          "time": "O(n+m)",
+          "space": "O(n+m)"
+        },
+        "substring": {
+          "time": "O(k)",
+          "space": "O(k)"
+        },
+        "compare": {
+          "time": "O(n)",
+          "space": "O(1)"
+        }
+      },
+      "source": "extracted",
+      "patterns": [
+        {
+          "id": "kmp-string-matching",
+          "name": "KMP String Matching",
+          "structural_signals": [
+            "pattern-occurrence-in-text",
+            "failure-function-prefix-matching",
+            "avoid-re-scanning-matched-prefix"
+          ],
+          "applies_when": [
+            "find all occurrences of pattern in text",
+            "pattern has repeating prefix structure",
+            "need O(n+m) guaranteed time"
+          ],
+          "avoid_when": [
+            "pattern is very short (brute force is fine)",
+            "need approximate matching (use edit distance)"
+          ],
+          "complexity": {
+            "time": "O(n+m)",
+            "space": "O(m)"
+          },
+          "constraints": "exact matching only",
+          "alternatives": [
+            "rabin-karp",
+            "brute-force-matching",
+            "z-function",
+            "rolling-hash",
+            "aho-corasick"
+          ]
+        },
+        {
+          "id": "rabin-karp",
+          "name": "Rabin-Karp Rolling Hash",
+          "structural_signals": [
+            "rolling-hash-window-comparison",
+            "multi-pattern-search",
+            "substring-fingerprinting"
+          ],
+          "applies_when": [
+            "search for multiple patterns simultaneously",
+            "need probabilistic fast substring matching",
+            "detecting repeated substrings"
+          ],
+          "avoid_when": [
+            "single pattern search (KMP is deterministic)",
+            "hash collisions are unacceptable"
+          ],
+          "complexity": {
+            "time": "O(n+m) average",
+            "space": "O(m)"
+          },
+          "constraints": "hash collisions require verification",
+          "alternatives": [
+            "kmp-string-matching",
+            "aho-corasick",
+            "z-function",
+            "rolling-hash"
+          ]
+        },
+        {
+          "id": "two-pointer-string",
+          "name": "Two Pointers on String",
+          "structural_signals": [
+            "palindrome-verification",
+            "character-comparison-from-ends",
+            "in-place-string-reversal"
+          ],
+          "applies_when": [
+            "check palindrome",
+            "reverse string in-place (char array)",
+            "compare characters from both ends"
+          ],
+          "avoid_when": [
+            "need substring operations",
+            "string is immutable and cannot be modified"
+          ],
+          "complexity": {
+            "time": "O(n)",
+            "space": "O(1)"
+          },
+          "constraints": "for mutation, convert to char array first",
+          "alternatives": [
+            "expand-around-center"
+          ]
+        },
+        {
+          "id": "expand-around-center",
+          "name": "Expand Around Center",
+          "structural_signals": [
+            "palindrome-substring-enumeration",
+            "center-expansion-outward",
+            "odd-and-even-length-centers"
+          ],
+          "applies_when": [
+            "find longest palindromic substring",
+            "count palindromic substrings",
+            "need all palindromes centered at each position"
+          ],
+          "avoid_when": [
+            "need O(n) palindrome detection (use Manacher's)"
+          ],
+          "complexity": {
+            "time": "O(n^2)",
+            "space": "O(1)"
+          },
+          "constraints": "check both odd and even length centers",
+          "alternatives": [
+            "manachers-algorithm",
+            "dp-palindromic"
+          ]
+        },
+        {
+          "id": "string-builder-accumulation",
+          "name": "StringBuilder Accumulation",
+          "structural_signals": [
+            "character-by-character-construction",
+            "avoid-repeated-concatenation",
+            "mutable-buffer-building"
+          ],
+          "applies_when": [
+            "building result string character by character",
+            "many string concatenations in a loop",
+            "need O(n) total construction"
+          ],
+          "avoid_when": [
+            "single concatenation (direct + is fine)",
+            "functional approach with joinToString is cleaner"
+          ],
+          "complexity": {
+            "time": "O(n) total",
+            "space": "O(n)"
+          },
+          "constraints": "use StringBuilder or equivalent mutable buffer",
+          "alternatives": [
+            "join-to-string"
+          ]
+        },
+        {
+          "id": "brute-force-matching",
+          "name": "Brute Force String Matching",
+          "structural_signals": [
+            "naive-pattern-search",
+            "slide-pattern-over-text"
+          ],
+          "applies_when": [
+            "pattern is short",
+            "single search needed",
+            "no preprocessing justified"
+          ],
+          "avoid_when": [
+            "multiple searches or long pattern",
+            "worst case O(n*m) matters"
+          ],
+          "complexity": {
+            "time": "O(n*m)",
+            "space": "O(1)"
+          },
+          "constraints": "simplest string search; no preprocessing",
+          "alternatives": [
+            "kmp-string-matching",
+            "rabin-karp"
+          ]
+        },
+        {
+          "id": "manachers-algorithm",
+          "name": "Manacher's Algorithm",
+          "structural_signals": [
+            "all-palindromic-substrings-linear-time",
+            "palindrome-radius-array",
+            "symmetry-based-expansion"
+          ],
+          "applies_when": [
+            "find longest palindromic substring in O(n)",
+            "compute palindrome radius at every position",
+            "count all palindromic substrings"
+          ],
+          "avoid_when": [
+            "need all distinct palindromic substrings (eertree is better)",
+            "palindromic subsequence not substring (use DP)"
+          ],
+          "complexity": {
+            "time": "O(n)",
+            "space": "O(n)"
+          },
+          "constraints": "transform string with separators for even-length palindromes; each position visited at most twice",
+          "alternatives": [
+            "expand-around-center",
+            "dp-palindromic"
+          ]
+        },
+        {
+          "id": "aho-corasick",
+          "name": "Aho-Corasick",
+          "structural_signals": [
+            "multi-pattern-string-matching",
+            "dictionary-matching-automaton",
+            "simultaneous-keyword-search"
+          ],
+          "applies_when": [
+            "search for multiple fixed patterns simultaneously",
+            "dictionary/keyword matching (spam filters, DNA search)",
+            "guaranteed worst-case linear-time matching"
+          ],
+          "avoid_when": [
+            "single pattern (KMP is simpler)",
+            "patterns change frequently (automaton must be rebuilt)",
+            "patterns are regexes not fixed strings"
+          ],
+          "complexity": {
+            "time": "O(m*k + n + z) where m=total pattern length, k=alphabet, z=matches",
+            "space": "O(m*k)"
+          },
+          "constraints": "build failure links like KMP but on trie; automaton construction is one-time cost",
+          "alternatives": [
+            "kmp-string-matching",
+            "rabin-karp",
+            "trie-prefix-tree",
+            "z-function",
+            "rolling-hash"
+          ]
+        },
+        {
+          "id": "dp-palindromic",
+          "name": "DP Palindromic (Subsequence/Substring)",
+          "structural_signals": [
+            "longest-palindromic-subsequence",
+            "palindromic-substring-counting",
+            "interval-dp-on-palindromes"
+          ],
+          "applies_when": [
+            "longest palindromic subsequence (not contiguous)",
+            "count palindromic subsequences",
+            "palindrome partitioning"
+          ],
+          "avoid_when": [
+            "longest palindromic substring only (Manacher's is O(n))",
+            "string very long and O(n^2) too slow"
+          ],
+          "complexity": {
+            "time": "O(n^2)",
+            "space": "O(n^2), optimizable to O(n)"
+          },
+          "constraints": "dp[i][j] = LPS of s[i..j]; alternative: LPS = LCS(s, reverse(s))",
+          "alternatives": [
+            "manachers-algorithm",
+            "expand-around-center"
+          ]
+        },
+        {
+          "id": "join-to-string",
+          "name": "Join-to-String (Efficient Concatenation)",
+          "structural_signals": [
+            "accumulate-parts-then-join",
+            "avoid-quadratic-concatenation"
+          ],
+          "applies_when": [
+            "building string from many parts",
+            "avoiding O(n^2) repeated immutable concatenation"
+          ],
+          "avoid_when": [
+            "few concatenations",
+            "language handles string mutability natively"
+          ],
+          "complexity": {
+            "time": "O(n)",
+            "space": "O(n)"
+          },
+          "constraints": "collect parts in list/array, join once at end",
+          "alternatives": [
+            "string-builder-accumulation"
+          ]
+        },
+        {
+          "id": "z-function",
+          "name": "Z-Function",
+          "structural_signals": [
+            "prefix-matching-at-every-position",
+            "string-period-detection",
+            "pattern-matching-via-concatenation"
+          ],
+          "applies_when": [
+            "pattern matching (concatenate pattern$text, compute Z-array)",
+            "string compression / smallest repeating unit detection",
+            "counting distinct substrings"
+          ],
+          "avoid_when": [
+            "multiple pattern matching (use Aho-Corasick)",
+            "approximate matching (use rolling hash)"
+          ],
+          "complexity": {
+            "time": "O(N)",
+            "space": "O(N)"
+          },
+          "constraints": "z[i] = length of longest substring starting at i matching a prefix of s; often cleaner to implement than KMP",
+          "alternatives": [
+            "kmp-string-matching",
+            "rabin-karp",
+            "rolling-hash",
+            "aho-corasick"
+          ]
+        },
+        {
+          "id": "rolling-hash",
+          "name": "Rolling Hash (Polynomial Hashing)",
+          "structural_signals": [
+            "constant-time-substring-comparison",
+            "probabilistic-string-equality",
+            "multi-pattern-hash-matching"
+          ],
+          "applies_when": [
+            "comparing many substrings for equality in O(1)",
+            "counting distinct substrings",
+            "file chunking / content-defined chunking"
+          ],
+          "avoid_when": [
+            "guaranteed correctness required (hash collisions exist)",
+            "single pattern matching (KMP/Z-function are deterministic)",
+            "adversarial inputs (use double hashing with large primes)"
+          ],
+          "complexity": {
+            "time": "O(N) preprocess, O(1) per query",
+            "space": "O(N)"
+          },
+          "constraints": "polynomial hash: h(s) = sum(s[i] * p^i) mod m; use double hashing to reduce collision probability; avoid mod 2^64 (vulnerable to anti-hash attacks)",
+          "alternatives": [
+            "z-function",
+            "kmp-string-matching",
+            "rabin-karp",
+            "aho-corasick"
+          ]
+        },
+        {
+          "id": "suffix-automaton",
+          "name": "Suffix Automaton / Suffix Tree",
+          "structural_signals": [
+            "all-substrings-of-a-string",
+            "longest-repeated-substring",
+            "online-substring-queries"
+          ],
+          "applies_when": [
+            "multiple substring queries on same text",
+            "counting distinct substrings",
+            "longest repeated substring, longest common substring",
+            "online text indexing"
+          ],
+          "avoid_when": [
+            "single pattern match (KMP/Z-function suffices)",
+            "memory constrained (suffix trees have large constants ~20N bytes)",
+            "only LCP queries needed (suffix array is more practical)"
+          ],
+          "complexity": {
+            "time": "O(N) construction",
+            "space": "O(N) (SAM: ≤2N-1 states)"
+          },
+          "constraints": "suffix automaton is more memory-efficient than suffix tree; suffix array + LCP array is 4-8x less memory for most applications",
+          "alternatives": [
+            "suffix-array-substring-search",
+            "z-function",
+            "rolling-hash"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hashmap",
+      "name": "HashMap",
+      "properties": [
+        "key-value-pairs",
+        "hash-based-addressing",
+        "amortized-constant-access",
+        "unordered",
+        "dynamic-size"
+      ],
+      "operations": {
+        "get": {
+          "time": "O(1) average",
+          "space": "O(1)"
+        },
+        "put": {
+          "time": "O(1) average",
+          "space": "O(1)"
+        },
+        "remove": {
+          "time": "O(1) average",
+          "space": "O(1)"
+        },
+        "contains_key": {
+          "time": "O(1) average",
+          "space": "O(1)"
+        },
+        "iterate": {
+          "time": "O(n)",
+          "space": "O(1)"
+        }
+      },
+      "source": "extracted",
+      "patterns": [
+        {
+          "id": "single-pass-complement-lookup",
+          "name": "Single-Pass Complement Lookup",
+          "structural_signals": [
+            "check-if-complement-exists-in-seen-set",
+            "store-element-after-checking",
+            "pair-matching-via-hash"
+          ],
+          "applies_when": [
+            "find pair of elements satisfying arithmetic constraint",
+            "complement = target - current can be precomputed",
+            "single pass needed with O(1) lookup"
+          ],
+          "avoid_when": [
+            "input is sorted (two pointers is O(1) space)",
+            "need all pairs, not just first",
+            "constraint is not decomposable into complement"
+          ],
+          "complexity": {
+            "time": "O(n)",
+            "space": "O(n)"
+          },
+          "constraints": "space for hash map",
+          "alternatives": [
+            "two-pointer-convergent",
+            "binary-search"
+          ]
+        },
+        {
+          "id": "frequency-aggregation",
+          "name": "Frequency Aggregation",
+          "structural_signals": [
+            "count-occurrences-of-each-element",
+            "element-to-count-mapping",
+            "frequency-based-decisions"
+          ],
+          "applies_when": [
+            "need to count occurrences of each element",
+            "decisions based on frequency (top-k, mode, threshold)",
+            "anagram detection via frequency comparison"
+          ],
+          "avoid_when": [
+            "elements are in small fixed range (use array instead)",
+            "only need presence check, not count"
+          ],
+          "complexity": {
+            "time": "O(n)",
+            "space": "O(k)"
+          },
+          "constraints": "k = number of distinct elements",
+          "alternatives": [
+            "counting-array",
+            "trie-frequency"
+          ]
+        },
+        {
+          "id": "grouping-by-key",
+          "name": "Grouping by Key",
+          "structural_signals": [
+            "classify-elements-by-derived-key",
+            "canonical-form-as-map-key",
+            "equivalence-class-partitioning"
+          ],
+          "applies_when": [
+            "group elements sharing a computed property",
+            "canonical form can represent equivalence classes",
+            "e.g., sorted character sequence groups anagrams"
+          ],
+          "avoid_when": [
+            "groups are predefined and small (use array of lists)",
+            "grouping key is expensive to compute"
+          ],
+          "complexity": {
+            "time": "O(n * key_cost)",
+            "space": "O(n)"
+          },
+          "constraints": "key function must be consistent for equivalent items",
+          "alternatives": [
+            "sorting-then-grouping"
+          ]
+        },
+        {
+          "id": "index-mapping",
+          "name": "Index / Value Mapping",
+          "structural_signals": [
+            "value-to-position-lookup",
+            "store-previously-seen-indices",
+            "fast-position-retrieval"
+          ],
+          "applies_when": [
+            "need to look up index/position of previously seen element",
+            "mapping values to their most recent index",
+            "tracking element positions for constraint checking"
+          ],
+          "avoid_when": [
+            "values are in small range (use array)",
+            "indices not needed, only existence"
+          ],
+          "complexity": {
+            "time": "O(1) per lookup",
+            "space": "O(n)"
+          },
+          "constraints": "handles duplicate values by overwriting (last seen) or storing list",
+          "alternatives": [
+            "hashset-membership"
+          ]
+        },
+        {
+          "id": "cache-lookup",
+          "name": "Cache / Memoization Lookup",
+          "structural_signals": [
+            "store-computed-results-for-reuse",
+            "key-is-input-state-value-is-result",
+            "avoid-redundant-computation"
+          ],
+          "applies_when": [
+            "function called with same inputs repeatedly",
+            "overlapping subproblems in recursion",
+            "expensive computation with cacheable results"
+          ],
+          "avoid_when": [
+            "inputs are always unique (no reuse)",
+            "cache size would exceed memory",
+            "bottom-up DP is more natural"
+          ],
+          "complexity": {
+            "time": "O(1) per cached lookup",
+            "space": "O(n) for cache"
+          },
+          "constraints": "key must fully represent input state",
+          "alternatives": [
+            "tabulation-bottom-up"
+          ]
+        },
+        {
+          "id": "prefix-sum-with-hashmap",
+          "name": "Prefix Sum with HashMap",
+          "structural_signals": [
+            "subarray-sum-target-with-negative-values",
+            "cumulative-sum-difference-lookup",
+            "prefix-to-count-mapping"
+          ],
+          "applies_when": [
+            "find subarrays summing to target k",
+            "array contains negative numbers",
+            "need count of all qualifying subarrays"
+          ],
+          "avoid_when": [
+            "all values are positive (sliding window works)",
+            "need actual subarray boundaries, not just count"
+          ],
+          "complexity": {
+            "time": "O(n)",
+            "space": "O(n)"
+          },
+          "constraints": "map stores prefix_sum -> count of occurrences",
+          "alternatives": [
+            "sliding-window-variable",
+            "prefix-sum"
+          ]
+        },
+        {
+          "id": "sliding-window-with-map",
+          "name": "Sliding Window with Map/Set",
+          "structural_signals": [
+            "window-content-tracking-with-hash",
+            "frequency-maintenance-on-expand-shrink",
+            "distinct-element-constraint-in-window"
+          ],
+          "applies_when": [
+            "sliding window needs to track element frequencies",
+            "constraint involves distinct count or frequency match",
+            "e.g., at most K distinct, minimum window containing all"
+          ],
+          "avoid_when": [
+            "simple sum/count constraint (plain window is enough)",
+            "character set is small (use array instead of map)"
+          ],
+          "complexity": {
+            "time": "O(n)",
+            "space": "O(k)"
+          },
+          "constraints": "update map on both expand and shrink",
+          "alternatives": [
+            "sliding-window-variable",
+            "sliding-window-fixed"
+          ]
+        },
+        {
+          "id": "counting-array",
+          "name": "Counting Array",
+          "structural_signals": [
+            "integer-frequency-via-direct-indexing",
+            "small-range-frequency-counter"
+          ],
+          "applies_when": [
+            "keys are non-negative integers in small range",
+            "faster than hashmap for bounded integer keys",
+            "frequency counting for characters (ASCII range)"
+          ],
+          "avoid_when": [
+            "keys are large, sparse, or non-integer",
+            "range is unknown at compile time"
+          ],
+          "complexity": {
+            "time": "O(1) per access",
+            "space": "O(k) where k is range"
+          },
+          "constraints": "direct indexed array; k must be bounded and reasonable",
+          "alternatives": [
+            "frequency-aggregation",
+            "hashset-membership"
+          ]
+        },
+        {
+          "id": "trie-frequency",
+          "name": "Trie-Based Frequency Counting",
+          "structural_signals": [
+            "word-frequency-with-prefix-queries",
+            "string-key-frequency-counting"
+          ],
+          "applies_when": [
+            "counting word frequencies with prefix-based queries needed",
+            "dictionary with prefix search + frequency"
+          ],
+          "avoid_when": [
+            "no prefix queries needed (hashmap is simpler)",
+            "small number of words"
+          ],
+          "complexity": {
+            "time": "O(m) per word where m = word length",
+            "space": "O(total characters)"
+          },
+          "constraints": "combines trie structure with frequency counters at nodes",
+          "alternatives": [
+            "frequency-aggregation",
+            "trie-prefix-tree"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hashset",
+      "name": "HashSet",
+      "properties": [
+        "unique-elements",
+        "hash-based-membership",
+        "unordered",
+        "set-algebra-operations"
+      ],
+      "operations": {
+        "add": {
+          "time": "O(1) average",
+          "space": "O(1)"
+        },
+        "remove": {
+          "time": "O(1) average",
+          "space": "O(1)"
+        },
+        "contains": {
+          "time": "O(1) average",
+          "space": "O(1)"
+        },
+        "union": {
+          "time": "O(n+m)",
+          "space": "O(n+m)"
+        },
+        "intersection": {
+          "time": "O(min(n,m))",
+          "space": "O(min(n,m))"
+        }
+      },
+      "source": "extracted",
+      "patterns": [
+        {
+          "id": "hashset-membership",
+          "name": "Set Membership Testing",
+          "structural_signals": [
+            "O(1)-existence-check",
+            "duplicate-detection",
+            "seen-element-tracking"
+          ],
+          "applies_when": [
+            "need fast membership testing",
+            "detect duplicates in a stream",
+            "track visited states"
+          ],
+          "avoid_when": [
+            "need count of occurrences (use hashmap)",
+            "need ordering (use treeset)",
+            "elements are in small range (use boolean array)"
+          ],
+          "complexity": {
+            "time": "O(1) per operation",
+            "space": "O(n)"
+          },
+          "constraints": "elements must be hashable",
+          "alternatives": [
+            "boolean-array",
+            "bloom-filter"
+          ]
+        },
+        {
+          "id": "longest-consecutive-sequence",
+          "name": "Consecutive Sequence via Set",
+          "structural_signals": [
+            "find-longest-run-of-consecutive-integers",
+            "start-of-sequence-detection",
+            "expand-from-sequence-boundary"
+          ],
+          "applies_when": [
+            "find longest consecutive sequence in unsorted array",
+            "O(n) time required (sorting is O(n log n))",
+            "check if x-1 not in set to find sequence starts"
+          ],
+          "avoid_when": [
+            "input is already sorted (just scan)",
+            "need the actual sequence elements in order"
+          ],
+          "complexity": {
+            "time": "O(n)",
+            "space": "O(n)"
+          },
+          "constraints": "only start expansion from sequence boundaries",
+          "alternatives": [
+            "sorting-then-scanning"
+          ]
+        },
+        {
+          "id": "set-algebra-operations",
+          "name": "Set Algebra (Union/Intersect/Diff)",
+          "structural_signals": [
+            "combine-or-compare-two-collections",
+            "find-common-or-exclusive-elements",
+            "symmetric-difference-for-missing"
+          ],
+          "applies_when": [
+            "find common elements between collections",
+            "find elements in one but not another",
+            "merge collections removing duplicates"
+          ],
+          "avoid_when": [
+            "need to preserve duplicates",
+            "need ordered output"
+          ],
+          "complexity": {
+            "time": "O(n+m)",
+            "space": "O(n+m)"
+          },
+          "constraints": "elements must be hashable",
+          "alternatives": [
+            "sorting-then-merging",
+            "two-pointer-on-sorted"
+          ]
+        },
+        {
+          "id": "bloom-filter",
+          "name": "Bloom Filter (Probabilistic Membership)",
+          "structural_signals": [
+            "probabilistic-set-membership",
+            "false-positives-acceptable",
+            "space-efficient-existence-check"
+          ],
+          "applies_when": [
+            "space is critical and false positives are acceptable",
+            "pre-filter before expensive lookup",
+            "large dataset membership testing"
+          ],
+          "avoid_when": [
+            "false positives are unacceptable",
+            "need to delete elements (use cuckoo filter)",
+            "need exact count or retrieval"
+          ],
+          "complexity": {
+            "time": "O(k) per query where k = hash functions",
+            "space": "O(m) bits, ~10 bits/element at 1% FPR"
+          },
+          "constraints": "no false negatives; FPR tunable via k and m; no deletion without counting variant",
+          "alternatives": [
+            "hashset-membership",
+            "cuckoo-filter"
+          ]
+        },
+        {
+          "id": "cuckoo-filter",
+          "name": "Cuckoo Filter",
+          "structural_signals": [
+            "probabilistic-membership-with-deletion",
+            "space-efficient-filter-with-delete"
+          ],
+          "applies_when": [
+            "need deletion support without extra space",
+            "target FPR <= 3% (more space-efficient than Bloom)",
+            "fast lookups with good cache locality"
+          ],
+          "avoid_when": [
+            "need union/intersection of filters (Bloom supports bitwise ops)",
+            "insertion must never fail (cuckoo fails at ~95% load)",
+            "FPR > 3% (Bloom uses less space)"
+          ],
+          "complexity": {
+            "time": "O(1) lookup (check 2 buckets)",
+            "space": "~7 bits/element at FPR <= 3%"
+          },
+          "constraints": "stores fingerprints in 2 candidate buckets; deletion supported if item was previously inserted",
+          "alternatives": [
+            "bloom-filter",
+            "hashset-membership"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "linked-list",
+      "name": "Linked List",
+      "properties": [
+        "non-contiguous-memory",
+        "sequential-access",
+        "dynamic-size",
+        "pointer-based",
+        "O(1)-insert-delete-at-position"
+      ],
+      "operations": {
+        "access_head": {
+          "time": "O(1)",
+          "space": "O(1)"
+        },
+        "access_at": {
+          "time": "O(n)",
+          "space": "O(1)"
+        },
+        "insert_head": {
+          "time": "O(1)",
+          "space": "O(1)"
+        },
+        "insert_at": {
+          "time": "O(n)",
+          "space": "O(1)"
+        },
+        "delete_head": {
+          "time": "O(1)",
+          "space": "O(1)"
+        },
+        "delete_at": {
+          "time": "O(n)",
+          "space": "O(1)"
+        },
+        "search": {
+          "time": "O(n)",
+          "space": "O(1)"
+        }
+      },
+      "source": "extracted",
+      "patterns": [
+        {
+          "id": "ll-fast-slow-pointers",
+          "name": "Fast & Slow Pointers (Floyd's)",
+          "structural_signals": [
+            "cycle-detection-in-sequence",
+            "find-middle-of-sequence",
+            "two-speed-traversal"
+          ],
+          "applies_when": [
+            "detect cycle in linked list or sequence",
+            "find middle node without knowing length",
+            "find cycle entry point",
+            "detect convergence in iterative process"
+          ],
+          "avoid_when": [
+            "need to find all cycles (DFS/BFS is better)",
+            "structure is not linear/sequential"
+          ],
+          "complexity": {
+            "time": "O(n)",
+            "space": "O(1)"
+          },
+          "constraints": "fast moves 2 steps, slow 1 step per iteration",
+          "alternatives": [
+            "hashset-membership"
+          ]
+        },
+        {
+          "id": "ll-reversal",
+          "name": "Linked List Reversal",
+          "structural_signals": [
+            "reverse-pointer-direction",
+            "three-pointer-prev-curr-next",
+            "iterative-or-recursive-flip"
+          ],
+          "applies_when": [
+            "reverse entire list or sublist",
+            "palindrome check on linked list",
+            "reorder list (reverse second half, interleave)"
+          ],
+          "avoid_when": [
+            "need random access to reversed elements (convert to array)",
+            "reversal would break other references"
+          ],
+          "complexity": {
+            "time": "O(n)",
+            "space": "O(1) iterative, O(n) recursive"
+          },
+          "constraints": "maintain prev, curr, next pointers",
+          "alternatives": [
+            "stack-based-reversal"
+          ]
+        },
+        {
+          "id": "ll-merge-sorted",
+          "name": "Merge Sorted Lists",
+          "structural_signals": [
+            "combine-two-sorted-sequences",
+            "compare-heads-and-advance",
+            "sentinel-node-for-result"
+          ],
+          "applies_when": [
+            "merge two or more sorted linked lists",
+            "merge step of merge sort on linked list"
+          ],
+          "avoid_when": [
+            "lists are unsorted",
+            "need merge of many lists (use heap)"
+          ],
+          "complexity": {
+            "time": "O(n+m)",
+            "space": "O(1)"
+          },
+          "constraints": "use dummy/sentinel node to simplify head handling",
+          "alternatives": [
+            "heap-merge-k-sorted"
+          ]
+        },
+        {
+          "id": "ll-dummy-sentinel",
+          "name": "Dummy / Sentinel Node",
+          "structural_signals": [
+            "simplify-head-edge-cases",
+            "avoid-null-check-for-head",
+            "uniform-insert-delete-logic"
+          ],
+          "applies_when": [
+            "head might change during operations",
+            "deletion or insertion at head needs special handling",
+            "building a new list from scratch"
+          ],
+          "avoid_when": [
+            "single traversal with no modification"
+          ],
+          "complexity": {
+            "time": "O(1) overhead",
+            "space": "O(1)"
+          },
+          "constraints": "return dummy.next as new head",
+          "alternatives": [
+            "ll-reversal"
+          ]
+        },
+        {
+          "id": "ll-nth-from-end",
+          "name": "Nth Node from End",
+          "structural_signals": [
+            "fixed-gap-two-pointer",
+            "advance-first-pointer-n-steps",
+            "both-pointers-move-together"
+          ],
+          "applies_when": [
+            "find or remove nth node from end",
+            "need element at known distance from tail",
+            "single pass required"
+          ],
+          "avoid_when": [
+            "can afford two passes (get length first)"
+          ],
+          "complexity": {
+            "time": "O(n)",
+            "space": "O(1)"
+          },
+          "constraints": "n must be valid (1 <= n <= list length)",
+          "alternatives": [
+            "two-pass-length-first"
+          ]
+        },
+        {
+          "id": "ll-partition",
+          "name": "List Partition",
+          "structural_signals": [
+            "split-into-two-sublists-by-condition",
+            "reconnect-sublists-after-partition",
+            "maintain-relative-order"
+          ],
+          "applies_when": [
+            "partition list around a pivot value",
+            "separate odd/even positioned nodes",
+            "stable partition preserving order"
+          ],
+          "avoid_when": [
+            "need in-place array-style partition"
+          ],
+          "complexity": {
+            "time": "O(n)",
+            "space": "O(1)"
+          },
+          "constraints": "use two dummy heads for sublists",
+          "alternatives": [
+            "two-pointer-same-direction"
+          ]
+        },
+        {
+          "id": "stack-based-reversal",
+          "name": "Stack-Based Reversal",
+          "structural_signals": [
+            "reverse-linked-list-via-stack",
+            "collect-then-reverse"
+          ],
+          "applies_when": [
+            "need to reverse linked list with simple logic",
+            "O(n) space is acceptable"
+          ],
+          "avoid_when": [
+            "O(1) space required (use in-place iterative reversal)",
+            "list is very long"
+          ],
+          "complexity": {
+            "time": "O(n)",
+            "space": "O(n)"
+          },
+          "constraints": "push all nodes to stack, pop to build reversed list",
+          "alternatives": [
+            "ll-reversal"
+          ]
+        },
+        {
+          "id": "two-pass-length-first",
+          "name": "Two-Pass Length-First",
+          "structural_signals": [
+            "find-length-then-traverse-to-position",
+            "two-pass-linked-list-traversal"
+          ],
+          "applies_when": [
+            "need to find nth from end or middle",
+            "simpler logic than fast-slow pointers"
+          ],
+          "avoid_when": [
+            "single-pass solution exists (fast-slow pointers)",
+            "list length is already known"
+          ],
+          "complexity": {
+            "time": "O(n)",
+            "space": "O(1)"
+          },
+          "constraints": "first pass counts length, second pass goes to target position",
+          "alternatives": [
+            "ll-nth-from-end",
+            "ll-fast-slow-pointers"
+          ]
+        },
+        {
+          "id": "doubly-linked-list-history",
+          "name": "Doubly Linked List History (Undo/Redo)",
+          "structural_signals": [
+            "undo-redo-via-doubly-linked-list",
+            "bidirectional-history-navigation"
+          ],
+          "applies_when": [
+            "browser history, text editor undo/redo",
+            "need bidirectional traversal of history",
+            "O(1) undo and redo"
+          ],
+          "avoid_when": [
+            "single direction only (stack suffices)",
+            "history has branching (need tree)"
+          ],
+          "complexity": {
+            "time": "O(1) per undo/redo",
+            "space": "O(n) for n states"
+          },
+          "constraints": "current pointer moves forward on action, backward on undo; new action truncates future",
+          "alternatives": [
+            "undo-operations"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "stack",
+      "name": "Stack",
+      "properties": [
+        "LIFO-order",
+        "push-pop-peek",
+        "function-call-model",
+        "depth-first-nature"
+      ],
+      "operations": {
+        "push": {
+          "time": "O(1)",
+          "space": "O(1)"
+        },
+        "pop": {
+          "time": "O(1)",
+          "space": "O(1)"
+        },
+        "peek": {
+          "time": "O(1)",
+          "space": "O(1)"
+        },
+        "is_empty": {
+          "time": "O(1)",
+          "space": "O(1)"
+        }
+      },
+      "source": "extracted",
+      "patterns": [
+        {
+          "id": "balanced-delimiters",
+          "name": "Balanced Delimiters",
+          "structural_signals": [
+            "nested-open-close-matching",
+            "push-on-open-pop-on-close",
+            "stack-empty-means-balanced"
+          ],
+          "applies_when": [
+            "validate matching brackets/parentheses/tags",
+            "nested structure validation",
+            "delimiter pairing"
+          ],
+          "avoid_when": [
+            "only one type of bracket (use counter)",
+            "need to count nesting depth only"
+          ],
+          "complexity": {
+            "time": "O(n)",
+            "space": "O(n)"
+          },
+          "constraints": "stack must be empty at end for valid input",
+          "alternatives": [
+            "counter-for-single-type"
+          ]
+        },
+        {
+          "id": "monotonic-stack",
+          "name": "Monotonic Stack",
+          "structural_signals": [
+            "next-greater-or-smaller-element",
+            "maintain-decreasing-or-increasing-invariant",
+            "pop-violated-elements-on-new-entry"
+          ],
+          "applies_when": [
+            "find next/previous greater/smaller element",
+            "histogram-type problems (largest rectangle)",
+            "temperature/stock span problems",
+            "elements popped when invariant violated give answers"
+          ],
+          "avoid_when": [
+            "need random access to stack elements",
+            "problem does not involve relative ordering comparisons"
+          ],
+          "complexity": {
+            "time": "O(n)",
+            "space": "O(n)"
+          },
+          "constraints": "each element pushed and popped at most once",
+          "alternatives": [
+            "brute-force-nested-loop"
+          ]
+        },
+        {
+          "id": "expression-evaluation",
+          "name": "Expression Evaluation",
+          "structural_signals": [
+            "operator-precedence-processing",
+            "operand-and-operator-stacks",
+            "parenthesis-scope-management"
+          ],
+          "applies_when": [
+            "evaluate mathematical expressions",
+            "convert infix to postfix (RPN)",
+            "handle operator precedence and parentheses"
+          ],
+          "avoid_when": [
+            "expression is already in postfix form",
+            "no operator precedence needed"
+          ],
+          "complexity": {
+            "time": "O(n)",
+            "space": "O(n)"
+          },
+          "constraints": "handle precedence: *, / before +, -",
+          "alternatives": [
+            "recursive-descent-parser"
+          ]
+        },
+        {
+          "id": "undo-operations",
+          "name": "Undo / History Tracking",
+          "structural_signals": [
+            "reverse-chronological-state-access",
+            "push-action-pop-to-undo",
+            "path-simplification"
+          ],
+          "applies_when": [
+            "undo last operation",
+            "simplify path by processing components",
+            "decode nested encoded strings",
+            "track state history for backtracking"
+          ],
+          "avoid_when": [
+            "need redo as well (use two stacks)",
+            "need random access to history"
+          ],
+          "complexity": {
+            "time": "O(1) per operation",
+            "space": "O(n)"
+          },
+          "constraints": "stack stores states or actions",
+          "alternatives": [
+            "doubly-linked-list-history"
+          ]
+        },
+        {
+          "id": "min-max-stack",
+          "name": "Min/Max Stack",
+          "structural_signals": [
+            "O(1)-minimum-or-maximum-query",
+            "auxiliary-stack-tracking-extremes",
+            "push-current-min-alongside-value"
+          ],
+          "applies_when": [
+            "need O(1) min/max in addition to O(1) push/pop",
+            "sliding minimum/maximum over LIFO access pattern"
+          ],
+          "avoid_when": [
+            "need FIFO min/max (use monotonic deque)"
+          ],
+          "complexity": {
+            "time": "O(1) all operations",
+            "space": "O(n)"
+          },
+          "constraints": "extra stack or tuple encoding",
+          "alternatives": [
+            "monotonic-deque"
+          ]
+        },
+        {
+          "id": "dfs-explicit-stack",
+          "name": "DFS with Explicit Stack",
+          "structural_signals": [
+            "iterative-depth-first-traversal",
+            "avoid-recursion-stack-overflow",
+            "push-children-in-reverse-order"
+          ],
+          "applies_when": [
+            "DFS on deep structures (avoid stack overflow)",
+            "need iterative control over traversal",
+            "tree/graph traversal without recursion"
+          ],
+          "avoid_when": [
+            "recursion depth is bounded and manageable",
+            "BFS is more appropriate"
+          ],
+          "complexity": {
+            "time": "O(V+E)",
+            "space": "O(V)"
+          },
+          "constraints": "push children in reverse for left-to-right order",
+          "alternatives": [
+            "recursive-dfs"
+          ]
+        },
+        {
+          "id": "counter-for-single-type",
+          "name": "Counter for Single Delimiter Type",
+          "structural_signals": [
+            "single-bracket-balance-via-counter",
+            "parenthesis-count-validation"
+          ],
+          "applies_when": [
+            "only one type of bracket to validate",
+            "count open vs close",
+            "O(1) space possible"
+          ],
+          "avoid_when": [
+            "multiple delimiter types (need stack)",
+            "need to track positions of mismatches"
+          ],
+          "complexity": {
+            "time": "O(n)",
+            "space": "O(1)"
+          },
+          "constraints": "increment on open, decrement on close; invalid if counter goes negative or ends non-zero",
+          "alternatives": [
+            "balanced-delimiters"
+          ]
+        },
+        {
+          "id": "recursive-descent-parser",
+          "name": "Recursive Descent Parser",
+          "structural_signals": [
+            "expression-parsing-via-recursive-grammar",
+            "operator-precedence-by-nesting",
+            "LL-grammar-parsing"
+          ],
+          "applies_when": [
+            "parsing expressions with operator precedence",
+            "LL(1) or LL(k) grammars",
+            "hand-written parser that's easy to extend"
+          ],
+          "avoid_when": [
+            "left-recursive grammars (infinite recursion)",
+            "simpler shunting-yard suffices for basic arithmetic",
+            "deep nesting (stack overflow risk)"
+          ],
+          "complexity": {
+            "time": "O(n) for unambiguous grammars",
+            "space": "O(n) call stack"
+          },
+          "constraints": "each non-terminal becomes a function; precedence encoded by call depth; additive calls multiplicative calls primary",
+          "alternatives": [
+            "expression-evaluation"
+          ]
+        },
+        {
+          "id": "recursive-dfs",
+          "name": "Recursive DFS",
+          "structural_signals": [
+            "depth-first-search-via-call-stack",
+            "natural-recursion-for-tree-graph"
+          ],
+          "applies_when": [
+            "tree/graph traversal where recursion depth is manageable",
+            "backtracking problems",
+            "cleaner code than explicit stack"
+          ],
+          "avoid_when": [
+            "deep graphs risk stack overflow",
+            "iterative required (explicit stack)"
+          ],
+          "complexity": {
+            "time": "O(V+E)",
+            "space": "O(V) call stack"
+          },
+          "constraints": "limited by call stack depth; Python default ~1000 frames",
+          "alternatives": [
+            "dfs-explicit-stack"
+          ]
+        },
+        {
+          "id": "monotonic-deque",
+          "name": "Monotonic Deque",
+          "structural_signals": [
+            "sliding-window-min-max-via-deque",
+            "monotonic-invariant-in-double-ended-queue"
+          ],
+          "applies_when": [
+            "sliding window maximum/minimum",
+            "maintaining monotonic order for O(1) access to extremum in window"
+          ],
+          "avoid_when": [
+            "fixed window aggregate other than min/max (use prefix sum)",
+            "no sliding window"
+          ],
+          "complexity": {
+            "time": "O(n) total",
+            "space": "O(k) where k is window size"
+          },
+          "constraints": "front of deque is always the answer; remove from back when new element is better; remove from front when out of window",
+          "alternatives": [
+            "sliding-window-maximum",
+            "heap-based-window"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "queue",
+      "name": "Queue / Deque",
+      "properties": [
+        "FIFO-order",
+        "enqueue-dequeue",
+        "breadth-first-nature",
+        "double-ended-access"
+      ],
+      "operations": {
+        "enqueue": {
+          "time": "O(1)",
+          "space": "O(1)"
+        },
+        "dequeue": {
+          "time": "O(1)",
+          "space": "O(1)"
+        },
+        "peek_front": {
+          "time": "O(1)",
+          "space": "O(1)"
+        },
+        "peek_back": {
+          "time": "O(1) (deque)",
+          "space": "O(1)"
+        },
+        "is_empty": {
+          "time": "O(1)",
+          "space": "O(1)"
+        }
+      },
+      "source": "extracted",
+      "patterns": [
+        {
+          "id": "bfs-traversal",
+          "name": "BFS Traversal",
+          "structural_signals": [
+            "layer-by-layer-exploration",
+            "shortest-path-in-unweighted-graph",
+            "level-order-processing"
+          ],
+          "applies_when": [
+            "find shortest path in unweighted graph/grid",
+            "process nodes level by level",
+            "find nearest target",
+            "explore all nodes at distance k before k+1"
+          ],
+          "avoid_when": [
+            "graph is weighted (use Dijkstra)",
+            "need all paths, not just shortest",
+            "memory constrained and graph is wide (DFS uses less)"
+          ],
+          "complexity": {
+            "time": "O(V+E)",
+            "space": "O(V)"
+          },
+          "constraints": "use visited set to avoid revisiting",
+          "alternatives": [
+            "dfs-traversal",
+            "dijkstra"
+          ]
+        },
+        {
+          "id": "multi-source-bfs",
+          "name": "Multi-Source BFS",
+          "structural_signals": [
+            "simultaneous-expansion-from-multiple-starts",
+            "initialize-queue-with-all-sources",
+            "distance-propagation-from-nearest-source"
+          ],
+          "applies_when": [
+            "compute distance from nearest source for all cells",
+            "multiple starting points expand simultaneously",
+            "rotten oranges / nearest gate type problems"
+          ],
+          "avoid_when": [
+            "single source (regular BFS)",
+            "weighted distances"
+          ],
+          "complexity": {
+            "time": "O(V+E)",
+            "space": "O(V)"
+          },
+          "constraints": "enqueue all sources at distance 0 initially",
+          "alternatives": [
+            "bfs-traversal"
+          ]
+        },
+        {
+          "id": "task-scheduling",
+          "name": "Task Scheduling",
+          "structural_signals": [
+            "process-tasks-with-cooldown-constraints",
+            "greedy-most-frequent-first",
+            "interleave-with-idle-slots",
+            "maximize-minimum-spacing-between-same-elements"
+          ],
+          "applies_when": [
+            "schedule tasks with cooldown between same-type tasks",
+            "minimize total time or idle slots",
+            "rearrange elements with distance constraint"
+          ],
+          "avoid_when": [
+            "no cooldown constraint",
+            "task order is fixed"
+          ],
+          "complexity": {
+            "time": "O(n log n)",
+            "space": "O(k)"
+          },
+          "constraints": "use max-heap for greedy selection + queue for cooldown; when answer is max achievable min distance, closed-form from max frequency may be O(N) vs O(N log N) binary search",
+          "alternatives": [
+            "greedy-formula",
+            "binary-search-on-answer"
+          ]
+        },
+        {
+          "id": "sliding-window-maximum",
+          "name": "Sliding Window Maximum (Monotonic Deque)",
+          "structural_signals": [
+            "maintain-decreasing-deque-of-candidates",
+            "front-is-always-current-maximum",
+            "remove-expired-and-smaller-elements"
+          ],
+          "applies_when": [
+            "find maximum/minimum in every window of size k",
+            "need O(n) total time for all windows",
+            "maintain ordered candidates as window slides"
+          ],
+          "avoid_when": [
+            "window size is 1 (trivial)",
+            "need more than max/min (use sorted structure)"
+          ],
+          "complexity": {
+            "time": "O(n)",
+            "space": "O(k)"
+          },
+          "constraints": "each element enters and exits deque at most once",
+          "alternatives": [
+            "heap-based-window",
+            "segment-tree"
+          ]
+        },
+        {
+          "id": "zero-one-bfs",
+          "name": "0-1 BFS (Deque-Based)",
+          "structural_signals": [
+            "graph-with-0-and-1-edge-weights",
+            "push-front-for-zero-weight",
+            "push-back-for-one-weight"
+          ],
+          "applies_when": [
+            "shortest path with only 0 and 1 weights",
+            "binary cost grid/graph",
+            "deque replaces priority queue"
+          ],
+          "avoid_when": [
+            "weights are uniform (use regular BFS)",
+            "weights are arbitrary (use Dijkstra)"
+          ],
+          "complexity": {
+            "time": "O(V+E)",
+            "space": "O(V)"
+          },
+          "constraints": "0-weight edges: push to front; 1-weight: push to back",
+          "alternatives": [
+            "dijkstra",
+            "bfs-traversal",
+            "bfs-shortest-unweighted",
+            "bellman-ford",
+            "spfa"
+          ]
+        },
+        {
+          "id": "heap-based-window",
+          "name": "Heap-Based Sliding Window",
+          "structural_signals": [
+            "sliding-window-extremum-via-heap",
+            "lazy-deletion-heap-for-window"
+          ],
+          "applies_when": [
+            "sliding window max/min when deque is hard to implement",
+            "need k-th largest in window"
+          ],
+          "avoid_when": [
+            "simple min/max (monotonic deque is O(n) vs O(n log n))",
+            "exact window boundary tracking is complex with lazy deletion"
+          ],
+          "complexity": {
+            "time": "O(n log n)",
+            "space": "O(n)"
+          },
+          "constraints": "heap with lazy deletion: mark expired elements, ignore them when they surface at top",
+          "alternatives": [
+            "sliding-window-maximum",
+            "monotonic-deque"
+          ]
+        },
+        {
+          "id": "greedy-formula",
+          "name": "Greedy Formula (Task Scheduling)",
+          "structural_signals": [
+            "scheduling-by-computed-priority",
+            "formula-based-ordering"
+          ],
+          "applies_when": [
+            "task scheduling with deadlines and penalties",
+            "priority computed by formula (e.g., processing time / weight)"
+          ],
+          "avoid_when": [
+            "dependencies between tasks (need topological sort)",
+            "multiple machines (more complex scheduling)"
+          ],
+          "complexity": {
+            "time": "O(n log n)",
+            "space": "O(n)"
+          },
+          "constraints": "sort by computed priority; often provable via exchange argument",
+          "alternatives": [
+            "task-scheduling"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "heap",
+      "name": "Heap / Priority Queue",
+      "properties": [
+        "partial-ordering",
+        "min-or-max-at-root",
+        "complete-binary-tree",
+        "array-backed"
+      ],
+      "operations": {
+        "insert": {
+          "time": "O(log n)",
+          "space": "O(1)"
+        },
+        "extract_min_max": {
+          "time": "O(log n)",
+          "space": "O(1)"
+        },
+        "peek": {
+          "time": "O(1)",
+          "space": "O(1)"
+        },
+        "heapify": {
+          "time": "O(n)",
+          "space": "O(1)"
+        }
+      },
+      "source": "extracted",
+      "patterns": [
+        {
+          "id": "heap-top-k",
+          "name": "Top-K Elements",
+          "structural_signals": [
+            "maintain-k-smallest-or-largest",
+            "min-heap-of-size-k-for-largest",
+            "stream-processing-with-bounded-memory"
+          ],
+          "applies_when": [
+            "find k largest or smallest elements",
+            "streaming data, k is much smaller than n",
+            "need sorted top-k output"
+          ],
+          "avoid_when": [
+            "k is close to n (just sort)",
+            "need exact kth element only (use quickselect)"
+          ],
+          "complexity": {
+            "time": "O(n log k)",
+            "space": "O(k)"
+          },
+          "constraints": "for k largest, use min-heap of size k",
+          "alternatives": [
+            "quick-select",
+            "sorting"
+          ]
+        },
+        {
+          "id": "heap-merge-k-sorted",
+          "name": "Merge K Sorted Sequences",
+          "structural_signals": [
+            "k-way-merge-via-min-heap",
+            "always-extract-smallest-across-heads",
+            "push-next-element-from-extracted-sequence"
+          ],
+          "applies_when": [
+            "merge k sorted lists/arrays into one",
+            "external sort merge phase",
+            "k sorted streams"
+          ],
+          "avoid_when": [
+            "k = 2 (direct two-pointer merge is simpler)",
+            "sequences are unsorted"
+          ],
+          "complexity": {
+            "time": "O(n log k)",
+            "space": "O(k)"
+          },
+          "constraints": "heap stores one element from each sequence",
+          "alternatives": [
+            "divide-and-conquer-merge",
+            "ll-merge-sorted"
+          ]
+        },
+        {
+          "id": "two-heaps-median",
+          "name": "Two Heaps (Median Maintenance)",
+          "structural_signals": [
+            "maintain-lower-half-max-heap-upper-half-min-heap",
+            "balance-sizes-for-O(1)-median",
+            "streaming-median-computation"
+          ],
+          "applies_when": [
+            "find median from data stream",
+            "maintain running median",
+            "balance two halves of sorted data"
+          ],
+          "avoid_when": [
+            "static data (just sort once)",
+            "need other percentiles (use more complex structure)"
+          ],
+          "complexity": {
+            "time": "O(log n) per insert, O(1) median",
+            "space": "O(n)"
+          },
+          "constraints": "max-heap for lower half, min-heap for upper half, balance sizes",
+          "alternatives": [
+            "sorted-array-with-binary-insert"
+          ]
+        },
+        {
+          "id": "dijkstra",
+          "name": "Dijkstra's Shortest Path",
+          "structural_signals": [
+            "weighted-graph-shortest-path",
+            "greedy-nearest-unvisited-expansion",
+            "priority-queue-distance-ordering"
+          ],
+          "applies_when": [
+            "shortest path in weighted graph with non-negative edges",
+            "single source shortest path",
+            "need minimum cost path"
+          ],
+          "avoid_when": [
+            "graph has negative edge weights (use Bellman-Ford)",
+            "graph is unweighted (use BFS)",
+            "all-pairs needed (use Floyd-Warshall)"
+          ],
+          "complexity": {
+            "time": "O((V+E) log V)",
+            "space": "O(V)"
+          },
+          "constraints": "no negative edge weights",
+          "alternatives": [
+            "bellman-ford",
+            "bfs-traversal",
+            "zero-one-bfs",
+            "bfs-shortest-unweighted",
+            "spfa"
+          ]
+        },
+        {
+          "id": "divide-and-conquer-merge",
+          "name": "Divide and Conquer Merge (k-way)",
+          "structural_signals": [
+            "merge-k-sorted-lists-via-divide-and-conquer",
+            "pairwise-merge-reduction"
+          ],
+          "applies_when": [
+            "merge k sorted lists when heap implementation is complex",
+            "naturally parallel merge process"
+          ],
+          "avoid_when": [
+            "k-way heap merge is simpler and has same complexity",
+            "k is small (just merge sequentially)"
+          ],
+          "complexity": {
+            "time": "O(n log k)",
+            "space": "O(n)"
+          },
+          "constraints": "pair up lists, merge pairs, repeat; log k rounds of O(n) work",
+          "alternatives": [
+            "heap-merge-k-sorted"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tree",
+      "name": "Tree",
+      "properties": [
+        "hierarchical",
+        "acyclic-connected-graph",
+        "parent-children-relationship",
+        "recursive-structure"
+      ],
+      "operations": {
+        "traverse": {
+          "time": "O(n)",
+          "space": "O(h)"
+        },
+        "search_bst": {
+          "time": "O(h)",
+          "space": "O(1)"
+        },
+        "insert_bst": {
+          "time": "O(h)",
+          "space": "O(1)"
+        },
+        "delete_bst": {
+          "time": "O(h)",
+          "space": "O(1)"
+        }
+      },
+      "source": "extracted",
+      "patterns": [
+        {
+          "id": "dfs-inorder",
+          "name": "DFS Inorder Traversal",
+          "structural_signals": [
+            "left-root-right-processing",
+            "sorted-order-from-BST",
+            "visit-after-left-subtree"
+          ],
+          "applies_when": [
+            "get BST elements in sorted order",
+            "find kth smallest in BST",
+            "validate BST property"
+          ],
+          "avoid_when": [
+            "need level-by-level processing (use BFS)"
+          ],
+          "complexity": {
+            "time": "O(n)",
+            "space": "O(h)"
+          },
+          "constraints": "h = height; O(log n) balanced, O(n) skewed",
+          "alternatives": [
+            "morris-traversal",
+            "dfs-explicit-stack",
+            "dfs-preorder",
+            "dfs-postorder",
+            "bfs-level-order"
+          ]
+        },
+        {
+          "id": "dfs-preorder",
+          "name": "DFS Preorder Traversal",
+          "structural_signals": [
+            "root-left-right-processing",
+            "process-node-before-children",
+            "serialization-order"
+          ],
+          "applies_when": [
+            "serialize tree",
+            "copy/clone tree structure",
+            "process parent before children"
+          ],
+          "avoid_when": [
+            "need sorted order from BST (use inorder)"
+          ],
+          "complexity": {
+            "time": "O(n)",
+            "space": "O(h)"
+          },
+          "constraints": "h = height of tree",
+          "alternatives": [
+            "dfs-inorder",
+            "bfs-level-order",
+            "dfs-postorder"
+          ]
+        },
+        {
+          "id": "dfs-postorder",
+          "name": "DFS Postorder Traversal",
+          "structural_signals": [
+            "left-right-root-processing",
+            "process-children-before-parent",
+            "bottom-up-computation"
+          ],
+          "applies_when": [
+            "compute value from children (height, size, sum)",
+            "delete tree (free children first)",
+            "evaluate expression tree"
+          ],
+          "avoid_when": [
+            "need top-down propagation"
+          ],
+          "complexity": {
+            "time": "O(n)",
+            "space": "O(h)"
+          },
+          "constraints": "natural for bottom-up aggregation",
+          "alternatives": [
+            "dfs-preorder",
+            "dfs-inorder",
+            "bfs-level-order"
+          ]
+        },
+        {
+          "id": "bfs-level-order",
+          "name": "BFS Level-Order Traversal",
+          "structural_signals": [
+            "process-nodes-level-by-level",
+            "queue-based-breadth-first",
+            "track-level-boundaries"
+          ],
+          "applies_when": [
+            "process nodes by level (zigzag, right view, averages)",
+            "find minimum depth (first leaf found = answer)",
+            "serialize level by level"
+          ],
+          "avoid_when": [
+            "need path from root to node (use DFS)",
+            "memory constrained (DFS uses O(h) vs O(w))"
+          ],
+          "complexity": {
+            "time": "O(n)",
+            "space": "O(w)"
+          },
+          "constraints": "w = max width of tree; up to n/2 at bottom level",
+          "alternatives": [
+            "dfs-preorder",
+            "dfs-inorder",
+            "dfs-postorder"
+          ]
+        },
+        {
+          "id": "binary-search-tree-ops",
+          "name": "BST Operations",
+          "structural_signals": [
+            "search-by-comparing-with-node-value",
+            "left-if-smaller-right-if-larger",
+            "maintained-ordering-invariant"
+          ],
+          "applies_when": [
+            "ordered dynamic set operations",
+            "predecessor/successor queries",
+            "range queries on sorted data"
+          ],
+          "avoid_when": [
+            "data is static (sorted array + binary search is simpler)",
+            "need O(1) lookup (use hashmap)"
+          ],
+          "complexity": {
+            "time": "O(h) per operation",
+            "space": "O(1)"
+          },
+          "constraints": "balanced BST gives O(log n); skewed gives O(n)",
+          "alternatives": [
+            "sorted-array-binary-search",
+            "hashmap"
+          ]
+        },
+        {
+          "id": "lowest-common-ancestor",
+          "name": "Lowest Common Ancestor",
+          "structural_signals": [
+            "find-deepest-shared-ancestor",
+            "split-point-where-paths-diverge",
+            "recursive-search-in-subtrees"
+          ],
+          "applies_when": [
+            "find lowest common ancestor of two nodes",
+            "in BST: compare values to find split point",
+            "in binary tree: recursive search returning found nodes"
+          ],
+          "avoid_when": [
+            "need LCA queries for many pairs (use binary lifting)"
+          ],
+          "complexity": {
+            "time": "O(n) general, O(h) BST",
+            "space": "O(h)"
+          },
+          "constraints": "both nodes must exist in tree",
+          "alternatives": [
+            "binary-lifting",
+            "euler-tour-rmq"
+          ]
+        },
+        {
+          "id": "tree-construction",
+          "name": "Tree Construction from Traversals",
+          "structural_signals": [
+            "rebuild-tree-from-inorder-plus-preorder-or-postorder",
+            "root-identification-from-preorder",
+            "partition-inorder-around-root"
+          ],
+          "applies_when": [
+            "reconstruct tree from inorder + preorder/postorder",
+            "deserialize tree from specific format"
+          ],
+          "avoid_when": [
+            "only one traversal is given (ambiguous without inorder)"
+          ],
+          "complexity": {
+            "time": "O(n)",
+            "space": "O(n)"
+          },
+          "constraints": "use hashmap for O(1) inorder index lookup",
+          "alternatives": [
+            "tree-serialization"
+          ]
+        },
+        {
+          "id": "path-sum-accumulation",
+          "name": "Path Sum Accumulation",
+          "structural_signals": [
+            "accumulate-value-along-root-to-leaf-path",
+            "carry-running-sum-as-parameter",
+            "check-condition-at-leaf"
+          ],
+          "applies_when": [
+            "check if root-to-leaf path sums to target",
+            "find all root-to-leaf paths with target sum",
+            "maximum path sum (through any path)"
+          ],
+          "avoid_when": [
+            "path does not need to be root-to-leaf (use different formulation)"
+          ],
+          "complexity": {
+            "time": "O(n)",
+            "space": "O(h)"
+          },
+          "constraints": "pass accumulated sum as parameter; check at leaves",
+          "alternatives": [
+            "prefix-sum-on-tree"
+          ]
+        },
+        {
+          "id": "tree-depth-height",
+          "name": "Tree Depth / Height Computation",
+          "structural_signals": [
+            "bottom-up-max-of-children-plus-one",
+            "leaf-base-case-returns-zero",
+            "recursive-height-aggregation"
+          ],
+          "applies_when": [
+            "compute height or depth of tree",
+            "check if tree is balanced",
+            "compute diameter (max left_height + right_height)"
+          ],
+          "avoid_when": [
+            "need minimum depth (BFS is more efficient)"
+          ],
+          "complexity": {
+            "time": "O(n)",
+            "space": "O(h)"
+          },
+          "constraints": "height = max(left, right) + 1",
+          "alternatives": [
+            "bfs-level-order"
+          ]
+        },
+        {
+          "id": "tree-serialization",
+          "name": "Tree Serialization / Deserialization",
+          "structural_signals": [
+            "encode-tree-as-string-or-array",
+            "use-null-markers-for-missing-children",
+            "preorder-with-null-sentinel"
+          ],
+          "applies_when": [
+            "serialize tree for storage or transmission",
+            "deep copy via serialize/deserialize",
+            "compare tree structures via string comparison"
+          ],
+          "avoid_when": [
+            "simple tree copy (just recursive clone)"
+          ],
+          "complexity": {
+            "time": "O(n)",
+            "space": "O(n)"
+          },
+          "constraints": "null markers needed to distinguish structure",
+          "alternatives": [
+            "tree-construction"
+          ]
+        },
+        {
+          "id": "trie-prefix-tree",
+          "name": "Trie (Prefix Tree)",
+          "structural_signals": [
+            "character-by-character-tree-traversal",
+            "shared-prefix-optimization",
+            "prefix-based-search-and-autocomplete"
+          ],
+          "applies_when": [
+            "prefix-based search or autocomplete",
+            "word dictionary with prefix queries",
+            "counting words with common prefix"
+          ],
+          "avoid_when": [
+            "exact match only (hashset is simpler)",
+            "very long strings with no shared prefixes"
+          ],
+          "complexity": {
+            "time": "O(m) per operation, m = word length",
+            "space": "O(alphabet * total_chars)"
+          },
+          "constraints": "each node has children map/array",
+          "alternatives": [
+            "hashset-membership",
+            "suffix-array"
+          ]
+        },
+        {
+          "id": "segment-tree",
+          "name": "Segment Tree",
+          "structural_signals": [
+            "range-query-with-point-or-range-updates",
+            "divide-range-into-segments",
+            "O(log n)-query-and-update"
+          ],
+          "applies_when": [
+            "range sum/min/max queries with updates",
+            "dynamic array with frequent queries and updates",
+            "interval-based aggregation"
+          ],
+          "avoid_when": [
+            "static array (prefix sum is simpler)",
+            "only point queries (direct array access)"
+          ],
+          "complexity": {
+            "time": "O(log n) query/update",
+            "space": "O(n)"
+          },
+          "constraints": "4n space for array-based implementation",
+          "alternatives": [
+            "fenwick-tree",
+            "prefix-sum",
+            "sparse-table",
+            "sqrt-decomposition"
+          ]
+        },
+        {
+          "id": "fenwick-tree",
+          "name": "Fenwick Tree (BIT)",
+          "structural_signals": [
+            "prefix-sum-with-point-updates",
+            "binary-indexed-tree",
+            "lowbit-parent-traversal"
+          ],
+          "applies_when": [
+            "prefix sum queries with point updates",
+            "simpler implementation than segment tree",
+            "cumulative frequency tables"
+          ],
+          "avoid_when": [
+            "need range updates (use lazy segment tree)",
+            "need min/max queries (segment tree)",
+            "static data (prefix sum array)"
+          ],
+          "complexity": {
+            "time": "O(log n) query/update",
+            "space": "O(n)"
+          },
+          "constraints": "1-indexed; supports prefix sum and point update",
+          "alternatives": [
+            "segment-tree",
+            "prefix-sum",
+            "sparse-table",
+            "sqrt-decomposition"
+          ]
+        },
+        {
+          "id": "binary-lifting",
+          "name": "Binary Lifting (LCA + k-th Ancestor)",
+          "structural_signals": [
+            "lca-via-jump-table",
+            "kth-ancestor-query",
+            "log-n-jumps-in-tree"
+          ],
+          "applies_when": [
+            "online LCA queries on static tree",
+            "k-th ancestor queries",
+            "path aggregate queries (max edge, sum on path)"
+          ],
+          "avoid_when": [
+            "need O(1) per query (use Euler tour + sparse table)",
+            "offline batch queries (Tarjan's is O(n + Q))",
+            "dynamic trees (use link-cut trees)"
+          ],
+          "complexity": {
+            "time": "O(n log n) preprocess, O(log n) per query",
+            "space": "O(n log n)"
+          },
+          "constraints": "build up[v][k] = 2^k-th ancestor of v; LCA: lift deeper node, then lift both until they meet",
+          "alternatives": [
+            "euler-tour-rmq",
+            "lowest-common-ancestor"
+          ]
+        },
+        {
+          "id": "euler-tour-rmq",
+          "name": "Euler Tour + RMQ (LCA)",
+          "structural_signals": [
+            "lca-reduced-to-range-minimum-query",
+            "euler-tour-depth-array"
+          ],
+          "applies_when": [
+            "many LCA queries where O(1) per query matters",
+            "problem naturally reduces to RMQ",
+            "static tree with no structural changes"
+          ],
+          "avoid_when": [
+            "dynamic trees",
+            "also need k-th ancestor (binary lifting is more natural)",
+            "path aggregate queries (use HLD)"
+          ],
+          "complexity": {
+            "time": "O(n log n) preprocess (sparse table), O(1) per query",
+            "space": "O(n log n)"
+          },
+          "constraints": "Euler tour produces 2n-1 entries; LCA(u,v) = RMQ on depth between first[u] and first[v]; Farach-Colton-Bender achieves O(n) preprocess, O(1) query",
+          "alternatives": [
+            "binary-lifting",
+            "lowest-common-ancestor"
+          ]
+        },
+        {
+          "id": "interval-tree",
+          "name": "Interval Tree",
+          "structural_signals": [
+            "dynamic-interval-overlap-queries",
+            "find-all-intervals-overlapping-point-or-range"
+          ],
+          "applies_when": [
+            "find all intervals overlapping a query interval/point",
+            "intervals inserted/deleted dynamically",
+            "scheduling conflict detection"
+          ],
+          "avoid_when": [
+            "static intervals (sweep line is simpler)",
+            "only need range-sum/range-min on points (segment tree)",
+            "non-overlapping sorted intervals (binary search)"
+          ],
+          "complexity": {
+            "time": "O(log n) insert/delete/query-one, O(k log n) query-all",
+            "space": "O(n)"
+          },
+          "constraints": "augmented BST storing intervals; each node stores max endpoint in subtree for pruning",
+          "alternatives": [
+            "segment-tree",
+            "sweep-line"
+          ]
+        },
+        {
+          "id": "prefix-sum-on-tree",
+          "name": "Prefix Sum on Tree",
+          "structural_signals": [
+            "path-sum-via-euler-tour-prefix-sum",
+            "subtree-aggregate-via-in-out-times"
+          ],
+          "applies_when": [
+            "subtree sum/count queries after Euler tour flattening",
+            "path sum using LCA: sum(root,u) + sum(root,v) - 2*sum(root,lca)"
+          ],
+          "avoid_when": [
+            "need point updates (use BIT/segment tree on Euler tour)",
+            "tree changes structure dynamically"
+          ],
+          "complexity": {
+            "time": "O(n) preprocess, O(1) per query",
+            "space": "O(n)"
+          },
+          "constraints": "flatten tree via Euler tour; subtree of v = contiguous range [in[v], out[v]]",
+          "alternatives": [
+            "path-sum-accumulation",
+            "segment-tree"
+          ]
+        },
+        {
+          "id": "treemap",
+          "name": "TreeMap / Ordered Map",
+          "structural_signals": [
+            "sorted-key-value-store",
+            "floor-ceiling-queries",
+            "ordered-iteration-over-keys"
+          ],
+          "applies_when": [
+            "need keys in sorted order",
+            "floor/ceiling/lower_bound/upper_bound queries",
+            "min/max key access",
+            "range-based operations"
+          ],
+          "avoid_when": [
+            "only need lookup/insert/delete without ordering (hashmap is O(1))",
+            "keys not comparable"
+          ],
+          "complexity": {
+            "time": "O(log n) per operation",
+            "space": "O(n)"
+          },
+          "constraints": "backed by Red-Black tree (Java TreeMap, C++ std::map); always use member lower_bound in C++ (O(log n) vs free function O(n))",
+          "alternatives": [
+            "binary-search-tree-ops",
+            "skip-list-ordered-ops"
+          ]
+        },
+        {
+          "id": "morris-traversal",
+          "name": "Morris Traversal",
+          "structural_signals": [
+            "inorder-traversal-without-stack-or-recursion",
+            "threaded-binary-tree-traversal"
+          ],
+          "applies_when": [
+            "O(1) space tree traversal required",
+            "memory extremely constrained",
+            "in-order traversal without recursion"
+          ],
+          "avoid_when": [
+            "tree is read-only/immutable (Morris temporarily modifies tree)",
+            "concurrent access (modification causes races)",
+            "simple recursive traversal is acceptable (O(h) space)"
+          ],
+          "complexity": {
+            "time": "O(n)",
+            "space": "O(1)"
+          },
+          "constraints": "temporarily creates threads (right pointers to in-order successor); restores tree structure after traversal",
+          "alternatives": [
+            "dfs-inorder",
+            "dfs-explicit-stack"
+          ]
+        },
+        {
+          "id": "sparse-table",
+          "name": "Sparse Table",
+          "structural_signals": [
+            "static-range-minimum-maximum-query",
+            "immutable-array-O1-range-query",
+            "idempotent-operation-range-query"
+          ],
+          "applies_when": [
+            "immutable array with many range min/max/gcd queries",
+            "need O(1) per query (faster than segment tree's O(log n))",
+            "LCA reduction to RMQ"
+          ],
+          "avoid_when": [
+            "array values change between queries (use segment tree)",
+            "range sum queries (use prefix sums)",
+            "memory constrained (O(N log N) space)"
+          ],
+          "complexity": {
+            "time": "O(N log N) build, O(1) query for idempotent ops",
+            "space": "O(N log N)"
+          },
+          "constraints": "precompute answers for all power-of-2-length ranges; query overlaps two precomputed ranges; only works for idempotent operations (min, max, gcd, OR)",
+          "alternatives": [
+            "segment-tree",
+            "sqrt-decomposition",
+            "prefix-sum",
+            "fenwick-tree"
+          ]
+        },
+        {
+          "id": "treap",
+          "name": "Treap (Tree + Heap)",
+          "structural_signals": [
+            "balanced-bst-with-split-merge",
+            "randomized-bst-priorities",
+            "implicit-treap-sequence-operations"
+          ],
+          "applies_when": [
+            "need split/merge as BST primitives",
+            "implicit treap for sequence operations (insert/delete at position, range reverse, range queries)",
+            "competitive programming where simplicity matters"
+          ],
+          "avoid_when": [
+            "need guaranteed worst-case O(log N) (use AVL/Red-Black)",
+            "production systems requiring deterministic behavior",
+            "simple ordered map suffices (use treemap)"
+          ],
+          "complexity": {
+            "time": "O(log N) expected all operations",
+            "space": "O(N)"
+          },
+          "constraints": "each node has key + random priority; BST property on keys, heap property on priorities; split and merge are the fundamental operations",
+          "alternatives": [
+            "treemap",
+            "binary-search-tree-ops"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "graph",
+      "name": "Graph",
+      "properties": [
+        "vertices-and-edges",
+        "directed-or-undirected",
+        "weighted-or-unweighted",
+        "cyclic-or-acyclic",
+        "adjacency-list-or-matrix"
+      ],
+      "operations": {
+        "add_vertex": {
+          "time": "O(1)",
+          "space": "O(1)"
+        },
+        "add_edge": {
+          "time": "O(1)",
+          "space": "O(1)"
+        },
+        "check_edge": {
+          "time": "O(degree) list, O(1) matrix",
+          "space": "O(1)"
+        },
+        "traverse": {
+          "time": "O(V+E)",
+          "space": "O(V)"
+        }
+      },
+      "source": "extracted",
+      "patterns": [
+        {
+          "id": "bfs-shortest-unweighted",
+          "name": "BFS Shortest Path (Unweighted)",
+          "structural_signals": [
+            "shortest-path-in-uniform-cost-graph",
+            "layer-by-layer-distance-expansion",
+            "first-visit-is-shortest"
+          ],
+          "applies_when": [
+            "shortest path in unweighted graph",
+            "minimum moves/steps to reach target",
+            "all edges have equal weight"
+          ],
+          "avoid_when": [
+            "edges have different weights",
+            "need all shortest paths (modify BFS to continue)"
+          ],
+          "complexity": {
+            "time": "O(V+E)",
+            "space": "O(V)"
+          },
+          "constraints": "mark visited when enqueuing, not when dequeuing",
+          "alternatives": [
+            "dijkstra",
+            "zero-one-bfs",
+            "bellman-ford",
+            "spfa"
+          ]
+        },
+        {
+          "id": "dfs-graph-traversal",
+          "name": "DFS Graph Traversal",
+          "structural_signals": [
+            "explore-as-deep-as-possible",
+            "backtrack-when-stuck",
+            "connected-component-discovery"
+          ],
+          "applies_when": [
+            "enumerate connected components",
+            "detect cycles",
+            "path existence check",
+            "topological ordering (reverse postorder)"
+          ],
+          "avoid_when": [
+            "need shortest path (use BFS)",
+            "need level-by-level processing"
+          ],
+          "complexity": {
+            "time": "O(V+E)",
+            "space": "O(V)"
+          },
+          "constraints": "use visited set; three-color for directed cycle detection",
+          "alternatives": [
+            "bfs-traversal"
+          ]
+        },
+        {
+          "id": "topological-sort",
+          "name": "Topological Sort",
+          "structural_signals": [
+            "dependency-ordering-in-DAG",
+            "process-prerequisites-before-dependents",
+            "kahn-BFS-or-DFS-reverse-postorder"
+          ],
+          "applies_when": [
+            "order tasks with dependencies",
+            "course schedule / build order",
+            "DAG processing order"
+          ],
+          "avoid_when": [
+            "graph has cycles (no valid topological order)",
+            "graph is undirected"
+          ],
+          "complexity": {
+            "time": "O(V+E)",
+            "space": "O(V)"
+          },
+          "constraints": "only valid for DAGs; Kahn's detects cycles",
+          "alternatives": [
+            "dfs-graph-traversal"
+          ]
+        },
+        {
+          "id": "union-find-connectivity",
+          "name": "Union-Find (Disjoint Set)",
+          "structural_signals": [
+            "dynamic-connectivity-queries",
+            "merge-sets-and-query-membership",
+            "path-compression-and-union-by-rank"
+          ],
+          "applies_when": [
+            "dynamic connectivity: are two nodes connected?",
+            "count connected components as edges are added",
+            "cycle detection in undirected graph",
+            "Kruskal's MST"
+          ],
+          "avoid_when": [
+            "need to split/disconnect components",
+            "static graph (BFS/DFS is simpler)"
+          ],
+          "complexity": {
+            "time": "O(alpha(n)) per operation",
+            "space": "O(n)"
+          },
+          "constraints": "path compression + union by rank for near-O(1)",
+          "alternatives": [
+            "dfs-graph-traversal",
+            "bfs-traversal",
+            "flood-fill"
+          ]
+        },
+        {
+          "id": "flood-fill",
+          "name": "Flood Fill",
+          "structural_signals": [
+            "connected-region-in-grid",
+            "BFS-or-DFS-from-starting-cell",
+            "propagate-to-same-value-neighbors"
+          ],
+          "applies_when": [
+            "fill connected region in grid",
+            "count islands / connected regions",
+            "paint bucket tool behavior"
+          ],
+          "avoid_when": [
+            "need to find disconnected components efficiently (use union-find)"
+          ],
+          "complexity": {
+            "time": "O(rows * cols)",
+            "space": "O(rows * cols)"
+          },
+          "constraints": "mark visited to avoid infinite loops",
+          "alternatives": [
+            "union-find-connectivity"
+          ]
+        },
+        {
+          "id": "bellman-ford",
+          "name": "Bellman-Ford",
+          "structural_signals": [
+            "shortest-path-with-negative-weights",
+            "relax-all-edges-V-1-times",
+            "detect-negative-cycles"
+          ],
+          "applies_when": [
+            "shortest path with negative edge weights",
+            "detect negative cycles",
+            "at most k edges constraint"
+          ],
+          "avoid_when": [
+            "all weights non-negative (Dijkstra is faster)",
+            "dense graph (Floyd-Warshall may be simpler)"
+          ],
+          "complexity": {
+            "time": "O(V*E)",
+            "space": "O(V)"
+          },
+          "constraints": "V-1 relaxation rounds; Vth round detects negative cycle",
+          "alternatives": [
+            "dijkstra",
+            "spfa",
+            "bfs-shortest-unweighted",
+            "zero-one-bfs"
+          ]
+        },
+        {
+          "id": "spfa",
+          "name": "SPFA (Shortest Path Faster Algorithm)",
+          "structural_signals": [
+            "bellman-ford-with-queue-optimization",
+            "shortest-path-negative-weights-fast-in-practice"
+          ],
+          "applies_when": [
+            "shortest path with negative edges (practical speedup over Bellman-Ford)",
+            "sparse graphs where most relaxations are unnecessary",
+            "competitive programming where SPFA is fast enough in practice"
+          ],
+          "avoid_when": [
+            "worst case O(V*E) same as Bellman-Ford — can be adversarially slow",
+            "non-negative weights (Dijkstra is better)",
+            "need guaranteed worst-case performance"
+          ],
+          "complexity": {
+            "time": "O(V*E) worst, O(E) average in practice",
+            "space": "O(V)"
+          },
+          "constraints": "queue-based Bellman-Ford; only enqueue vertices whose distance improved; degenerate to O(V*E) on adversarial graphs",
+          "alternatives": [
+            "bellman-ford",
+            "dijkstra",
+            "bfs-shortest-unweighted",
+            "zero-one-bfs"
+          ]
+        },
+        {
+          "id": "floyd-warshall",
+          "name": "Floyd-Warshall",
+          "structural_signals": [
+            "all-pairs-shortest-paths",
+            "dynamic-programming-on-intermediate-vertices",
+            "dense-graph-distance-matrix"
+          ],
+          "applies_when": [
+            "all-pairs shortest paths",
+            "small graph (V up to ~500)",
+            "detect negative cycles (diagonal < 0)"
+          ],
+          "avoid_when": [
+            "single-source shortest path (Dijkstra/BFS is faster)",
+            "large graph (O(V^3) is too slow)"
+          ],
+          "complexity": {
+            "time": "O(V^3)",
+            "space": "O(V^2)"
+          },
+          "constraints": "triple nested loop: for k, for i, for j",
+          "alternatives": [
+            "dijkstra",
+            "bellman-ford"
+          ]
+        },
+        {
+          "id": "tarjan-scc",
+          "name": "Tarjan's SCC",
+          "structural_signals": [
+            "strongly-connected-components",
+            "DFS-with-low-link-values",
+            "stack-based-component-collection"
+          ],
+          "applies_when": [
+            "find strongly connected components in directed graph",
+            "2-SAT problem",
+            "condensation graph construction"
+          ],
+          "avoid_when": [
+            "undirected graph (use regular DFS for components)",
+            "only need connectivity, not strong connectivity"
+          ],
+          "complexity": {
+            "time": "O(V+E)",
+            "space": "O(V)"
+          },
+          "constraints": "maintain discovery time and low-link values",
+          "alternatives": [
+            "kosaraju-scc"
+          ]
+        },
+        {
+          "id": "kruskal-mst",
+          "name": "Kruskal's MST",
+          "structural_signals": [
+            "minimum-spanning-tree-via-sorted-edges",
+            "greedy-add-cheapest-non-cycle-edge",
+            "union-find-for-cycle-detection"
+          ],
+          "applies_when": [
+            "find minimum spanning tree",
+            "sparse graph (E << V^2)",
+            "edges are naturally given as list"
+          ],
+          "avoid_when": [
+            "dense graph (Prim's is better)",
+            "graph is not connected (produces forest)"
+          ],
+          "complexity": {
+            "time": "O(E log E)",
+            "space": "O(V)"
+          },
+          "constraints": "sort edges by weight; use union-find",
+          "alternatives": [
+            "prim-mst"
+          ]
+        },
+        {
+          "id": "prim-mst",
+          "name": "Prim's MST",
+          "structural_signals": [
+            "grow-MST-from-single-vertex",
+            "always-add-cheapest-edge-to-tree",
+            "priority-queue-for-edge-selection"
+          ],
+          "applies_when": [
+            "minimum spanning tree on dense graph",
+            "graph given as adjacency matrix/list",
+            "need to grow tree incrementally"
+          ],
+          "avoid_when": [
+            "sparse graph (Kruskal's is simpler)",
+            "edges given as list (Kruskal's is more natural)"
+          ],
+          "complexity": {
+            "time": "O(E log V)",
+            "space": "O(V)"
+          },
+          "constraints": "use priority queue for efficient minimum edge selection",
+          "alternatives": [
+            "kruskal-mst"
+          ]
+        },
+        {
+          "id": "bipartite-check",
+          "name": "Bipartite Check (2-Coloring)",
+          "structural_signals": [
+            "alternate-colors-in-BFS-or-DFS",
+            "no-odd-length-cycles",
+            "two-group-assignment"
+          ],
+          "applies_when": [
+            "check if graph is bipartite",
+            "two-group assignment problem",
+            "detect odd-length cycles"
+          ],
+          "avoid_when": [
+            "directed graph (bipartite is for undirected)",
+            "need more than 2 colors"
+          ],
+          "complexity": {
+            "time": "O(V+E)",
+            "space": "O(V)"
+          },
+          "constraints": "color nodes alternately; conflict = not bipartite",
+          "alternatives": [
+            "union-find-connectivity"
+          ]
+        },
+        {
+          "id": "hungarian-algorithm",
+          "name": "Hungarian Algorithm (Kuhn-Munkres)",
+          "structural_signals": [
+            "maximize-total-weight-in-bipartite-assignment",
+            "one-to-one-matching-with-costs",
+            "assignment-problem-matrix"
+          ],
+          "applies_when": [
+            "assign N items from group A to N items in group B with costs",
+            "each item assigned to exactly one other (1-to-1)",
+            "maximize total value or minimize total cost of assignments",
+            "greedy highest-value-first fails because it blocks better global assignments"
+          ],
+          "avoid_when": [
+            "unweighted matching (use Hopcroft-Karp instead)",
+            "not a bipartite structure",
+            "N > 1000 (O(N^3) becomes slow)"
+          ],
+          "complexity": {
+            "time": "O(N^3)",
+            "space": "O(N^2)"
+          },
+          "constraints": "works on bipartite graphs; build cost matrix N×M; for max-weight, negate costs and run min-cost version",
+          "alternatives": [
+            "bipartite-matching",
+            "min-cost-max-flow",
+            "binary-search-on-answer"
+          ]
+        },
+        {
+          "id": "bipartite-matching",
+          "name": "Bipartite Matching (Hopcroft-Karp)",
+          "structural_signals": [
+            "maximum-matching-in-bipartite-graph",
+            "one-to-one-assignment-feasibility",
+            "augmenting-path-in-two-sided-graph"
+          ],
+          "applies_when": [
+            "find maximum cardinality matching in bipartite graph",
+            "check if perfect matching exists (feasibility)",
+            "binary search on answer + matching feasibility check",
+            "unweighted 1-to-1 assignment"
+          ],
+          "avoid_when": [
+            "matching has weights/costs (use Hungarian algorithm)",
+            "graph is not bipartite",
+            "simple greedy matching suffices (e.g., all items compatible)"
+          ],
+          "complexity": {
+            "time": "O(E * sqrt(V))",
+            "space": "O(V + E)"
+          },
+          "constraints": "Hopcroft-Karp for unweighted; for weighted use Hungarian or min-cost-max-flow",
+          "alternatives": [
+            "hungarian-algorithm",
+            "min-cost-max-flow",
+            "binary-search-on-answer"
+          ]
+        },
+        {
+          "id": "min-cost-max-flow",
+          "name": "Min-Cost Max-Flow",
+          "structural_signals": [
+            "flow-network-with-edge-costs",
+            "assignment-with-capacities-and-costs",
+            "generalized-matching-with-weights"
+          ],
+          "applies_when": [
+            "assignment problem where items have capacities > 1",
+            "flow network with both capacities and per-unit costs",
+            "generalized bipartite matching with weights and capacities"
+          ],
+          "avoid_when": [
+            "simple 1-to-1 assignment (use Hungarian, simpler)",
+            "no costs on edges (use max-flow alone)",
+            "graph is small enough for Hungarian O(N^3)"
+          ],
+          "complexity": {
+            "time": "O(V^2 * E) or O(V * E * log V) with potentials",
+            "space": "O(V + E)"
+          },
+          "constraints": "model as flow network: source → left nodes → right nodes → sink; edge costs = negative revenue for max-revenue problems",
+          "alternatives": [
+            "hungarian-algorithm",
+            "bipartite-matching"
+          ]
+        },
+        {
+          "id": "topological-sort-longest-path",
+          "name": "Topological Sort + Longest Path (Critical Path)",
+          "structural_signals": [
+            "parallel-execution-in-DAG",
+            "critical-path-through-pipeline",
+            "total-latency-with-parallel-branches"
+          ],
+          "applies_when": [
+            "DAG where independent branches execute in parallel",
+            "parent waits for ALL children to complete (slowest child is bottleneck)",
+            "find total completion time = longest path, not shortest",
+            "project scheduling / critical path method (CPM)"
+          ],
+          "avoid_when": [
+            "graph has cycles (not a DAG)",
+            "execution is sequential, not parallel (use regular shortest/longest path)",
+            "need shortest path (this finds LONGEST)"
+          ],
+          "complexity": {
+            "time": "O(V+E)",
+            "space": "O(V+E)"
+          },
+          "constraints": "topological sort then DP: for each node, completion_time[v] = processing_time[v] + max(completion_time[u] for all parents u); the answer is max over all nodes",
+          "alternatives": [
+            "topological-sort",
+            "dfs-graph-traversal"
+          ]
+        },
+        {
+          "id": "kosaraju-scc",
+          "name": "Kosaraju's SCC",
+          "structural_signals": [
+            "strongly-connected-components-two-pass",
+            "scc-via-transpose-graph"
+          ],
+          "applies_when": [
+            "find all SCCs in directed graph",
+            "build condensation DAG for further processing (2-SAT)",
+            "conceptual simplicity matters"
+          ],
+          "avoid_when": [
+            "undirected graph (use connected components)",
+            "cannot store transpose graph (memory constrained)",
+            "Tarjan's single-pass is preferred for efficiency"
+          ],
+          "complexity": {
+            "time": "O(V+E)",
+            "space": "O(V+E)"
+          },
+          "constraints": "two DFS passes: first on original graph for finish order, second on transposed graph in reverse finish order",
+          "alternatives": [
+            "tarjan-scc"
+          ]
+        },
+        {
+          "id": "dfs-traversal",
+          "name": "DFS Traversal (Generic)",
+          "structural_signals": [
+            "depth-first-exploration",
+            "explore-as-deep-as-possible-first"
+          ],
+          "applies_when": [
+            "cycle detection, topological sort, connected components",
+            "pathfinding where any path suffices (not shortest)",
+            "backtracking and exhaustive search"
+          ],
+          "avoid_when": [
+            "need shortest path in unweighted graph (use BFS)",
+            "level-order processing needed"
+          ],
+          "complexity": {
+            "time": "O(V+E)",
+            "space": "O(V)"
+          },
+          "constraints": "uses stack (call stack or explicit); may hit recursion limit for deep graphs",
+          "alternatives": [
+            "bfs-traversal"
+          ]
+        },
+        {
+          "id": "dinics-max-flow",
+          "name": "Dinic's Algorithm (Maximum Flow)",
+          "structural_signals": [
+            "maximum-flow-in-network",
+            "min-cut-max-flow-duality",
+            "capacitated-edge-network"
+          ],
+          "applies_when": [
+            "find maximum flow from source to sink",
+            "minimum cut problems (max-flow = min-cut)",
+            "bipartite matching at scale (O(E*sqrt(V)) on unit networks)"
+          ],
+          "avoid_when": [
+            "only need simple augmenting paths (Edmonds-Karp is simpler)",
+            "no capacity constraints",
+            "graph is too small to justify complexity"
+          ],
+          "complexity": {
+            "time": "O(V^2 * E)",
+            "space": "O(V + E)"
+          },
+          "constraints": "layered BFS + blocking flow DFS; O(E*sqrt(V)) on unit-capacity networks; consistently fast in practice",
+          "alternatives": [
+            "bipartite-matching",
+            "min-cost-max-flow"
+          ]
+        },
+        {
+          "id": "articulation-points",
+          "name": "Articulation Points (Cut Vertices)",
+          "structural_signals": [
+            "vertex-removal-disconnects-graph",
+            "single-point-of-failure-detection",
+            "biconnected-component-decomposition"
+          ],
+          "applies_when": [
+            "find critical nodes whose removal disconnects the graph",
+            "network reliability analysis",
+            "infrastructure single-point-of-failure detection"
+          ],
+          "avoid_when": [
+            "directed graphs (use SCC algorithms)",
+            "need edge criticality not vertex (use bridge finding)",
+            "graph is already known to be 2-connected"
+          ],
+          "complexity": {
+            "time": "O(V+E)",
+            "space": "O(V)"
+          },
+          "constraints": "DFS with disc[]/low[] arrays; root is AP if 2+ children; non-root v is AP if child to has low[to] >= disc[v]",
+          "alternatives": [
+            "bridge-finding",
+            "tarjan-scc"
+          ]
+        },
+        {
+          "id": "bridge-finding",
+          "name": "Bridge Finding (Cut Edges)",
+          "structural_signals": [
+            "edge-removal-disconnects-graph",
+            "critical-link-identification",
+            "two-edge-connected-components"
+          ],
+          "applies_when": [
+            "find critical edges whose removal disconnects the graph",
+            "network link vulnerability analysis",
+            "2-edge-connected component decomposition"
+          ],
+          "avoid_when": [
+            "directed graphs",
+            "need vertex criticality (use articulation points)",
+            "dynamic graph with edge insertions"
+          ],
+          "complexity": {
+            "time": "O(V+E)",
+            "space": "O(V)"
+          },
+          "constraints": "DFS with disc[]/low[]; edge (v,to) is bridge if low[to] > disc[v] (strictly greater, unlike articulation points which use >=)",
+          "alternatives": [
+            "articulation-points",
+            "tarjan-scc"
+          ]
+        },
+        {
+          "id": "eulerian-path",
+          "name": "Eulerian Path/Circuit (Hierholzer's)",
+          "structural_signals": [
+            "visit-every-edge-exactly-once",
+            "route-covering-all-connections",
+            "degree-based-path-existence"
+          ],
+          "applies_when": [
+            "visit every edge exactly once (Eulerian path/circuit)",
+            "route optimization (mail delivery, snow plowing)",
+            "de Bruijn sequence construction"
+          ],
+          "avoid_when": [
+            "visit every VERTEX once (Hamiltonian — NP-complete)",
+            "degree conditions not satisfied (no Eulerian path exists)",
+            "need shortest path not edge-covering path"
+          ],
+          "complexity": {
+            "time": "O(V+E)",
+            "space": "O(V+E)"
+          },
+          "constraints": "undirected: circuit if all even degree, path if exactly 2 odd; directed: circuit if in-deg=out-deg for all, path if one vertex out-in=1 and one in-out=1",
+          "alternatives": [
+            "dfs-graph-traversal"
+          ]
+        },
+        {
+          "id": "two-sat",
+          "name": "2-SAT (Boolean Satisfiability)",
+          "structural_signals": [
+            "binary-constraints-pairwise",
+            "implication-graph-satisfiability",
+            "two-literals-per-clause"
+          ],
+          "applies_when": [
+            "boolean formula with exactly 2 literals per clause",
+            "binary choices with pairwise constraints",
+            "scheduling with mutual exclusions or forced implications"
+          ],
+          "avoid_when": [
+            "3+ literals per clause (3-SAT is NP-complete)",
+            "need to count solutions or find optimal",
+            "constraints are not naturally pairwise"
+          ],
+          "complexity": {
+            "time": "O(N+M) where N=variables, M=clauses",
+            "space": "O(N+M)"
+          },
+          "constraints": "convert (a OR b) to implications NOT a->b and NOT b->a; build implication graph; find SCCs; unsatisfiable iff x and NOT x in same SCC",
+          "alternatives": [
+            "constraint-satisfaction",
+            "backtracking"
+          ]
+        },
+        {
+          "id": "functional-graph",
+          "name": "Functional Graph (Successor Graph)",
+          "structural_signals": [
+            "each-node-has-one-outgoing-edge",
+            "rho-shaped-components",
+            "iterated-function-queries"
+          ],
+          "applies_when": [
+            "each state has unique successor (f: V -> V)",
+            "find where you end up after K steps (binary lifting)",
+            "detect cycles in iterated functions",
+            "permutation cycle decomposition"
+          ],
+          "avoid_when": [
+            "nodes have multiple outgoing edges (general graph)",
+            "need shortest paths",
+            "successor function changes over time"
+          ],
+          "complexity": {
+            "time": "O(N log N) build, O(log N) per query",
+            "space": "O(N log N)"
+          },
+          "constraints": "binary lifting table: jump[v][k] = 2^k-th successor of v; cycle detection via Floyd's or coloring in O(N)",
+          "alternatives": [
+            "binary-lifting",
+            "ll-fast-slow-pointers"
+          ]
+        },
+        {
+          "id": "geometric-sweep-line",
+          "name": "Geometric Sweep Line",
+          "structural_signals": [
+            "2d-event-processing-by-coordinate",
+            "line-segment-intersection-detection",
+            "rectangle-union-area"
+          ],
+          "applies_when": [
+            "line segment intersection detection (Bentley-Ottmann)",
+            "area of union of rectangles",
+            "closest pair via sweep with active set",
+            "skyline problem"
+          ],
+          "avoid_when": [
+            "higher dimensions (sweep generalizes poorly)",
+            "global geometric structure needed (use Voronoi)",
+            "dynamic point insertions (use KD-tree)"
+          ],
+          "complexity": {
+            "time": "O(N log N) typical, O((N+K) log N) for K intersections",
+            "space": "O(N)"
+          },
+          "constraints": "sweep vertical line left to right; maintain active set in balanced BST ordered by y-coordinate",
+          "alternatives": [
+            "sweep-line",
+            "closest-pair-of-points"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "disjoint-set",
+      "name": "Disjoint Set (Union-Find)",
+      "properties": [
+        "partition-into-disjoint-sets",
+        "union-and-find-operations",
+        "path-compression",
+        "union-by-rank"
+      ],
+      "operations": {
+        "find": {
+          "time": "O(alpha(n))",
+          "space": "O(1)"
+        },
+        "union": {
+          "time": "O(alpha(n))",
+          "space": "O(1)"
+        },
+        "connected": {
+          "time": "O(alpha(n))",
+          "space": "O(1)"
+        }
+      },
+      "source": "extracted",
+      "patterns": [
+        {
+          "id": "uf-dynamic-connectivity",
+          "name": "Dynamic Connectivity",
+          "structural_signals": [
+            "online-edge-additions-with-connectivity-queries",
+            "component-counting-as-edges-arrive",
+            "merge-groups-incrementally"
+          ],
+          "applies_when": [
+            "edges arrive one at a time",
+            "need to answer 'are x and y connected?' dynamically",
+            "count components after each edge"
+          ],
+          "avoid_when": [
+            "edges can be removed (need link-cut tree)",
+            "graph is static (BFS/DFS is simpler)"
+          ],
+          "complexity": {
+            "time": "O(alpha(n)) per operation",
+            "space": "O(n)"
+          },
+          "constraints": "path compression + union by rank",
+          "alternatives": [
+            "dfs-graph-traversal"
+          ]
+        },
+        {
+          "id": "uf-cycle-detection",
+          "name": "Cycle Detection via Union-Find",
+          "structural_signals": [
+            "edge-connects-same-component-means-cycle",
+            "undirected-graph-cycle-check",
+            "process-edges-one-by-one"
+          ],
+          "applies_when": [
+            "detect cycle in undirected graph",
+            "redundant connection finding",
+            "minimum spanning tree validation"
+          ],
+          "avoid_when": [
+            "directed graph (use DFS three-color)",
+            "need to find the actual cycle path"
+          ],
+          "complexity": {
+            "time": "O(E * alpha(V))",
+            "space": "O(V)"
+          },
+          "constraints": "if find(u) == find(v) before union, cycle exists",
+          "alternatives": [
+            "dfs-graph-traversal"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bloom-filter",
+      "name": "Bloom Filter",
+      "properties": [
+        "probabilistic-membership",
+        "space-efficient",
+        "no-false-negatives",
+        "possible-false-positives",
+        "no-deletion"
+      ],
+      "operations": {
+        "add": {
+          "time": "O(k)",
+          "space": "O(1)"
+        },
+        "contains": {
+          "time": "O(k)",
+          "space": "O(1)"
+        },
+        "false_positive_rate": {
+          "time": "N/A",
+          "space": "O(m) bits"
+        }
+      },
+      "source": "authored",
+      "patterns": [
+        {
+          "id": "bloom-pre-filter",
+          "name": "Bloom Pre-Filter",
+          "structural_signals": [
+            "fast-negative-membership-test",
+            "reduce-expensive-lookups",
+            "probabilistic-first-pass"
+          ],
+          "applies_when": [
+            "need to quickly reject non-members before expensive check",
+            "memory is constrained and false positives are acceptable",
+            "large set with infrequent positive lookups"
+          ],
+          "avoid_when": [
+            "false positives are unacceptable",
+            "need deletion support (use counting bloom filter)",
+            "set is small enough for exact membership"
+          ],
+          "complexity": {
+            "time": "O(k) per operation",
+            "space": "O(m) bits"
+          },
+          "constraints": "k = number of hash functions; m = bit array size; tune for target FP rate",
+          "alternatives": [
+            "hashset-membership",
+            "cuckoo-filter"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "skip-list",
+      "name": "Skip List",
+      "properties": [
+        "probabilistic-balancing",
+        "layered-linked-lists",
+        "ordered",
+        "expected-logarithmic-operations"
+      ],
+      "operations": {
+        "search": {
+          "time": "O(log n) expected",
+          "space": "O(1)"
+        },
+        "insert": {
+          "time": "O(log n) expected",
+          "space": "O(1)"
+        },
+        "delete": {
+          "time": "O(log n) expected",
+          "space": "O(1)"
+        },
+        "range_query": {
+          "time": "O(log n + k)",
+          "space": "O(1)"
+        }
+      },
+      "source": "authored",
+      "patterns": [
+        {
+          "id": "skip-list-ordered-ops",
+          "name": "Skip List Ordered Operations",
+          "structural_signals": [
+            "concurrent-friendly-ordered-structure",
+            "probabilistic-balance-without-rotation",
+            "range-scan-at-bottom-level"
+          ],
+          "applies_when": [
+            "need ordered set/map with concurrent access",
+            "simpler implementation than balanced BST",
+            "range queries needed"
+          ],
+          "avoid_when": [
+            "deterministic worst-case needed (use balanced BST)",
+            "space is critical (overhead of multiple levels)"
+          ],
+          "complexity": {
+            "time": "O(log n) expected",
+            "space": "O(n) expected"
+          },
+          "constraints": "coin-flip level assignment; p = 0.5 or 0.25",
+          "alternatives": [
+            "binary-search-tree-ops",
+            "treemap"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "b-tree",
+      "name": "B-Tree",
+      "properties": [
+        "self-balancing",
+        "multi-way-search-tree",
+        "disk-optimized",
+        "high-branching-factor",
+        "all-leaves-same-depth"
+      ],
+      "operations": {
+        "search": {
+          "time": "O(log n)",
+          "space": "O(1)"
+        },
+        "insert": {
+          "time": "O(log n)",
+          "space": "O(1)"
+        },
+        "delete": {
+          "time": "O(log n)",
+          "space": "O(1)"
+        },
+        "range_query": {
+          "time": "O(log n + k)",
+          "space": "O(1)"
+        }
+      },
+      "source": "authored",
+      "patterns": [
+        {
+          "id": "b-tree-disk-optimized",
+          "name": "B-Tree Disk-Optimized Storage",
+          "structural_signals": [
+            "minimize-disk-seeks",
+            "large-node-size-matching-page",
+            "database-index-structure"
+          ],
+          "applies_when": [
+            "data too large for memory (disk-based)",
+            "database indexing",
+            "file system metadata"
+          ],
+          "avoid_when": [
+            "data fits in memory (use balanced BST or hashmap)",
+            "no disk I/O concerns"
+          ],
+          "complexity": {
+            "time": "O(log_B n) disk seeks",
+            "space": "O(n)"
+          },
+          "constraints": "B chosen to match disk page size (typically 4KB-16KB)",
+          "alternatives": [
+            "binary-search-tree-ops",
+            "lsm-tree"
+          ]
+        },
+        {
+          "id": "lsm-tree",
+          "name": "LSM Tree (Log-Structured Merge)",
+          "structural_signals": [
+            "write-optimized-storage",
+            "append-then-compact",
+            "level-based-compaction"
+          ],
+          "applies_when": [
+            "write-heavy workloads (logging, time-series, event sourcing)",
+            "sequential I/O throughput matters",
+            "used in LevelDB, RocksDB, Cassandra, HBase"
+          ],
+          "avoid_when": [
+            "read-heavy workloads (B-tree is faster)",
+            "small datasets fitting in memory",
+            "low read latency critical",
+            "SSD write amplification concern"
+          ],
+          "complexity": {
+            "time": "O(1) amortized write, O(L) read where L=levels",
+            "space": "O(n)"
+          },
+          "constraints": "write amplification 10-30x; Bloom filters on SSTables reduce read cost; leveled vs tiered compaction tradeoff",
+          "alternatives": [
+            "b-tree-disk-optimized"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "circular-buffer",
+      "name": "Circular Buffer (Ring Buffer)",
+      "properties": [
+        "fixed-capacity",
+        "wrap-around-indexing",
+        "FIFO-with-overwrite",
+        "contiguous-memory"
+      ],
+      "operations": {
+        "enqueue": {
+          "time": "O(1)",
+          "space": "O(1)"
+        },
+        "dequeue": {
+          "time": "O(1)",
+          "space": "O(1)"
+        },
+        "peek": {
+          "time": "O(1)",
+          "space": "O(1)"
+        },
+        "is_full": {
+          "time": "O(1)",
+          "space": "O(1)"
+        }
+      },
+      "source": "authored",
+      "patterns": [
+        {
+          "id": "circular-buffer-streaming",
+          "name": "Streaming Data Buffer",
+          "structural_signals": [
+            "fixed-memory-FIFO-processing",
+            "oldest-data-overwritten",
+            "producer-consumer-ring"
+          ],
+          "applies_when": [
+            "fixed-size buffer for streaming data",
+            "moving average or recent history window",
+            "producer-consumer with bounded buffer"
+          ],
+          "avoid_when": [
+            "need unbounded growth (use dynamic array/deque)",
+            "need random access by content (use hashmap)"
+          ],
+          "complexity": {
+            "time": "O(1) all operations",
+            "space": "O(k)"
+          },
+          "constraints": "k = buffer capacity; head and tail pointers wrap around",
+          "alternatives": [
+            "queue",
+            "monotonic-deque"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "suffix-array",
+      "name": "Suffix Array / Suffix Tree",
+      "properties": [
+        "all-suffixes-sorted",
+        "substring-search-via-binary-search",
+        "LCP-array-companion",
+        "space-efficient-vs-suffix-tree"
+      ],
+      "operations": {
+        "build": {
+          "time": "O(n log n) or O(n)",
+          "space": "O(n)"
+        },
+        "search_substring": {
+          "time": "O(m log n)",
+          "space": "O(1)"
+        },
+        "lcp_query": {
+          "time": "O(1) with RMQ",
+          "space": "O(n)"
+        }
+      },
+      "source": "authored",
+      "patterns": [
+        {
+          "id": "suffix-array-substring-search",
+          "name": "Suffix Array Substring Search",
+          "structural_signals": [
+            "all-suffixes-sorted-for-binary-search",
+            "repeated-substring-via-LCP",
+            "multiple-pattern-queries-on-same-text"
+          ],
+          "applies_when": [
+            "many substring queries on same text",
+            "find longest repeated substring",
+            "find number of distinct substrings"
+          ],
+          "avoid_when": [
+            "single pattern search (KMP is simpler)",
+            "text changes frequently (rebuild is expensive)"
+          ],
+          "complexity": {
+            "time": "O(n log n) build, O(m log n) query",
+            "space": "O(n)"
+          },
+          "constraints": "pair with LCP array for repeated substring problems",
+          "alternatives": [
+            "kmp-string-matching",
+            "trie-prefix-tree"
+          ]
+        },
+        {
+          "id": "suffix-array",
+          "name": "Suffix Array (Pattern Alternative)",
+          "structural_signals": [
+            "sorted-suffixes-for-substring-operations",
+            "suffix-based-string-indexing"
+          ],
+          "applies_when": [
+            "multiple substring searches on fixed text",
+            "LCP queries",
+            "text is fixed and patterns vary"
+          ],
+          "avoid_when": [
+            "text changes frequently",
+            "single pattern search (use KMP)",
+            "need prefix search (use trie)"
+          ],
+          "complexity": {
+            "time": "O(n log n) build, O(m log n) per query",
+            "space": "O(n)"
+          },
+          "constraints": "sort all suffixes; binary search for pattern; LCP array enables O(1) LCP queries with RMQ",
+          "alternatives": [
+            "trie-prefix-tree",
+            "kmp-string-matching"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dp",
+      "name": "Dynamic Programming",
+      "properties": [
+        "optimal-substructure",
+        "overlapping-subproblems",
+        "memoization-or-tabulation",
+        "state-transition-recurrence"
+      ],
+      "operations": {
+        "compute": {
+          "time": "depends on states and transitions",
+          "space": "depends on state space"
+        }
+      },
+      "source": "extracted",
+      "patterns": [
+        {
+          "id": "memoization-top-down",
+          "name": "Memoization (Top-Down)",
+          "structural_signals": [
+            "recursive-with-cache",
+            "compute-on-demand-and-store",
+            "natural-recursive-decomposition"
+          ],
+          "applies_when": [
+            "recursive solution has overlapping subproblems",
+            "not all subproblems need to be solved",
+            "natural recursive formulation exists"
+          ],
+          "avoid_when": [
+            "all subproblems will be solved (tabulation avoids overhead)",
+            "recursion depth would cause stack overflow",
+            "space optimization by rolling array is needed"
+          ],
+          "complexity": {
+            "time": "O(states * transition_cost)",
+            "space": "O(states)"
+          },
+          "constraints": "cache key must fully represent state",
+          "alternatives": [
+            "tabulation-bottom-up"
+          ]
+        },
+        {
+          "id": "tabulation-bottom-up",
+          "name": "Tabulation (Bottom-Up)",
+          "structural_signals": [
+            "iterative-fill-table-from-base-cases",
+            "compute-all-subproblems-in-order",
+            "space-optimization-via-rolling-array"
+          ],
+          "applies_when": [
+            "all subproblems need to be solved",
+            "want to avoid recursion overhead",
+            "space optimization by keeping only last row/column"
+          ],
+          "avoid_when": [
+            "many subproblems are never needed",
+            "recursive formulation is much clearer"
+          ],
+          "complexity": {
+            "time": "O(states * transition_cost)",
+            "space": "O(states), optimizable"
+          },
+          "constraints": "determine correct fill order from base cases",
+          "alternatives": [
+            "memoization-top-down",
+            "greedy"
+          ]
+        },
+        {
+          "id": "state-compression-bitmask",
+          "name": "Bitmask DP",
+          "structural_signals": [
+            "subset-represented-as-bitmask",
+            "exponential-state-space-over-small-set",
+            "transition-by-adding-one-element"
+          ],
+          "applies_when": [
+            "set size <= 20 (2^20 = ~1M states)",
+            "TSP or assignment problems",
+            "subset enumeration with memoization"
+          ],
+          "avoid_when": [
+            "set size > 20 (exponential blowup)",
+            "polynomial DP formulation exists"
+          ],
+          "complexity": {
+            "time": "O(2^n * n)",
+            "space": "O(2^n)"
+          },
+          "constraints": "n <= 20 typically; use bit operations for set manipulation",
+          "alternatives": [
+            "backtracking"
+          ]
+        },
+        {
+          "id": "knapsack-01",
+          "name": "0/1 Knapsack",
+          "structural_signals": [
+            "select-items-with-weight-capacity-constraint",
+            "take-or-skip-each-item",
+            "maximize-value-within-budget"
+          ],
+          "applies_when": [
+            "select items with weight/cost constraint",
+            "each item used at most once",
+            "maximize total value under capacity"
+          ],
+          "avoid_when": [
+            "items can be used unlimited times (unbounded knapsack)",
+            "items are fractional (greedy is optimal)"
+          ],
+          "complexity": {
+            "time": "O(n * W)",
+            "space": "O(W)"
+          },
+          "constraints": "W = capacity; optimize space with 1D array iterating backwards",
+          "alternatives": [
+            "unbounded-knapsack",
+            "greedy-fractional",
+            "meet-in-middle"
+          ]
+        },
+        {
+          "id": "longest-common-subsequence",
+          "name": "Longest Common Subsequence",
+          "structural_signals": [
+            "two-sequence-alignment",
+            "match-skip-recurrence",
+            "2D-table-with-diagonal-transition"
+          ],
+          "applies_when": [
+            "find longest common subsequence of two sequences",
+            "diff computation",
+            "minimum edit to make sequences equal"
+          ],
+          "avoid_when": [
+            "need contiguous match (use longest common substring)",
+            "sequences are very long and similar (specialized algorithms exist)"
+          ],
+          "complexity": {
+            "time": "O(n * m)",
+            "space": "O(min(n, m))"
+          },
+          "constraints": "if chars match: dp[i][j] = dp[i-1][j-1] + 1; else max(dp[i-1][j], dp[i][j-1])",
+          "alternatives": [
+            "edit-distance"
+          ]
+        },
+        {
+          "id": "edit-distance",
+          "name": "Edit Distance (Levenshtein)",
+          "structural_signals": [
+            "minimum-operations-to-transform-sequence",
+            "insert-delete-replace-transitions",
+            "2D-table-with-three-predecessors"
+          ],
+          "applies_when": [
+            "minimum edits to transform one string to another",
+            "spell check / fuzzy matching",
+            "sequence alignment"
+          ],
+          "avoid_when": [
+            "only need to check if edit distance <= k (optimized approaches exist)",
+            "strings are very long (O(nm) may be too slow)"
+          ],
+          "complexity": {
+            "time": "O(n * m)",
+            "space": "O(min(n, m))"
+          },
+          "constraints": "three operations: insert, delete, replace",
+          "alternatives": [
+            "longest-common-subsequence"
+          ]
+        },
+        {
+          "id": "interval-dp",
+          "name": "Interval DP",
+          "structural_signals": [
+            "optimize-over-contiguous-subranges",
+            "try-all-split-points-in-range",
+            "merge-cost-or-partition-cost"
+          ],
+          "applies_when": [
+            "optimal strategy for merging/splitting contiguous ranges",
+            "matrix chain multiplication",
+            "burst balloons, stone merging"
+          ],
+          "avoid_when": [
+            "subproblems are not contiguous intervals",
+            "greedy solution exists"
+          ],
+          "complexity": {
+            "time": "O(n^3)",
+            "space": "O(n^2)"
+          },
+          "constraints": "iterate by interval length, then start position, then split point",
+          "alternatives": [
+            "greedy"
+          ]
+        },
+        {
+          "id": "digit-dp",
+          "name": "Digit DP",
+          "structural_signals": [
+            "count-numbers-in-range-with-digit-constraints",
+            "digit-by-digit-construction",
+            "tight-bound-flag"
+          ],
+          "applies_when": [
+            "count numbers in [L, R] satisfying digit properties",
+            "digit sum constraints",
+            "numbers without certain digit patterns"
+          ],
+          "avoid_when": [
+            "constraint is not digit-based",
+            "range is small enough to enumerate"
+          ],
+          "complexity": {
+            "time": "O(digits * states)",
+            "space": "O(digits * states)"
+          },
+          "constraints": "track: position, tight flag, and problem-specific state",
+          "alternatives": [
+            "brute-force-enumeration"
+          ]
+        },
+        {
+          "id": "dp-on-trees",
+          "name": "DP on Trees",
+          "structural_signals": [
+            "bottom-up-aggregation-on-tree",
+            "root-subtree-recurrence",
+            "combine-children-results-at-parent"
+          ],
+          "applies_when": [
+            "optimize over tree structure",
+            "independent subproblems at children",
+            "max path sum, tree diameter, house robber III"
+          ],
+          "avoid_when": [
+            "tree is actually a graph with cycles",
+            "problem does not decompose by subtrees"
+          ],
+          "complexity": {
+            "time": "O(n)",
+            "space": "O(n)"
+          },
+          "constraints": "postorder traversal: solve children before parent",
+          "alternatives": [
+            "dfs-postorder"
+          ]
+        },
+        {
+          "id": "state-machine-dp",
+          "name": "State Machine DP",
+          "structural_signals": [
+            "transitions-between-defined-states",
+            "buy-sell-hold-cooldown-states",
+            "state-at-each-step-determines-options"
+          ],
+          "applies_when": [
+            "problem has well-defined states and transitions",
+            "stock trading with constraints (cooldown, fee, k transactions)",
+            "finite automaton behavior"
+          ],
+          "avoid_when": [
+            "states are not well-defined",
+            "greedy solution exists (single transaction)"
+          ],
+          "complexity": {
+            "time": "O(n * states)",
+            "space": "O(states)"
+          },
+          "constraints": "define states clearly; optimize space since only previous step needed",
+          "alternatives": [
+            "greedy"
+          ]
+        },
+        {
+          "id": "dp-lis",
+          "name": "Longest Increasing Subsequence",
+          "structural_signals": [
+            "find-longest-strictly-increasing-subsequence",
+            "patience-sorting-with-binary-search",
+            "dp-with-binary-search-optimization"
+          ],
+          "applies_when": [
+            "find length of longest increasing subsequence",
+            "subsequence ordering problems",
+            "envelope nesting / chain problems"
+          ],
+          "avoid_when": [
+            "need contiguous subarray (use different approach)",
+            "need all LIS sequences (more complex)"
+          ],
+          "complexity": {
+            "time": "O(n log n)",
+            "space": "O(n)"
+          },
+          "constraints": "maintain tails array with binary search for O(n log n)",
+          "alternatives": [
+            "dp-n-squared"
+          ]
+        },
+        {
+          "id": "knapsack-grouped",
+          "name": "Grouped/Bundled Knapsack",
+          "structural_signals": [
+            "items-in-groups-take-all-or-nothing",
+            "coupled-items-within-bundles",
+            "knapsack-with-item-dependencies"
+          ],
+          "applies_when": [
+            "items belong to groups/bundles where taking one means taking all",
+            "each group has a combined weight and combined value (possibly with bonus)",
+            "individual items can be taken freely, but grouped items are all-or-nothing",
+            "standard 0/1 knapsack after collapsing each group into a single super-item"
+          ],
+          "avoid_when": [
+            "items are independent (use standard 0/1 knapsack)",
+            "groups allow partial selection (use group knapsack with at-most-one-per-group)",
+            "N and W are too large for pseudo-polynomial DP"
+          ],
+          "complexity": {
+            "time": "O(G*W) where G = number of groups + individuals",
+            "space": "O(W)"
+          },
+          "constraints": "precompute each group's total weight and total value (with any bonuses); then run standard 0/1 knapsack on collapsed items",
+          "alternatives": [
+            "knapsack-01",
+            "subsets-generation"
+          ]
+        },
+        {
+          "id": "weighted-interval-dp",
+          "name": "Weighted Interval Scheduling DP",
+          "structural_signals": [
+            "select-non-overlapping-intervals-maximizing-weight",
+            "job-scheduling-with-profits",
+            "intervals-with-different-values"
+          ],
+          "applies_when": [
+            "select non-overlapping intervals to maximize total profit/weight",
+            "each interval has a value (not all equal)",
+            "greedy sort-by-end fails because intervals have different weights"
+          ],
+          "avoid_when": [
+            "all intervals have equal weight (use greedy sort-by-end)",
+            "intervals can overlap (different problem)",
+            "no constraint on overlap"
+          ],
+          "complexity": {
+            "time": "O(n log n)",
+            "space": "O(n)"
+          },
+          "constraints": "sort by end time; for each interval, binary search for latest non-overlapping predecessor; dp[i] = max(dp[i-1], value[i] + dp[p(i)])",
+          "alternatives": [
+            "merge-intervals",
+            "greedy"
+          ]
+        },
+        {
+          "id": "unbounded-knapsack",
+          "name": "Unbounded Knapsack",
+          "structural_signals": [
+            "items-reusable-unlimited-times",
+            "coin-change-rod-cutting",
+            "capacity-fill-with-repeats"
+          ],
+          "applies_when": [
+            "items can be used multiple times (coin change, rod cutting)",
+            "capacity W is small enough for DP"
+          ],
+          "avoid_when": [
+            "items used at most once (use 0/1 knapsack)",
+            "W is extremely large",
+            "items are divisible (use fractional/greedy)"
+          ],
+          "complexity": {
+            "time": "O(n*W)",
+            "space": "O(W)"
+          },
+          "constraints": "1D DP: dp[w] = max over all items i of (dp[w - weight[i]] + value[i]); iterate capacity left to right (unlike 0/1 which goes right to left)",
+          "alternatives": [
+            "knapsack-01",
+            "greedy-fractional"
+          ]
+        },
+        {
+          "id": "greedy-fractional",
+          "name": "Greedy Fractional Knapsack",
+          "structural_signals": [
+            "divisible-items-maximize-value-density",
+            "sort-by-value-weight-ratio"
+          ],
+          "applies_when": [
+            "items are divisible/fractional",
+            "maximize value within capacity"
+          ],
+          "avoid_when": [
+            "items are indivisible (need 0/1 knapsack DP)",
+            "additional constraints between items"
+          ],
+          "complexity": {
+            "time": "O(n log n)",
+            "space": "O(1)"
+          },
+          "constraints": "sort by value/weight ratio descending; take greedily; can be solved in O(n) via median-of-medians but rarely implemented",
+          "alternatives": [
+            "knapsack-01",
+            "unbounded-knapsack"
+          ]
+        },
+        {
+          "id": "dp-n-squared",
+          "name": "DP O(n^2) (Classic LIS / Pairwise DP)",
+          "structural_signals": [
+            "quadratic-dp-comparing-all-pairs",
+            "dp-with-predecessor-check"
+          ],
+          "applies_when": [
+            "n <= 5000",
+            "need to reconstruct actual subsequence (easier with DP array)",
+            "counting number of LIS",
+            "variants where O(n log n) optimization doesn't apply"
+          ],
+          "avoid_when": [
+            "n > 5000-10000 (use O(n log n) with binary search)",
+            "only length needed on large n"
+          ],
+          "complexity": {
+            "time": "O(n^2)",
+            "space": "O(n)"
+          },
+          "constraints": "dp[i] = best value ending at index i; for each i, check all j < i",
+          "alternatives": [
+            "dp-lis"
+          ]
+        },
+        {
+          "id": "brute-force-enumeration",
+          "name": "Brute Force Enumeration",
+          "structural_signals": [
+            "try-all-possibilities-exhaustively",
+            "no-pruning-full-search"
+          ],
+          "applies_when": [
+            "n is very small",
+            "need to verify correctness of optimized solution",
+            "no exploitable structure"
+          ],
+          "avoid_when": [
+            "any polynomial algorithm exists",
+            "n is not tiny"
+          ],
+          "complexity": {
+            "time": "O(k^n) or O(n!)",
+            "space": "O(n)"
+          },
+          "constraints": "baseline correctness check; generate all candidates, test each",
+          "alternatives": [
+            "subsets-generation",
+            "constraint-satisfaction"
+          ]
+        },
+        {
+          "id": "dc-dp-optimization",
+          "name": "Divide and Conquer DP Optimization",
+          "structural_signals": [
+            "monotone-optimal-split-points",
+            "partition-into-groups-minimize-cost",
+            "quadrilateral-inequality-on-cost"
+          ],
+          "applies_when": [
+            "DP recurrence dp[i][j] = min over k {dp[i-1][k-1] + C(k,j)}",
+            "optimal split points are monotone non-decreasing",
+            "cost function satisfies quadrilateral inequality"
+          ],
+          "avoid_when": [
+            "optimal split points are not monotone",
+            "cost function doesn't satisfy QI",
+            "simpler DP structure (no partitioning)"
+          ],
+          "complexity": {
+            "time": "O(M*N*log N) from O(M*N^2)",
+            "space": "O(N)"
+          },
+          "constraints": "divide and conquer on the answer range; compute dp[i][mid] then recurse on left/right with narrowed opt range",
+          "alternatives": [
+            "knuth-dp-optimization",
+            "interval-dp"
+          ]
+        },
+        {
+          "id": "knuth-dp-optimization",
+          "name": "Knuth's DP Optimization",
+          "structural_signals": [
+            "interval-dp-with-monotone-optimal-splits",
+            "optimal-bst-construction",
+            "quadrilateral-inequality-interval-cost"
+          ],
+          "applies_when": [
+            "interval DP: dp[i][j] = min over k {dp[i][k] + dp[k+1][j] + C(i,j)}",
+            "cost satisfies monotonicity and quadrilateral inequality",
+            "optimal BST, matrix chain-like, cutting problems"
+          ],
+          "avoid_when": [
+            "recurrence is not interval DP shape",
+            "cost doesn't satisfy QI",
+            "N <= 500 where O(N^3) is fine"
+          ],
+          "complexity": {
+            "time": "O(N^2) from O(N^3)",
+            "space": "O(N^2)"
+          },
+          "constraints": "key insight: opt(i,j-1) <= opt(i,j) <= opt(i+1,j); iterate diagonals with narrowed search",
+          "alternatives": [
+            "dc-dp-optimization",
+            "interval-dp"
+          ]
+        },
+        {
+          "id": "slope-trick",
+          "name": "Slope Trick",
+          "structural_signals": [
+            "piecewise-linear-convex-dp-function",
+            "priority-queue-slope-representation",
+            "make-array-monotone-minimum-cost"
+          ],
+          "applies_when": [
+            "DP values form piecewise-linear convex function",
+            "transitions add |x-c| or take prefix/suffix minima",
+            "make array non-decreasing with minimum cost"
+          ],
+          "avoid_when": [
+            "DP value function is not convex/piecewise-linear",
+            "transitions can't be expressed as slope changes",
+            "N <= 5000 where O(N^2) naive DP is fine"
+          ],
+          "complexity": {
+            "time": "O(N log N)",
+            "space": "O(N)"
+          },
+          "constraints": "represent convex function by its slope change points in a priority queue; transitions modify the queue",
+          "alternatives": [
+            "tabulation-bottom-up",
+            "dp-n-squared"
+          ]
+        },
+        {
+          "id": "persistent-segment-tree",
+          "name": "Persistent Segment Tree",
+          "structural_signals": [
+            "query-historical-versions-of-array",
+            "kth-smallest-in-range",
+            "version-preserving-updates"
+          ],
+          "applies_when": [
+            "need access to multiple versions of data structure simultaneously",
+            "k-th smallest element in range [L,R]",
+            "offline versioning: query as if only first i updates happened"
+          ],
+          "avoid_when": [
+            "only current version matters (plain segment tree)",
+            "memory tight (each update costs O(log N) extra nodes)",
+            "range updates with lazy propagation (complex on persistent trees)"
+          ],
+          "complexity": {
+            "time": "O(log N) per update/query",
+            "space": "O(N + Q*log N)"
+          },
+          "constraints": "path copying: each update creates O(log N) new nodes, shares rest with previous version",
+          "alternatives": [
+            "segment-tree",
+            "sqrt-decomposition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "recursion-backtracking",
+      "name": "Recursion / Backtracking",
+      "properties": [
+        "explore-all-possibilities",
+        "build-solution-incrementally",
+        "undo-and-try-next",
+        "pruning-for-efficiency"
+      ],
+      "operations": {
+        "recursive_call": {
+          "time": "O(branching^depth)",
+          "space": "O(depth)"
+        }
+      },
+      "source": "extracted",
+      "patterns": [
+        {
+          "id": "subsets-generation",
+          "name": "Subsets / Power Set",
+          "structural_signals": [
+            "include-or-exclude-each-element",
+            "binary-choice-tree",
+            "2^n-total-subsets"
+          ],
+          "applies_when": [
+            "generate all subsets",
+            "feature selection / combination enumeration",
+            "subset with constraints (sum, size)"
+          ],
+          "avoid_when": [
+            "n > 20 (2^n is too many)",
+            "only need count, not enumeration (use math/DP)"
+          ],
+          "complexity": {
+            "time": "O(2^n)",
+            "space": "O(n) recursion depth"
+          },
+          "constraints": "handle duplicates by sorting and skipping",
+          "alternatives": [
+            "bitmask-enumeration",
+            "state-compression-bitmask"
+          ]
+        },
+        {
+          "id": "permutations-generation",
+          "name": "Permutations",
+          "structural_signals": [
+            "all-orderings-of-elements",
+            "swap-or-used-array-approach",
+            "n!-total-permutations"
+          ],
+          "applies_when": [
+            "generate all permutations",
+            "arrangement / ordering problems",
+            "small n (n! grows fast)"
+          ],
+          "avoid_when": [
+            "n > 10 (10! = 3.6M)",
+            "only need next permutation (use iterative algorithm)"
+          ],
+          "complexity": {
+            "time": "O(n!)",
+            "space": "O(n)"
+          },
+          "constraints": "sort input and skip duplicates for unique permutations",
+          "alternatives": [
+            "next-permutation-iterative"
+          ]
+        },
+        {
+          "id": "combinations-generation",
+          "name": "Combinations",
+          "structural_signals": [
+            "choose-k-from-n-elements",
+            "order-does-not-matter",
+            "start-index-prevents-duplicates"
+          ],
+          "applies_when": [
+            "choose k elements from n",
+            "combination sum with reuse or no-reuse",
+            "enumeration with size constraint"
+          ],
+          "avoid_when": [
+            "C(n,k) is too large",
+            "only need count (use math formula)"
+          ],
+          "complexity": {
+            "time": "O(C(n,k))",
+            "space": "O(k)"
+          },
+          "constraints": "use start index to avoid generating same combination",
+          "alternatives": [
+            "subsets-generation"
+          ]
+        },
+        {
+          "id": "constraint-satisfaction",
+          "name": "Constraint Satisfaction Backtracking",
+          "structural_signals": [
+            "place-element-check-constraints-backtrack",
+            "grid-filling-with-rules",
+            "incremental-constraint-checking"
+          ],
+          "applies_when": [
+            "N-Queens, Sudoku solver",
+            "constraint propagation with backtracking",
+            "valid placement at each step"
+          ],
+          "avoid_when": [
+            "constraints can be checked globally (use math/greedy)",
+            "problem has polynomial solution"
+          ],
+          "complexity": {
+            "time": "problem-dependent, typically exponential",
+            "space": "O(n)"
+          },
+          "constraints": "prune early: check constraints before recursing",
+          "alternatives": [
+            "dp",
+            "greedy"
+          ]
+        },
+        {
+          "id": "divide-and-conquer",
+          "name": "Divide and Conquer",
+          "structural_signals": [
+            "split-problem-into-independent-subproblems",
+            "solve-recursively-then-merge",
+            "reduction-by-constant-factor"
+          ],
+          "applies_when": [
+            "problem decomposes into independent subproblems",
+            "merge sort, quick sort paradigm",
+            "subproblems do not overlap (otherwise use DP)"
+          ],
+          "avoid_when": [
+            "subproblems overlap (use DP)",
+            "simpler iterative solution exists"
+          ],
+          "complexity": {
+            "time": "O(n log n) typical",
+            "space": "O(log n) stack"
+          },
+          "constraints": "use Master Theorem to analyze recurrence",
+          "alternatives": [
+            "tabulation-bottom-up",
+            "linear-scan"
+          ]
+        },
+        {
+          "id": "backtracking",
+          "name": "Backtracking (Generic)",
+          "structural_signals": [
+            "explore-choices-with-pruning",
+            "try-and-undo-decisions"
+          ],
+          "applies_when": [
+            "constraint satisfaction (N-Queens, Sudoku)",
+            "combinatorial search with pruning",
+            "problem has choices that can be undone"
+          ],
+          "avoid_when": [
+            "problem has polynomial solution (greedy, DP)",
+            "no useful pruning possible (bitmask DP may be better)"
+          ],
+          "complexity": {
+            "time": "problem-dependent, typically exponential with pruning",
+            "space": "O(n) for recursion depth"
+          },
+          "constraints": "effectiveness depends on quality of pruning; always check constraints before recursing deeper",
+          "alternatives": [
+            "constraint-satisfaction",
+            "state-compression-bitmask"
+          ]
+        },
+        {
+          "id": "next-permutation-iterative",
+          "name": "Next Permutation (Narayana Pandita's)",
+          "structural_signals": [
+            "lexicographically-next-arrangement",
+            "in-place-permutation-generation"
+          ],
+          "applies_when": [
+            "generate permutations in lexicographic order",
+            "need only the next permutation",
+            "std::next_permutation equivalent"
+          ],
+          "avoid_when": [
+            "order doesn't matter (Heap's algorithm has fewer swaps)",
+            "n > 12 (n! is astronomical)",
+            "need random permutation (Fisher-Yates)"
+          ],
+          "complexity": {
+            "time": "O(n) per call",
+            "space": "O(1)"
+          },
+          "constraints": "find rightmost ascent, swap with smallest larger element to right, reverse suffix; Narayana Pandita (14th century)",
+          "alternatives": [
+            "permutations-generation"
+          ]
+        },
+        {
+          "id": "sprague-grundy",
+          "name": "Sprague-Grundy Theorem / Nim",
+          "structural_signals": [
+            "impartial-combinatorial-game",
+            "two-player-perfect-information",
+            "xor-of-game-values"
+          ],
+          "applies_when": [
+            "two-player impartial game with perfect information",
+            "games decomposable into independent sub-games (XOR Grundy values)",
+            "Nim and Nim variants"
+          ],
+          "avoid_when": [
+            "partisan games (chess, Go) where players have different moves",
+            "games with randomness or hidden information",
+            "state space too large to enumerate Grundy values"
+          ],
+          "complexity": {
+            "time": "O(V+E) for all Grundy values",
+            "space": "O(V)"
+          },
+          "constraints": "Grundy number g(s) = mex({g(s') : s' reachable}); position is losing iff g=0; combined game: XOR individual Grundy numbers; Nim: XOR pile sizes",
+          "alternatives": [
+            "backtracking",
+            "constraint-satisfaction"
+          ]
+        }
+      ]
+    }
+  ]
+}

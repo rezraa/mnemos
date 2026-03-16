@@ -1,0 +1,610 @@
+{
+  "version": "1.0.0",
+  "generated": "2026-03-15",
+  "source": "ds-algorithm-primer + authored",
+  "rules": [
+    {
+      "id": "rule-sorted-pair-search",
+      "structural_signal": "Sorted input with pair satisfying arithmetic constraint",
+      "code_indicators": ["sorted array", "two elements sum/diff", "target sum", "pair search"],
+      "constraints": "input is sorted or can be sorted without losing information",
+      "recommended_pattern": "two-pointer-convergent",
+      "recommended_structure": "array",
+      "alternatives": ["single-pass-complement-lookup", "binary-search"]
+    },
+    {
+      "id": "rule-unsorted-pair-search",
+      "structural_signal": "Unsorted input with pair satisfying arithmetic constraint, need indices",
+      "code_indicators": ["unsorted array", "target sum", "need original indices", "complement"],
+      "constraints": "cannot sort (need original indices) or O(1) lookup needed",
+      "recommended_pattern": "single-pass-complement-lookup",
+      "recommended_structure": "hashmap",
+      "alternatives": ["two-pointer-convergent"]
+    },
+    {
+      "id": "rule-in-place-filter",
+      "structural_signal": "Remove or filter elements in-place preserving order",
+      "code_indicators": ["remove element", "move zeros", "remove duplicates", "in-place", "O(1) space"],
+      "constraints": "must modify array in-place",
+      "recommended_pattern": "two-pointer-same-direction",
+      "recommended_structure": "array",
+      "alternatives": ["dutch-national-flag"]
+    },
+    {
+      "id": "rule-fixed-window-aggregate",
+      "structural_signal": "Aggregate (sum/max/count) over all contiguous subarrays of fixed size",
+      "code_indicators": ["window size k", "subarray of size", "rolling sum", "sliding average"],
+      "constraints": "window size is fixed and known",
+      "recommended_pattern": "sliding-window-fixed",
+      "recommended_structure": "array",
+      "alternatives": ["prefix-sum"]
+    },
+    {
+      "id": "rule-variable-window-constraint",
+      "structural_signal": "Find longest/shortest contiguous subarray satisfying a constraint",
+      "code_indicators": ["longest subarray", "shortest subarray", "at most k", "minimum length"],
+      "constraints": "elements are non-negative for sum-based constraints",
+      "recommended_pattern": "sliding-window-variable",
+      "recommended_structure": "array",
+      "alternatives": ["prefix-sum-with-hashmap", "binary-search"]
+    },
+    {
+      "id": "rule-subarray-sum-with-negatives",
+      "structural_signal": "Count or find subarrays summing to target when values can be negative",
+      "code_indicators": ["subarray sum equals k", "negative values", "prefix sum", "count subarrays"],
+      "constraints": "negative values prevent sliding window; use cumulative sum difference",
+      "recommended_pattern": "prefix-sum-with-hashmap",
+      "recommended_structure": "hashmap",
+      "alternatives": ["sliding-window-variable"]
+    },
+    {
+      "id": "rule-sorted-target-lookup",
+      "structural_signal": "Find target or boundary in sorted data or monotonic search space",
+      "code_indicators": ["sorted array", "find target", "first/last occurrence", "minimize/maximize"],
+      "constraints": "search space has monotonic property",
+      "recommended_pattern": "binary-search",
+      "recommended_structure": "array",
+      "alternatives": ["linear-scan"]
+    },
+    {
+      "id": "rule-range-sum-queries",
+      "structural_signal": "Multiple range sum queries on static array",
+      "code_indicators": ["range sum", "sum between indices", "multiple queries", "static array"],
+      "constraints": "array does not change between queries",
+      "recommended_pattern": "prefix-sum",
+      "recommended_structure": "array",
+      "alternatives": ["segment-tree", "fenwick-tree", "sparse-table", "sqrt-decomposition"]
+    },
+    {
+      "id": "rule-range-query-with-updates",
+      "structural_signal": "Range queries with point or range updates on dynamic array",
+      "code_indicators": ["range sum query", "update element", "dynamic", "many queries and updates"],
+      "constraints": "need both queries and updates in O(log n)",
+      "recommended_pattern": "segment-tree",
+      "recommended_structure": "tree",
+      "alternatives": ["fenwick-tree", "sqrt-decomposition", "prefix-sum", "sparse-table"]
+    },
+    {
+      "id": "rule-max-contiguous-subarray",
+      "structural_signal": "Find maximum sum contiguous subarray with possible negatives",
+      "code_indicators": ["maximum subarray", "contiguous", "negative values", "running sum"],
+      "constraints": "contiguous subarray only; values can be negative",
+      "recommended_pattern": "kadanes-algorithm",
+      "recommended_structure": "array",
+      "alternatives": ["prefix-sum", "divide-and-conquer"]
+    },
+    {
+      "id": "rule-three-way-partition",
+      "structural_signal": "Partition array into exactly three groups in-place",
+      "code_indicators": ["three categories", "sort colors", "three-way partition", "low/mid/high"],
+      "constraints": "exactly three categories; single pass",
+      "recommended_pattern": "dutch-national-flag",
+      "recommended_structure": "array",
+      "alternatives": ["counting-sort", "two-pointer-same-direction"]
+    },
+    {
+      "id": "rule-overlapping-intervals",
+      "structural_signal": "Merge, insert, or analyze overlapping intervals",
+      "code_indicators": ["intervals", "overlapping", "merge", "schedule", "meeting rooms"],
+      "constraints": "sort intervals by start time first",
+      "recommended_pattern": "merge-intervals",
+      "recommended_structure": "array",
+      "alternatives": ["sweep-line"]
+    },
+    {
+      "id": "rule-missing-in-range",
+      "structural_signal": "Find missing/duplicate number when values are in range [1, n]",
+      "code_indicators": ["values 1 to n", "missing number", "find duplicate", "first missing positive"],
+      "constraints": "values must be in bounded integer range",
+      "recommended_pattern": "cyclic-sort",
+      "recommended_structure": "array",
+      "alternatives": ["hashset-membership", "bit-manipulation"]
+    },
+    {
+      "id": "rule-frequency-counting",
+      "structural_signal": "Count occurrences of each element for frequency-based decisions",
+      "code_indicators": ["frequency", "count occurrences", "most common", "anagram", "top k frequent"],
+      "constraints": "need element-to-count mapping",
+      "recommended_pattern": "frequency-aggregation",
+      "recommended_structure": "hashmap",
+      "alternatives": ["counting-array", "trie-frequency"]
+    },
+    {
+      "id": "rule-grouping-equivalence",
+      "structural_signal": "Group elements by computed equivalence key",
+      "code_indicators": ["group by", "anagram groups", "canonical form", "equivalence classes"],
+      "constraints": "key function must be consistent for equivalent items",
+      "recommended_pattern": "grouping-by-key",
+      "recommended_structure": "hashmap",
+      "alternatives": ["sorting-then-grouping"]
+    },
+    {
+      "id": "rule-bracket-matching",
+      "structural_signal": "Validate nested open/close delimiter matching",
+      "code_indicators": ["parentheses", "brackets", "balanced", "valid", "nested"],
+      "constraints": "multiple delimiter types require stack; single type uses counter",
+      "recommended_pattern": "balanced-delimiters",
+      "recommended_structure": "stack",
+      "alternatives": ["counter-for-single-type"]
+    },
+    {
+      "id": "rule-next-greater-element",
+      "structural_signal": "Find next greater/smaller element for each position",
+      "code_indicators": ["next greater", "next smaller", "daily temperatures", "stock span", "histogram"],
+      "constraints": "maintain monotonic invariant in stack",
+      "recommended_pattern": "monotonic-stack",
+      "recommended_structure": "stack",
+      "alternatives": ["brute-force-nested-loop"]
+    },
+    {
+      "id": "rule-shortest-path-unweighted",
+      "structural_signal": "Shortest path or minimum steps in unweighted graph/grid",
+      "code_indicators": ["shortest path", "minimum steps", "minimum moves", "unweighted", "grid"],
+      "constraints": "all edges have equal weight",
+      "recommended_pattern": "bfs-shortest-unweighted",
+      "recommended_structure": "queue",
+      "alternatives": ["dijkstra", "zero-one-bfs", "bellman-ford", "spfa"]
+    },
+    {
+      "id": "rule-shortest-path-weighted",
+      "structural_signal": "Shortest path in weighted graph with non-negative edges",
+      "code_indicators": ["weighted graph", "shortest path", "minimum cost", "non-negative weights"],
+      "constraints": "no negative edge weights",
+      "recommended_pattern": "dijkstra",
+      "recommended_structure": "heap",
+      "alternatives": ["bellman-ford", "bfs-traversal", "bfs-shortest-unweighted", "zero-one-bfs", "spfa"]
+    },
+    {
+      "id": "rule-dependency-ordering",
+      "structural_signal": "Order tasks/items respecting dependency constraints in a DAG",
+      "code_indicators": ["prerequisites", "dependencies", "build order", "course schedule", "DAG"],
+      "constraints": "graph must be acyclic; cycle means no valid order",
+      "recommended_pattern": "topological-sort",
+      "recommended_structure": "graph",
+      "alternatives": ["dfs-graph-traversal"]
+    },
+    {
+      "id": "rule-dynamic-connectivity",
+      "structural_signal": "Track connected components as edges are added dynamically",
+      "code_indicators": ["connected components", "union", "find", "add edges", "are connected"],
+      "constraints": "supports union and find, not deletion",
+      "recommended_pattern": "union-find-connectivity",
+      "recommended_structure": "disjoint-set",
+      "alternatives": ["dfs-graph-traversal", "bfs-traversal"]
+    },
+    {
+      "id": "rule-grid-connected-regions",
+      "structural_signal": "Count or fill connected regions in a 2D grid",
+      "code_indicators": ["islands", "connected region", "flood fill", "grid", "4-directional"],
+      "constraints": "mark visited cells to avoid revisiting",
+      "recommended_pattern": "flood-fill",
+      "recommended_structure": "graph",
+      "alternatives": ["union-find-connectivity"]
+    },
+    {
+      "id": "rule-cycle-detection-linked",
+      "structural_signal": "Detect cycle in linked list or iterative sequence",
+      "code_indicators": ["cycle", "linked list", "fast and slow", "Floyd's"],
+      "constraints": "fast moves 2 steps, slow 1 step",
+      "recommended_pattern": "ll-fast-slow-pointers",
+      "recommended_structure": "linked-list",
+      "alternatives": ["hashset-membership"]
+    },
+    {
+      "id": "rule-top-k-elements",
+      "structural_signal": "Find k largest/smallest elements from stream or collection",
+      "code_indicators": ["top k", "kth largest", "k smallest", "k most frequent"],
+      "constraints": "k << n; use min-heap of size k for k largest",
+      "recommended_pattern": "heap-top-k",
+      "recommended_structure": "heap",
+      "alternatives": ["quick-select", "sorting"]
+    },
+    {
+      "id": "rule-streaming-median",
+      "structural_signal": "Maintain running median as elements arrive",
+      "code_indicators": ["median from stream", "running median", "balance two halves"],
+      "constraints": "maintain max-heap for lower half, min-heap for upper half",
+      "recommended_pattern": "two-heaps-median",
+      "recommended_structure": "heap",
+      "alternatives": ["sorted-array-with-binary-insert"]
+    },
+    {
+      "id": "rule-window-maximum",
+      "structural_signal": "Find maximum/minimum in every sliding window of size k",
+      "code_indicators": ["sliding window maximum", "window minimum", "deque", "monotonic"],
+      "constraints": "maintain monotonic deque; front is always the answer",
+      "recommended_pattern": "sliding-window-maximum",
+      "recommended_structure": "queue",
+      "alternatives": ["heap-based-window", "segment-tree"]
+    },
+    {
+      "id": "rule-overlapping-subproblems",
+      "structural_signal": "Recursive solution with overlapping subproblems and optimal substructure",
+      "code_indicators": ["minimize/maximize", "count ways", "can we reach", "optimal", "overlapping"],
+      "constraints": "define state clearly; check for optimal substructure",
+      "recommended_pattern": "tabulation-bottom-up",
+      "recommended_structure": "dp",
+      "alternatives": ["memoization-top-down", "greedy"]
+    },
+    {
+      "id": "rule-subset-with-target",
+      "structural_signal": "Select items with cost/weight to reach target capacity/sum",
+      "code_indicators": ["knapsack", "subset sum", "target sum", "partition equal", "capacity"],
+      "constraints": "each item used once (0/1) or unlimited (unbounded)",
+      "recommended_pattern": "knapsack-01",
+      "recommended_structure": "dp",
+      "alternatives": ["subsets-generation"]
+    },
+    {
+      "id": "rule-sequence-alignment",
+      "structural_signal": "Align or compare two sequences optimally",
+      "code_indicators": ["edit distance", "LCS", "common subsequence", "transform string"],
+      "constraints": "2D DP table; optimize space to O(min(n,m))",
+      "recommended_pattern": "longest-common-subsequence",
+      "recommended_structure": "dp",
+      "alternatives": ["edit-distance"]
+    },
+    {
+      "id": "rule-generate-all-combinations",
+      "structural_signal": "Generate all subsets, permutations, or combinations",
+      "code_indicators": ["all subsets", "all permutations", "combinations", "power set", "enumerate"],
+      "constraints": "n must be small (subsets: n<=20, permutations: n<=10)",
+      "recommended_pattern": "subsets-generation",
+      "recommended_structure": "recursion-backtracking",
+      "alternatives": ["bitmask-enumeration", "permutations-generation"]
+    },
+    {
+      "id": "rule-prefix-search",
+      "structural_signal": "Search words by prefix or build autocomplete",
+      "code_indicators": ["prefix search", "autocomplete", "word dictionary", "starts with"],
+      "constraints": "many prefix queries on same dictionary",
+      "recommended_pattern": "trie-prefix-tree",
+      "recommended_structure": "tree",
+      "alternatives": ["hashset-membership", "binary-search"]
+    },
+    {
+      "id": "rule-mst-sparse-graph",
+      "structural_signal": "Find minimum spanning tree in sparse graph",
+      "code_indicators": ["minimum spanning tree", "connect all nodes", "minimum cost edges"],
+      "constraints": "graph must be connected for MST; produces forest otherwise",
+      "recommended_pattern": "kruskal-mst",
+      "recommended_structure": "graph",
+      "alternatives": ["prim-mst"]
+    },
+    {
+      "id": "rule-tree-bottom-up",
+      "structural_signal": "Compute aggregate from children before processing parent",
+      "code_indicators": ["tree height", "tree depth", "diameter", "balanced check", "subtree sum"],
+      "constraints": "process children before parent (postorder)",
+      "recommended_pattern": "tree-depth-height",
+      "recommended_structure": "tree",
+      "alternatives": ["bfs-level-order"]
+    },
+    {
+      "id": "rule-lca-query",
+      "structural_signal": "Find lowest common ancestor of two nodes in tree",
+      "code_indicators": ["lowest common ancestor", "LCA", "shared ancestor", "path divergence"],
+      "constraints": "both nodes must exist; BST can use value comparison",
+      "recommended_pattern": "lowest-common-ancestor",
+      "recommended_structure": "tree",
+      "alternatives": ["binary-lifting"]
+    },
+    {
+      "id": "rule-negative-weight-shortest",
+      "structural_signal": "Shortest path in graph with negative edge weights",
+      "code_indicators": ["negative weights", "negative edges", "detect negative cycle"],
+      "constraints": "negative cycles make shortest path undefined",
+      "recommended_pattern": "bellman-ford",
+      "recommended_structure": "graph",
+      "alternatives": ["dijkstra", "floyd-warshall", "spfa", "bfs-shortest-unweighted", "zero-one-bfs"]
+    },
+    {
+      "id": "rule-expression-parsing",
+      "structural_signal": "Evaluate or parse mathematical expression with operator precedence",
+      "code_indicators": ["calculator", "evaluate expression", "operator precedence", "infix", "RPN"],
+      "constraints": "handle precedence: *, / before +, -; parentheses override",
+      "recommended_pattern": "expression-evaluation",
+      "recommended_structure": "stack",
+      "alternatives": ["recursive-descent-parser"]
+    },
+    {
+      "id": "rule-grouped-knapsack",
+      "structural_signal": "Select items to maximize value within capacity where some items are grouped and must be taken all-or-nothing",
+      "code_indicators": ["knapsack", "capacity", "bundles", "groups", "all-or-nothing", "coupled items"],
+      "constraints": "items within a group are coupled — take all or none; individual items are standard 0/1; reduces to grouped knapsack DP",
+      "recommended_pattern": "knapsack-grouped",
+      "recommended_structure": "dp",
+      "alternatives": ["knapsack-01", "subsets-generation"]
+    },
+    {
+      "id": "rule-min-max-assignment",
+      "structural_signal": "Assign items 1-to-1 between two groups to minimize the maximum cost across all pairs",
+      "code_indicators": ["matching", "minimize maximum", "min-max", "bottleneck", "1-to-1 assignment", "bipartite"],
+      "constraints": "greedy nearest-match fails; binary search on answer + bipartite feasibility check; threshold D is feasible iff bipartite graph of pairs with cost <= D has perfect matching",
+      "recommended_pattern": "binary-search-on-answer",
+      "recommended_structure": "graph",
+      "alternatives": ["hungarian-algorithm", "bipartite-matching"]
+    },
+    {
+      "id": "rule-parallel-dag-critical-path",
+      "structural_signal": "Find total completion time in a DAG where independent branches execute in parallel",
+      "code_indicators": ["parallel execution", "critical path", "DAG", "pipeline", "total latency", "longest path"],
+      "constraints": "parallel execution means the bottleneck is the LONGEST path, not shortest; topological sort then DP tracking max arrival time at each node",
+      "recommended_pattern": "topological-sort-longest-path",
+      "recommended_structure": "graph",
+      "alternatives": ["topological-sort", "dfs-graph-traversal"]
+    },
+    {
+      "id": "rule-max-weight-bipartite-matching",
+      "structural_signal": "Assign items from group A to group B (1-to-1) to maximize total value of assignments",
+      "code_indicators": ["auction", "assignment", "maximize revenue", "bipartite", "one winner per slot", "one slot per bidder"],
+      "constraints": "greedy highest-value-first fails because it can block better global assignments; use Hungarian algorithm or max-weight bipartite matching",
+      "recommended_pattern": "hungarian-algorithm",
+      "recommended_structure": "graph",
+      "alternatives": ["bipartite-matching", "min-cost-max-flow"]
+    },
+    {
+      "id": "rule-meet-in-middle-subsets",
+      "structural_signal": "Choose subset of N items optimizing a metric where N is moderate (20-40) and item values are too large for DP array",
+      "code_indicators": ["subset", "N around 30", "large weights", "knapsack with large capacity", "two halves"],
+      "constraints": "N too large for 2^N brute force but too large values for DP; split into two halves, enumerate 2^(N/2) each, combine with two-pointer or binary search",
+      "recommended_pattern": "meet-in-middle",
+      "recommended_structure": "array",
+      "alternatives": ["knapsack-01", "subsets-generation"]
+    },
+    {
+      "id": "rule-binary-search-on-answer",
+      "structural_signal": "Minimize the maximum or maximize the minimum of some metric where feasibility can be checked efficiently",
+      "code_indicators": ["minimize maximum", "maximize minimum", "can we achieve distance D", "feasibility check", "threshold", "binary search on answer"],
+      "constraints": "answer space is monotonic — if D is feasible then D-1 is also feasible (or vice versa); binary search over answer space and check feasibility in O(N) or O(N log N)",
+      "recommended_pattern": "binary-search-on-answer",
+      "recommended_structure": "array",
+      "alternatives": ["binary-search", "greedy", "task-scheduling", "frequency-aggregation"]
+    },
+    {
+      "id": "rule-maximize-min-spacing-by-frequency",
+      "structural_signal": "Maximize minimum distance between repeated elements by rearranging, where answer depends on max frequency",
+      "code_indicators": ["maximize minimum distance", "spacing", "diversity", "rearrange", "same artist", "same type", "cooldown", "interleave"],
+      "constraints": "when the answer is determined by max element frequency f and total count N, a closed-form O(N) solution exists: answer = (N - count_of_max_freq_elements) / (f - 1); avoids O(N log N) binary search",
+      "recommended_pattern": "task-scheduling",
+      "recommended_structure": "hashmap",
+      "alternatives": ["binary-search-on-answer", "frequency-aggregation"]
+    },
+    {
+      "id": "rule-greedy-looks-right-but-dp",
+      "structural_signal": "Maximize/minimize value with constraints that carry forward across decisions",
+      "code_indicators": ["maximize profit", "coupled constraints", "budget carries forward", "state depends on previous choice", "cooldown"],
+      "constraints": "when constraints are coupled across decisions (e.g., cooldown, budget, state-dependent transitions), greedy local optima diverge from global; need DP with proper state",
+      "recommended_pattern": "state-machine-dp",
+      "recommended_structure": "dp",
+      "alternatives": ["tabulation-bottom-up", "memoization-top-down"]
+    },
+    {
+      "id": "rule-dp-extra-state-dimension",
+      "structural_signal": "DP where optimal next choice depends on which choice was made previously, not just position",
+      "code_indicators": ["last action", "cooldown after sell", "parity matters", "holding vs not holding", "multiple states per position"],
+      "constraints": "define dp[i][state] where state encodes the relevant prior choice; common states: hold/not-hold, cooldown days, last-used color/type",
+      "recommended_pattern": "state-machine-dp",
+      "recommended_structure": "dp",
+      "alternatives": ["tabulation-bottom-up"]
+    },
+    {
+      "id": "rule-weighted-interval-scheduling",
+      "structural_signal": "Select non-overlapping intervals to maximize total weight/profit",
+      "code_indicators": ["weighted intervals", "job scheduling", "profit", "non-overlapping", "deadline"],
+      "constraints": "unweighted greedy (sort by end) fails when intervals have different values; sort by end, DP with binary search for latest non-overlapping predecessor",
+      "recommended_pattern": "weighted-interval-dp",
+      "recommended_structure": "dp",
+      "alternatives": ["merge-intervals", "greedy"]
+    },
+    {
+      "id": "rule-max-flow-network",
+      "structural_signal": "Find maximum flow through a capacitated network from source to sink",
+      "code_indicators": ["maximum flow", "min cut", "capacity", "source", "sink", "network", "bandwidth"],
+      "constraints": "max-flow = min-cut duality; Dinic's is O(V^2*E) general, O(E*sqrt(V)) on unit networks",
+      "recommended_pattern": "dinics-max-flow",
+      "recommended_structure": "graph",
+      "alternatives": ["bipartite-matching", "min-cost-max-flow"]
+    },
+    {
+      "id": "rule-critical-vertices",
+      "structural_signal": "Find vertices whose removal disconnects an undirected graph",
+      "code_indicators": ["articulation point", "cut vertex", "single point of failure", "disconnect", "critical node"],
+      "constraints": "single DFS pass with disc[]/low[] arrays; undirected graphs only",
+      "recommended_pattern": "articulation-points",
+      "recommended_structure": "graph",
+      "alternatives": ["bridge-finding", "tarjan-scc"]
+    },
+    {
+      "id": "rule-critical-edges",
+      "structural_signal": "Find edges whose removal disconnects an undirected graph",
+      "code_indicators": ["bridge", "cut edge", "critical connection", "critical link", "disconnect edge"],
+      "constraints": "DFS with low[to] > disc[v] (strictly greater); undirected graphs only",
+      "recommended_pattern": "bridge-finding",
+      "recommended_structure": "graph",
+      "alternatives": ["articulation-points", "tarjan-scc"]
+    },
+    {
+      "id": "rule-eulerian-path",
+      "structural_signal": "Find a path or circuit that visits every edge exactly once",
+      "code_indicators": ["visit every edge", "Eulerian", "circuit", "route covering all roads", "edge traversal"],
+      "constraints": "undirected: all even degree for circuit, exactly 2 odd for path; directed: in=out for circuit; Hierholzer's O(V+E)",
+      "recommended_pattern": "eulerian-path",
+      "recommended_structure": "graph",
+      "alternatives": ["dfs-graph-traversal"]
+    },
+    {
+      "id": "rule-binary-constraints-satisfiability",
+      "structural_signal": "Assign true/false to variables satisfying pairwise boolean constraints (2 literals per clause)",
+      "code_indicators": ["2-SAT", "boolean", "satisfiability", "implication", "pairwise constraints", "mutual exclusion"],
+      "constraints": "exactly 2 literals per clause; build implication graph, find SCCs; unsatisfiable iff x and NOT x in same SCC; O(N+M)",
+      "recommended_pattern": "two-sat",
+      "recommended_structure": "graph",
+      "alternatives": ["constraint-satisfaction", "backtracking"]
+    },
+    {
+      "id": "rule-successor-graph-queries",
+      "structural_signal": "Each node has exactly one outgoing edge; query where you end up after K steps",
+      "code_indicators": ["successor", "functional graph", "iterated function", "K steps", "permutation cycle", "rho-shaped"],
+      "constraints": "binary lifting: jump[v][k] = 2^k-th successor; O(N log N) build, O(log N) per query; cycle detection via Floyd's in O(N)/O(1)",
+      "recommended_pattern": "functional-graph",
+      "recommended_structure": "graph",
+      "alternatives": ["binary-lifting", "ll-fast-slow-pointers"]
+    },
+    {
+      "id": "rule-static-range-min-max",
+      "structural_signal": "Many range minimum or maximum queries on a static (immutable) array",
+      "code_indicators": ["range minimum", "range maximum", "RMQ", "static array", "no updates", "immutable"],
+      "constraints": "O(N log N) build, O(1) per query for idempotent operations (min, max, gcd); does NOT support updates",
+      "recommended_pattern": "sparse-table",
+      "recommended_structure": "tree",
+      "alternatives": ["segment-tree", "sqrt-decomposition", "fenwick-tree", "prefix-sum"]
+    },
+    {
+      "id": "rule-pattern-matching-single",
+      "structural_signal": "Find all occurrences of a single pattern in a text string",
+      "code_indicators": ["pattern matching", "find substring", "string search", "occurrences of pattern"],
+      "constraints": "Z-function or KMP both O(N+M); Z-function often cleaner to implement; rolling hash is probabilistic alternative",
+      "recommended_pattern": "z-function",
+      "recommended_structure": "string",
+      "alternatives": ["kmp-string-matching", "rolling-hash", "rabin-karp"]
+    },
+    {
+      "id": "rule-substring-comparison-hashing",
+      "structural_signal": "Compare many substrings for equality in O(1) after preprocessing",
+      "code_indicators": ["substring comparison", "duplicate substrings", "rolling hash", "string hashing", "content chunking"],
+      "constraints": "polynomial hash with large prime mods; double hashing reduces collision probability; O(N) preprocess, O(1) per comparison",
+      "recommended_pattern": "rolling-hash",
+      "recommended_structure": "string",
+      "alternatives": ["z-function", "suffix-automaton"]
+    },
+    {
+      "id": "rule-all-substrings-queries",
+      "structural_signal": "Answer multiple queries about all substrings of a string (count distinct, longest repeated, etc.)",
+      "code_indicators": ["all substrings", "distinct substrings", "longest repeated", "suffix", "common substring of two strings"],
+      "constraints": "suffix automaton O(N) build with ≤2N-1 states; suffix array + LCP is 4-8x less memory; suffix tree has large constant",
+      "recommended_pattern": "suffix-automaton",
+      "recommended_structure": "string",
+      "alternatives": ["suffix-array-substring-search", "rolling-hash"]
+    },
+    {
+      "id": "rule-find-all-primes",
+      "structural_signal": "Generate all prime numbers up to N or test many numbers for primality",
+      "code_indicators": ["prime", "sieve", "factorization", "primality", "coprime", "divisibility"],
+      "constraints": "O(N log log N) time, O(N) space; only sieve up to sqrt(N); practical limit ~10^7; use segmented sieve for large ranges",
+      "recommended_pattern": "sieve-of-eratosthenes",
+      "recommended_structure": "array",
+      "alternatives": ["bit-manipulation"]
+    },
+    {
+      "id": "rule-convex-hull-2d",
+      "structural_signal": "Find the smallest convex polygon enclosing a set of 2D points",
+      "code_indicators": ["convex hull", "enclosing polygon", "farthest pair", "rotating calipers", "boundary points"],
+      "constraints": "Andrew's monotone chain: sort by (x,y), build upper+lower hull; O(N log N) is optimal (proven lower bound)",
+      "recommended_pattern": "convex-hull",
+      "recommended_structure": "array",
+      "alternatives": ["sweep-line"]
+    },
+    {
+      "id": "rule-closest-pair-2d",
+      "structural_signal": "Find the minimum distance between any two points in a 2D point set",
+      "code_indicators": ["closest pair", "minimum distance", "nearest points", "Euclidean distance", "point set"],
+      "constraints": "divide and conquer or sweep line; strip optimization: each point checks at most 7 neighbors; O(N log N)",
+      "recommended_pattern": "closest-pair-of-points",
+      "recommended_structure": "array",
+      "alternatives": ["sweep-line", "brute-force-nested-loop"]
+    },
+    {
+      "id": "rule-count-union-overlapping-sets",
+      "structural_signal": "Count elements in the union of overlapping sets using alternating inclusion and exclusion",
+      "code_indicators": ["inclusion exclusion", "union of sets", "at least one", "derangement", "coprime count", "complementary counting"],
+      "constraints": "N sets must be small (≤20-25) due to 2^N blowup; |A∪B∪C| = |A|+|B|+|C| - |A∩B| - |A∩C| - |B∩C| + |A∩B∩C|",
+      "recommended_pattern": "inclusion-exclusion",
+      "recommended_structure": "array",
+      "alternatives": ["bitmask-enumeration"]
+    },
+    {
+      "id": "rule-impartial-combinatorial-game",
+      "structural_signal": "Determine winning/losing positions in a two-player impartial game with perfect information",
+      "code_indicators": ["Nim", "game theory", "Grundy", "Sprague-Grundy", "mex", "combinatorial game", "pile", "stones"],
+      "constraints": "Grundy number = mex of successors' Grundy values; position loses iff Grundy=0; sum of games: XOR Grundy values; Nim: XOR pile sizes",
+      "recommended_pattern": "sprague-grundy",
+      "recommended_structure": "recursion-backtracking",
+      "alternatives": ["backtracking"]
+    },
+    {
+      "id": "rule-dc-dp-optimization",
+      "structural_signal": "DP partitioning into groups where optimal split points are monotone non-decreasing",
+      "code_indicators": ["partition into K groups", "monotone split", "quadrilateral inequality", "minimize partition cost"],
+      "constraints": "reduces O(M*N^2) to O(M*N*log N); cost function must satisfy QI so opt split points are monotone",
+      "recommended_pattern": "dc-dp-optimization",
+      "recommended_structure": "dp",
+      "alternatives": ["knuth-dp-optimization", "interval-dp"]
+    },
+    {
+      "id": "rule-knuth-dp-optimization",
+      "structural_signal": "Interval DP where cost satisfies quadrilateral inequality allowing narrowed split search",
+      "code_indicators": ["optimal BST", "matrix chain", "cutting problem", "interval cost", "quadrilateral inequality"],
+      "constraints": "reduces interval DP from O(N^3) to O(N^2); opt(i,j-1) <= opt(i,j) <= opt(i+1,j)",
+      "recommended_pattern": "knuth-dp-optimization",
+      "recommended_structure": "dp",
+      "alternatives": ["dc-dp-optimization", "interval-dp"]
+    },
+    {
+      "id": "rule-slope-trick-convex-dp",
+      "structural_signal": "DP where value function is piecewise-linear convex, transitions add absolute values or take prefix minima",
+      "code_indicators": ["make array non-decreasing", "minimum cost transformation", "piecewise linear", "convex DP", "slope changes"],
+      "constraints": "represent function by slope change points in priority queue; transitions modify the queue; O(N log N)",
+      "recommended_pattern": "slope-trick",
+      "recommended_structure": "dp",
+      "alternatives": ["tabulation-bottom-up"]
+    },
+    {
+      "id": "rule-persistent-versioned-queries",
+      "structural_signal": "Query historical versions of a data structure or find k-th smallest in a range",
+      "code_indicators": ["persistent", "versioned", "k-th smallest in range", "historical state", "time travel query"],
+      "constraints": "path copying: O(log N) new nodes per update; O(N + Q*log N) total space; supports querying any version in O(log N)",
+      "recommended_pattern": "persistent-segment-tree",
+      "recommended_structure": "tree",
+      "alternatives": ["segment-tree", "sqrt-decomposition"]
+    },
+    {
+      "id": "rule-treap-split-merge",
+      "structural_signal": "Need a balanced BST supporting split and merge as fundamental operations",
+      "code_indicators": ["split", "merge", "implicit treap", "insert at position", "range reverse", "rope"],
+      "constraints": "randomized priorities maintain balance; O(log N) expected; implicit treap indexes by subtree size for sequence operations",
+      "recommended_pattern": "treap",
+      "recommended_structure": "tree",
+      "alternatives": ["treemap", "binary-search-tree-ops"]
+    },
+    {
+      "id": "rule-geometric-sweep-2d",
+      "structural_signal": "Process 2D geometric events by sweeping a line across one coordinate",
+      "code_indicators": ["segment intersection", "rectangle union area", "skyline", "sweep line geometry", "active set"],
+      "constraints": "sweep vertical line left to right; maintain active set in balanced BST by other coordinate; Bentley-Ottmann: O((N+K) log N)",
+      "recommended_pattern": "geometric-sweep-line",
+      "recommended_structure": "graph",
+      "alternatives": ["sweep-line", "closest-pair-of-points"]
+    }
+  ]
+}

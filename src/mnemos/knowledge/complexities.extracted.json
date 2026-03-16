@@ -1,0 +1,1460 @@
+{
+  "version": "1.0.0-extracted",
+  "source": "ds-algorithm-primer",
+  "extracted_complexities": [
+    {
+      "page": "arrays.html",
+      "card": "Bubble Sort",
+      "time": [
+        "O(n²)"
+      ],
+      "space": [
+        "O(1)"
+      ]
+    },
+    {
+      "page": "arrays.html",
+      "card": "Selection Sort",
+      "time": [
+        "O(n²)"
+      ],
+      "space": [
+        "O(1)"
+      ]
+    },
+    {
+      "page": "arrays.html",
+      "card": "Insertion Sort",
+      "time": [
+        "O(n²)"
+      ],
+      "space": [
+        "O(1)"
+      ]
+    },
+    {
+      "page": "arrays.html",
+      "card": "Heap Sort",
+      "time": [
+        "O(n log n)"
+      ],
+      "space": [
+        "O(1)"
+      ]
+    },
+    {
+      "page": "arrays.html",
+      "card": "Counting Sort",
+      "time": [
+        "O(n+k)"
+      ],
+      "space": [
+        "O(k)"
+      ]
+    },
+    {
+      "page": "arrays.html",
+      "card": "Radix Sort",
+      "time": [
+        "O(d(n+k))"
+      ],
+      "space": [
+        "O(n+k)"
+      ]
+    },
+    {
+      "page": "arrays.html",
+      "card": "Bucket Sort",
+      "time": [
+        "O(n+k) avg"
+      ],
+      "space": [
+        "O(n)"
+      ]
+    },
+    {
+      "page": "arrays.html",
+      "card": "Two Pointers — Convergent",
+      "time": [
+        "O(n)"
+      ],
+      "space": [
+        "O(1)"
+      ]
+    },
+    {
+      "page": "arrays.html",
+      "card": "Two Pointers — Same Direction",
+      "time": [
+        "O(n)"
+      ],
+      "space": [
+        "O(1)"
+      ]
+    },
+    {
+      "page": "arrays.html",
+      "card": "Sliding Window — Fixed Size",
+      "time": [
+        "O(n)"
+      ],
+      "space": [
+        "O(1)"
+      ]
+    },
+    {
+      "page": "arrays.html",
+      "card": "Sliding Window — Variable Size",
+      "time": [
+        "O(n)"
+      ],
+      "space": [
+        "O(k)"
+      ]
+    },
+    {
+      "page": "arrays.html",
+      "card": "Prefix Sums",
+      "time": [
+        "O(n) build"
+      ],
+      "space": [
+        "O(n)"
+      ]
+    },
+    {
+      "page": "arrays.html",
+      "card": "Kadane's Algorithm",
+      "time": [
+        "O(n)"
+      ],
+      "space": [
+        "O(1)"
+      ]
+    },
+    {
+      "page": "arrays.html",
+      "card": "Binary Search",
+      "time": [],
+      "space": [
+        "O(1)"
+      ]
+    },
+    {
+      "page": "arrays.html",
+      "card": "Dutch National Flag",
+      "time": [
+        "O(n)"
+      ],
+      "space": [
+        "O(1)"
+      ]
+    },
+    {
+      "page": "arrays.html",
+      "card": "Frequency Counting",
+      "time": [
+        "O(n)"
+      ],
+      "space": [
+        "O(k)"
+      ]
+    },
+    {
+      "page": "arrays.html",
+      "card": "Monotonic Stack",
+      "time": [
+        "O(n)"
+      ],
+      "space": [
+        "O(n)"
+      ]
+    },
+    {
+      "page": "arrays.html",
+      "card": "Quick Select (Kth Element)",
+      "time": [
+        "O(n) avg"
+      ],
+      "space": [
+        "O(1)"
+      ]
+    },
+    {
+      "page": "arrays.html",
+      "card": "Cyclic Sort",
+      "time": [
+        "O(n)"
+      ],
+      "space": [
+        "O(1)"
+      ]
+    },
+    {
+      "page": "arrays.html",
+      "card": "In-Place Rotation & Reversal",
+      "time": [
+        "O(n)"
+      ],
+      "space": [
+        "O(1)"
+      ]
+    },
+    {
+      "page": "arrays.html",
+      "card": "Merge Intervals",
+      "time": [],
+      "space": [
+        "O(n)"
+      ]
+    },
+    {
+      "page": "strings.html",
+      "card": "KMP & Rabin-Karp — String Matching",
+      "time": [
+        "O(n+m)"
+      ],
+      "space": [
+        "O(m)"
+      ]
+    },
+    {
+      "page": "hashmaps.html",
+      "card": "Frequency Counting & Anagrams",
+      "time": [
+        "O(n)"
+      ],
+      "space": [
+        "O(k)"
+      ]
+    },
+    {
+      "page": "hashmaps.html",
+      "card": "Two-Sum & Complement Lookup",
+      "time": [
+        "O(n)"
+      ],
+      "space": [
+        "O(n)"
+      ]
+    },
+    {
+      "page": "hashmaps.html",
+      "card": "Sliding Window with Maps/Sets",
+      "time": [
+        "O(n)"
+      ],
+      "space": [
+        "O(k)"
+      ]
+    },
+    {
+      "page": "hashmaps.html",
+      "card": "Caching & Memoization",
+      "time": [
+        "O(n)"
+      ],
+      "space": [
+        "O(n)"
+      ]
+    },
+    {
+      "page": "hashmaps.html",
+      "card": "LRU Cache",
+      "time": [
+        "O(1) get/put"
+      ],
+      "space": [
+        "O(capacity)"
+      ]
+    },
+    {
+      "page": "sets.html",
+      "card": "Duplicate Detection",
+      "time": [
+        "O(n)"
+      ],
+      "space": [
+        "O(n)"
+      ]
+    },
+    {
+      "page": "sets.html",
+      "card": "Longest Consecutive Sequence",
+      "time": [
+        "O(n)"
+      ],
+      "space": [
+        "O(n)"
+      ]
+    },
+    {
+      "page": "sets.html",
+      "card": "First Unique / Non-Repeating Element",
+      "time": [
+        "O(n)"
+      ],
+      "space": [
+        "O(k)"
+      ]
+    },
+    {
+      "page": "linkedlists.html",
+      "card": "Reversing a Linked List",
+      "time": [
+        "O(n)"
+      ],
+      "space": [
+        "O(1)"
+      ]
+    },
+    {
+      "page": "linkedlists.html",
+      "card": "Fast & Slow Pointers (Floyd's)",
+      "time": [
+        "O(n)"
+      ],
+      "space": [
+        "O(1)"
+      ]
+    },
+    {
+      "page": "linkedlists.html",
+      "card": "Merging Sorted Lists",
+      "time": [
+        "O(n+m)"
+      ],
+      "space": [
+        "O(1)"
+      ]
+    },
+    {
+      "page": "linkedlists.html",
+      "card": "Remove Nth Node from End",
+      "time": [
+        "O(n)"
+      ],
+      "space": [
+        "O(1)"
+      ]
+    },
+    {
+      "page": "linkedlists.html",
+      "card": "Intersection of Two Lists",
+      "time": [
+        "O(n+m)"
+      ],
+      "space": [
+        "O(1)"
+      ]
+    },
+    {
+      "page": "linkedlists.html",
+      "card": "Palindrome Linked List",
+      "time": [
+        "O(n)"
+      ],
+      "space": [
+        "O(1)"
+      ]
+    },
+    {
+      "page": "linkedlists.html",
+      "card": "Reorder List",
+      "time": [
+        "O(n)"
+      ],
+      "space": [
+        "O(1)"
+      ]
+    },
+    {
+      "page": "linkedlists.html",
+      "card": "Add Two Numbers",
+      "time": [
+        "O(max(n,m))"
+      ],
+      "space": [
+        "O(max(n,m))"
+      ]
+    },
+    {
+      "page": "linkedlists.html",
+      "card": "Partition List",
+      "time": [
+        "O(n)"
+      ],
+      "space": [
+        "O(1)"
+      ]
+    },
+    {
+      "page": "linkedlists.html",
+      "card": "Rotate List",
+      "time": [
+        "O(n)"
+      ],
+      "space": [
+        "O(1)"
+      ]
+    },
+    {
+      "page": "linkedlists.html",
+      "card": "Remove Duplicates (Sorted List)",
+      "time": [
+        "O(n)"
+      ],
+      "space": [
+        "O(1)"
+      ]
+    },
+    {
+      "page": "linkedlists.html",
+      "card": "Swap Nodes in Pairs",
+      "time": [
+        "O(n)"
+      ],
+      "space": [
+        "O(1)"
+      ]
+    },
+    {
+      "page": "linkedlists.html",
+      "card": "Reverse Nodes in k-Group",
+      "time": [
+        "O(n)"
+      ],
+      "space": [
+        "O(1)"
+      ]
+    },
+    {
+      "page": "linkedlists.html",
+      "card": "Copy List with Random Pointer",
+      "time": [
+        "O(n)"
+      ],
+      "space": [
+        "O(n) or O(1)"
+      ]
+    },
+    {
+      "page": "linkedlists.html",
+      "card": "LRU Cache (HashMap + Doubly Linked List)",
+      "time": [
+        "O(1) get/put"
+      ],
+      "space": [
+        "O(capacity)"
+      ]
+    },
+    {
+      "page": "stacks.html",
+      "card": "Valid Parentheses",
+      "time": [
+        "O(n)"
+      ],
+      "space": [
+        "O(n)"
+      ]
+    },
+    {
+      "page": "stacks.html",
+      "card": "Min Stack",
+      "time": [
+        "O(1)"
+      ],
+      "space": [
+        "O(n)"
+      ]
+    },
+    {
+      "page": "stacks.html",
+      "card": "Evaluate Reverse Polish Notation",
+      "time": [
+        "O(n)"
+      ],
+      "space": [
+        "O(n)"
+      ]
+    },
+    {
+      "page": "stacks.html",
+      "card": "Monotonic Stack",
+      "time": [
+        "O(n)"
+      ],
+      "space": [
+        "O(n)"
+      ]
+    },
+    {
+      "page": "stacks.html",
+      "card": "Largest Rectangle in Histogram",
+      "time": [
+        "O(n)"
+      ],
+      "space": [
+        "O(n)"
+      ]
+    },
+    {
+      "page": "stacks.html",
+      "card": "Trapping Rain Water",
+      "time": [
+        "O(n)"
+      ],
+      "space": [
+        "O(n)"
+      ]
+    },
+    {
+      "page": "stacks.html",
+      "card": "Daily Temperatures",
+      "time": [
+        "O(n)"
+      ],
+      "space": [
+        "O(n)"
+      ]
+    },
+    {
+      "page": "stacks.html",
+      "card": "Simplify Path",
+      "time": [
+        "O(n)"
+      ],
+      "space": [
+        "O(n)"
+      ]
+    },
+    {
+      "page": "stacks.html",
+      "card": "Decode String",
+      "time": [
+        "O(n×maxK)"
+      ],
+      "space": [
+        "O(n)"
+      ]
+    },
+    {
+      "page": "stacks.html",
+      "card": "Basic Calculator",
+      "time": [
+        "O(n)"
+      ],
+      "space": [
+        "O(n)"
+      ]
+    },
+    {
+      "page": "stacks.html",
+      "card": "Asteroid Collision",
+      "time": [
+        "O(n)"
+      ],
+      "space": [
+        "O(n)"
+      ]
+    },
+    {
+      "page": "stacks.html",
+      "card": "Remove K Digits",
+      "time": [
+        "O(n)"
+      ],
+      "space": [
+        "O(n)"
+      ]
+    },
+    {
+      "page": "stacks.html",
+      "card": "DFS with Explicit Stack",
+      "time": [
+        "O(V+E)"
+      ],
+      "space": [
+        "O(V)"
+      ]
+    },
+    {
+      "page": "stacks.html",
+      "card": "Stock Span",
+      "time": [
+        "O(n)"
+      ],
+      "space": [
+        "O(n)"
+      ]
+    },
+    {
+      "page": "queues.html",
+      "card": "BFS — Breadth-First Search",
+      "time": [
+        "O(V+E)"
+      ],
+      "space": [
+        "O(V)"
+      ]
+    },
+    {
+      "page": "queues.html",
+      "card": "Level-Order Tree Traversal",
+      "time": [
+        "O(n)"
+      ],
+      "space": [
+        "O(w)"
+      ]
+    },
+    {
+      "page": "queues.html",
+      "card": "Multi-Source BFS",
+      "time": [
+        "O(V+E)"
+      ],
+      "space": [
+        "O(V)"
+      ]
+    },
+    {
+      "page": "queues.html",
+      "card": "Word Ladder",
+      "time": [
+        "O(n×L²)"
+      ],
+      "space": [
+        "O(n×L)"
+      ]
+    },
+    {
+      "page": "queues.html",
+      "card": "Sliding Window Maximum (Monotonic Deque)",
+      "time": [
+        "O(n)"
+      ],
+      "space": [
+        "O(k)"
+      ]
+    },
+    {
+      "page": "queues.html",
+      "card": "Implement Stack Using Queues",
+      "time": [
+        "O(n) push"
+      ],
+      "space": [
+        "O(1) pop"
+      ]
+    },
+    {
+      "page": "queues.html",
+      "card": "Implement Queue Using Stacks",
+      "time": [
+        "O(1) amortized"
+      ],
+      "space": [
+        "O(n)"
+      ]
+    },
+    {
+      "page": "queues.html",
+      "card": "Moving Average from Data Stream",
+      "time": [
+        "O(1) per call"
+      ],
+      "space": [
+        "O(k)"
+      ]
+    },
+    {
+      "page": "queues.html",
+      "card": "01-BFS (Deque-Based)",
+      "time": [
+        "O(V+E)"
+      ],
+      "space": [
+        "O(V)"
+      ]
+    },
+    {
+      "page": "queues.html",
+      "card": "Task Scheduler",
+      "time": [
+        "O(n×m)"
+      ],
+      "space": [
+        "O(m)"
+      ]
+    },
+    {
+      "page": "queues.html",
+      "card": "Top K Frequent Elements",
+      "time": [
+        "O(n log k)"
+      ],
+      "space": [
+        "O(n)"
+      ]
+    },
+    {
+      "page": "queues.html",
+      "card": "Kth Largest / Merge K Lists",
+      "time": [
+        "O(n log k)"
+      ],
+      "space": [
+        "O(k)"
+      ]
+    },
+    {
+      "page": "queues.html",
+      "card": "Median from Data Stream (Two Heaps)",
+      "time": [
+        "O(log n) add"
+      ],
+      "space": [
+        "O(1) find"
+      ]
+    },
+    {
+      "page": "queues.html",
+      "card": "Dijkstra's Shortest Path",
+      "time": [
+        "O((V+E) log V)"
+      ],
+      "space": [
+        "O(V+E)"
+      ]
+    },
+    {
+      "page": "queues.html",
+      "card": "Reorganize String",
+      "time": [
+        "O(n log k)"
+      ],
+      "space": [
+        "O(k)"
+      ]
+    },
+    {
+      "page": "trees.html",
+      "card": "Max & Min Depth",
+      "time": [
+        "O(n) time"
+      ],
+      "space": [
+        "O(h) space"
+      ]
+    },
+    {
+      "page": "trees.html",
+      "card": "Diameter of Binary Tree",
+      "time": [
+        "O(n) time"
+      ],
+      "space": [
+        "O(h) space"
+      ]
+    },
+    {
+      "page": "trees.html",
+      "card": "Balanced & Symmetric",
+      "time": [
+        "O(n) time"
+      ],
+      "space": [
+        "O(h) space"
+      ]
+    },
+    {
+      "page": "trees.html",
+      "card": "Invert Binary Tree",
+      "time": [
+        "O(n) time"
+      ],
+      "space": [
+        "O(h) space"
+      ]
+    },
+    {
+      "page": "trees.html",
+      "card": "Path Sum Problems",
+      "time": [
+        "O(n) time"
+      ],
+      "space": [
+        "O(h-n) space"
+      ]
+    },
+    {
+      "page": "trees.html",
+      "card": "Lowest Common Ancestor",
+      "time": [
+        "O(n) / O(h) time"
+      ],
+      "space": [
+        "O(h) space"
+      ]
+    },
+    {
+      "page": "trees.html",
+      "card": "Serialize & Deserialize",
+      "time": [
+        "O(n) time"
+      ],
+      "space": [
+        "O(n) space"
+      ]
+    },
+    {
+      "page": "trees.html",
+      "card": "Construct from Traversals",
+      "time": [
+        "O(n) time"
+      ],
+      "space": [
+        "O(n) space"
+      ]
+    },
+    {
+      "page": "trees.html",
+      "card": "Right Side View & Zigzag",
+      "time": [
+        "O(n) time"
+      ],
+      "space": [
+        "O(w) space"
+      ]
+    },
+    {
+      "page": "trees.html",
+      "card": "Flatten to Linked List",
+      "time": [
+        "O(n) time"
+      ],
+      "space": [
+        "O(1) space"
+      ]
+    },
+    {
+      "page": "trees.html",
+      "card": "Kth Smallest & BST Iterator",
+      "time": [
+        "O(h+k) time"
+      ],
+      "space": [
+        "O(h) space"
+      ]
+    },
+    {
+      "page": "trees.html",
+      "card": "Max Path Sum & Good Nodes",
+      "time": [
+        "O(n) time"
+      ],
+      "space": [
+        "O(h) space"
+      ]
+    },
+    {
+      "page": "trees.html",
+      "card": "Same Tree, Subtree, Merge Trees",
+      "time": [
+        "O(n) time"
+      ],
+      "space": [
+        "O(h) space"
+      ]
+    },
+    {
+      "page": "trees.html",
+      "card": "Vertical Order & Sorted Array → BST",
+      "time": [
+        "O(n log n) / O(n) time"
+      ],
+      "space": [
+        "O(n) space"
+      ]
+    },
+    {
+      "page": "trees.html",
+      "card": "Trie (Prefix Tree)",
+      "time": [
+        "O(L) per op"
+      ],
+      "space": [
+        "O(N·L) space"
+      ]
+    },
+    {
+      "page": "trees.html",
+      "card": "Segment Tree",
+      "time": [
+        "O(log n) query/update"
+      ],
+      "space": [
+        "O(n) space"
+      ]
+    },
+    {
+      "page": "trees.html",
+      "card": "Fenwick Tree (BIT)",
+      "time": [
+        "O(log n) query/update"
+      ],
+      "space": [
+        "O(n) space"
+      ]
+    },
+    {
+      "page": "graphs.html",
+      "card": "BFS — Breadth-First Search",
+      "time": [
+        "O(V+E)"
+      ],
+      "space": [
+        "O(V)"
+      ]
+    },
+    {
+      "page": "graphs.html",
+      "card": "DFS — Depth-First Search",
+      "time": [
+        "O(V+E)"
+      ],
+      "space": [
+        "O(V)"
+      ]
+    },
+    {
+      "page": "graphs.html",
+      "card": "Connected Components",
+      "time": [
+        "O(V+E)"
+      ],
+      "space": [
+        "O(V)"
+      ]
+    },
+    {
+      "page": "graphs.html",
+      "card": "Cycle Detection",
+      "time": [
+        "O(V+E)"
+      ],
+      "space": [
+        "O(V)"
+      ]
+    },
+    {
+      "page": "graphs.html",
+      "card": "Topological Sort",
+      "time": [
+        "O(V+E)"
+      ],
+      "space": [
+        "O(V)"
+      ]
+    },
+    {
+      "page": "graphs.html",
+      "card": "Shortest Path — Dijkstra’s Algorithm",
+      "time": [
+        "O((V+E) log V)"
+      ],
+      "space": [
+        "O(V+E)"
+      ]
+    },
+    {
+      "page": "graphs.html",
+      "card": "Shortest Path — Bellman-Ford",
+      "time": [
+        "O(V × E)"
+      ],
+      "space": [
+        "O(V)"
+      ]
+    },
+    {
+      "page": "graphs.html",
+      "card": "Shortest Path — Floyd-Warshall (All Pairs)",
+      "time": [
+        "O(V³)"
+      ],
+      "space": [
+        "O(V²)"
+      ]
+    },
+    {
+      "page": "graphs.html",
+      "card": "Union-Find (Disjoint Set Union)",
+      "time": [
+        "O(α(n)) per op"
+      ],
+      "space": [
+        "O(V)"
+      ]
+    },
+    {
+      "page": "graphs.html",
+      "card": "Minimum Spanning Tree — Kruskal & Prim",
+      "time": [
+        "O(E log E)"
+      ],
+      "space": [
+        "O(V)"
+      ]
+    },
+    {
+      "page": "graphs.html",
+      "card": "Number of Islands (Grid BFS/DFS)",
+      "time": [
+        "O(R × C)"
+      ],
+      "space": [
+        "O(R × C)"
+      ]
+    },
+    {
+      "page": "graphs.html",
+      "card": "Multi-Source BFS (Rotten Oranges)",
+      "time": [
+        "O(R × C)"
+      ],
+      "space": [
+        "O(R × C)"
+      ]
+    },
+    {
+      "page": "graphs.html",
+      "card": "Bipartite Graph Check",
+      "time": [
+        "O(V+E)"
+      ],
+      "space": [
+        "O(V)"
+      ]
+    },
+    {
+      "page": "graphs.html",
+      "card": "Strongly Connected Components (Kosaraju / Tarjan)",
+      "time": [
+        "O(V+E)"
+      ],
+      "space": [
+        "O(V+E)"
+      ]
+    },
+    {
+      "page": "graphs.html",
+      "card": "Bridges & Articulation Points",
+      "time": [
+        "O(V+E)"
+      ],
+      "space": [
+        "O(V)"
+      ]
+    },
+    {
+      "page": "graphs.html",
+      "card": "A* Search",
+      "time": [
+        "O(E log V)*"
+      ],
+      "space": [
+        "O(V)"
+      ]
+    },
+    {
+      "page": "graphs.html",
+      "card": "Maximum Flow — Edmonds-Karp",
+      "time": [
+        "O(V × E²)"
+      ],
+      "space": [
+        "O(V²)"
+      ]
+    },
+    {
+      "page": "dp.html",
+      "card": "Fibonacci & Climbing Stairs",
+      "time": [
+        "O(n) time"
+      ],
+      "space": [
+        "O(1) space"
+      ]
+    },
+    {
+      "page": "dp.html",
+      "card": "House Robber",
+      "time": [
+        "O(n) time"
+      ],
+      "space": [
+        "O(1) space"
+      ]
+    },
+    {
+      "page": "dp.html",
+      "card": "Coin Change",
+      "time": [
+        "O(n×amount) time"
+      ],
+      "space": [
+        "O(amount) space"
+      ]
+    },
+    {
+      "page": "dp.html",
+      "card": "Longest Increasing Subsequence",
+      "time": [
+        "O(n²) / O(n log n) time"
+      ],
+      "space": [
+        "O(n) space"
+      ]
+    },
+    {
+      "page": "dp.html",
+      "card": "Maximum Subarray (Kadane's)",
+      "time": [
+        "O(n) time"
+      ],
+      "space": [
+        "O(1) space"
+      ]
+    },
+    {
+      "page": "dp.html",
+      "card": "Decode Ways & Word Break",
+      "time": [
+        "O(n) / O(n²) time"
+      ],
+      "space": [
+        "O(1) / O(n) space"
+      ]
+    },
+    {
+      "page": "dp.html",
+      "card": "Jump Game",
+      "time": [
+        "O(n) time"
+      ],
+      "space": [
+        "O(1) space"
+      ]
+    },
+    {
+      "page": "dp.html",
+      "card": "Perfect Squares",
+      "time": [
+        "O(n√n) time"
+      ],
+      "space": [
+        "O(n) space"
+      ]
+    },
+    {
+      "page": "dp.html",
+      "card": "Grid Paths & Min Path Sum",
+      "time": [
+        "O(m×n) time"
+      ],
+      "space": [
+        "O(n) space"
+      ]
+    },
+    {
+      "page": "dp.html",
+      "card": "Longest Common Subsequence",
+      "time": [
+        "O(m×n) time"
+      ],
+      "space": [
+        "O(m×n) space"
+      ]
+    },
+    {
+      "page": "dp.html",
+      "card": "Edit Distance",
+      "time": [
+        "O(m×n) time"
+      ],
+      "space": [
+        "O(n) space"
+      ]
+    },
+    {
+      "page": "dp.html",
+      "card": "0/1 Knapsack",
+      "time": [
+        "O(n×W) time"
+      ],
+      "space": [
+        "O(W) space"
+      ]
+    },
+    {
+      "page": "dp.html",
+      "card": "Palindromic Subsequence & Substring",
+      "time": [
+        "O(n²) time"
+      ],
+      "space": [
+        "O(n²) / O(1) space"
+      ]
+    },
+    {
+      "page": "dp.html",
+      "card": "Regex & Wildcard Matching",
+      "time": [
+        "O(m×n) time"
+      ],
+      "space": [
+        "O(m×n) space"
+      ]
+    },
+    {
+      "page": "dp.html",
+      "card": "Subset Sum & Partition",
+      "time": [
+        "O(n×target) time"
+      ],
+      "space": [
+        "O(target) space"
+      ]
+    },
+    {
+      "page": "dp.html",
+      "card": "Interval DP",
+      "time": [
+        "O(n³) time"
+      ],
+      "space": [
+        "O(n²) space"
+      ]
+    },
+    {
+      "page": "dp.html",
+      "card": "State Machine DP — Stock Problems",
+      "time": [
+        "O(n) time"
+      ],
+      "space": [
+        "O(1) space"
+      ]
+    },
+    {
+      "page": "dp.html",
+      "card": "Bitmask DP",
+      "time": [
+        "O(2^n × n²) time"
+      ],
+      "space": [
+        "O(2^n × n) space"
+      ]
+    },
+    {
+      "page": "dp.html",
+      "card": "Counting DP — Catalan Numbers",
+      "time": [
+        "O(n²) time"
+      ],
+      "space": [
+        "O(n) space"
+      ]
+    },
+    {
+      "page": "dp.html",
+      "card": "DP on Trees",
+      "time": [
+        "O(n) time"
+      ],
+      "space": [
+        "O(h) space"
+      ]
+    },
+    {
+      "page": "dp.html",
+      "card": "Multi-Dimensional DP",
+      "time": [
+        "O(m×n) / O(n³) time"
+      ],
+      "space": [
+        "O(m×n) space"
+      ]
+    },
+    {
+      "page": "recursion.html",
+      "card": "Factorial, Fibonacci, Power",
+      "time": [
+        "O(n) / O(2^n) / O(log n)"
+      ],
+      "space": []
+    },
+    {
+      "page": "recursion.html",
+      "card": "Recursion on Strings",
+      "time": [
+        "O(n) / O(2^n)"
+      ],
+      "space": [
+        "O(n)"
+      ]
+    },
+    {
+      "page": "recursion.html",
+      "card": "Recursion on Linked Lists",
+      "time": [
+        "O(n)"
+      ],
+      "space": [
+        "O(n) stack"
+      ]
+    },
+    {
+      "page": "recursion.html",
+      "card": "Recursion on Trees",
+      "time": [
+        "O(n)"
+      ],
+      "space": [
+        "O(h)"
+      ]
+    },
+    {
+      "page": "recursion.html",
+      "card": "Divide and Conquer",
+      "time": [
+        "O(n log n)"
+      ],
+      "space": [
+        "O(n)"
+      ]
+    },
+    {
+      "page": "recursion.html",
+      "card": "Memoization — Top-Down DP",
+      "time": [
+        "O(2^n) → O(n)"
+      ],
+      "space": [
+        "O(n) cache"
+      ]
+    },
+    {
+      "page": "recursion.html",
+      "card": "The Backtracking Templates",
+      "time": [
+        "Varies by problem"
+      ],
+      "space": [
+        "O(n) depth"
+      ]
+    },
+    {
+      "page": "recursion.html",
+      "card": "Subsets (Power Set)",
+      "time": [
+        "O(n×2^n)"
+      ],
+      "space": [
+        "O(n)"
+      ]
+    },
+    {
+      "page": "recursion.html",
+      "card": "Permutations",
+      "time": [
+        "O(n×n!)"
+      ],
+      "space": [
+        "O(n)"
+      ]
+    },
+    {
+      "page": "recursion.html",
+      "card": "Combinations & Combination Sum",
+      "time": [
+        "O(k×C(n,k))"
+      ],
+      "space": [
+        "O(k)"
+      ]
+    },
+    {
+      "page": "recursion.html",
+      "card": "Generate Parentheses",
+      "time": [
+        "O(4^n/√n)"
+      ],
+      "space": [
+        "O(n)"
+      ]
+    },
+    {
+      "page": "recursion.html",
+      "card": "N-Queens",
+      "time": [
+        "O(n!)"
+      ],
+      "space": [
+        "O(n)"
+      ]
+    },
+    {
+      "page": "recursion.html",
+      "card": "Sudoku Solver",
+      "time": [
+        "O(9^empty)"
+      ],
+      "space": [
+        "O(empty)"
+      ]
+    },
+    {
+      "page": "recursion.html",
+      "card": "Word Search (Grid)",
+      "time": [
+        "O(m×n×4^L)"
+      ],
+      "space": [
+        "O(L)"
+      ]
+    },
+    {
+      "page": "recursion.html",
+      "card": "Palindrome Partitioning",
+      "time": [
+        "O(n×2^n)"
+      ],
+      "space": [
+        "O(n)"
+      ]
+    },
+    {
+      "page": "recursion.html",
+      "card": "Expression Add Operators",
+      "time": [
+        "O(4^n)"
+      ],
+      "space": [
+        "O(n)"
+      ]
+    },
+    {
+      "page": "recursion.html",
+      "card": "Restore IP Addresses",
+      "time": [
+        "O(1) — max 81"
+      ],
+      "space": [
+        "O(1)"
+      ]
+    }
+  ]
+}
