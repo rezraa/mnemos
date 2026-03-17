@@ -14,7 +14,7 @@ By submitting a Contribution to this Project, you accept and agree to the follow
 
 ### 2. Grant of Copyright License
 
-You hereby grant to the Maintainer a perpetual, worldwide, non-exclusive, no-charge, royalty-free, irrevocable copyright license to reproduce, prepare derivative works of, publicly display, publicly perform, sublicense, and distribute your Contributions and such derivative works under any license, including but not limited to the GNU Affero General Public License v3.0 ("AGPL v3") and proprietary licenses.
+You hereby grant to the Maintainer a perpetual, worldwide, non-exclusive, no-charge, royalty-free, irrevocable copyright license to reproduce, prepare derivative works of, publicly display, publicly perform, sublicense, and distribute your Contributions and such derivative works under any license, including but not limited to the Apache License 2.0 and proprietary licenses.
 
 ### 3. Grant of Patent License
 
@@ -39,7 +39,7 @@ You are not expected to provide support for your Contributions, except to the ex
 
 ### 7. Project License
 
-The Project is currently distributed under the [GNU Affero General Public License v3.0](LICENSE). The dual-licensing grant in Section 2 allows the Maintainer to offer the Project under alternative licenses in the future while ensuring the open-source version remains available under AGPL v3.
+The Project is distributed under the [Apache License 2.0](LICENSE). The dual-licensing grant in Section 2 allows the Maintainer to offer the Project under alternative licenses in the future while ensuring the open-source version remains available under Apache 2.0.
 
 ---
 

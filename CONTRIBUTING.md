@@ -7,7 +7,7 @@ Created by **Reza Malik**. Thanks for your interest in contributing.
 By submitting a pull request you agree to the [Contributor License Agreement](CLA.md). In short:
 
 - Your contribution is your original work (or you have the right to submit it)
-- Your contribution is licensed under [AGPL v3](LICENSE), the same license as the project
+- Your contribution is licensed under [Apache 2.0](LICENSE), the same license as the project
 - You grant the project maintainer a non-exclusive, irrevocable, worldwide license to use, modify, and redistribute your contribution under any license, including proprietary licenses
 
 ## What We're Looking For
@@ -56,4 +56,4 @@ These are non-negotiable:
 
 ## License
 
-This project is licensed under [AGPL v3](LICENSE). The CLA above applies to all contributions.
+This project is licensed under [Apache 2.0](LICENSE). The CLA above applies to all contributions.

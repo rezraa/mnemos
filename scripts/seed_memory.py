@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Copyright (c) 2026 Reza Malik. Licensed under AGPL-3.0.
+# Copyright (c) 2026 Reza Malik. Licensed under the Apache License, Version 2.0.
 """Seed memory with realistic regressions for benchmark testing.
 
 Populates the Mnemos MemoryStore with known regressions drawn from

@@ -1,5 +1,5 @@
 @echo off
-REM Copyright (c) 2026 Reza Malik. Licensed under AGPL-3.0.
+REM Copyright (c) 2026 Reza Malik. Licensed under the Apache License, Version 2.0.
 REM Start the Mnemos MCP server and dashboard
 REM Usage: server.bat [--dashboard-only | --mcp-only]
 

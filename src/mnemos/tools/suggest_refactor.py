@@ -1,4 +1,4 @@
-# Copyright (c) 2026 Reza Malik. Licensed under AGPL-3.0.
+# Copyright (c) 2026 Reza Malik. Licensed under the Apache License, Version 2.0.
 """MCP tool: suggest_refactor
 
 Suggest refactoring alternatives based on the agent's diagnosis of the

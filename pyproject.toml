@@ -7,7 +7,7 @@ name = "mnemos"
 version = "0.1.0"
 description = "Algorithmic Reasoning Memory for LLMs — MCP server providing structure-centric algorithm/DS recommendations"
 readme = "README.md"
-license = "AGPL-3.0-only"
+license = "Apache-2.0"
 requires-python = ">=3.11"
 authors = [
     { name = "Reza Malik" },
