@@ -20,4 +20,6 @@ env/
 tests/benchmarks/results/*.json
 PLAN.md
 .mcp.json
-.claude/
+.claude/settings.json
+.claude/settings.local.json
+.claude/agent-memory-local/
