@@ -16,7 +16,7 @@ from mnemos.memory.schemas import (
     Regression,
     Severity,
 )
-from mnemos.tools._shared import emit_event, memory
+from mnemos.tools._shared import emit_event, get_memory
 
 
 def log_decision(
@@ -28,6 +28,7 @@ def log_decision(
     project_id: str | None = None,
     regression_details: str | None = None,
     correction_details: str | None = None,
+    conn: object = None,
 ) -> dict:
     """Log an algorithmic decision and its outcome to memory.
 
@@ -58,6 +59,8 @@ def log_decision(
 
     effective_project_id = project_id or "default"
 
+    mem = get_memory(conn)
+
     # 1. Create and persist the Decision
     decision = Decision(
         mode=decision_mode,
@@ -70,7 +73,7 @@ def log_decision(
         correction_details=correction_details,
     )
 
-    decision_id = memory.log_decision(decision)
+    decision_id = mem.log_decision(decision)
 
     result: dict[str, Any] = {
         "logged": True,
@@ -87,7 +90,7 @@ def log_decision(
             project_id=effective_project_id,
             decision_id=decision_id,
         )
-        reg_id = memory.add_regression(regression)
+        reg_id = mem.add_regression(regression)
         result["regression_id"] = f"r-{reg_id}"
 
         emit_event("regression_logged", {
@@ -110,7 +113,7 @@ def log_decision(
             project_id=effective_project_id,
             decision_id=decision_id,
         )
-        corr_id = memory.add_correction(correction)
+        corr_id = mem.add_correction(correction)
         result["correction_id"] = f"c-{corr_id}"
 
         emit_event("correction_logged", {

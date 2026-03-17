@@ -13,8 +13,7 @@ from mnemos.tools.bootstrap_context import bootstrap_context
 def _patch_memory(tmp_path: Path):
     """Monkey-patch the shared memory singleton to use a temp directory."""
     temp_store = MemoryStore(memory_dir=tmp_path)
-    with patch("mnemos.tools._shared.memory", temp_store), \
-         patch("mnemos.tools.bootstrap_context.memory", temp_store):
+    with patch("mnemos.tools._shared.memory", temp_store):
         yield temp_store
 
 

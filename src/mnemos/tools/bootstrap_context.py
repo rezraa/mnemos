@@ -15,7 +15,7 @@ from mnemos.memory.schemas import (
     PatternFound,
     StructureFound,
 )
-from mnemos.tools._shared import emit_event, knowledge, memory
+from mnemos.tools._shared import emit_event, get_knowledge, get_memory
 
 
 def bootstrap_context(
@@ -24,6 +24,7 @@ def bootstrap_context(
     structures_found: list[dict],
     patterns_found: list[dict] | None = None,
     runtime_constraints: list[str] | None = None,
+    conn: object = None,
 ) -> dict:
     """Store codebase context for project-aware recommendations.
 
@@ -76,10 +77,12 @@ def bootstrap_context(
         runtime_constraints=constraints_str,
     )
 
-    memory.set_context(context)
+    mem = get_memory(conn)
+    mem.set_context(context)
 
     # Validate against knowledge base: classify as known vs unknown
-    validated = _validate_against_knowledge(structure_objs, pattern_objs)
+    kb = get_knowledge(conn)
+    validated = _validate_against_knowledge(structure_objs, pattern_objs, kb)
 
     emit_event("context_bootstrapped", {
         "project_id": project_id,
@@ -104,18 +107,19 @@ def _project_id_from_path(path: str) -> str:
 def _validate_against_knowledge(
     structures: list[StructureFound],
     patterns: list[PatternFound],
+    kb: Any,
 ) -> dict[str, Any]:
     """Cross-reference discovered structures and patterns with the knowledge
     base.  Returns counts of known vs unknown items."""
 
-    all_kb_patterns = knowledge.get_all_patterns()
+    all_kb_patterns = kb.get_all_patterns()
     kb_pattern_names: set[str] = set()
     kb_pattern_ids: set[str] = set()
     for p in all_kb_patterns:
         kb_pattern_names.add(p.get("name", "").lower())
         kb_pattern_ids.add(p.get("id", "").lower())
 
-    all_kb_structures = knowledge.get_all_structures()
+    all_kb_structures = kb.get_all_structures()
     kb_structure_ids: set[str] = set()
     for s in all_kb_structures:
         kb_structure_ids.add(s.get("id", "").lower())

@@ -14,8 +14,8 @@ from typing import Any
 from mnemos.knowledge.loader import _rank
 from mnemos.tools._shared import (
     emit_event,
-    knowledge,
-    memory,
+    get_knowledge,
+    get_memory,
     validate_suggestion,
 )
 
@@ -26,6 +26,7 @@ def review_complexity(
     detected_complexity: str | None = None,
     constraints: dict | None = None,
     project_id: str | None = None,
+    conn: object = None,
 ) -> dict:
     """Review complexity based on the agent's analysis of code.
 
@@ -47,12 +48,15 @@ def review_complexity(
     if detected_complexity:
         detected_info["complexity"] = detected_complexity
 
+    kb = get_knowledge(conn)
+    mem = get_memory(conn)
+
     # 1. Look up detected_pattern in knowledge base
     pattern_info: dict[str, Any] | None = None
     alternatives: list[dict[str, Any]] = []
 
     if detected_pattern:
-        pattern_info = knowledge.get_pattern(detected_pattern)
+        pattern_info = kb.get_pattern(detected_pattern)
         if pattern_info:
             detected_info["known_pattern"] = {
                 "id": pattern_info["id"],
@@ -62,7 +66,7 @@ def review_complexity(
             }
 
             # Get alternatives with when_better reasoning
-            alts = knowledge.get_alternatives(detected_pattern)
+            alts = kb.get_alternatives(detected_pattern)
             for alt in alts:
                 alt_complexity = alt.get("complexity", {})
                 alt_time = alt_complexity.get("time", "") if alt_complexity else ""
@@ -82,7 +86,7 @@ def review_complexity(
                         alt_entry["improvement"] = f"{detected_complexity} -> {alt_time}"
 
                 # Resolve structure_id
-                full_alt = knowledge.get_pattern(alt["id"])
+                full_alt = kb.get_pattern(alt["id"])
                 if full_alt:
                     alt_entry["structure_id"] = full_alt.get("structure_id", "")
                     alt_entry["ds"] = full_alt.get("structure_id", "")
@@ -93,7 +97,7 @@ def review_complexity(
     structure_info: dict[str, Any] = {}
     if detected_structures:
         for sid in detected_structures:
-            struct = knowledge.get_structure(sid)
+            struct = kb.get_structure(sid)
             if struct:
                 structure_info[sid] = {
                     "operations": struct.get("operations", {}),
@@ -109,7 +113,7 @@ def review_complexity(
 
         # Create a dummy pattern entry for filtering
         dummy = [{"complexity": {"time": detected_complexity}, "name": "current"}]
-        surviving, removed = knowledge.filter_by_constraints(dummy, normalized)
+        surviving, removed = kb.filter_by_constraints(dummy, normalized)
         feasibility["is_feasible"] = len(surviving) > 0
         if removed:
             feasibility["reason"] = removed[0].get("filter_reason", "")
@@ -122,7 +126,7 @@ def review_complexity(
         normalized = dict(constraints)
         if "n" in normalized and "input_size" not in normalized:
             normalized["input_size"] = normalized.pop("n")
-        surviving, removed = knowledge.filter_by_constraints(alternatives, normalized)
+        surviving, removed = kb.filter_by_constraints(alternatives, normalized)
         filtered_out = [
             {"pattern_id": r.get("pattern_id", ""), "reason": r.get("filter_reason", "")}
             for r in removed
@@ -136,7 +140,7 @@ def review_complexity(
         if pattern_info:
             ds = pattern_info.get("structure_id", "")
         if ds:
-            reg = memory.check_regression(pattern=detected_pattern, ds=ds)
+            reg = mem.check_regression(pattern=detected_pattern, ds=ds)
             if reg:
                 memory_info["regressions"] = [{
                     "pattern": detected_pattern,
@@ -148,7 +152,7 @@ def review_complexity(
     # 6. Codebase context
     context_info: dict[str, Any] = {}
     if project_id:
-        ctx = memory.get_context(project_id)
+        ctx = mem.get_context(project_id)
         if ctx:
             context_info = {
                 "project_id": ctx.project_id,
@@ -157,7 +161,7 @@ def review_complexity(
 
     # 7. Validate alternative suggestions
     alternatives = validate_suggestion(
-        alternatives, constraints=constraints, project_id=project_id,
+        alternatives, constraints=constraints, project_id=project_id, kb=kb, mem=mem,
     )
 
     result = {

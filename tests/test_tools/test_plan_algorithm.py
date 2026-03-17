@@ -20,8 +20,7 @@ from mnemos.tools.plan_algorithm import plan_algorithm
 def _patch_memory(tmp_path: Path):
     """Monkey-patch the shared memory singleton to use a temp directory."""
     temp_store = MemoryStore(memory_dir=tmp_path)
-    with patch("mnemos.tools._shared.memory", temp_store), \
-         patch("mnemos.tools.plan_algorithm.memory", temp_store):
+    with patch("mnemos.tools._shared.memory", temp_store):
         yield temp_store
 
 

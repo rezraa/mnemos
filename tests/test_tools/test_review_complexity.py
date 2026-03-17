@@ -14,8 +14,7 @@ from mnemos.tools.review_complexity import review_complexity
 def _patch_memory(tmp_path: Path):
     """Monkey-patch the shared memory singleton to use a temp directory."""
     temp_store = MemoryStore(memory_dir=tmp_path)
-    with patch("mnemos.tools._shared.memory", temp_store), \
-         patch("mnemos.tools.review_complexity.memory", temp_store):
+    with patch("mnemos.tools._shared.memory", temp_store):
         yield temp_store
 
 

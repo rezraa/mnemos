@@ -16,8 +16,8 @@ from typing import Any
 
 from mnemos.tools._shared import (
     emit_event,
-    knowledge,
-    memory,
+    get_knowledge,
+    get_memory,
     validate_suggestion,
 )
 
@@ -28,6 +28,7 @@ def plan_algorithm(
     constraints: dict | None = None,
     structures: list[str] | None = None,
     project_id: str | None = None,
+    conn: object = None,
 ) -> dict:
     """Recommend algorithm + DS based on structural signals and constraints.
 
@@ -44,12 +45,15 @@ def plan_algorithm(
         Tight JSON with keys: matched_rules, knowledge, filtered_out,
         context, memory.
     """
-    # 1. Match structural signals against decision_rules.json
+    kb = get_knowledge(conn)
+    mem = get_memory(conn)
+
+    # 1. Match structural signals against decision rules
     matched_rules: list[dict[str, Any]] = []
     consider: list[dict[str, Any]] = []
 
     if structural_signals:
-        rule_matches = knowledge.match_structural_signals(structural_signals)
+        rule_matches = kb.match_structural_signals(structural_signals)
         for rm in rule_matches:
             rule = rm["rule"]
             rec_pat = rm.get("recommended_pattern")
@@ -94,7 +98,7 @@ def plan_algorithm(
     knowledge_slice: dict[str, Any] = {}
     if structures:
         for sid in structures:
-            struct = knowledge.get_structure(sid)
+            struct = kb.get_structure(sid)
             if struct:
                 patterns = []
                 for pat in struct.get("patterns", []):
@@ -118,7 +122,7 @@ def plan_algorithm(
         if "n" in normalized and "input_size" not in normalized:
             normalized["input_size"] = normalized.pop("n")
 
-        surviving, removed = knowledge.filter_by_constraints(consider, normalized)
+        surviving, removed = kb.filter_by_constraints(consider, normalized)
         filtered_out = [
             {"pattern_id": r.get("pattern_id", ""), "name": r.get("name", ""),
              "reason": r.get("filter_reason", "")}
@@ -133,7 +137,7 @@ def plan_algorithm(
         pid = c.get("pattern_id", "")
         ds = c.get("ds", c.get("structure_id", ""))
         if pid and ds:
-            reg = memory.check_regression(pattern=pid, ds=ds)
+            reg = mem.check_regression(pattern=pid, ds=ds)
             if reg:
                 regressions_found.append({
                     "pattern": pid,
@@ -146,7 +150,7 @@ def plan_algorithm(
 
     # Recent decisions for context
     if project_id:
-        recent = memory.get_decisions(project_id=project_id)
+        recent = mem.get_decisions(project_id=project_id)
         if recent:
             memory_info["past_decisions"] = len(recent)
             memory_info["last_pattern"] = recent[-1].pattern_chosen
@@ -154,7 +158,7 @@ def plan_algorithm(
     # 5. Codebase context
     context_info: dict[str, Any] = {}
     if project_id:
-        ctx = memory.get_context(project_id)
+        ctx = mem.get_context(project_id)
         if ctx:
             context_info = {
                 "project_id": ctx.project_id,
@@ -165,7 +169,7 @@ def plan_algorithm(
 
     # 6. Validate suggestions before returning
     consider = validate_suggestion(
-        consider, constraints=constraints, project_id=project_id,
+        consider, constraints=constraints, project_id=project_id, kb=kb, mem=mem,
     )
 
     result = {

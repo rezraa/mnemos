@@ -11,7 +11,7 @@ import json
 import os
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Callable
+from typing import TYPE_CHECKING, Any, Callable
 
 from mnemos.knowledge.loader import KnowledgeLoader, _rank
 from mnemos.memory.store import MemoryStore
@@ -22,6 +22,32 @@ from mnemos.memory.store import MemoryStore
 
 knowledge: KnowledgeLoader = KnowledgeLoader()
 memory: MemoryStore = MemoryStore()
+
+
+def get_memory(conn: Any = None) -> MemoryStore:
+    """Return the appropriate memory store for the current mode.
+
+    Args:
+        conn: If provided, returns a GraphMemoryStore backed by this
+              Kuzu/LadybugDB connection. If None, returns the JSON singleton.
+    """
+    if conn is None:
+        return memory
+    from mnemos.memory.graph_store import GraphMemoryStore
+    return GraphMemoryStore(conn)
+
+
+def get_knowledge(conn: Any = None) -> KnowledgeLoader:
+    """Return the appropriate knowledge loader for the current mode.
+
+    Args:
+        conn: If provided, returns a GraphKnowledgeLoader backed by this
+              Kuzu/LadybugDB connection. If None, returns the JSON singleton.
+    """
+    if conn is None:
+        return knowledge
+    from mnemos.knowledge.graph_loader import GraphKnowledgeLoader
+    return GraphKnowledgeLoader(conn)
 
 # ---------------------------------------------------------------------------
 # Event system — file-based for cross-process dashboard communication
@@ -78,6 +104,8 @@ def validate_suggestion(
     suggestions: list[dict[str, Any]],
     constraints: dict[str, Any] | None = None,
     project_id: str | None = None,
+    kb: Any = None,
+    mem: Any = None,
 ) -> list[dict[str, Any]]:
     """Validate a list of suggestion dicts before returning to the caller.
 
@@ -98,8 +126,10 @@ def validate_suggestion(
 
     validated: list[dict[str, Any]] = []
 
+    _mem = mem or memory
+
     # Load codebase context once if project_id given
-    ctx = memory.get_context(project_id) if project_id else None
+    ctx = _mem.get_context(project_id) if project_id else None
     banned_terms: set[str] = set()
     if ctx and ctx.runtime_constraints:
         rc_lower = ctx.runtime_constraints.lower()
@@ -127,7 +157,8 @@ def validate_suggestion(
             n = constraints.get("input_size") or constraints.get("n")
             if n is not None and isinstance(n, (int, float)):
                 n = int(n)
-                max_rank = knowledge.max_feasible_complexity_rank(n)
+                _kb = kb or knowledge
+                max_rank = _kb.max_feasible_complexity_rank(n)
                 time_rank = _rank(time_c) if time_c else 0
                 if time_c and time_rank > max_rank:
                     warnings.append(
@@ -145,7 +176,7 @@ def validate_suggestion(
 
         # ----- 2. Memory contradictions -----
         if pattern_id and ds:
-            regression = memory.check_regression(pattern=str(pattern_id), ds=str(ds))
+            regression = _mem.check_regression(pattern=str(pattern_id), ds=str(ds))
             if regression:
                 warnings.append(
                     f"REGRESSION WARNING: {pattern_id}+{ds} regressed previously — "

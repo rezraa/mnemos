@@ -14,8 +14,8 @@ from typing import Any
 from mnemos.knowledge.loader import _rank
 from mnemos.tools._shared import (
     emit_event,
-    knowledge,
-    memory,
+    get_knowledge,
+    get_memory,
     validate_suggestion,
 )
 
@@ -27,6 +27,7 @@ def suggest_refactor(
     target_complexity: str | None = None,
     constraints: dict | None = None,
     project_id: str | None = None,
+    conn: object = None,
 ) -> dict:
     """Suggest refactoring alternatives given the agent's diagnosis.
 
@@ -51,12 +52,15 @@ def suggest_refactor(
     if target_complexity:
         current_info["target"] = target_complexity
 
+    kb = get_knowledge(conn)
+    mem = get_memory(conn)
+
     # 1. Look up current_pattern -> get alternatives from knowledge base
     suggestions: list[dict[str, Any]] = []
     seen_ids: set[str] = set()
 
     if current_pattern:
-        alts = knowledge.get_alternatives(current_pattern)
+        alts = kb.get_alternatives(current_pattern)
         for alt in alts:
             alt_id = alt.get("id", "")
             if alt_id in seen_ids:
@@ -72,7 +76,7 @@ def suggest_refactor(
                     continue
 
             # Resolve full pattern for structure_id
-            full_alt = knowledge.get_pattern(alt_id)
+            full_alt = kb.get_pattern(alt_id)
             structure_id = full_alt.get("structure_id", "") if full_alt else ""
 
             entry: dict[str, Any] = {
@@ -93,7 +97,7 @@ def suggest_refactor(
     # 2. If current_structure provided, also look at patterns from that
     #    structure that might be better
     if current_structure:
-        struct = knowledge.get_structure(current_structure)
+        struct = kb.get_structure(current_structure)
         if struct:
             for pat in struct.get("patterns", []):
                 pid = pat["id"]
@@ -127,7 +131,7 @@ def suggest_refactor(
             filter_constraints["target_complexity"] = target_complexity
 
         if filter_constraints:
-            surviving, removed = knowledge.filter_by_constraints(
+            surviving, removed = kb.filter_by_constraints(
                 suggestions, filter_constraints,
             )
             filtered_out = [
@@ -140,7 +144,7 @@ def suggest_refactor(
     # 4. Check memory for past refactors and regressions
     memory_info: dict[str, Any] = {}
     if project_id:
-        corrections = memory.get_corrections(project_id=project_id)
+        corrections = mem.get_corrections(project_id=project_id)
         if corrections:
             memory_info["past_corrections"] = [
                 {
@@ -155,7 +159,7 @@ def suggest_refactor(
         pid = s.get("pattern_id", "")
         ds = s.get("ds", "")
         if pid and ds:
-            reg = memory.check_regression(pattern=pid, ds=ds)
+            reg = mem.check_regression(pattern=pid, ds=ds)
             if reg:
                 memory_info.setdefault("regressions_on_suggestions", []).append({
                     "pattern": pid,
@@ -167,7 +171,7 @@ def suggest_refactor(
     # 5. Codebase context
     context_info: dict[str, Any] = {}
     if project_id:
-        ctx = memory.get_context(project_id)
+        ctx = mem.get_context(project_id)
         if ctx:
             context_info = {
                 "project_id": ctx.project_id,
@@ -181,6 +185,8 @@ def suggest_refactor(
         suggestions,
         constraints=constraints,
         project_id=project_id,
+        kb=kb,
+        mem=mem,
     )
 
     # Sort by complexity improvement (best first)
