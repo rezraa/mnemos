@@ -4,8 +4,9 @@
 Same public API as MemoryStore but reads/writes to the Kuzu `memories`
 table instead of JSON files. Each memory record is stored as a node with
 the decision/regression/correction data serialised in the `content` JSON
-blob. The `agent` field is always "mnemos" and the `type` field maps to
+blob. The `agent` field is always "mnemos" and the `memory_type` field maps to
 the memory kind ("decision", "regression", "correction", "context").
+Conforms to Othrys standard schema (memory_type, status, outcome, confidence).
 
 Used when Mnemos is summoned inside Othrys (conn is provided).
 """
@@ -32,7 +33,7 @@ class GraphMemoryStore:
     """Kuzu-backed memory store — drop-in replacement for MemoryStore.
 
     All memory types are stored in the shared `memories` node table with:
-        id, agent, project, timestamp, type, content (JSON blob)
+        id, content, memory_type, status, outcome, agent, project, confidence, timestamp
 
     The content blob holds the full Pydantic model data so nothing is lost.
     Relationship edges (decided_by, related_to) are wired for Phoebe to
@@ -56,16 +57,20 @@ class GraphMemoryStore:
         """Insert a memory node into Kuzu."""
         self._conn.execute(
             "CREATE (m:memories {"
-            "  id: $id, agent: $agent, project: $project,"
-            "  timestamp: $ts, type: $type, content: $content"
+            "  id: $id, content: $content, memory_type: $memory_type,"
+            "  status: $status, outcome: $outcome, agent: $agent,"
+            "  project: $project, confidence: $confidence, timestamp: $ts"
             "})",
             {
                 "id": memory_id,
+                "content": json.dumps(content, default=str),
+                "memory_type": memory_type,
+                "status": "open",
+                "outcome": content.get("outcome", "unknown"),
                 "agent": AGENT,
                 "project": project,
+                "confidence": 0.9,
                 "ts": datetime.now(timezone.utc).isoformat(),
-                "type": memory_type,
-                "content": json.dumps(content, default=str),
             },
         )
 
@@ -98,10 +103,10 @@ class GraphMemoryStore:
     ) -> list[dict[str, Any]]:
         """Query memories by type with optional filters on content fields."""
         result = self._conn.execute(
-            "MATCH (m:memories) WHERE m.agent = $agent AND m.type = $type "
+            "MATCH (m:memories) WHERE m.agent = $agent AND m.memory_type = $memory_type "
             "RETURN m.id, m.project, m.timestamp, m.content "
             "ORDER BY m.timestamp DESC",
-            {"agent": AGENT, "type": memory_type},
+            {"agent": AGENT, "memory_type": memory_type},
         )
         rows = []
         while result.has_next():
