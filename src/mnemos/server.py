@@ -55,7 +55,7 @@ mcp = FastMCP("mnemos", instructions="Algorithmic Reasoning Memory for LLMs")
 @mcp.tool()
 def plan_algorithm(
     problem: str,
-    structural_signals: Union[list[str], str, None] = None,
+    structural_signals: Union[list[str], str],
     constraints: Union[dict, str, None] = None,
     structures: Union[list[str], str, None] = None,
     project_id: str | None = None,

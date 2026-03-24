@@ -24,7 +24,7 @@ from mnemos.tools._shared import (
 
 def plan_algorithm(
     problem: str,
-    structural_signals: list[str] | None = None,
+    structural_signals: list[str],
     constraints: dict | None = None,
     structures: list[str] | None = None,
     project_id: str | None = None,

@@ -6,6 +6,7 @@ Log an algorithmic decision and its outcome to persistent memory.
 
 from __future__ import annotations
 
+import logging
 from typing import Any
 
 from mnemos.memory.schemas import (
@@ -17,6 +18,11 @@ from mnemos.memory.schemas import (
     Severity,
 )
 from mnemos.tools._shared import emit_event, get_memory
+
+logger = logging.getLogger(__name__)
+
+_VALID_MODES = {m.value for m in DecisionMode}
+_VALID_OUTCOMES = {o.value for o in DecisionOutcome}
 
 
 def log_decision(
@@ -46,14 +52,26 @@ def log_decision(
     Returns:
         ``{logged: true, decision_id: "d-xxxx"}`` on success.
     """
-    # Resolve enums with fallback
+    # Resolve enums — warn on unknown values but accept them
+    effective_mode = mode.lower().strip()
+    if effective_mode not in _VALID_MODES:
+        logger.warning(
+            "Unknown mode '%s', accepting anyway (valid: %s)",
+            mode, _VALID_MODES,
+        )
     try:
-        decision_mode = DecisionMode(mode)
+        decision_mode = DecisionMode(effective_mode)
     except ValueError:
         decision_mode = DecisionMode.plan
 
+    effective_outcome = outcome.lower().strip()
+    if effective_outcome not in _VALID_OUTCOMES:
+        logger.warning(
+            "Unknown outcome '%s', accepting anyway (valid: %s)",
+            outcome, _VALID_OUTCOMES,
+        )
     try:
-        decision_outcome = DecisionOutcome(outcome)
+        decision_outcome = DecisionOutcome(effective_outcome)
     except ValueError:
         decision_outcome = DecisionOutcome.accepted
 
