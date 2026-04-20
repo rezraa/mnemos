@@ -78,7 +78,9 @@ class GraphKnowledgeLoader:
         if result.has_next():
             raw = result.get_next()[0]
             if raw:
-                return json.loads(raw) if isinstance(raw, str) else raw
+                parsed = self._parse_json(raw, None)
+                if parsed is not None:
+                    return parsed
 
         # Fallback for DBs without reference_data on agent
         with open(self._dir / "complexities.json", encoding="utf-8") as f:
@@ -191,11 +193,23 @@ class GraphKnowledgeLoader:
         return graph_id or ""
 
     @staticmethod
-    def _parse_json(raw: str | None, default: Any = None) -> Any:
-        if not raw:
+    def _parse_json(raw: Any, default: Any = None) -> Any:
+        """Decode a Kuzu value back to Python. Two accepted shapes:
+        tagged-``JSON:`` strings and native list/dict. All other string
+        forms are rejected per v3 invariant."""
+        if raw is None:
+            return default
+        if isinstance(raw, (list, dict)):
+            return raw
+        if not isinstance(raw, str) or not raw:
+            return default
+        if not raw.startswith("JSON:"):
+            return default
+        body = raw[5:]
+        if not body:
             return default
         try:
-            return json.loads(raw)
+            return json.loads(body)
         except (json.JSONDecodeError, TypeError):
             return default
 

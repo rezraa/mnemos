@@ -63,7 +63,7 @@ class GraphMemoryStore:
             "})",
             {
                 "id": memory_id,
-                "content": json.dumps(content, default=str),
+                "content": "JSON:" + json.dumps(content, default=str),
                 "memory_type": memory_type,
                 "status": "open",
                 "outcome": content.get("outcome", "unknown"),
@@ -111,7 +111,15 @@ class GraphMemoryStore:
         rows = []
         while result.has_next():
             row = result.get_next()
-            content = json.loads(row[3]) if isinstance(row[3], str) else row[3]
+            raw = row[3]
+            if isinstance(raw, str):
+                # Strip JSON: tag written by _insert_memory so the
+                # driver's first-byte heuristic never fires on bind.
+                if raw.startswith("JSON:"):
+                    raw = raw[len("JSON:"):]
+                content = json.loads(raw) if raw else {}
+            else:
+                content = raw
             # Apply filters on content fields
             if filters:
                 skip = False
