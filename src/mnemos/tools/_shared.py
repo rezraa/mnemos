@@ -7,7 +7,9 @@ KnowledgeLoader, MemoryStore, and the validate_suggestion() pre-return filter.
 
 from __future__ import annotations
 
+import functools
 import json
+import logging
 import os
 from datetime import datetime, timezone
 from pathlib import Path
@@ -15,6 +17,8 @@ from typing import TYPE_CHECKING, Any, Callable
 
 from mnemos.knowledge.loader import KnowledgeLoader, _rank
 from mnemos.memory.store import MemoryStore
+
+_log = logging.getLogger(__name__)
 
 # ---------------------------------------------------------------------------
 # Singletons — shared across all tool modules
@@ -94,6 +98,58 @@ def emit_event(event_name: str, payload: dict[str, Any]) -> None:
             f.write(json.dumps(event) + "\n")
     except Exception:
         pass  # best-effort — never break tool execution
+
+
+# ---------------------------------------------------------------------------
+# Kwarg normalisation — per-tool alias / ignore tables
+# ---------------------------------------------------------------------------
+
+def normalize_kwargs(func: Callable) -> Callable:
+    """Remap caller kwarg synonyms to canonical params before invocation.
+
+    Reads ``_ALIASES`` (synonym -> canonical) and ``_IGNORED`` (drop+warn)
+    from the wrapped function's own module. Genuinely-unknown kwargs are
+    left untouched so the wrapped signature still raises the standard
+    ``unexpected keyword argument`` TypeError — typos are not swallowed.
+
+    Raises TypeError if a synonym and its canonical (or two synonyms of the
+    same canonical) are both supplied: an aliasing collision is ambiguous
+    and must fail loud, not silently pick a winner.
+
+    The tables are read from ``func.__globals__`` (not via module import) so
+    this works both as a normal package import and inside the Othrys
+    served-source sandbox, where each tool is exec'd into a synthetic
+    namespace that is not importable by name.
+    """
+    g = func.__globals__
+    aliases: dict[str, str] = g.get("_ALIASES", {})
+    ignored: set[str] = g.get("_IGNORED", set())
+
+    @functools.wraps(func)
+    def wrapper(*args: Any, **kwargs: Any) -> Any:
+        for name in list(kwargs):
+            if name in ignored:
+                _log.warning(
+                    "%s: ignoring unsupported argument '%s'",
+                    func.__name__, name,
+                )
+                kwargs.pop(name)
+        remapped: dict[str, Any] = {}
+        for name in list(kwargs):
+            canonical = aliases.get(name)
+            if canonical is None:
+                continue
+            value = kwargs.pop(name)
+            if canonical in kwargs or canonical in remapped:
+                raise TypeError(
+                    f"{func.__name__}() received conflicting arguments for "
+                    f"'{canonical}': both it and alias '{name}' were supplied"
+                )
+            remapped[canonical] = value
+        kwargs.update(remapped)
+        return func(*args, **kwargs)
+
+    return wrapper
 
 
 # ---------------------------------------------------------------------------

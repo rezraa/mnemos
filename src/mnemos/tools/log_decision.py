@@ -17,14 +17,20 @@ from mnemos.memory.schemas import (
     Regression,
     Severity,
 )
-from mnemos.tools._shared import emit_event, get_memory
+from mnemos.tools._shared import emit_event, get_memory, normalize_kwargs
 
 logger = logging.getLogger(__name__)
 
 _VALID_MODES = {m.value for m in DecisionMode}
 _VALID_OUTCOMES = {o.value for o in DecisionOutcome}
 
+# Caller kwarg synonyms remapped to mnemos's distinct signature; ``decision_id``
+# is generated and ``tags`` is unmodelled here, so both are dropped with a warn.
+_ALIASES = {"notes": "correction_details"}
+_IGNORED = {"decision_id", "tags"}
 
+
+@normalize_kwargs
 def log_decision(
     mode: str,
     problem: str,
