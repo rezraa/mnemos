@@ -1,0 +1,845 @@
+{
+  "authored_by": "Mnemos",
+  "corpus_snapshot_sha256": {
+    "complexities.json": "0a162d4a852ac57518b750b15bff235df1c7b337a62802fd093d664f866f6f01",
+    "decision_rules.json": "088cf57ce8d1b70366bd93ff20d9b902be91eac7e3ccfa733bd51615c8263caf",
+    "structures.json": "779a4a2fe42948bc65b286ff9d1d91f0113cf79bd7d540d6b93663624a03fa00"
+  },
+  "matches": {
+    "P01": [
+      "sig-03ea24216a7d",
+      "sig-2e7b97b15284",
+      "sig-2f290f1f4b55",
+      "sig-409193b35f18",
+      "sig-5bf83f274d1f",
+      "sig-76b4d32d255a",
+      "sig-7a874a56d372",
+      "sig-7c76cb68dca5",
+      "sig-7dbe6f453eb0",
+      "sig-7e2bbb6fc51f",
+      "sig-7f378b60c873",
+      "sig-8b465d68d324",
+      "sig-9cf8a3370dce",
+      "sig-a96de421dfc6",
+      "sig-c6b8825aa5be",
+      "sig-c6f2766820ed",
+      "sig-d947eac65051",
+      "sig-e05be7241a87",
+      "sig-e8d1f8215916",
+      "sig-e9c5b83f0be6",
+      "sig-f41730393b0c",
+      "sig-fd2e30a9236e"
+    ],
+    "P02": [
+      "sig-1bf756371fd4",
+      "sig-217f8231a69a",
+      "sig-64d01d586b54",
+      "sig-88240ef09e82",
+      "sig-95655effd33c",
+      "sig-cca21ebb48fa",
+      "sig-dc5f270e6f10",
+      "sig-ee68ab6b8ce3"
+    ],
+    "P03": [
+      "sig-12f9b7b4622c",
+      "sig-4e51a97a2b84",
+      "sig-8e710d297961",
+      "sig-c87da8c3998d"
+    ],
+    "P04": [
+      "sig-433d2437bc9c",
+      "sig-61ce12cd55cb",
+      "sig-81bff01d82bf",
+      "sig-a96de421dfc6",
+      "sig-d72edff6c1de"
+    ],
+    "P05": [
+      "sig-0dbbc0d8193f",
+      "sig-4842a1bd8d79"
+    ],
+    "P06": [
+      "sig-03e41f276b04",
+      "sig-065af4b6872d",
+      "sig-1375b6773e70",
+      "sig-13c42749154b",
+      "sig-1616e3689db4",
+      "sig-34367549e588",
+      "sig-4bb42dbc5a44",
+      "sig-6a2e5feb52f1",
+      "sig-73711480261f",
+      "sig-75b117d9376e",
+      "sig-835e0d4dbd56",
+      "sig-9304e7fdbcf8",
+      "sig-96aac1f0006c",
+      "sig-de86e96e15bd",
+      "sig-e5c326306db1"
+    ],
+    "P07": [
+      "sig-17baa03f790a",
+      "sig-1c54df4991d6",
+      "sig-47cd503c9334",
+      "sig-4fd43bd1f046",
+      "sig-524c83f41a2e",
+      "sig-6b998a9a2904",
+      "sig-7d36e950e896",
+      "sig-7dbe6f453eb0",
+      "sig-7e2bbb6fc51f",
+      "sig-81ac3c4eaa99",
+      "sig-81bff01d82bf",
+      "sig-8ffacc7dc3d0",
+      "sig-e77196af8a9e",
+      "sig-f41730393b0c"
+    ],
+    "P08": [
+      "sig-180034efb90a",
+      "sig-5606fb7b60e3",
+      "sig-6f533e0db93d",
+      "sig-7991547d4b15",
+      "sig-bd1e2af5b8b6",
+      "sig-c6f2766820ed",
+      "sig-e2ea678d219f",
+      "sig-e9c5b83f0be6"
+    ],
+    "P09": [
+      "sig-09c0c4afb316",
+      "sig-17d89a2f7928",
+      "sig-1c7f57bb31c5",
+      "sig-b05ab56d0c69",
+      "sig-b3b4f57bd59a",
+      "sig-dea2f14887dc"
+    ],
+    "P10": [
+      "sig-37806d292696",
+      "sig-409193b35f18",
+      "sig-47cd503c9334",
+      "sig-6b998a9a2904",
+      "sig-a39c5c4d30b9",
+      "sig-cb9103a664d0",
+      "sig-f07455758d78"
+    ],
+    "P11": [
+      "sig-40925683b371",
+      "sig-4fc4bea61160",
+      "sig-9e370772a807"
+    ],
+    "P12": [
+      "sig-0c1dbf227256",
+      "sig-1122d228a84c",
+      "sig-3765d384a5fa",
+      "sig-7423915f8e37",
+      "sig-7c5a7e91ee32",
+      "sig-8b208f3f8150",
+      "sig-930f058d83d7",
+      "sig-bd306ad06d6d"
+    ],
+    "P13": [
+      "sig-03ea24216a7d",
+      "sig-060caf376336",
+      "sig-17baa03f790a",
+      "sig-1c54df4991d6",
+      "sig-5acc948f0c15",
+      "sig-69e435bbb001",
+      "sig-6cb7b5c44f86",
+      "sig-71a40e4e0d08",
+      "sig-75ba04e23461",
+      "sig-7c76cb68dca5",
+      "sig-7e9ef297c48f",
+      "sig-9b41d77b3b1b",
+      "sig-a4c76b270f2c",
+      "sig-f41730393b0c"
+    ],
+    "P14": [
+      "sig-9128d253fd51",
+      "sig-c3a9a0356dc0",
+      "sig-decc164b1081",
+      "sig-e59f5a36bbb6"
+    ],
+    "P15": [
+      "sig-03d6ce19461f",
+      "sig-03e41f276b04",
+      "sig-0a1bba85e4e7",
+      "sig-0eee206c70ce",
+      "sig-1616e3689db4",
+      "sig-1bb3a1a05956",
+      "sig-34367549e588",
+      "sig-3e3a3131cf88",
+      "sig-448369e35d48",
+      "sig-4bb42dbc5a44",
+      "sig-613f473b641f",
+      "sig-73711480261f",
+      "sig-7a63cda029f3",
+      "sig-7c5a7e91ee32",
+      "sig-7e2bbb6fc51f",
+      "sig-835e0d4dbd56",
+      "sig-847da8d216e0",
+      "sig-8d407457b735",
+      "sig-9304e7fdbcf8",
+      "sig-95655effd33c",
+      "sig-96aac1f0006c",
+      "sig-9bca8d5736ce",
+      "sig-a4d3af54d8a2",
+      "sig-b099afc16b1e",
+      "sig-c2e3d7c66259",
+      "sig-cc41e666956f",
+      "sig-de86e96e15bd",
+      "sig-e5c326306db1",
+      "sig-e6e9a83c39cc",
+      "sig-fa22c9e5bdf6"
+    ],
+    "P16": [
+      "sig-03ea24216a7d",
+      "sig-17baa03f790a",
+      "sig-5acc948f0c15",
+      "sig-69e435bbb001",
+      "sig-6b9f361e5b6e",
+      "sig-75ba04e23461",
+      "sig-7c76cb68dca5",
+      "sig-7dbe6f453eb0",
+      "sig-7e9ef297c48f",
+      "sig-82be594fdaad",
+      "sig-9b41d77b3b1b",
+      "sig-c90d4a554729",
+      "sig-e6728470c713",
+      "sig-f41730393b0c",
+      "sig-fd2e30a9236e"
+    ],
+    "P17": [
+      "sig-a4c76b270f2c"
+    ],
+    "P18": [
+      "sig-16c72635111a",
+      "sig-b8e75880510e",
+      "sig-c44fca2fcdc7"
+    ],
+    "P19": [
+      "sig-0eee206c70ce",
+      "sig-34367549e588",
+      "sig-be0d923f328d",
+      "sig-e2ea678d219f"
+    ],
+    "P20": [
+      "sig-61e3ba34db65",
+      "sig-7991547d4b15",
+      "sig-7f378b60c873",
+      "sig-8b465d68d324",
+      "sig-a4c76b270f2c",
+      "sig-bd1e2af5b8b6",
+      "sig-e8d1f8215916"
+    ],
+    "P21": [
+      "sig-15995faf4403",
+      "sig-19a6ec46f006",
+      "sig-81ac3c4eaa99",
+      "sig-8c902ab013ec",
+      "sig-903077005102",
+      "sig-acd73cacf97c",
+      "sig-f8feaa3a4eef"
+    ],
+    "P22": [
+      "sig-13c1bc47efb3",
+      "sig-477118327316",
+      "sig-547930ed3220",
+      "sig-71a40e4e0d08",
+      "sig-7c6e4537ecf4",
+      "sig-7e2bbb6fc51f",
+      "sig-b1195044c0de",
+      "sig-be2e15867f2a",
+      "sig-e28d58f85cf5"
+    ],
+    "P23": [
+      "sig-09c0c4afb316",
+      "sig-0c1dbf227256",
+      "sig-17d89a2f7928",
+      "sig-1bb3a1a05956",
+      "sig-40b4f8d0a08f",
+      "sig-613f473b641f",
+      "sig-7423915f8e37",
+      "sig-7c5a7e91ee32",
+      "sig-930f058d83d7",
+      "sig-98bb52fa4a4a",
+      "sig-9bca8d5736ce",
+      "sig-a61838c922e5",
+      "sig-b05ab56d0c69"
+    ],
+    "P24": [
+      "sig-13c1bc47efb3",
+      "sig-1cca7ff8b9c0",
+      "sig-2fa7d0c12797",
+      "sig-409193b35f18",
+      "sig-643db62c2598",
+      "sig-6f533e0db93d",
+      "sig-dd551e49611c"
+    ],
+    "P25": [
+      "sig-03ea24216a7d",
+      "sig-2e7b97b15284",
+      "sig-5acc948f0c15",
+      "sig-7199b5b235cb",
+      "sig-75ba04e23461",
+      "sig-7c6e4537ecf4",
+      "sig-7c76cb68dca5",
+      "sig-7e9ef297c48f",
+      "sig-9b41d77b3b1b",
+      "sig-9cf8a3370dce",
+      "sig-a96de421dfc6",
+      "sig-b1195044c0de",
+      "sig-be2e15867f2a"
+    ],
+    "P26": [
+      "sig-2164012fcdab",
+      "sig-698722c0f4a3",
+      "sig-6b9f361e5b6e",
+      "sig-7bf702fc51d5",
+      "sig-87c9c9e75aa5",
+      "sig-9d5dbf33acde",
+      "sig-d1645b78f3f6",
+      "sig-d42df8f1dc84",
+      "sig-d6eecaa61b3d",
+      "sig-e7a7f061ca9a",
+      "sig-eb91e98c7497",
+      "sig-f725edee8031"
+    ],
+    "P27": [
+      "sig-3dcfb2c8b4e9",
+      "sig-9a366d0025f3",
+      "sig-fb68502d370a"
+    ],
+    "P28": [
+      "sig-2944c8a8913f",
+      "sig-61e3ba34db65",
+      "sig-71a40e4e0d08",
+      "sig-7e2bbb6fc51f",
+      "sig-7f378b60c873",
+      "sig-8b465d68d324",
+      "sig-a0eaaa73ae43",
+      "sig-e05be7241a87",
+      "sig-e28d58f85cf5",
+      "sig-e8d1f8215916"
+    ],
+    "P29": [
+      "sig-0ac65c43392e",
+      "sig-1988c7610d96",
+      "sig-19d5fbcf6662",
+      "sig-292f2c638066",
+      "sig-61a7217589cc",
+      "sig-69c8628d1d01",
+      "sig-8c36c392fe76",
+      "sig-a39c5c4d30b9",
+      "sig-a7c46fc8f8a2",
+      "sig-af29a9ea2e06",
+      "sig-bcf0f4d24d08",
+      "sig-d90181d52636",
+      "sig-e6728470c713"
+    ],
+    "P30": [
+      "sig-03d6ce19461f",
+      "sig-03e41f276b04",
+      "sig-1616e3689db4",
+      "sig-34367549e588",
+      "sig-3e3a3131cf88",
+      "sig-448369e35d48",
+      "sig-4bb42dbc5a44",
+      "sig-73711480261f",
+      "sig-835e0d4dbd56",
+      "sig-9304e7fdbcf8",
+      "sig-96aac1f0006c",
+      "sig-de86e96e15bd",
+      "sig-e5c326306db1",
+      "sig-e6e9a83c39cc"
+    ],
+    "P31": [
+      "sig-118cfc8d007c",
+      "sig-4897c85f7d3d",
+      "sig-4afbcb069e1f",
+      "sig-a676bed85ef1"
+    ],
+    "P32": [
+      "sig-02dc634f7d27",
+      "sig-12020b40b5b2",
+      "sig-95655effd33c",
+      "sig-ad20694dfe8f",
+      "sig-b099afc16b1e",
+      "sig-df30521f6162",
+      "sig-fa22c9e5bdf6"
+    ],
+    "P33": [
+      "sig-42f53f459f76",
+      "sig-6619b0c4f1a1",
+      "sig-696b47929fc8",
+      "sig-84b18e68566d",
+      "sig-f6a21e766961"
+    ],
+    "P34": [
+      "sig-374fae6951f5",
+      "sig-424616f6facf",
+      "sig-613f473b641f",
+      "sig-6cfe5a467f6e",
+      "sig-73711480261f",
+      "sig-7423915f8e37",
+      "sig-75b117d9376e",
+      "sig-847da8d216e0",
+      "sig-98bb52fa4a4a"
+    ],
+    "P35": [
+      "sig-1c54df4991d6"
+    ],
+    "P36": [
+      "sig-1627f7adadd8",
+      "sig-17baa03f790a",
+      "sig-88240ef09e82",
+      "sig-dc5f270e6f10"
+    ],
+    "P37": [
+      "sig-03e41f276b04",
+      "sig-1616e3689db4",
+      "sig-4bb42dbc5a44",
+      "sig-73711480261f",
+      "sig-835e0d4dbd56",
+      "sig-9304e7fdbcf8",
+      "sig-96aac1f0006c",
+      "sig-de86e96e15bd",
+      "sig-e5c326306db1"
+    ],
+    "P38": [
+      "sig-7f378b60c873",
+      "sig-8b465d68d324",
+      "sig-e8d1f8215916"
+    ],
+    "P39": [
+      "sig-479ebed4279e"
+    ],
+    "P40": [
+      "sig-19d5fbcf6662",
+      "sig-214285be2961",
+      "sig-6b9f361e5b6e",
+      "sig-af29a9ea2e06",
+      "sig-bcf0f4d24d08",
+      "sig-cd5b1aa6df4e",
+      "sig-d90181d52636",
+      "sig-e6728470c713",
+      "sig-f725edee8031",
+      "sig-fd2e30a9236e"
+    ]
+  },
+  "matches_by_signal_text": {
+    "P01": [
+      "contiguous-subarray-satisfying-constraint",
+      "Sorted input with pair satisfying arithmetic constraint",
+      "parallel-scan-two-sorted-lists",
+      "sort-two-collections-then-two-pointer-merge",
+      "sorted-input-with-pair-search",
+      "fixed-gap-two-pointer",
+      "static-sorted-collection-with-lookups",
+      "Find longest/shortest contiguous subarray satisfying a constraint",
+      "Select items with cost/weight to reach target capacity/sum",
+      "Assign items 1-to-1 between two groups to minimize the maximum cost across all pairs",
+      "dp-with-binary-search-optimization",
+      "all-suffixes-sorted-for-binary-search",
+      "Assign true/false to variables satisfying pairwise boolean constraints (2 literals per clause)",
+      "Unsorted input with pair satisfying arithmetic constraint, need indices",
+      "binary-constraints-pairwise",
+      "combine-two-sorted-sequences",
+      "sorted-input-with-target-lookup",
+      "Find target or boundary in sorted data or monotonic search space",
+      "patience-sorting-with-binary-search",
+      "merge-two-sorted-sequences",
+      "subarray-sum-target-with-negative-values",
+      "cumulative-sum-difference-lookup"
+    ],
+    "P02": [
+      "element-to-count-mapping",
+      "frequency-based-decisions",
+      "string-key-frequency-counting",
+      "Count elements in the union of overlapping sets using alternating inclusion and exclusion",
+      "Maximize minimum distance between repeated elements by rearranging, where answer depends on max frequency",
+      "frequency-based-rearrangement",
+      "Count occurrences of each element for frequency-based decisions",
+      "count-occurrences-of-each-element"
+    ],
+    "P03": [
+      "push-on-open-pop-on-close",
+      "stack-empty-means-balanced",
+      "nested-open-close-matching",
+      "Validate nested open/close delimiter matching"
+    ],
+    "P04": [
+      "process-tasks-with-cooldown-constraints",
+      "dependency-ordering-in-DAG",
+      "select-items-with-weight-capacity-constraint",
+      "Unsorted input with pair satisfying arithmetic constraint, need indices",
+      "Order tasks/items respecting dependency constraints in a DAG"
+    ],
+    "P05": [
+      "maintain-k-smallest-or-largest",
+      "Find k largest/smallest elements from stream or collection"
+    ],
+    "P06": [
+      "shortest-path-with-negative-weights",
+      "make-array-monotone-minimum-cost",
+      "first-visit-is-shortest",
+      "queue-based-breadth-first",
+      "weighted-graph-shortest-path",
+      "augmenting-path-in-two-sided-graph",
+      "shortest-path-negative-weights-fast-in-practice",
+      "advance-first-pointer-n-steps",
+      "Shortest path in weighted graph with non-negative edges",
+      "Find minimum spanning tree in sparse graph",
+      "all-pairs-shortest-paths",
+      "shortest-path-in-unweighted-graph",
+      "shortest-path-in-uniform-cost-graph",
+      "Shortest path or minimum steps in unweighted graph/grid",
+      "Shortest path in graph with negative edge weights"
+    ],
+    "P07": [
+      "Count or find subarrays summing to target when values can be negative",
+      "Assign items from group A to group B (1-to-1) to maximize total value of assignments",
+      "Select non-overlapping intervals to maximize total weight/profit",
+      "stable-sort-needed-for-bounded-values",
+      "divisible-items-maximize-value-density",
+      "select-non-overlapping-intervals-maximizing-weight",
+      "knapsack-with-item-dependencies",
+      "Select items with cost/weight to reach target capacity/sum",
+      "Assign items 1-to-1 between two groups to minimize the maximum cost across all pairs",
+      "Choose subset of N items optimizing a metric where N is moderate (20-40) and item values are too large for DP array",
+      "select-items-with-weight-capacity-constraint",
+      "sort-by-value-weight-ratio",
+      "Select items to maximize value within capacity where some items are grouped and must be taken all-or-nothing",
+      "subarray-sum-target-with-negative-values"
+    ],
+    "P08": [
+      "Align or compare two sequences optimally",
+      "two-sequence-alignment",
+      "combine-or-compare-two-collections",
+      "find-longest-strictly-increasing-subsequence",
+      "longest-palindromic-subsequence",
+      "combine-two-sorted-sequences",
+      "Find lowest common ancestor of two nodes in tree",
+      "merge-two-sorted-sequences"
+    ],
+    "P09": [
+      "cycle-detection-in-sequence",
+      "Detect cycle in linked list or iterative sequence",
+      "two-pass-linked-list-traversal",
+      "detect-negative-cycles",
+      "undo-redo-via-doubly-linked-list",
+      "reverse-linked-list-via-stack"
+    ],
+    "P10": [
+      "sort-by-start-then-merge",
+      "sort-two-collections-then-two-pointer-merge",
+      "Select non-overlapping intervals to maximize total weight/profit",
+      "select-non-overlapping-intervals-maximizing-weight",
+      "find-all-intervals-overlapping-point-or-range",
+      "Merge, insert, or analyze overlapping intervals",
+      "interval-endpoint-comparison"
+    ],
+    "P11": [
+      "prefix-based-search-and-autocomplete",
+      "word-frequency-with-prefix-queries",
+      "Search words by prefix or build autocomplete"
+    ],
+    "P12": [
+      "component-counting-as-edges-arrive",
+      "strongly-connected-components-two-pass",
+      "connected-component-discovery",
+      "edge-connects-same-component-means-cycle",
+      "two-edge-connected-components",
+      "probabilistic-set-membership",
+      "Track connected components as edges are added dynamically",
+      "strongly-connected-components"
+    ],
+    "P13": [
+      "contiguous-subarray-satisfying-constraint",
+      "running-sum-with-reset",
+      "Count or find subarrays summing to target when values can be negative",
+      "Assign items from group A to group B (1-to-1) to maximize total value of assignments",
+      "Aggregate (sum/max/count) over all contiguous subarrays of fixed size",
+      "subarray-sum-via-difference",
+      "carry-running-sum-as-parameter",
+      "minimize-the-maximum-value",
+      "maximum-contiguous-subarray-aggregate",
+      "Find longest/shortest contiguous subarray satisfying a constraint",
+      "contiguous-subarray-of-fixed-length",
+      "Find maximum sum contiguous subarray with possible negatives",
+      "find-longest-run-of-consecutive-integers",
+      "subarray-sum-target-with-negative-values"
+    ],
+    "P14": [
+      "longest-repeated-substring",
+      "palindrome-substring-enumeration",
+      "Answer multiple queries about all substrings of a string (count distinct, longest repeated, etc.)",
+      "center-expansion-outward"
+    ],
+    "P15": [
+      "priority-queue-distance-ordering",
+      "shortest-path-with-negative-weights",
+      "Interval DP where cost satisfies quadrilateral inequality allowing narrowed split search",
+      "split-point-where-paths-diverge",
+      "weighted-graph-shortest-path",
+      "Each node has exactly one outgoing edge; query where you end up after K steps",
+      "augmenting-path-in-two-sided-graph",
+      "dense-graph-distance-matrix",
+      "priority-queue-for-edge-selection",
+      "shortest-path-negative-weights-fast-in-practice",
+      "greedy-add-cheapest-non-cycle-edge",
+      "Shortest path in weighted graph with non-negative edges",
+      "Find edges whose removal disconnects an undirected graph",
+      "two-edge-connected-components",
+      "Assign items 1-to-1 between two groups to minimize the maximum cost across all pairs",
+      "all-pairs-shortest-paths",
+      "always-add-cheapest-edge-to-tree",
+      "edge-removal-disconnects-graph",
+      "shortest-path-in-unweighted-graph",
+      "Maximize minimum distance between repeated elements by rearranging, where answer depends on max frequency",
+      "shortest-path-in-uniform-cost-graph",
+      "each-node-has-one-outgoing-edge",
+      "flow-network-with-edge-costs",
+      "Find the minimum distance between any two points in a 2D point set",
+      "Find a path or circuit that visits every edge exactly once",
+      "graph-with-0-and-1-edge-weights",
+      "Shortest path or minimum steps in unweighted graph/grid",
+      "Shortest path in graph with negative edge weights",
+      "priority-queue-slope-representation",
+      "minimum-distance-between-any-two-points"
+    ],
+    "P16": [
+      "contiguous-subarray-satisfying-constraint",
+      "Count or find subarrays summing to target when values can be negative",
+      "Aggregate (sum/max/count) over all contiguous subarrays of fixed size",
+      "subarray-sum-via-difference",
+      "DP where value function is piecewise-linear convex, transitions add absolute values or take prefix minima",
+      "maximum-contiguous-subarray-aggregate",
+      "Find longest/shortest contiguous subarray satisfying a constraint",
+      "Select items with cost/weight to reach target capacity/sum",
+      "contiguous-subarray-of-fixed-length",
+      "prefix-to-count-mapping",
+      "Find maximum sum contiguous subarray with possible negatives",
+      "path-sum-via-euler-tour-prefix-sum",
+      "prefix-sum-with-point-updates",
+      "subarray-sum-target-with-negative-values",
+      "cumulative-sum-difference-lookup"
+    ],
+    "P17": [
+      "find-longest-run-of-consecutive-integers"
+    ],
+    "P18": [
+      "Find next greater/smaller element for each position",
+      "next-greater-or-smaller-element",
+      "push-next-element-from-extracted-sequence"
+    ],
+    "P19": [
+      "split-point-where-paths-diverge",
+      "augmenting-path-in-two-sided-graph",
+      "find-deepest-shared-ancestor",
+      "Find lowest common ancestor of two nodes in tree"
+    ],
+    "P20": [
+      "search-by-comparing-with-node-value",
+      "find-longest-strictly-increasing-subsequence",
+      "dp-with-binary-search-optimization",
+      "all-suffixes-sorted-for-binary-search",
+      "find-longest-run-of-consecutive-integers",
+      "longest-palindromic-subsequence",
+      "patience-sorting-with-binary-search"
+    ],
+    "P21": [
+      "enumerate-all-subsets-via-bitmask",
+      "choose-k-from-n-elements",
+      "Choose subset of N items optimizing a metric where N is moderate (20-40) and item values are too large for DP array",
+      "power-set-generation",
+      "bitmask-subset-operations",
+      "include-or-exclude-each-element",
+      "subset-represented-as-bitmask"
+    ],
+    "P22": [
+      "Find missing/duplicate number when values are in range [1, n]",
+      "maintain-decreasing-deque-of-candidates",
+      "monotonic-elimination-of-candidates",
+      "minimize-the-maximum-value",
+      "sliding-window-min-max-via-deque",
+      "Assign items 1-to-1 between two groups to minimize the maximum cost across all pairs",
+      "sliding-window-extremum-via-heap",
+      "Find maximum/minimum in every sliding window of size k",
+      "Maximize/minimize value with constraints that carry forward across decisions"
+    ],
+    "P23": [
+      "cycle-detection-in-sequence",
+      "component-counting-as-edges-arrive",
+      "Detect cycle in linked list or iterative sequence",
+      "Each node has exactly one outgoing edge; query where you end up after K steps",
+      "process-edges-one-by-one",
+      "greedy-add-cheapest-non-cycle-edge",
+      "edge-connects-same-component-means-cycle",
+      "two-edge-connected-components",
+      "Track connected components as edges are added dynamically",
+      "union-find-for-cycle-detection",
+      "each-node-has-one-outgoing-edge",
+      "relax-all-edges-V-1-times",
+      "detect-negative-cycles"
+    ],
+    "P24": [
+      "Find missing/duplicate number when values are in range [1, n]",
+      "balance-sizes-for-O(1)-median",
+      "split-into-two-halves-and-combine",
+      "sort-two-collections-then-two-pointer-merge",
+      "Maintain running median as elements arrive",
+      "combine-or-compare-two-collections",
+      "streaming-median-computation"
+    ],
+    "P25": [
+      "contiguous-subarray-satisfying-constraint",
+      "Sorted input with pair satisfying arithmetic constraint",
+      "Aggregate (sum/max/count) over all contiguous subarrays of fixed size",
+      "distinct-element-constraint-in-window",
+      "maximum-contiguous-subarray-aggregate",
+      "sliding-window-min-max-via-deque",
+      "Find longest/shortest contiguous subarray satisfying a constraint",
+      "contiguous-subarray-of-fixed-length",
+      "Find maximum sum contiguous subarray with possible negatives",
+      "Assign true/false to variables satisfying pairwise boolean constraints (2 literals per clause)",
+      "Unsorted input with pair satisfying arithmetic constraint, need indices",
+      "sliding-window-extremum-via-heap",
+      "Find maximum/minimum in every sliding window of size k"
+    ],
+    "P26": [
+      "pair-matching-via-hash",
+      "failure-function-prefix-matching",
+      "DP where value function is piecewise-linear convex, transitions add absolute values or take prefix minima",
+      "pattern-occurrence-in-text",
+      "multi-pattern-hash-matching",
+      "rolling-hash-window-comparison",
+      "slide-pattern-over-text",
+      "multi-pattern-string-matching",
+      "multiple-pattern-queries-on-same-text",
+      "pattern-matching-via-concatenation",
+      "Find all occurrences of a single pattern in a text string",
+      "prefix-matching-at-every-position"
+    ],
+    "P27": [
+      "Count or fill connected regions in a 2D grid",
+      "propagate-to-same-value-neighbors",
+      "connected-region-in-grid"
+    ],
+    "P28": [
+      "monotonic-feasibility-over-answer-space",
+      "search-by-comparing-with-node-value",
+      "minimize-the-maximum-value",
+      "Assign items 1-to-1 between two groups to minimize the maximum cost across all pairs",
+      "dp-with-binary-search-optimization",
+      "all-suffixes-sorted-for-binary-search",
+      "Minimize the maximum or maximize the minimum of some metric where feasibility can be checked efficiently",
+      "Find target or boundary in sorted data or monotonic search space",
+      "Maximize/minimize value with constraints that carry forward across decisions",
+      "patience-sorting-with-binary-search"
+    ],
+    "P29": [
+      "block-decomposition-for-range-queries",
+      "Query historical versions of a data structure or find k-th smallest in a range",
+      "Range queries with point or range updates on dynamic array",
+      "idempotent-operation-range-query",
+      "lca-reduced-to-range-minimum-query",
+      "static-range-minimum-maximum-query",
+      "O(log n)-query-and-update",
+      "find-all-intervals-overlapping-point-or-range",
+      "try-all-split-points-in-range",
+      "range-query-with-point-or-range-updates",
+      "divide-range-into-segments",
+      "immutable-array-O1-range-query",
+      "prefix-sum-with-point-updates"
+    ],
+    "P30": [
+      "priority-queue-distance-ordering",
+      "shortest-path-with-negative-weights",
+      "weighted-graph-shortest-path",
+      "augmenting-path-in-two-sided-graph",
+      "dense-graph-distance-matrix",
+      "priority-queue-for-edge-selection",
+      "shortest-path-negative-weights-fast-in-practice",
+      "Shortest path in weighted graph with non-negative edges",
+      "all-pairs-shortest-paths",
+      "shortest-path-in-unweighted-graph",
+      "shortest-path-in-uniform-cost-graph",
+      "Shortest path or minimum steps in unweighted graph/grid",
+      "Shortest path in graph with negative edge weights",
+      "priority-queue-slope-representation"
+    ],
+    "P31": [
+      "three-way-in-place-partitioning",
+      "three-region-boundary-tracking",
+      "in-place-partitioning",
+      "Partition array into exactly three groups in-place"
+    ],
+    "P32": [
+      "minimum-operations-to-transform-sequence",
+      "insert-delete-replace-transitions",
+      "Maximize minimum distance between repeated elements by rearranging, where answer depends on max frequency",
+      "uniform-insert-delete-logic",
+      "Find the minimum distance between any two points in a 2D point set",
+      "implicit-treap-sequence-operations",
+      "minimum-distance-between-any-two-points"
+    ],
+    "P33": [
+      "equivalence-class-partitioning",
+      "sort-by-key-then-group-consecutive-equals",
+      "Group elements by computed equivalence key",
+      "canonical-form-as-map-key",
+      "classify-elements-by-derived-key"
+    ],
+    "P34": [
+      "merge-k-sorted-lists-via-divide-and-conquer",
+      "minimum-spanning-tree-via-sorted-edges",
+      "greedy-add-cheapest-non-cycle-edge",
+      "median-tracking-via-sorted-array",
+      "Shortest path in weighted graph with non-negative edges",
+      "edge-connects-same-component-means-cycle",
+      "Find minimum spanning tree in sparse graph",
+      "always-add-cheapest-edge-to-tree",
+      "union-find-for-cycle-detection"
+    ],
+    "P35": [
+      "Assign items from group A to group B (1-to-1) to maximize total value of assignments"
+    ],
+    "P36": [
+      "constant-time-substring-comparison",
+      "Count or find subarrays summing to target when values can be negative",
+      "Count elements in the union of overlapping sets using alternating inclusion and exclusion",
+      "Count occurrences of each element for frequency-based decisions"
+    ],
+    "P37": [
+      "shortest-path-with-negative-weights",
+      "weighted-graph-shortest-path",
+      "shortest-path-negative-weights-fast-in-practice",
+      "Shortest path in weighted graph with non-negative edges",
+      "all-pairs-shortest-paths",
+      "shortest-path-in-unweighted-graph",
+      "shortest-path-in-uniform-cost-graph",
+      "Shortest path or minimum steps in unweighted graph/grid",
+      "Shortest path in graph with negative edge weights"
+    ],
+    "P38": [
+      "dp-with-binary-search-optimization",
+      "all-suffixes-sorted-for-binary-search",
+      "patience-sorting-with-binary-search"
+    ],
+    "P39": [
+      "in-place-permutation-generation"
+    ],
+    "P40": [
+      "Range queries with point or range updates on dynamic array",
+      "Many range minimum or maximum queries on a static (immutable) array",
+      "DP where value function is piecewise-linear convex, transitions add absolute values or take prefix minima",
+      "range-query-with-point-or-range-updates",
+      "divide-range-into-segments",
+      "Multiple range sum queries on static array",
+      "immutable-array-O1-range-query",
+      "prefix-sum-with-point-updates",
+      "prefix-matching-at-every-position",
+      "cumulative-sum-difference-lookup"
+    ]
+  },
+  "n_problems": 40,
+  "recognition_rule": "signal matched iff (query + authored SHAPE working-memory) overlaps its text by >= 2 stemmed content tokens, OR query == signal_text (TK exact leg). SHAPE is a gold-blind restatement of each problem's shape; the mechanical matcher picks ids, so SHAPE cannot encode a pattern id. Audit matches_by_signal_text against problems_blind.",
+  "spec_id": "mnemos-Gmetric-v1-recognizer",
+  "story": "story-79321e96",
+  "what": "FROZEN gold-blind recognition {problem_id -> matched signal_ids} that bridges each frozen benchmark query to the Shape-C hydrate path. The LLM-stand-in for the benchmark (production uses a live LLM). Produced by mnemos_engine_bench.recognize over problems_blind + the signal index; independent of gmetric's acceptable_ids (never read here)."
+}

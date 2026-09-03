@@ -1,0 +1,968 @@
+{
+  "n_problems": 40,
+  "problems": [
+    {
+      "golds": [
+        {
+          "canonical": "two-pointer-convergent",
+          "concept": "two-pointer convergent scan on sorted input",
+          "role": "primary_fit",
+          "verdict": "E"
+        },
+        {
+          "canonical": "single-pass-complement-lookup",
+          "concept": "single-pass complement lookup",
+          "role": "constraint_alternative",
+          "verdict": "E"
+        },
+        {
+          "canonical": "binary-search",
+          "concept": "binary search for complement",
+          "role": "alternative",
+          "verdict": "E"
+        }
+      ],
+      "id": "P01",
+      "problem": "Given a sorted array of integers and a target value, find two elements whose values sum to the target.",
+      "qclass": "PA",
+      "query": [
+        "Sorted input with pair satisfying arithmetic constraint"
+      ],
+      "register": "prose"
+    },
+    {
+      "golds": [
+        {
+          "canonical": "frequency-aggregation",
+          "concept": "hash frequency map",
+          "role": "primary_fit",
+          "verdict": "E"
+        },
+        {
+          "canonical": "counting-array",
+          "concept": "direct-indexed counting array",
+          "role": "alternative",
+          "verdict": "E"
+        },
+        {
+          "canonical": "trie-frequency",
+          "concept": "trie-based frequency for string keys",
+          "role": "alternative",
+          "verdict": "E"
+        }
+      ],
+      "id": "P02",
+      "problem": "Count how many times each distinct value appears so you can make frequency-based decisions (mode, top-k, thresholds).",
+      "qclass": "PA",
+      "query": [
+        "Count occurrences of each element for frequency-based decisions"
+      ],
+      "register": "prose"
+    },
+    {
+      "golds": [
+        {
+          "canonical": "balanced-delimiters",
+          "concept": "stack of open delimiters",
+          "role": "primary_fit",
+          "verdict": "E"
+        },
+        {
+          "canonical": "counter-for-single-type",
+          "concept": "counter for a single delimiter type",
+          "role": "constraint_alternative",
+          "verdict": "E"
+        }
+      ],
+      "id": "P03",
+      "problem": "Check whether a string containing several kinds of brackets is correctly nested and balanced.",
+      "qclass": "PA",
+      "query": [
+        "Validate nested open/close delimiter matching"
+      ],
+      "register": "prose"
+    },
+    {
+      "golds": [
+        {
+          "canonical": "topological-sort",
+          "concept": "topological sort",
+          "role": "primary_fit",
+          "verdict": "E"
+        },
+        {
+          "canonical": "dfs-graph-traversal",
+          "concept": "DFS reverse-postorder ordering",
+          "role": "alternative",
+          "verdict": "E"
+        }
+      ],
+      "id": "P04",
+      "problem": "Produce an order to run build tasks so every task runs only after the tasks it depends on.",
+      "qclass": "PA",
+      "query": [
+        "For my build system I need to order tasks/items respecting dependency constraints in a DAG."
+      ],
+      "register": "prose"
+    },
+    {
+      "golds": [
+        {
+          "canonical": "heap-top-k",
+          "concept": "bounded top-k heap",
+          "role": "primary_fit",
+          "verdict": "E"
+        },
+        {
+          "canonical": "quick-select",
+          "concept": "quickselect kth statistic",
+          "role": "alternative",
+          "verdict": "E"
+        },
+        {
+          "canonical": "sorting",
+          "concept": "full sort then slice",
+          "role": "alternative",
+          "verdict": "E"
+        }
+      ],
+      "id": "P05",
+      "problem": "From a large stream keep the k biggest items seen so far, with k much smaller than the total.",
+      "qclass": "PA",
+      "query": [
+        "Find k largest/smallest elements from stream or collection"
+      ],
+      "register": "prose"
+    },
+    {
+      "golds": [
+        {
+          "canonical": "bfs-shortest-unweighted",
+          "concept": "BFS on unweighted graph",
+          "role": "primary_fit",
+          "verdict": "E"
+        },
+        {
+          "canonical": "dijkstra",
+          "concept": "Dijkstra (degenerate uniform weight)",
+          "role": "alternative",
+          "verdict": "E"
+        }
+      ],
+      "id": "P06",
+      "problem": "Find the fewest moves from a start cell to a goal cell on a grid where every step costs the same.",
+      "qclass": "PA",
+      "query": [
+        "minimum steps in unweighted graph/grid"
+      ],
+      "register": "prose"
+    },
+    {
+      "golds": [
+        {
+          "canonical": "knapsack-01",
+          "concept": "0/1 knapsack DP",
+          "role": "primary_fit",
+          "verdict": "E"
+        },
+        {
+          "canonical": "subsets-generation",
+          "concept": "exhaustive subset search",
+          "role": "alternative",
+          "verdict": "E"
+        }
+      ],
+      "id": "P07",
+      "problem": "Pick a subset of items, each with a weight and value, to maximize value under a capacity, each item used at most once.",
+      "qclass": "PA",
+      "query": [
+        "Select items with cost/weight to reach target capacity/sum"
+      ],
+      "register": "prose"
+    },
+    {
+      "golds": [
+        {
+          "canonical": "longest-common-subsequence",
+          "concept": "LCS DP",
+          "role": "primary_fit",
+          "verdict": "E"
+        },
+        {
+          "canonical": "edit-distance",
+          "concept": "edit distance DP",
+          "role": "alternative",
+          "verdict": "E"
+        }
+      ],
+      "id": "P08",
+      "problem": "Find the longest subsequence common to two strings.",
+      "qclass": "PA",
+      "query": [
+        "Align or compare two sequences optimally"
+      ],
+      "register": "prose"
+    },
+    {
+      "golds": [
+        {
+          "canonical": "ll-fast-slow-pointers",
+          "concept": "Floyd fast/slow pointers",
+          "role": "primary_fit",
+          "verdict": "E"
+        },
+        {
+          "canonical": "hashset-membership",
+          "concept": "visited set",
+          "role": "constraint_alternative",
+          "verdict": "E"
+        }
+      ],
+      "id": "P09",
+      "problem": "Determine whether a linked list loops back on itself, using O(1) extra space.",
+      "qclass": "PA",
+      "query": [
+        "Detect cycle in linked list or iterative sequence with O(1) memory."
+      ],
+      "register": "prose"
+    },
+    {
+      "golds": [
+        {
+          "canonical": "merge-intervals",
+          "concept": "sort-by-start then merge",
+          "role": "primary_fit",
+          "verdict": "E"
+        },
+        {
+          "canonical": "sweep-line",
+          "concept": "sweep line over endpoints",
+          "role": "alternative",
+          "verdict": "E"
+        }
+      ],
+      "id": "P10",
+      "problem": "Given a list of intervals, merge every group that overlaps into single intervals.",
+      "qclass": "PA",
+      "query": [
+        "Given scheduling data I must merge, insert, or analyze overlapping intervals."
+      ],
+      "register": "prose"
+    },
+    {
+      "golds": [
+        {
+          "canonical": "trie-prefix-tree",
+          "concept": "trie / prefix tree",
+          "role": "primary_fit",
+          "verdict": "E"
+        },
+        {
+          "canonical": "hashset-membership",
+          "concept": "hash set of words",
+          "role": "alternative",
+          "verdict": "E"
+        }
+      ],
+      "id": "P11",
+      "problem": "Support fast prefix lookups and autocomplete over a dictionary of words.",
+      "qclass": "PA",
+      "query": [
+        "Search words by prefix or build autocomplete"
+      ],
+      "register": "prose"
+    },
+    {
+      "golds": [
+        {
+          "canonical": "union-find-connectivity",
+          "concept": "union-find / disjoint set",
+          "role": "primary_fit",
+          "verdict": "E"
+        },
+        {
+          "canonical": "dfs-graph-traversal",
+          "concept": "recompute components by traversal",
+          "role": "alternative",
+          "verdict": "E"
+        }
+      ],
+      "id": "P12",
+      "problem": "As friendships are added one at a time, answer whether two people are already in the same group.",
+      "qclass": "PA",
+      "query": [
+        "connected components as edges are added dynamically"
+      ],
+      "register": "prose"
+    },
+    {
+      "golds": [
+        {
+          "canonical": "kadanes-algorithm",
+          "concept": "Kadane running-sum-with-reset",
+          "role": "primary_fit",
+          "verdict": "E"
+        },
+        {
+          "canonical": "prefix-sum",
+          "concept": "prefix sums with running minimum",
+          "role": "alternative",
+          "verdict": "E"
+        },
+        {
+          "canonical": "divide-and-conquer-max-subarray",
+          "concept": "divide and conquer max crossing",
+          "role": "alternative",
+          "verdict": "E"
+        }
+      ],
+      "id": "P13",
+      "problem": "Given daily profit-and-loss values, some negative, find the contiguous stretch of days with the maximum total.",
+      "qclass": "PB",
+      "query": [
+        "What is the largest total I can get from a run of consecutive days of gains and losses?"
+      ],
+      "register": "prose"
+    },
+    {
+      "golds": [
+        {
+          "canonical": "expand-around-center",
+          "concept": "expand around each center",
+          "role": "primary_fit",
+          "verdict": "E"
+        },
+        {
+          "canonical": "manachers-algorithm",
+          "concept": "Manacher linear-time",
+          "role": "alternative",
+          "verdict": "E"
+        },
+        {
+          "canonical": "dp-palindromic",
+          "concept": "interval DP on palindromes",
+          "role": "alternative",
+          "verdict": "E"
+        }
+      ],
+      "id": "P14",
+      "problem": "Find the longest stretch inside a word that reads the same forwards and backwards.",
+      "qclass": "PB",
+      "query": [
+        "Find the longest stretch inside a word that reads the same forwards and backwards."
+      ],
+      "register": "prose"
+    },
+    {
+      "golds": [
+        {
+          "canonical": "dijkstra",
+          "concept": "Dijkstra with priority queue",
+          "role": "primary_fit",
+          "verdict": "E"
+        },
+        {
+          "canonical": "bellman-ford",
+          "concept": "Bellman-Ford relaxation",
+          "role": "alternative",
+          "verdict": "E"
+        }
+      ],
+      "id": "P15",
+      "problem": "Find the cheapest route between two cities where each road has a positive travel cost.",
+      "qclass": "PB",
+      "query": [
+        "Find the cheapest route between two cities where each road has a positive travel cost."
+      ],
+      "register": "prose"
+    },
+    {
+      "golds": [
+        {
+          "canonical": "prefix-sum-with-hashmap",
+          "concept": "prefix sum counts in a hash map",
+          "role": "primary_fit",
+          "verdict": "E"
+        },
+        {
+          "canonical": "prefix-sum",
+          "concept": "plain prefix sum",
+          "role": "alternative",
+          "verdict": "E"
+        }
+      ],
+      "id": "P16",
+      "problem": "Count how many contiguous stretches of a list of integers, which may be negative, add up to exactly K.",
+      "qclass": "PB",
+      "query": [
+        "Count how many contiguous stretches of a list of integers, which may be negative, add up to exactly K."
+      ],
+      "register": "prose"
+    },
+    {
+      "golds": [
+        {
+          "canonical": "longest-consecutive-sequence",
+          "concept": "consecutive sequence via set boundaries",
+          "role": "primary_fit",
+          "verdict": "E"
+        },
+        {
+          "canonical": "sorting-then-scanning",
+          "concept": "sort then scan neighbours",
+          "role": "alternative",
+          "verdict": "E"
+        }
+      ],
+      "id": "P17",
+      "problem": "Given a jumbled bag of integers, how long is the longest run of consecutive whole numbers you can form?",
+      "qclass": "PB",
+      "query": [
+        "Given a jumbled bag of integers, how long is the longest run of consecutive whole numbers you can form?"
+      ],
+      "register": "prose"
+    },
+    {
+      "golds": [
+        {
+          "canonical": "monotonic-stack",
+          "concept": "monotonic stack of pending indices",
+          "role": "primary_fit",
+          "verdict": "E"
+        }
+      ],
+      "id": "P18",
+      "problem": "For each day's temperature, report how many days you must wait until a warmer day.",
+      "qclass": "PB",
+      "query": [
+        "For each day's temperature, report how many days until a warmer day."
+      ],
+      "register": "prose"
+    },
+    {
+      "golds": [
+        {
+          "canonical": "lowest-common-ancestor",
+          "concept": "recursive LCA search",
+          "role": "primary_fit",
+          "verdict": "E"
+        },
+        {
+          "canonical": "binary-lifting",
+          "concept": "binary lifting for repeated queries",
+          "role": "alternative",
+          "verdict": "E"
+        }
+      ],
+      "id": "P19",
+      "problem": "In a family tree, find the closest ancestor shared by two given people.",
+      "qclass": "PB",
+      "query": [
+        "In a family tree, find the closest ancestor shared by two given people."
+      ],
+      "register": "prose"
+    },
+    {
+      "golds": [
+        {
+          "canonical": "dp-lis",
+          "concept": "patience-sorting LIS with binary search",
+          "role": "primary_fit",
+          "verdict": "E"
+        },
+        {
+          "canonical": "dp-n-squared",
+          "concept": "quadratic DP with predecessor",
+          "role": "alternative",
+          "verdict": "E"
+        }
+      ],
+      "id": "P20",
+      "problem": "What is the length of the longest run of increasing values you can pick from a sequence, not necessarily adjacent?",
+      "qclass": "PB",
+      "query": [
+        "What is the length of the longest run of increasing values you can pick from a sequence, not necessarily adjacent?"
+      ],
+      "register": "prose"
+    },
+    {
+      "golds": [
+        {
+          "canonical": "subsets-generation",
+          "concept": "include/exclude recursion",
+          "role": "primary_fit",
+          "verdict": "E"
+        },
+        {
+          "canonical": "bitmask-enumeration",
+          "concept": "bitmask enumeration of subsets",
+          "role": "alternative",
+          "verdict": "E"
+        }
+      ],
+      "id": "P21",
+      "problem": "List every possible way to choose any number of items from a set of distinct items.",
+      "qclass": "PB",
+      "query": [
+        "List every possible way to choose any number of items from a set."
+      ],
+      "register": "prose"
+    },
+    {
+      "golds": [
+        {
+          "canonical": "sliding-window-maximum",
+          "concept": "monotonic deque of candidates",
+          "role": "primary_fit",
+          "verdict": "E"
+        },
+        {
+          "canonical": "heap-based-window",
+          "concept": "heap with lazy deletion",
+          "role": "alternative",
+          "verdict": "E"
+        }
+      ],
+      "id": "P22",
+      "problem": "As a window of fixed width slides across a stream of numbers, report the biggest value in the window at each step.",
+      "qclass": "PB",
+      "query": [
+        "As a fixed-width window slides across a stream of numbers, report the biggest value in the window at each step."
+      ],
+      "register": "prose"
+    },
+    {
+      "golds": [
+        {
+          "canonical": "uf-cycle-detection",
+          "concept": "union-find cycle detection",
+          "role": "primary_fit",
+          "verdict": "E"
+        },
+        {
+          "canonical": "union-find-connectivity",
+          "concept": "union-find connectivity",
+          "role": "alternative",
+          "verdict": "E"
+        }
+      ],
+      "id": "P23",
+      "problem": "As roads are added between towns one at a time, detect the first road that closes a loop.",
+      "qclass": "PB",
+      "query": [
+        "As roads are added between towns one at a time, detect the first road that closes a loop."
+      ],
+      "register": "prose"
+    },
+    {
+      "golds": [
+        {
+          "canonical": "two-heaps-median",
+          "concept": "two balanced heaps",
+          "role": "primary_fit",
+          "verdict": "E"
+        },
+        {
+          "canonical": "sorted-array-with-binary-insert",
+          "concept": "sorted array with binary insert",
+          "role": "alternative",
+          "verdict": "E"
+        }
+      ],
+      "id": "P24",
+      "problem": "Keep track of the middle value of a growing collection of numbers as each new number arrives.",
+      "qclass": "PB",
+      "query": [
+        "Keep track of the middle value of a growing collection of numbers as each new number arrives."
+      ],
+      "register": "prose"
+    },
+    {
+      "golds": [
+        {
+          "canonical": "sliding-window-variable",
+          "concept": "variable sliding window",
+          "role": "primary_fit",
+          "verdict": "E"
+        },
+        {
+          "canonical": "prefix-sum-with-hashmap",
+          "concept": "prefix sum with hashmap",
+          "role": "alternative",
+          "verdict": "E"
+        }
+      ],
+      "id": "P25",
+      "problem": "Find the shortest contiguous block of a list that satisfies a running condition.",
+      "qclass": "TK",
+      "query": [
+        "contiguous-subarray-satisfying-constraint"
+      ],
+      "register": "token"
+    },
+    {
+      "golds": [
+        {
+          "canonical": "kmp-string-matching",
+          "concept": "KMP failure function",
+          "role": "primary_fit",
+          "verdict": "E"
+        },
+        {
+          "canonical": "z-function",
+          "concept": "Z-function",
+          "role": "alternative",
+          "verdict": "E"
+        },
+        {
+          "canonical": "rabin-karp",
+          "concept": "Rabin-Karp / rolling hash",
+          "role": "alternative",
+          "verdict": "E"
+        }
+      ],
+      "id": "P26",
+      "problem": "Find every position where a pattern occurs inside a text string.",
+      "qclass": "TK",
+      "query": [
+        "pattern-occurrence-in-text"
+      ],
+      "register": "token"
+    },
+    {
+      "golds": [
+        {
+          "canonical": "flood-fill",
+          "concept": "flood fill",
+          "role": "primary_fit",
+          "verdict": "E"
+        },
+        {
+          "canonical": "union-find-connectivity",
+          "concept": "union-find over cells",
+          "role": "alternative",
+          "verdict": "E"
+        }
+      ],
+      "id": "P27",
+      "problem": "Count connected regions of equal cells in a 2D grid.",
+      "qclass": "TK",
+      "query": [
+        "connected-region-in-grid"
+      ],
+      "register": "token"
+    },
+    {
+      "golds": [
+        {
+          "canonical": "binary-search-on-answer",
+          "concept": "binary search on the answer",
+          "role": "primary_fit",
+          "verdict": "E"
+        },
+        {
+          "canonical": "greedy",
+          "concept": "greedy feasibility check",
+          "role": "alternative",
+          "verdict": "E"
+        }
+      ],
+      "id": "P28",
+      "problem": "Split an array into m contiguous parts minimizing the largest part sum.",
+      "qclass": "TK",
+      "query": [
+        "minimize-the-maximum-value"
+      ],
+      "register": "token"
+    },
+    {
+      "golds": [
+        {
+          "canonical": "segment-tree",
+          "concept": "segment tree",
+          "role": "primary_fit",
+          "verdict": "E"
+        },
+        {
+          "canonical": "fenwick-tree",
+          "concept": "Fenwick / BIT",
+          "role": "alternative",
+          "verdict": "E"
+        },
+        {
+          "canonical": "sqrt-decomposition",
+          "concept": "sqrt decomposition",
+          "role": "alternative",
+          "verdict": "E"
+        }
+      ],
+      "id": "P29",
+      "problem": "Support range-sum queries with point updates on a dynamic array.",
+      "qclass": "TK",
+      "query": [
+        "range-query-with-point-or-range-updates"
+      ],
+      "register": "token"
+    },
+    {
+      "golds": [
+        {
+          "canonical": "dijkstra",
+          "concept": "Dijkstra with priority queue",
+          "role": "primary_fit",
+          "verdict": "E"
+        },
+        {
+          "canonical": "bellman-ford",
+          "concept": "Bellman-Ford",
+          "role": "alternative",
+          "verdict": "E"
+        }
+      ],
+      "id": "P30",
+      "problem": "Least-cost path in a positively weighted graph.",
+      "qclass": "TK",
+      "query": [
+        "weighted-graph-shortest-path"
+      ],
+      "register": "token"
+    },
+    {
+      "golds": [
+        {
+          "canonical": "dutch-national-flag",
+          "concept": "Dutch national flag",
+          "role": "primary_fit",
+          "verdict": "E"
+        },
+        {
+          "canonical": "counting-sort",
+          "concept": "counting sort",
+          "role": "alternative",
+          "verdict": "E"
+        }
+      ],
+      "id": "P31",
+      "problem": "Sort an array containing only three distinct values in place in a single pass.",
+      "qclass": "TK",
+      "query": [
+        "three-way-in-place-partitioning"
+      ],
+      "register": "token"
+    },
+    {
+      "golds": [
+        {
+          "canonical": "edit-distance",
+          "concept": "edit distance DP",
+          "role": "primary_fit",
+          "verdict": "E"
+        },
+        {
+          "canonical": "longest-common-subsequence",
+          "concept": "LCS DP",
+          "role": "alternative",
+          "verdict": "E"
+        }
+      ],
+      "id": "P32",
+      "problem": "Fewest insert / delete / replace edits to turn one string into another.",
+      "qclass": "TK",
+      "query": [
+        "minimum-operations-to-transform-sequence"
+      ],
+      "register": "token"
+    },
+    {
+      "golds": [
+        {
+          "canonical": "grouping-by-key",
+          "concept": "group by canonical key",
+          "role": "primary_fit",
+          "verdict": "E"
+        },
+        {
+          "canonical": "sorting-then-grouping",
+          "concept": "sort then group",
+          "role": "alternative",
+          "verdict": "E"
+        }
+      ],
+      "id": "P33",
+      "problem": "Group words that are anagrams of one another.",
+      "qclass": "TK",
+      "query": [
+        "canonical-form-as-map-key"
+      ],
+      "register": "token"
+    },
+    {
+      "golds": [
+        {
+          "canonical": "kruskal-mst",
+          "concept": "Kruskal MST",
+          "role": "primary_fit",
+          "verdict": "E"
+        },
+        {
+          "canonical": "prim-mst",
+          "concept": "Prim MST",
+          "role": "alternative",
+          "verdict": "E"
+        }
+      ],
+      "id": "P34",
+      "problem": "Cheapest set of connections that links every node together.",
+      "qclass": "TK",
+      "query": [
+        "minimum-spanning-tree-via-sorted-edges"
+      ],
+      "register": "token"
+    },
+    {
+      "golds": [
+        {
+          "canonical": "reservoir-sampling",
+          "concept": "reservoir sampling",
+          "role": "primary_fit",
+          "verdict": "A"
+        }
+      ],
+      "id": "P35",
+      "problem": "Pick one item uniformly at random from a stream whose total length you do not know in advance.",
+      "qclass": "CE",
+      "query": [
+        "Pick one item uniformly at random from a stream whose total length is unknown in advance."
+      ],
+      "register": "prose"
+    },
+    {
+      "golds": [
+        {
+          "canonical": "boyer-moore-majority-vote",
+          "concept": "Boyer-Moore majority vote (O(1) space)",
+          "role": "primary_fit",
+          "verdict": "A"
+        },
+        {
+          "canonical": "frequency-aggregation",
+          "concept": "hash frequency count (O(n) space, not the space-optimal mechanism)",
+          "role": "constraint_alternative",
+          "verdict": "B"
+        }
+      ],
+      "id": "P36",
+      "problem": "Find the value that appears more than half the time in a list, using only constant extra memory.",
+      "qclass": "CE",
+      "query": [
+        "Find the value that appears more than half the time in a list, using only constant extra memory."
+      ],
+      "register": "prose"
+    },
+    {
+      "golds": [
+        {
+          "canonical": "a-star-search",
+          "concept": "A* heuristic search",
+          "role": "primary_fit",
+          "verdict": "A"
+        },
+        {
+          "canonical": "dijkstra",
+          "concept": "Dijkstra (uninformed, correct but not heuristic-guided)",
+          "role": "constraint_alternative",
+          "verdict": "E"
+        }
+      ],
+      "id": "P37",
+      "problem": "Find a route on a very large map quickly by using a distance estimate to guide the search toward the goal.",
+      "qclass": "CE",
+      "query": [
+        "Find a route on a very large map quickly using a distance estimate to guide the search toward the goal."
+      ],
+      "register": "prose"
+    },
+    {
+      "golds": [
+        {
+          "canonical": "ternary-search",
+          "concept": "ternary search on a unimodal function",
+          "role": "primary_fit",
+          "verdict": "A"
+        },
+        {
+          "canonical": "binary-search-on-answer",
+          "concept": "binary search on answer (monotonic feasibility, not unimodal extremum)",
+          "role": "constraint_alternative",
+          "verdict": "B"
+        }
+      ],
+      "id": "P38",
+      "problem": "Find the peak of a function that rises then falls, by repeatedly narrowing the search range.",
+      "qclass": "CE",
+      "query": [
+        "Find the peak of a function that rises then falls by repeatedly narrowing the range."
+      ],
+      "register": "prose"
+    },
+    {
+      "golds": [
+        {
+          "canonical": "fisher-yates-shuffle",
+          "concept": "Fisher-Yates shuffle",
+          "role": "primary_fit",
+          "verdict": "A"
+        }
+      ],
+      "id": "P39",
+      "problem": "Shuffle an array uniformly at random in place.",
+      "qclass": "CE",
+      "query": [
+        "uniform-random-in-place-permutation"
+      ],
+      "register": "token"
+    },
+    {
+      "golds": [
+        {
+          "canonical": "difference-array",
+          "concept": "difference array (range-add via boundary marks)",
+          "role": "primary_fit",
+          "verdict": "B"
+        },
+        {
+          "canonical": "fenwick-tree",
+          "concept": "Fenwick tree with range update",
+          "role": "alternative",
+          "verdict": "E"
+        },
+        {
+          "canonical": "segment-tree",
+          "concept": "segment tree with lazy range add",
+          "role": "alternative",
+          "verdict": "E"
+        }
+      ],
+      "id": "P40",
+      "problem": "Apply many 'add X to every element between positions i and j' updates, then read the final array once.",
+      "qclass": "CE",
+      "query": [
+        "Apply many range-add updates over positions, then read the final array once."
+      ],
+      "register": "prose"
+    }
+  ],
+  "qclasses": [
+    "CE",
+    "PA",
+    "PB",
+    "TK"
+  ],
+  "registers": [
+    "prose",
+    "token"
+  ],
+  "spec_id": "mnemos-Gmetric-v1",
+  "story": "story-63e99042",
+  "what": "Blind, corpus-blind algorithm/DS-selection problems. Each carries its FROZEN verbatim query signal(s) fed to retrieval and its gold concept ids. Recorded verbatim and byte-frozen (d-6146f069): the grader reads THIS file and feeds 'query' to the method unchanged."
+}

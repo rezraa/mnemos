@@ -1,0 +1,105 @@
+{
+  "husk_feasible_no_constraints": {
+    "alternatives": [],
+    "context": {},
+    "detected": {
+      "complexity": "O(n)",
+      "pattern": "two_pointer",
+      "structures": [
+        "array"
+      ]
+    },
+    "feasibility": {
+      "is_feasible": true
+    },
+    "filtered_out": [],
+    "memory": {},
+    "structure_info": {
+      "array": {
+        "operations": {
+          "access": {
+            "space": "O(1)",
+            "time": "O(1)"
+          },
+          "delete_at": {
+            "space": "O(1)",
+            "time": "O(n)"
+          },
+          "delete_end": {
+            "space": "O(1)",
+            "time": "O(1)"
+          },
+          "insert_at": {
+            "space": "O(1)",
+            "time": "O(n)"
+          },
+          "insert_end": {
+            "space": "O(1)",
+            "time": "O(1) amortized"
+          },
+          "iterate": {
+            "space": "O(1)",
+            "time": "O(n)"
+          },
+          "search": {
+            "space": "O(1)",
+            "time": "O(n)"
+          }
+        },
+        "pattern_count": 37
+      }
+    }
+  },
+  "husk_infeasible_no_alts": {
+    "alternatives": [],
+    "context": {},
+    "detected": {
+      "complexity": "O(n^2)",
+      "pattern": "nested_loop_pair_search",
+      "structures": [
+        "array"
+      ]
+    },
+    "feasibility": {
+      "is_feasible": false,
+      "reason": "O(n^2) infeasible for n=1,000,000"
+    },
+    "filtered_out": [],
+    "memory": {},
+    "structure_info": {
+      "array": {
+        "operations": {
+          "access": {
+            "space": "O(1)",
+            "time": "O(1)"
+          },
+          "delete_at": {
+            "space": "O(1)",
+            "time": "O(n)"
+          },
+          "delete_end": {
+            "space": "O(1)",
+            "time": "O(1)"
+          },
+          "insert_at": {
+            "space": "O(1)",
+            "time": "O(n)"
+          },
+          "insert_end": {
+            "space": "O(1)",
+            "time": "O(1) amortized"
+          },
+          "iterate": {
+            "space": "O(1)",
+            "time": "O(n)"
+          },
+          "search": {
+            "space": "O(1)",
+            "time": "O(n)"
+          }
+        },
+        "pattern_count": 37
+      }
+    }
+  }
+}

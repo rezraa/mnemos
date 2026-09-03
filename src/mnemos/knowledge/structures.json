@@ -51,7 +51,14 @@
           "structural_signals": [
             "sorted-input-with-pair-search",
             "symmetric-comparison-from-ends",
-            "monotonic-elimination-of-candidates"
+            "monotonic-elimination-of-candidates",
+            "Sorted input with pair satisfying arithmetic constraint"
+          ],
+          "code_indicators": [
+            "sorted array",
+            "two elements sum/diff",
+            "target sum",
+            "pair search"
           ],
           "applies_when": [
             "input is sorted or has monotonic property",
@@ -81,7 +88,15 @@
             "in-place-partitioning",
             "read-write-head-separation",
             "conditional-element-retention",
-            "order-preserving-filter"
+            "order-preserving-filter",
+            "Remove or filter elements in-place preserving order"
+          ],
+          "code_indicators": [
+            "remove element",
+            "move zeros",
+            "remove duplicates",
+            "in-place",
+            "O(1) space"
           ],
           "applies_when": [
             "need in-place removal or partitioning",
@@ -108,7 +123,14 @@
           "structural_signals": [
             "contiguous-subarray-of-fixed-length",
             "rolling-aggregate-over-window",
-            "incremental-add-remove-at-boundaries"
+            "incremental-add-remove-at-boundaries",
+            "Aggregate (sum/max/count) over all contiguous subarrays of fixed size"
+          ],
+          "code_indicators": [
+            "window size k",
+            "subarray of size",
+            "rolling sum",
+            "sliding average"
           ],
           "applies_when": [
             "window size is given or determined",
@@ -135,7 +157,14 @@
           "structural_signals": [
             "contiguous-subarray-satisfying-constraint",
             "expand-right-shrink-left-optimization",
-            "dynamic-window-boundary-adjustment"
+            "dynamic-window-boundary-adjustment",
+            "Find longest/shortest contiguous subarray satisfying a constraint"
+          ],
+          "code_indicators": [
+            "longest subarray",
+            "shortest subarray",
+            "at most k",
+            "minimum length"
           ],
           "applies_when": [
             "find longest/shortest contiguous subarray meeting a condition",
@@ -163,7 +192,14 @@
           "structural_signals": [
             "sorted-input-with-target-lookup",
             "monotonic-predicate-boundary-finding",
-            "search-space-halving"
+            "search-space-halving",
+            "Find target or boundary in sorted data or monotonic search space"
+          ],
+          "code_indicators": [
+            "sorted array",
+            "find target",
+            "first/last occurrence",
+            "minimize/maximize"
           ],
           "applies_when": [
             "input is sorted",
@@ -193,7 +229,14 @@
           "structural_signals": [
             "range-sum-queries",
             "cumulative-aggregate-precomputation",
-            "subarray-sum-via-difference"
+            "subarray-sum-via-difference",
+            "Multiple range sum queries on static array"
+          ],
+          "code_indicators": [
+            "range sum",
+            "sum between indices",
+            "multiple queries",
+            "static array"
           ],
           "applies_when": [
             "multiple range sum queries on static array",
@@ -223,7 +266,14 @@
           "structural_signals": [
             "maximum-contiguous-subarray-aggregate",
             "running-sum-with-reset",
-            "local-vs-global-optimum-tracking"
+            "local-vs-global-optimum-tracking",
+            "Find maximum sum contiguous subarray with possible negatives"
+          ],
+          "code_indicators": [
+            "maximum subarray",
+            "contiguous",
+            "negative values",
+            "running sum"
           ],
           "applies_when": [
             "find maximum sum contiguous subarray",
@@ -251,7 +301,14 @@
           "structural_signals": [
             "three-way-in-place-partitioning",
             "three-region-boundary-tracking",
-            "single-pass-classification"
+            "single-pass-classification",
+            "Partition array into exactly three groups in-place"
+          ],
+          "code_indicators": [
+            "three categories",
+            "sort colors",
+            "three-way partition",
+            "low/mid/high"
           ],
           "applies_when": [
             "partition array into exactly three groups",
@@ -278,7 +335,15 @@
           "structural_signals": [
             "overlapping-range-consolidation",
             "sort-by-start-then-merge",
-            "interval-endpoint-comparison"
+            "interval-endpoint-comparison",
+            "Merge, insert, or analyze overlapping intervals"
+          ],
+          "code_indicators": [
+            "intervals",
+            "overlapping",
+            "merge",
+            "schedule",
+            "meeting rooms"
           ],
           "applies_when": [
             "input is a collection of intervals that may overlap",
@@ -305,7 +370,14 @@
           "structural_signals": [
             "values-in-known-range-1-to-n",
             "place-each-element-at-its-index",
-            "in-place-positioning-by-value"
+            "in-place-positioning-by-value",
+            "Find missing/duplicate number when values are in range [1, n]"
+          ],
+          "code_indicators": [
+            "values 1 to n",
+            "missing number",
+            "find duplicate",
+            "first missing positive"
           ],
           "applies_when": [
             "values are in range [1, n] or [0, n-1]",
@@ -385,7 +457,22 @@
           "structural_signals": [
             "minimize-the-maximum-value",
             "maximize-the-minimum-value",
-            "monotonic-feasibility-over-answer-space"
+            "monotonic-feasibility-over-answer-space",
+            "Assign items 1-to-1 between two groups to minimize the maximum cost across all pairs",
+            "Minimize the maximum or maximize the minimum of some metric where feasibility can be checked efficiently"
+          ],
+          "code_indicators": [
+            "matching",
+            "minimize maximum",
+            "min-max",
+            "bottleneck",
+            "1-to-1 assignment",
+            "bipartite",
+            "maximize minimum",
+            "can we achieve distance D",
+            "feasibility check",
+            "threshold",
+            "binary search on answer"
           ],
           "applies_when": [
             "minimize the maximum or maximize the minimum of some metric",
@@ -417,7 +504,15 @@
           "structural_signals": [
             "subset-optimization-with-moderate-N",
             "split-into-two-halves-and-combine",
-            "values-too-large-for-DP-array"
+            "values-too-large-for-DP-array",
+            "Choose subset of N items optimizing a metric where N is moderate (20-40) and item values are too large for DP array"
+          ],
+          "code_indicators": [
+            "subset",
+            "N around 30",
+            "large weights",
+            "knapsack with large capacity",
+            "two halves"
           ],
           "applies_when": [
             "N is moderate (20-40) making 2^N too slow but 2^(N/2) feasible",
@@ -963,7 +1058,15 @@
           "structural_signals": [
             "smallest-convex-polygon-enclosing-points",
             "rubber-band-around-nails",
-            "geometric-boundary-computation"
+            "geometric-boundary-computation",
+            "Find the smallest convex polygon enclosing a set of 2D points"
+          ],
+          "code_indicators": [
+            "convex hull",
+            "enclosing polygon",
+            "farthest pair",
+            "rotating calipers",
+            "boundary points"
           ],
           "applies_when": [
             "find convex hull of 2D point set",
@@ -989,7 +1092,15 @@
           "name": "Closest Pair of Points",
           "structural_signals": [
             "minimum-distance-between-any-two-points",
-            "nearest-neighbor-in-point-set"
+            "nearest-neighbor-in-point-set",
+            "Find the minimum distance between any two points in a 2D point set"
+          ],
+          "code_indicators": [
+            "closest pair",
+            "minimum distance",
+            "nearest points",
+            "Euclidean distance",
+            "point set"
           ],
           "applies_when": [
             "find minimum Euclidean distance between N points in 2D",
@@ -1017,7 +1128,16 @@
           "structural_signals": [
             "find-all-primes-up-to-n",
             "prime-number-precomputation",
-            "bulk-primality-testing"
+            "bulk-primality-testing",
+            "Generate all prime numbers up to N or test many numbers for primality"
+          ],
+          "code_indicators": [
+            "prime",
+            "sieve",
+            "factorization",
+            "primality",
+            "coprime",
+            "divisibility"
           ],
           "applies_when": [
             "generate all primes up to N (~10^7 practical limit)",
@@ -1044,7 +1164,16 @@
           "structural_signals": [
             "count-union-of-overlapping-sets",
             "complementary-counting",
-            "at-least-one-condition-counting"
+            "at-least-one-condition-counting",
+            "Count elements in the union of overlapping sets using alternating inclusion and exclusion"
+          ],
+          "code_indicators": [
+            "inclusion exclusion",
+            "union of sets",
+            "at least one",
+            "derangement",
+            "coprime count",
+            "complementary counting"
           ],
           "applies_when": [
             "count elements in union of overlapping sets",
@@ -1380,7 +1509,14 @@
           "structural_signals": [
             "prefix-matching-at-every-position",
             "string-period-detection",
-            "pattern-matching-via-concatenation"
+            "pattern-matching-via-concatenation",
+            "Find all occurrences of a single pattern in a text string"
+          ],
+          "code_indicators": [
+            "pattern matching",
+            "find substring",
+            "string search",
+            "occurrences of pattern"
           ],
           "applies_when": [
             "pattern matching (concatenate pattern$text, compute Z-array)",
@@ -1409,7 +1545,15 @@
           "structural_signals": [
             "constant-time-substring-comparison",
             "probabilistic-string-equality",
-            "multi-pattern-hash-matching"
+            "multi-pattern-hash-matching",
+            "Compare many substrings for equality in O(1) after preprocessing"
+          ],
+          "code_indicators": [
+            "substring comparison",
+            "duplicate substrings",
+            "rolling hash",
+            "string hashing",
+            "content chunking"
           ],
           "applies_when": [
             "comparing many substrings for equality in O(1)",
@@ -1439,7 +1583,15 @@
           "structural_signals": [
             "all-substrings-of-a-string",
             "longest-repeated-substring",
-            "online-substring-queries"
+            "online-substring-queries",
+            "Answer multiple queries about all substrings of a string (count distinct, longest repeated, etc.)"
+          ],
+          "code_indicators": [
+            "all substrings",
+            "distinct substrings",
+            "longest repeated",
+            "suffix",
+            "common substring of two strings"
           ],
           "applies_when": [
             "multiple substring queries on same text",
@@ -1505,7 +1657,14 @@
           "structural_signals": [
             "check-if-complement-exists-in-seen-set",
             "store-element-after-checking",
-            "pair-matching-via-hash"
+            "pair-matching-via-hash",
+            "Unsorted input with pair satisfying arithmetic constraint, need indices"
+          ],
+          "code_indicators": [
+            "unsorted array",
+            "target sum",
+            "need original indices",
+            "complement"
           ],
           "applies_when": [
             "find pair of elements satisfying arithmetic constraint",
@@ -1533,7 +1692,15 @@
           "structural_signals": [
             "count-occurrences-of-each-element",
             "element-to-count-mapping",
-            "frequency-based-decisions"
+            "frequency-based-decisions",
+            "Count occurrences of each element for frequency-based decisions"
+          ],
+          "code_indicators": [
+            "frequency",
+            "count occurrences",
+            "most common",
+            "anagram",
+            "top k frequent"
           ],
           "applies_when": [
             "need to count occurrences of each element",
@@ -1560,7 +1727,14 @@
           "structural_signals": [
             "classify-elements-by-derived-key",
             "canonical-form-as-map-key",
-            "equivalence-class-partitioning"
+            "equivalence-class-partitioning",
+            "Group elements by computed equivalence key"
+          ],
+          "code_indicators": [
+            "group by",
+            "anagram groups",
+            "canonical form",
+            "equivalence classes"
           ],
           "applies_when": [
             "group elements sharing a computed property",
@@ -1639,7 +1813,14 @@
           "structural_signals": [
             "subarray-sum-target-with-negative-values",
             "cumulative-sum-difference-lookup",
-            "prefix-to-count-mapping"
+            "prefix-to-count-mapping",
+            "Count or find subarrays summing to target when values can be negative"
+          ],
+          "code_indicators": [
+            "subarray sum equals k",
+            "negative values",
+            "prefix sum",
+            "count subarrays"
           ],
           "applies_when": [
             "find subarrays summing to target k",
@@ -1959,7 +2140,14 @@
           "structural_signals": [
             "cycle-detection-in-sequence",
             "find-middle-of-sequence",
-            "two-speed-traversal"
+            "two-speed-traversal",
+            "Detect cycle in linked list or iterative sequence"
+          ],
+          "code_indicators": [
+            "cycle",
+            "linked list",
+            "fast and slow",
+            "Floyd's"
           ],
           "applies_when": [
             "detect cycle in linked list or sequence",
@@ -2217,7 +2405,15 @@
           "structural_signals": [
             "nested-open-close-matching",
             "push-on-open-pop-on-close",
-            "stack-empty-means-balanced"
+            "stack-empty-means-balanced",
+            "Validate nested open/close delimiter matching"
+          ],
+          "code_indicators": [
+            "parentheses",
+            "brackets",
+            "balanced",
+            "valid",
+            "nested"
           ],
           "applies_when": [
             "validate matching brackets/parentheses/tags",
@@ -2243,7 +2439,15 @@
           "structural_signals": [
             "next-greater-or-smaller-element",
             "maintain-decreasing-or-increasing-invariant",
-            "pop-violated-elements-on-new-entry"
+            "pop-violated-elements-on-new-entry",
+            "Find next greater/smaller element for each position"
+          ],
+          "code_indicators": [
+            "next greater",
+            "next smaller",
+            "daily temperatures",
+            "stock span",
+            "histogram"
           ],
           "applies_when": [
             "find next/previous greater/smaller element",
@@ -2270,7 +2474,15 @@
           "structural_signals": [
             "operator-precedence-processing",
             "operand-and-operator-stacks",
-            "parenthesis-scope-management"
+            "parenthesis-scope-management",
+            "Evaluate or parse mathematical expression with operator precedence"
+          ],
+          "code_indicators": [
+            "calculator",
+            "evaluate expression",
+            "operator precedence",
+            "infix",
+            "RPN"
           ],
           "applies_when": [
             "evaluate mathematical expressions",
@@ -2566,7 +2778,18 @@
             "process-tasks-with-cooldown-constraints",
             "greedy-most-frequent-first",
             "interleave-with-idle-slots",
-            "maximize-minimum-spacing-between-same-elements"
+            "maximize-minimum-spacing-between-same-elements",
+            "Maximize minimum distance between repeated elements by rearranging, where answer depends on max frequency"
+          ],
+          "code_indicators": [
+            "maximize minimum distance",
+            "spacing",
+            "diversity",
+            "rearrange",
+            "same artist",
+            "same type",
+            "cooldown",
+            "interleave"
           ],
           "applies_when": [
             "schedule tasks with cooldown between same-type tasks",
@@ -2593,7 +2816,14 @@
           "structural_signals": [
             "maintain-decreasing-deque-of-candidates",
             "front-is-always-current-maximum",
-            "remove-expired-and-smaller-elements"
+            "remove-expired-and-smaller-elements",
+            "Find maximum/minimum in every sliding window of size k"
+          ],
+          "code_indicators": [
+            "sliding window maximum",
+            "window minimum",
+            "deque",
+            "monotonic"
           ],
           "applies_when": [
             "find maximum/minimum in every window of size k",
@@ -2730,7 +2960,14 @@
           "structural_signals": [
             "maintain-k-smallest-or-largest",
             "min-heap-of-size-k-for-largest",
-            "stream-processing-with-bounded-memory"
+            "stream-processing-with-bounded-memory",
+            "Find k largest/smallest elements from stream or collection"
+          ],
+          "code_indicators": [
+            "top k",
+            "kth largest",
+            "k smallest",
+            "k most frequent"
           ],
           "applies_when": [
             "find k largest or smallest elements",
@@ -2784,7 +3021,13 @@
           "structural_signals": [
             "maintain-lower-half-max-heap-upper-half-min-heap",
             "balance-sizes-for-O(1)-median",
-            "streaming-median-computation"
+            "streaming-median-computation",
+            "Maintain running median as elements arrive"
+          ],
+          "code_indicators": [
+            "median from stream",
+            "running median",
+            "balance two halves"
           ],
           "applies_when": [
             "find median from data stream",
@@ -2810,7 +3053,14 @@
           "structural_signals": [
             "weighted-graph-shortest-path",
             "greedy-nearest-unvisited-expansion",
-            "priority-queue-distance-ordering"
+            "priority-queue-distance-ordering",
+            "Shortest path in weighted graph with non-negative edges"
+          ],
+          "code_indicators": [
+            "weighted graph",
+            "shortest path",
+            "minimum cost",
+            "non-negative weights"
           ],
           "applies_when": [
             "shortest path in weighted graph with non-negative edges",
@@ -3034,7 +3284,14 @@
           "structural_signals": [
             "find-deepest-shared-ancestor",
             "split-point-where-paths-diverge",
-            "recursive-search-in-subtrees"
+            "recursive-search-in-subtrees",
+            "Find lowest common ancestor of two nodes in tree"
+          ],
+          "code_indicators": [
+            "lowest common ancestor",
+            "LCA",
+            "shared ancestor",
+            "path divergence"
           ],
           "applies_when": [
             "find lowest common ancestor of two nodes",
@@ -3109,7 +3366,15 @@
           "structural_signals": [
             "bottom-up-max-of-children-plus-one",
             "leaf-base-case-returns-zero",
-            "recursive-height-aggregation"
+            "recursive-height-aggregation",
+            "Compute aggregate from children before processing parent"
+          ],
+          "code_indicators": [
+            "tree height",
+            "tree depth",
+            "diameter",
+            "balanced check",
+            "subtree sum"
           ],
           "applies_when": [
             "compute height or depth of tree",
@@ -3159,7 +3424,14 @@
           "structural_signals": [
             "character-by-character-tree-traversal",
             "shared-prefix-optimization",
-            "prefix-based-search-and-autocomplete"
+            "prefix-based-search-and-autocomplete",
+            "Search words by prefix or build autocomplete"
+          ],
+          "code_indicators": [
+            "prefix search",
+            "autocomplete",
+            "word dictionary",
+            "starts with"
           ],
           "applies_when": [
             "prefix-based search or autocomplete",
@@ -3186,7 +3458,14 @@
           "structural_signals": [
             "range-query-with-point-or-range-updates",
             "divide-range-into-segments",
-            "O(log n)-query-and-update"
+            "O(log n)-query-and-update",
+            "Range queries with point or range updates on dynamic array"
+          ],
+          "code_indicators": [
+            "range sum query",
+            "update element",
+            "dynamic",
+            "many queries and updates"
           ],
           "applies_when": [
             "range sum/min/max queries with updates",
@@ -3407,7 +3686,16 @@
           "structural_signals": [
             "static-range-minimum-maximum-query",
             "immutable-array-O1-range-query",
-            "idempotent-operation-range-query"
+            "idempotent-operation-range-query",
+            "Many range minimum or maximum queries on a static (immutable) array"
+          ],
+          "code_indicators": [
+            "range minimum",
+            "range maximum",
+            "RMQ",
+            "static array",
+            "no updates",
+            "immutable"
           ],
           "applies_when": [
             "immutable array with many range min/max/gcd queries",
@@ -3437,7 +3725,16 @@
           "structural_signals": [
             "balanced-bst-with-split-merge",
             "randomized-bst-priorities",
-            "implicit-treap-sequence-operations"
+            "implicit-treap-sequence-operations",
+            "Need a balanced BST supporting split and merge as fundamental operations"
+          ],
+          "code_indicators": [
+            "split",
+            "merge",
+            "implicit treap",
+            "insert at position",
+            "range reverse",
+            "rope"
           ],
           "applies_when": [
             "need split/merge as BST primitives",
@@ -3497,7 +3794,15 @@
           "structural_signals": [
             "shortest-path-in-uniform-cost-graph",
             "layer-by-layer-distance-expansion",
-            "first-visit-is-shortest"
+            "first-visit-is-shortest",
+            "Shortest path or minimum steps in unweighted graph/grid"
+          ],
+          "code_indicators": [
+            "shortest path",
+            "minimum steps",
+            "minimum moves",
+            "unweighted",
+            "grid"
           ],
           "applies_when": [
             "shortest path in unweighted graph",
@@ -3553,7 +3858,15 @@
           "structural_signals": [
             "dependency-ordering-in-DAG",
             "process-prerequisites-before-dependents",
-            "kahn-BFS-or-DFS-reverse-postorder"
+            "kahn-BFS-or-DFS-reverse-postorder",
+            "Order tasks/items respecting dependency constraints in a DAG"
+          ],
+          "code_indicators": [
+            "prerequisites",
+            "dependencies",
+            "build order",
+            "course schedule",
+            "DAG"
           ],
           "applies_when": [
             "order tasks with dependencies",
@@ -3579,7 +3892,15 @@
           "structural_signals": [
             "dynamic-connectivity-queries",
             "merge-sets-and-query-membership",
-            "path-compression-and-union-by-rank"
+            "path-compression-and-union-by-rank",
+            "Track connected components as edges are added dynamically"
+          ],
+          "code_indicators": [
+            "connected components",
+            "union",
+            "find",
+            "add edges",
+            "are connected"
           ],
           "applies_when": [
             "dynamic connectivity: are two nodes connected?",
@@ -3608,7 +3929,15 @@
           "structural_signals": [
             "connected-region-in-grid",
             "BFS-or-DFS-from-starting-cell",
-            "propagate-to-same-value-neighbors"
+            "propagate-to-same-value-neighbors",
+            "Count or fill connected regions in a 2D grid"
+          ],
+          "code_indicators": [
+            "islands",
+            "connected region",
+            "flood fill",
+            "grid",
+            "4-directional"
           ],
           "applies_when": [
             "fill connected region in grid",
@@ -3633,7 +3962,13 @@
           "structural_signals": [
             "shortest-path-with-negative-weights",
             "relax-all-edges-V-1-times",
-            "detect-negative-cycles"
+            "detect-negative-cycles",
+            "Shortest path in graph with negative edge weights"
+          ],
+          "code_indicators": [
+            "negative weights",
+            "negative edges",
+            "detect negative cycle"
           ],
           "applies_when": [
             "shortest path with negative edge weights",
@@ -3744,7 +4079,13 @@
           "structural_signals": [
             "minimum-spanning-tree-via-sorted-edges",
             "greedy-add-cheapest-non-cycle-edge",
-            "union-find-for-cycle-detection"
+            "union-find-for-cycle-detection",
+            "Find minimum spanning tree in sparse graph"
+          ],
+          "code_indicators": [
+            "minimum spanning tree",
+            "connect all nodes",
+            "minimum cost edges"
           ],
           "applies_when": [
             "find minimum spanning tree",
@@ -3822,7 +4163,16 @@
           "structural_signals": [
             "maximize-total-weight-in-bipartite-assignment",
             "one-to-one-matching-with-costs",
-            "assignment-problem-matrix"
+            "assignment-problem-matrix",
+            "Assign items from group A to group B (1-to-1) to maximize total value of assignments"
+          ],
+          "code_indicators": [
+            "auction",
+            "assignment",
+            "maximize revenue",
+            "bipartite",
+            "one winner per slot",
+            "one slot per bidder"
           ],
           "applies_when": [
             "assign N items from group A to N items in group B with costs",
@@ -3910,7 +4260,16 @@
           "structural_signals": [
             "parallel-execution-in-DAG",
             "critical-path-through-pipeline",
-            "total-latency-with-parallel-branches"
+            "total-latency-with-parallel-branches",
+            "Find total completion time in a DAG where independent branches execute in parallel"
+          ],
+          "code_indicators": [
+            "parallel execution",
+            "critical path",
+            "DAG",
+            "pipeline",
+            "total latency",
+            "longest path"
           ],
           "applies_when": [
             "DAG where independent branches execute in parallel",
@@ -3990,7 +4349,17 @@
           "structural_signals": [
             "maximum-flow-in-network",
             "min-cut-max-flow-duality",
-            "capacitated-edge-network"
+            "capacitated-edge-network",
+            "Find maximum flow through a capacitated network from source to sink"
+          ],
+          "code_indicators": [
+            "maximum flow",
+            "min cut",
+            "capacity",
+            "source",
+            "sink",
+            "network",
+            "bandwidth"
           ],
           "applies_when": [
             "find maximum flow from source to sink",
@@ -4018,7 +4387,15 @@
           "structural_signals": [
             "vertex-removal-disconnects-graph",
             "single-point-of-failure-detection",
-            "biconnected-component-decomposition"
+            "biconnected-component-decomposition",
+            "Find vertices whose removal disconnects an undirected graph"
+          ],
+          "code_indicators": [
+            "articulation point",
+            "cut vertex",
+            "single point of failure",
+            "disconnect",
+            "critical node"
           ],
           "applies_when": [
             "find critical nodes whose removal disconnects the graph",
@@ -4046,7 +4423,15 @@
           "structural_signals": [
             "edge-removal-disconnects-graph",
             "critical-link-identification",
-            "two-edge-connected-components"
+            "two-edge-connected-components",
+            "Find edges whose removal disconnects an undirected graph"
+          ],
+          "code_indicators": [
+            "bridge",
+            "cut edge",
+            "critical connection",
+            "critical link",
+            "disconnect edge"
           ],
           "applies_when": [
             "find critical edges whose removal disconnects the graph",
@@ -4074,7 +4459,15 @@
           "structural_signals": [
             "visit-every-edge-exactly-once",
             "route-covering-all-connections",
-            "degree-based-path-existence"
+            "degree-based-path-existence",
+            "Find a path or circuit that visits every edge exactly once"
+          ],
+          "code_indicators": [
+            "visit every edge",
+            "Eulerian",
+            "circuit",
+            "route covering all roads",
+            "edge traversal"
           ],
           "applies_when": [
             "visit every edge exactly once (Eulerian path/circuit)",
@@ -4101,7 +4494,16 @@
           "structural_signals": [
             "binary-constraints-pairwise",
             "implication-graph-satisfiability",
-            "two-literals-per-clause"
+            "two-literals-per-clause",
+            "Assign true/false to variables satisfying pairwise boolean constraints (2 literals per clause)"
+          ],
+          "code_indicators": [
+            "2-SAT",
+            "boolean",
+            "satisfiability",
+            "implication",
+            "pairwise constraints",
+            "mutual exclusion"
           ],
           "applies_when": [
             "boolean formula with exactly 2 literals per clause",
@@ -4129,7 +4531,16 @@
           "structural_signals": [
             "each-node-has-one-outgoing-edge",
             "rho-shaped-components",
-            "iterated-function-queries"
+            "iterated-function-queries",
+            "Each node has exactly one outgoing edge; query where you end up after K steps"
+          ],
+          "code_indicators": [
+            "successor",
+            "functional graph",
+            "iterated function",
+            "K steps",
+            "permutation cycle",
+            "rho-shaped"
           ],
           "applies_when": [
             "each state has unique successor (f: V -> V)",
@@ -4158,7 +4569,15 @@
           "structural_signals": [
             "2d-event-processing-by-coordinate",
             "line-segment-intersection-detection",
-            "rectangle-union-area"
+            "rectangle-union-area",
+            "Process 2D geometric events by sweeping a line across one coordinate"
+          ],
+          "code_indicators": [
+            "segment intersection",
+            "rectangle union area",
+            "skyline",
+            "sweep line geometry",
+            "active set"
           ],
           "applies_when": [
             "line segment intersection detection (Bentley-Ottmann)",
@@ -4652,7 +5071,15 @@
           "structural_signals": [
             "iterative-fill-table-from-base-cases",
             "compute-all-subproblems-in-order",
-            "space-optimization-via-rolling-array"
+            "space-optimization-via-rolling-array",
+            "Recursive solution with overlapping subproblems and optimal substructure"
+          ],
+          "code_indicators": [
+            "minimize/maximize",
+            "count ways",
+            "can we reach",
+            "optimal",
+            "overlapping"
           ],
           "applies_when": [
             "all subproblems need to be solved",
@@ -4705,7 +5132,15 @@
           "structural_signals": [
             "select-items-with-weight-capacity-constraint",
             "take-or-skip-each-item",
-            "maximize-value-within-budget"
+            "maximize-value-within-budget",
+            "Select items with cost/weight to reach target capacity/sum"
+          ],
+          "code_indicators": [
+            "knapsack",
+            "subset sum",
+            "target sum",
+            "partition equal",
+            "capacity"
           ],
           "applies_when": [
             "select items with weight/cost constraint",
@@ -4733,7 +5168,14 @@
           "structural_signals": [
             "two-sequence-alignment",
             "match-skip-recurrence",
-            "2D-table-with-diagonal-transition"
+            "2D-table-with-diagonal-transition",
+            "Align or compare two sequences optimally"
+          ],
+          "code_indicators": [
+            "edit distance",
+            "LCS",
+            "common subsequence",
+            "transform string"
           ],
           "applies_when": [
             "find longest common subsequence of two sequences",
@@ -4863,7 +5305,21 @@
           "structural_signals": [
             "transitions-between-defined-states",
             "buy-sell-hold-cooldown-states",
-            "state-at-each-step-determines-options"
+            "state-at-each-step-determines-options",
+            "Maximize/minimize value with constraints that carry forward across decisions",
+            "DP where optimal next choice depends on which choice was made previously, not just position"
+          ],
+          "code_indicators": [
+            "maximize profit",
+            "coupled constraints",
+            "budget carries forward",
+            "state depends on previous choice",
+            "cooldown",
+            "last action",
+            "cooldown after sell",
+            "parity matters",
+            "holding vs not holding",
+            "multiple states per position"
           ],
           "applies_when": [
             "problem has well-defined states and transitions",
@@ -4915,7 +5371,16 @@
           "structural_signals": [
             "items-in-groups-take-all-or-nothing",
             "coupled-items-within-bundles",
-            "knapsack-with-item-dependencies"
+            "knapsack-with-item-dependencies",
+            "Select items to maximize value within capacity where some items are grouped and must be taken all-or-nothing"
+          ],
+          "code_indicators": [
+            "knapsack",
+            "capacity",
+            "bundles",
+            "groups",
+            "all-or-nothing",
+            "coupled items"
           ],
           "applies_when": [
             "items belong to groups/bundles where taking one means taking all",
@@ -4944,7 +5409,15 @@
           "structural_signals": [
             "select-non-overlapping-intervals-maximizing-weight",
             "job-scheduling-with-profits",
-            "intervals-with-different-values"
+            "intervals-with-different-values",
+            "Select non-overlapping intervals to maximize total weight/profit"
+          ],
+          "code_indicators": [
+            "weighted intervals",
+            "job scheduling",
+            "profit",
+            "non-overlapping",
+            "deadline"
           ],
           "applies_when": [
             "select non-overlapping intervals to maximize total profit/weight",
@@ -5076,7 +5549,14 @@
           "structural_signals": [
             "monotone-optimal-split-points",
             "partition-into-groups-minimize-cost",
-            "quadrilateral-inequality-on-cost"
+            "quadrilateral-inequality-on-cost",
+            "DP partitioning into groups where optimal split points are monotone non-decreasing"
+          ],
+          "code_indicators": [
+            "partition into K groups",
+            "monotone split",
+            "quadrilateral inequality",
+            "minimize partition cost"
           ],
           "applies_when": [
             "DP recurrence dp[i][j] = min over k {dp[i-1][k-1] + C(k,j)}",
@@ -5104,7 +5584,15 @@
           "structural_signals": [
             "interval-dp-with-monotone-optimal-splits",
             "optimal-bst-construction",
-            "quadrilateral-inequality-interval-cost"
+            "quadrilateral-inequality-interval-cost",
+            "Interval DP where cost satisfies quadrilateral inequality allowing narrowed split search"
+          ],
+          "code_indicators": [
+            "optimal BST",
+            "matrix chain",
+            "cutting problem",
+            "interval cost",
+            "quadrilateral inequality"
           ],
           "applies_when": [
             "interval DP: dp[i][j] = min over k {dp[i][k] + dp[k+1][j] + C(i,j)}",
@@ -5132,7 +5620,15 @@
           "structural_signals": [
             "piecewise-linear-convex-dp-function",
             "priority-queue-slope-representation",
-            "make-array-monotone-minimum-cost"
+            "make-array-monotone-minimum-cost",
+            "DP where value function is piecewise-linear convex, transitions add absolute values or take prefix minima"
+          ],
+          "code_indicators": [
+            "make array non-decreasing",
+            "minimum cost transformation",
+            "piecewise linear",
+            "convex DP",
+            "slope changes"
           ],
           "applies_when": [
             "DP values form piecewise-linear convex function",
@@ -5160,7 +5656,15 @@
           "structural_signals": [
             "query-historical-versions-of-array",
             "kth-smallest-in-range",
-            "version-preserving-updates"
+            "version-preserving-updates",
+            "Query historical versions of a data structure or find k-th smallest in a range"
+          ],
+          "code_indicators": [
+            "persistent",
+            "versioned",
+            "k-th smallest in range",
+            "historical state",
+            "time travel query"
           ],
           "applies_when": [
             "need access to multiple versions of data structure simultaneously",
@@ -5207,7 +5711,15 @@
           "structural_signals": [
             "include-or-exclude-each-element",
             "binary-choice-tree",
-            "2^n-total-subsets"
+            "2^n-total-subsets",
+            "Generate all subsets, permutations, or combinations"
+          ],
+          "code_indicators": [
+            "all subsets",
+            "all permutations",
+            "combinations",
+            "power set",
+            "enumerate"
           ],
           "applies_when": [
             "generate all subsets",
@@ -5392,7 +5904,18 @@
           "structural_signals": [
             "impartial-combinatorial-game",
             "two-player-perfect-information",
-            "xor-of-game-values"
+            "xor-of-game-values",
+            "Determine winning/losing positions in a two-player impartial game with perfect information"
+          ],
+          "code_indicators": [
+            "Nim",
+            "game theory",
+            "Grundy",
+            "Sprague-Grundy",
+            "mex",
+            "combinatorial game",
+            "pile",
+            "stones"
           ],
           "applies_when": [
             "two-player impartial game with perfect information",

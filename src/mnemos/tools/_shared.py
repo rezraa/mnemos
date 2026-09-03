@@ -2,7 +2,8 @@
 """Shared state and utilities for all Mnemos MCP tools.
 
 Every tool module imports from here to get access to the singleton
-KnowledgeLoader, MemoryStore, and the validate_suggestion() pre-return filter.
+KnowledgeLoader / MemoryStore, the own-field candidate view (``_fit``), the shared
+context block (``_context_block``), and the alternatives fan-out (``_alternatives_fan_out``).
 """
 
 from __future__ import annotations
@@ -15,7 +16,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Callable
 
-from mnemos.knowledge.loader import KnowledgeLoader, _rank
+from mnemos.knowledge.loader import KnowledgeLoader, _rank, split_conditions
 from mnemos.memory.store import MemoryStore
 
 _log = logging.getLogger(__name__)
@@ -52,6 +53,141 @@ def get_knowledge(conn: Any = None) -> KnowledgeLoader:
         return knowledge
     from mnemos.knowledge.graph_loader import GraphKnowledgeLoader
     return GraphKnowledgeLoader(conn)
+
+
+# ---------------------------------------------------------------------------
+# Caller-boundary ceilings — one source of truth, shared by every Shape-C tool
+# ---------------------------------------------------------------------------
+# A JUSTIFIED MIRROR of coeus.tools._shared (coeus _shared.py:220-236). The
+# retrieval engine bounds its own fan-out (loader._SEED_CAP / _TOPK_CAP); these
+# bound the UNTRUSTED caller input BEFORE that engine is reached, applied where
+# the cost is incurred. Declared once here so a second tool cannot drift a second
+# copy. The S3-S5 tool retrofits (plan_algorithm et al. moving onto hydrate) apply
+# _MAX_MATCHED_SIGNALS before calling loader.hydrate(); get_signal_index is a
+# read-only accessor with no unbounded caller input, so it needs none.
+_MAX_MATCHED_SIGNALS = 256      # cap on caller-supplied signal ids, bound BEFORE hydrate
+_MAX_CONSTRAINTS = 64           # cap on constraint-dict cardinality
+_MAX_CONSTRAINT_VALUE_LEN = 256  # cap on each constraint value used in comparison
+_MAX_DESCRIPTION_LEN = 4096     # cap on free-text description (context/telemetry only)
+
+
+def _bounded_constraints(constraints: dict) -> dict:
+    """Bound an untrusted constraints dict at the caller boundary.
+
+    Keeps at most ``_MAX_CONSTRAINTS`` entries and clips each string value to
+    ``_MAX_CONSTRAINT_VALUE_LEN`` characters so an unbounded dict cannot amplify
+    the per-facet comparison cost. Pure sanitisation -- never interpretation.
+    """
+    bounded: dict[str, Any] = {}
+    for key, val in list(constraints.items())[:_MAX_CONSTRAINTS]:
+        bounded[key] = val[:_MAX_CONSTRAINT_VALUE_LEN] if isinstance(val, str) else val
+    return bounded
+
+
+# ---------------------------------------------------------------------------
+# Own-field candidate view — the one source of truth for "reason over a
+# retrieved pattern's OWN fields", shared by every Shape-C tool retrofit.
+# ---------------------------------------------------------------------------
+
+def _fit(pattern: dict) -> dict:
+    """Derive the fit view from a retrieved pattern's OWN fields — one source of truth.
+
+    ``complexity`` / ``applies_when`` / ``avoid_when`` / ``constraints`` are the
+    corpus pattern's own data, so every recommendation or alternative carries its
+    real tradeoff surface (no hardcoded detector, no fabricated score).
+    ``split_conditions`` partitions the text conditions from any (dormant, on this
+    corpus) facet dict so a facet never leaks into the prose lists. Fresh copies are
+    returned: the source pattern is deep-frozen at the hydrate boundary, so reading
+    its fields is corpus-safe and the returned view is plainly mutable/JSON-safe.
+    """
+    applies_texts, _ = split_conditions(pattern.get("applies_when"))
+    avoid_texts, _ = split_conditions(pattern.get("avoid_when"))
+    return {
+        "complexity": dict(pattern.get("complexity") or {}),
+        "applies_when": list(applies_texts),
+        "avoid_when": list(avoid_texts),
+        "constraints": pattern.get("constraints", ""),
+    }
+
+
+def _context_block(mem: Any, project_id: str | None) -> dict:
+    """Project codebase context (candidate-independent) — the one shared empirical-
+    memory context block for the retrofit-wave tools.
+
+    Lean shape: the project id and its runtime constraints, read from the memory
+    store. One source of truth so review_complexity and suggest_refactor do not each
+    carry a copy (empirical memory is KEPT; only the duplication is removed). Present
+    on every path, abstention included — it is retrieval-independent.
+    """
+    if not project_id:
+        return {}
+    ctx = mem.get_context(project_id)
+    if not ctx:
+        return {}
+    return {"project_id": ctx.project_id, "runtime_constraints": ctx.runtime_constraints}
+
+
+# ---------------------------------------------------------------------------
+# Alternatives fan-out — the one source of truth for "reason one alternative per
+# surviving candidate over its OWN fields", shared by review_complexity and
+# suggest_refactor (the dedupe S4 deferred to S5).
+# ---------------------------------------------------------------------------
+
+def _alternatives_fan_out(
+    kb: Any,
+    survivors: list[dict],
+    baseline_complexity: str | None,
+    exclude_id: str | None,
+    only_better: bool = False,
+) -> list[dict[str, Any]]:
+    """Turn post-gate hydrated survivors into the ranked ``alternatives`` list.
+
+    The REASON step of the four-step template — one entry per surviving candidate,
+    reasoned over the candidate's OWN corpus fields, shared verbatim by
+    review_complexity and suggest_refactor so the fan-out lives in exactly one place
+    (grep-provable: this is its only definition). Each entry is
+    ``{rank, pattern_id, pattern_name, structure_id, fit, retrieval[, improvement]}``:
+    own-field ``fit`` (:func:`_fit`), the integer-vote ``retrieval`` as a plain dict,
+    and the parent structure resolved as ``structure_id``. The candidate carrying
+    ``exclude_id`` is dropped -- a pattern is never its own alternative.
+    ``improvement`` is annotated whenever the candidate's OWN time complexity is
+    strictly faster than ``baseline_complexity`` (the delta path).
+
+    ``only_better`` is the two callers' one behavioural difference: review keeps every
+    feasible survivor and annotates only the faster ones (the better options among all
+    feasible candidates); refactor keeps ONLY the strictly-faster ones (the "only if
+    actually better" rank). Ranks are assigned 1..N AFTER the drop, so they stay
+    contiguous either way. No tuned scalar -- ordering is inherited from ``survivors``
+    (the hydrate/gate order the caller already fixed).
+    """
+    baseline_rank = _rank(baseline_complexity) if baseline_complexity else None
+    alternatives: list[dict[str, Any]] = []
+    for p in survivors:
+        pid = p["id"]
+        if exclude_id and pid == exclude_id:
+            continue
+        fit = _fit(p)
+        alt_time = fit["complexity"].get("time", "")
+        is_better = (
+            baseline_rank is not None and bool(alt_time)
+            and _rank(alt_time) < baseline_rank
+        )
+        if only_better and not is_better:
+            continue
+        parent = kb.get_pattern(pid)
+        alt: dict[str, Any] = {
+            "rank": len(alternatives) + 1,
+            "pattern_id": pid,
+            "pattern_name": p.get("name", pid),
+            "structure_id": parent.get("structure_id", "") if parent else "",
+            "fit": fit,
+            "retrieval": dict(p["retrieval"]),   # plain dict for the output surface
+        }
+        if is_better:
+            alt["improvement"] = f"{baseline_complexity} -> {alt_time}"
+        alternatives.append(alt)
+    return alternatives
+
 
 # ---------------------------------------------------------------------------
 # Event system — file-based for cross-process dashboard communication
@@ -150,113 +286,3 @@ def normalize_kwargs(func: Callable) -> Callable:
         return func(*args, **kwargs)
 
     return wrapper
-
-
-# ---------------------------------------------------------------------------
-# validate_suggestion — internal pre-return filter
-# ---------------------------------------------------------------------------
-
-def validate_suggestion(
-    suggestions: list[dict[str, Any]],
-    constraints: dict[str, Any] | None = None,
-    project_id: str | None = None,
-    kb: Any = None,
-    mem: Any = None,
-) -> list[dict[str, Any]]:
-    """Validate a list of suggestion dicts before returning to the caller.
-
-    Checks performed:
-    1. Constraint violations  — demote suggestions whose complexity exceeds
-       what *constraints* allow (using input_size_guidelines from JSON).
-    2. Memory contradictions  — demote if the suggestion matches a known
-       regression in MemoryStore.
-    3. Codebase conflicts     — remove if the suggested DS or pattern is
-       explicitly banned in the project's CodebaseContext runtime_constraints.
-
-    Each suggestion dict is expected to have at least:
-        name (str), complexity (dict with 'time'/'space'), and optionally
-        pattern_id / ds / structure_id.
-    """
-    if not suggestions:
-        return suggestions
-
-    validated: list[dict[str, Any]] = []
-
-    _mem = mem or memory
-
-    # Load codebase context once if project_id given
-    ctx = _mem.get_context(project_id) if project_id else None
-    banned_terms: set[str] = set()
-    if ctx and ctx.runtime_constraints:
-        rc_lower = ctx.runtime_constraints.lower()
-        if "no " in rc_lower or "ban" in rc_lower or "avoid" in rc_lower:
-            banned_terms = {
-                w.strip().lower()
-                for w in rc_lower.replace(",", " ").split()
-                if len(w.strip()) > 2
-            }
-
-    for suggestion in suggestions:
-        name = suggestion.get("name", "")
-        name_lower = name.lower().replace(" ", "-")
-        complexity = suggestion.get("complexity", {})
-        time_c = complexity.get("time", "")
-        space_c = complexity.get("space", "")
-        pattern_id = suggestion.get("pattern_id", suggestion.get("id", ""))
-        ds = suggestion.get("structure_id", suggestion.get("ds", ""))
-
-        skip = False
-        warnings: list[str] = list(suggestion.get("warnings", []))
-
-        # ----- 1. Constraint violations (data-driven) -----
-        if constraints:
-            n = constraints.get("input_size") or constraints.get("n")
-            if n is not None and isinstance(n, (int, float)):
-                n = int(n)
-                _kb = kb or knowledge
-                max_rank = _kb.max_feasible_complexity_rank(n)
-                time_rank = _rank(time_c) if time_c else 0
-                if time_c and time_rank > max_rank:
-                    warnings.append(
-                        f"CONSTRAINT VIOLATION: {time_c} infeasible for n={n:,}"
-                    )
-                    suggestion["demoted"] = True
-
-            max_space = constraints.get("space")
-            if max_space and space_c:
-                if _rank(space_c) > _rank(max_space):
-                    warnings.append(
-                        f"SPACE VIOLATION: {space_c} exceeds max {max_space}"
-                    )
-                    suggestion["demoted"] = True
-
-        # ----- 2. Memory contradictions -----
-        if pattern_id and ds:
-            regression = _mem.check_regression(pattern=str(pattern_id), ds=str(ds))
-            if regression:
-                warnings.append(
-                    f"REGRESSION WARNING: {pattern_id}+{ds} regressed previously — "
-                    f"{regression.description}"
-                )
-                suggestion["demoted"] = True
-
-        # ----- 3. Codebase conflicts -----
-        if banned_terms:
-            combined = f"{name_lower} {pattern_id} {ds}".lower()
-            for term in banned_terms:
-                if term in combined:
-                    warnings.append(
-                        f"CODEBASE CONFLICT: '{term}' appears banned in project constraints"
-                    )
-                    skip = True
-                    break
-
-        if not skip:
-            suggestion["warnings"] = warnings
-            validated.append(suggestion)
-
-    # Sort: non-demoted first, then by score descending
-    validated.sort(
-        key=lambda s: (s.get("demoted", False), -(s.get("score", 0))),
-    )
-    return validated

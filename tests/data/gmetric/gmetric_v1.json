@@ -1,0 +1,1333 @@
+{
+  "1_grader": {
+    "decision": "Frozen deterministic concept/alias lookup, NOT a live LLM judge.",
+    "rule": "A gold is COVERED@k iff the method's rank-ordered top-k pattern ids for that problem intersect ANY of that gold's acceptable_ids. Only E golds are scored; B and A are neutral (excluded from numerator AND denominator).",
+    "type": "curated_concept_map",
+    "verbatim_query_contract": "The grader feeds problems_blind_v1.json 'query' to match_structural_signals unchanged. No paraphrase layer (d-6146f069).",
+    "why": "A frozen map is a pure function -> 'compute twice, same score' holds byte-exactly. The map pre-encodes naming/mechanism variants so a correct alternate id still counts."
+  },
+  "2_denominators": {
+    "content_method_independent": {
+      "content_coverage_E_over_total": 0.9059,
+      "content_coverage_by_qclass": {
+        "CE": {
+          "A": 5,
+          "B": 3,
+          "E": 3,
+          "coverage_E_over_total": 0.2727,
+          "total": 11
+        },
+        "PA": {
+          "A": 0,
+          "B": 0,
+          "E": 27,
+          "coverage_E_over_total": 1.0,
+          "total": 27
+        },
+        "PB": {
+          "A": 0,
+          "B": 0,
+          "E": 25,
+          "coverage_E_over_total": 1.0,
+          "total": 25
+        },
+        "TK": {
+          "A": 0,
+          "B": 0,
+          "E": 22,
+          "coverage_E_over_total": 1.0,
+          "total": 22
+        }
+      },
+      "definition": "Does the gold concept EXIST in the 179-pattern canon, by DIRECT corpus check? E=standalone pattern (or naming/mechanism variant); B=embedded/borderline only; A=absent. This answers Q5 and is independent of any retrieval method (m-0364c120: a miss is not a content gap).",
+      "pooled_number_warning": "The pooled 0.9059 mixes mainstream selection (PA/PB/TK) with deliberately-probed canon-edge cases (CE). Read the by_qclass split, not the pool (m-e8ccb163).",
+      "tally": {
+        "A_absent": 5,
+        "B_borderline": 3,
+        "E_exists": 77
+      },
+      "total_golds": 85
+    },
+    "matcher_reachable_ceiling_method_dependent": {
+      "baseline_recall_ceiling": 0.8831,
+      "benchmark_E_golds_matcher_reachable": 68,
+      "benchmark_E_golds_total": 77,
+      "corpus_pattern_count": 179,
+      "definition": "Ceiling on what the CURRENT matcher could ever retrieve. Corpus-wide: a pattern is reachable iff some rule names it as recommended_pattern or alternative. An E-gold whose acceptable_ids are all unreachable is a baseline retrieval-miss by construction, NOT a content gap.",
+      "structure_count": 18,
+      "structures_with_reachable_pattern": 13,
+      "unreachable_patterns": 72,
+      "wired_patterns": 107
+    },
+    "note": "TWO denominators, kept strictly distinct (bb55bb05-decision-1). Never conflated.",
+    "reachable_set_for_recall": {
+      "FROZEN_reachable_denominator": 77,
+      "definition": "recall denominator = E-golds only (B and A excluded, scored neutral)."
+    }
+  },
+  "3_score": {
+    "formula": "recall@k = (# E-golds whose acceptable_ids intersect the method's top-k) / E-golds",
+    "method_output_contract": "Per problem the method emits a rank-ordered list of DISTINCT corpus pattern ids. BASELINE = match_structural_signals(query) -> for each matched rule in index order append recommended_pattern then alternatives, dedup preserving first-seen. AFTER (S1) = the ported signal-index engine over the SAME frozen queries + corpus.",
+    "metric": "concept_recall_at_k",
+    "primary_cutoff_k": 10,
+    "secondary_cutoff_k": 5
+  },
+  "4_stratification": {
+    "dimensions": {
+      "qclass": {
+        "CE": "canon-edge probe (Q5 content coverage)",
+        "PA": "prose, rule-prose-aligned (matcher answerable)",
+        "PB": "prose, problem-language / blind (matcher misses)",
+        "TK": "token, corpus kebab vocabulary (matcher misses; engine target)"
+      },
+      "register": [
+        "prose",
+        "token"
+      ],
+      "structure": "parent structure of each E-gold's canonical id"
+    },
+    "rule": "m-e8ccb163: never a single pooled mean. The finest split (qclass) is primary."
+  },
+  "5_reproducibility": {
+    "corpus_pattern_count": 179,
+    "corpus_snapshot_sha256": {
+      "complexities.json": "0a162d4a852ac57518b750b15bff235df1c7b337a62802fd093d664f866f6f01",
+      "decision_rules.json": "1c95838f740e2a21151254d268f47bd5bea80d88d66165617386535cb0700e74",
+      "structures.json": "ccd18b0be3a0820399c27dae69d38f796cf9ee07b3afbf2ed4c41b97c7aa7ed0"
+    },
+    "cutoffs": {
+      "primary_k": 10,
+      "secondary_k": 5
+    },
+    "n_problems": 40,
+    "problems_blind": {
+      "file": "problems_blind_v1.json",
+      "sha256": "c42b84d1f54d0e51b3a9f722ee55cb116091252e77a62a534767499b977ec17e"
+    },
+    "recompute_contract": "Given the pinned problems_blind hash, the corpus hashes, k, and this map, recall@k is a pure function of a method's ranked output -> identical on every recompute. Any hash change INVALIDATES the metric and forces a re-freeze (v1->v2) per migration tranche."
+  },
+  "6_locked_legs": {
+    "note": "The three legs are calibrated from and frozen in locked_legs_v1.json AFTER the baseline is read (never before). Kept external so this metric definition stays reproducible from the builder alone; legs depend on the baseline, which depends on this file.",
+    "status": "SET_AFTER_BASELINE -> locked_legs_v1.json"
+  },
+  "Q5_answer_measured": {
+    "borderline_embedded_only": [
+      "binary-search-on-answer",
+      "difference-array",
+      "frequency-aggregation"
+    ],
+    "canon_edge_CE": {
+      "A": 5,
+      "B": 3,
+      "E": 3,
+      "reading": "deliberately probed the boundary; this is where the gaps are.",
+      "total": 11
+    },
+    "genuine_content_gaps_ABSENT": [
+      "a-star-search",
+      "boyer-moore-majority-vote",
+      "fisher-yates-shuffle",
+      "reservoir-sampling",
+      "ternary-search"
+    ],
+    "mainstream_PA_PB_TK": {
+      "E": 74,
+      "coverage": 1.0,
+      "reading": "every mainstream gold concept exists in the canon (0 content gaps).",
+      "total": 74
+    },
+    "question": "Is the 179-pattern canon high-coverage for these problems, or is there a genuine content gap?",
+    "scope_note": "Per AC these gaps are RECORDED, not filled. Authoring new patterns is out of scope for S0. The content denominator reflects the authored problem mix; the mainstream classes were drawn from real selection problems (not reverse-engineered from the corpus) and the edge probes from real specialized needs.",
+    "verdict": "HIGH-COVERAGE for mainstream algorithm/DS selection; a small, named set of specialized gaps at the canon edge. Measured, assumed neither way (m-0364c120)."
+  },
+  "authored_by": "Mnemos",
+  "design_authority": [
+    "council f1b39fbd (decisions 4,5)",
+    "council bb55bb05 (decisions 1,2)"
+  ],
+  "one_line": "Concept-level recall@10 over a method-independent reachable set of E-golds; the S1 engine must beat the CURRENT match_structural_signals baseline on the same set. Every number stratified by query-class, register, and structure.",
+  "reachable_set_map": [
+    {
+      "acceptable_ids": [
+        "two-pointer-convergent"
+      ],
+      "canonical": "two-pointer-convergent",
+      "concept": "two-pointer convergent scan on sorted input",
+      "matcher_reachable": true,
+      "problem": "P01",
+      "qclass": "PA",
+      "register": "prose",
+      "role": "primary_fit",
+      "structure": "array",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "single-pass-complement-lookup"
+      ],
+      "canonical": "single-pass-complement-lookup",
+      "concept": "single-pass complement lookup",
+      "matcher_reachable": true,
+      "problem": "P01",
+      "qclass": "PA",
+      "register": "prose",
+      "role": "constraint_alternative",
+      "structure": "hashmap",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "binary-search"
+      ],
+      "canonical": "binary-search",
+      "concept": "binary search for complement",
+      "matcher_reachable": true,
+      "problem": "P01",
+      "qclass": "PA",
+      "register": "prose",
+      "role": "alternative",
+      "structure": "array",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "frequency-aggregation"
+      ],
+      "canonical": "frequency-aggregation",
+      "concept": "hash frequency map",
+      "matcher_reachable": true,
+      "problem": "P02",
+      "qclass": "PA",
+      "register": "prose",
+      "role": "primary_fit",
+      "structure": "hashmap",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "counting-array"
+      ],
+      "canonical": "counting-array",
+      "concept": "direct-indexed counting array",
+      "matcher_reachable": true,
+      "problem": "P02",
+      "qclass": "PA",
+      "register": "prose",
+      "role": "alternative",
+      "structure": "hashmap",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "trie-frequency"
+      ],
+      "canonical": "trie-frequency",
+      "concept": "trie-based frequency for string keys",
+      "matcher_reachable": true,
+      "problem": "P02",
+      "qclass": "PA",
+      "register": "prose",
+      "role": "alternative",
+      "structure": "hashmap",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "balanced-delimiters"
+      ],
+      "canonical": "balanced-delimiters",
+      "concept": "stack of open delimiters",
+      "matcher_reachable": true,
+      "problem": "P03",
+      "qclass": "PA",
+      "register": "prose",
+      "role": "primary_fit",
+      "structure": "stack",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "counter-for-single-type"
+      ],
+      "canonical": "counter-for-single-type",
+      "concept": "counter for a single delimiter type",
+      "matcher_reachable": true,
+      "problem": "P03",
+      "qclass": "PA",
+      "register": "prose",
+      "role": "constraint_alternative",
+      "structure": "stack",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "topological-sort"
+      ],
+      "canonical": "topological-sort",
+      "concept": "topological sort",
+      "matcher_reachable": true,
+      "problem": "P04",
+      "qclass": "PA",
+      "register": "prose",
+      "role": "primary_fit",
+      "structure": "graph",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "dfs-graph-traversal"
+      ],
+      "canonical": "dfs-graph-traversal",
+      "concept": "DFS reverse-postorder ordering",
+      "matcher_reachable": true,
+      "problem": "P04",
+      "qclass": "PA",
+      "register": "prose",
+      "role": "alternative",
+      "structure": "graph",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "heap-top-k"
+      ],
+      "canonical": "heap-top-k",
+      "concept": "bounded top-k heap",
+      "matcher_reachable": true,
+      "problem": "P05",
+      "qclass": "PA",
+      "register": "prose",
+      "role": "primary_fit",
+      "structure": "heap",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "quick-select"
+      ],
+      "canonical": "quick-select",
+      "concept": "quickselect kth statistic",
+      "matcher_reachable": true,
+      "problem": "P05",
+      "qclass": "PA",
+      "register": "prose",
+      "role": "alternative",
+      "structure": "array",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "sorting"
+      ],
+      "canonical": "sorting",
+      "concept": "full sort then slice",
+      "matcher_reachable": true,
+      "problem": "P05",
+      "qclass": "PA",
+      "register": "prose",
+      "role": "alternative",
+      "structure": "array",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "bfs-shortest-unweighted",
+        "bfs-traversal"
+      ],
+      "canonical": "bfs-shortest-unweighted",
+      "concept": "BFS on unweighted graph",
+      "matcher_reachable": true,
+      "problem": "P06",
+      "qclass": "PA",
+      "register": "prose",
+      "role": "primary_fit",
+      "structure": "graph",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "dijkstra"
+      ],
+      "canonical": "dijkstra",
+      "concept": "Dijkstra (degenerate uniform weight)",
+      "matcher_reachable": true,
+      "problem": "P06",
+      "qclass": "PA",
+      "register": "prose",
+      "role": "alternative",
+      "structure": "heap",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "knapsack-01"
+      ],
+      "canonical": "knapsack-01",
+      "concept": "0/1 knapsack DP",
+      "matcher_reachable": true,
+      "problem": "P07",
+      "qclass": "PA",
+      "register": "prose",
+      "role": "primary_fit",
+      "structure": "dp",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "subsets-generation"
+      ],
+      "canonical": "subsets-generation",
+      "concept": "exhaustive subset search",
+      "matcher_reachable": true,
+      "problem": "P07",
+      "qclass": "PA",
+      "register": "prose",
+      "role": "alternative",
+      "structure": "recursion-backtracking",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "longest-common-subsequence"
+      ],
+      "canonical": "longest-common-subsequence",
+      "concept": "LCS DP",
+      "matcher_reachable": true,
+      "problem": "P08",
+      "qclass": "PA",
+      "register": "prose",
+      "role": "primary_fit",
+      "structure": "dp",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "edit-distance"
+      ],
+      "canonical": "edit-distance",
+      "concept": "edit distance DP",
+      "matcher_reachable": true,
+      "problem": "P08",
+      "qclass": "PA",
+      "register": "prose",
+      "role": "alternative",
+      "structure": "dp",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "ll-fast-slow-pointers"
+      ],
+      "canonical": "ll-fast-slow-pointers",
+      "concept": "Floyd fast/slow pointers",
+      "matcher_reachable": true,
+      "problem": "P09",
+      "qclass": "PA",
+      "register": "prose",
+      "role": "primary_fit",
+      "structure": "linked-list",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "hashset-membership"
+      ],
+      "canonical": "hashset-membership",
+      "concept": "visited set",
+      "matcher_reachable": true,
+      "problem": "P09",
+      "qclass": "PA",
+      "register": "prose",
+      "role": "constraint_alternative",
+      "structure": "hashset",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "merge-intervals"
+      ],
+      "canonical": "merge-intervals",
+      "concept": "sort-by-start then merge",
+      "matcher_reachable": true,
+      "problem": "P10",
+      "qclass": "PA",
+      "register": "prose",
+      "role": "primary_fit",
+      "structure": "array",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "sweep-line"
+      ],
+      "canonical": "sweep-line",
+      "concept": "sweep line over endpoints",
+      "matcher_reachable": true,
+      "problem": "P10",
+      "qclass": "PA",
+      "register": "prose",
+      "role": "alternative",
+      "structure": "array",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "trie-prefix-tree"
+      ],
+      "canonical": "trie-prefix-tree",
+      "concept": "trie / prefix tree",
+      "matcher_reachable": true,
+      "problem": "P11",
+      "qclass": "PA",
+      "register": "prose",
+      "role": "primary_fit",
+      "structure": "tree",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "hashset-membership"
+      ],
+      "canonical": "hashset-membership",
+      "concept": "hash set of words",
+      "matcher_reachable": true,
+      "problem": "P11",
+      "qclass": "PA",
+      "register": "prose",
+      "role": "alternative",
+      "structure": "hashset",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "union-find-connectivity",
+        "uf-dynamic-connectivity"
+      ],
+      "canonical": "union-find-connectivity",
+      "concept": "union-find / disjoint set",
+      "matcher_reachable": true,
+      "problem": "P12",
+      "qclass": "PA",
+      "register": "prose",
+      "role": "primary_fit",
+      "structure": "graph",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "dfs-graph-traversal",
+        "bfs-traversal"
+      ],
+      "canonical": "dfs-graph-traversal",
+      "concept": "recompute components by traversal",
+      "matcher_reachable": true,
+      "problem": "P12",
+      "qclass": "PA",
+      "register": "prose",
+      "role": "alternative",
+      "structure": "graph",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "kadanes-algorithm"
+      ],
+      "canonical": "kadanes-algorithm",
+      "concept": "Kadane running-sum-with-reset",
+      "matcher_reachable": true,
+      "problem": "P13",
+      "qclass": "PB",
+      "register": "prose",
+      "role": "primary_fit",
+      "structure": "array",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "prefix-sum"
+      ],
+      "canonical": "prefix-sum",
+      "concept": "prefix sums with running minimum",
+      "matcher_reachable": true,
+      "problem": "P13",
+      "qclass": "PB",
+      "register": "prose",
+      "role": "alternative",
+      "structure": "array",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "divide-and-conquer-max-subarray"
+      ],
+      "canonical": "divide-and-conquer-max-subarray",
+      "concept": "divide and conquer max crossing",
+      "matcher_reachable": false,
+      "problem": "P13",
+      "qclass": "PB",
+      "register": "prose",
+      "role": "alternative",
+      "structure": "array",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "expand-around-center"
+      ],
+      "canonical": "expand-around-center",
+      "concept": "expand around each center",
+      "matcher_reachable": false,
+      "problem": "P14",
+      "qclass": "PB",
+      "register": "prose",
+      "role": "primary_fit",
+      "structure": "string",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "manachers-algorithm"
+      ],
+      "canonical": "manachers-algorithm",
+      "concept": "Manacher linear-time",
+      "matcher_reachable": false,
+      "problem": "P14",
+      "qclass": "PB",
+      "register": "prose",
+      "role": "alternative",
+      "structure": "string",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "dp-palindromic"
+      ],
+      "canonical": "dp-palindromic",
+      "concept": "interval DP on palindromes",
+      "matcher_reachable": false,
+      "problem": "P14",
+      "qclass": "PB",
+      "register": "prose",
+      "role": "alternative",
+      "structure": "string",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "dijkstra"
+      ],
+      "canonical": "dijkstra",
+      "concept": "Dijkstra with priority queue",
+      "matcher_reachable": true,
+      "problem": "P15",
+      "qclass": "PB",
+      "register": "prose",
+      "role": "primary_fit",
+      "structure": "heap",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "bellman-ford"
+      ],
+      "canonical": "bellman-ford",
+      "concept": "Bellman-Ford relaxation",
+      "matcher_reachable": true,
+      "problem": "P15",
+      "qclass": "PB",
+      "register": "prose",
+      "role": "alternative",
+      "structure": "graph",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "prefix-sum-with-hashmap"
+      ],
+      "canonical": "prefix-sum-with-hashmap",
+      "concept": "prefix sum counts in a hash map",
+      "matcher_reachable": true,
+      "problem": "P16",
+      "qclass": "PB",
+      "register": "prose",
+      "role": "primary_fit",
+      "structure": "hashmap",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "prefix-sum"
+      ],
+      "canonical": "prefix-sum",
+      "concept": "plain prefix sum",
+      "matcher_reachable": true,
+      "problem": "P16",
+      "qclass": "PB",
+      "register": "prose",
+      "role": "alternative",
+      "structure": "array",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "longest-consecutive-sequence"
+      ],
+      "canonical": "longest-consecutive-sequence",
+      "concept": "consecutive sequence via set boundaries",
+      "matcher_reachable": false,
+      "problem": "P17",
+      "qclass": "PB",
+      "register": "prose",
+      "role": "primary_fit",
+      "structure": "hashset",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "sorting-then-scanning"
+      ],
+      "canonical": "sorting-then-scanning",
+      "concept": "sort then scan neighbours",
+      "matcher_reachable": false,
+      "problem": "P17",
+      "qclass": "PB",
+      "register": "prose",
+      "role": "alternative",
+      "structure": "array",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "monotonic-stack"
+      ],
+      "canonical": "monotonic-stack",
+      "concept": "monotonic stack of pending indices",
+      "matcher_reachable": true,
+      "problem": "P18",
+      "qclass": "PB",
+      "register": "prose",
+      "role": "primary_fit",
+      "structure": "stack",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "lowest-common-ancestor"
+      ],
+      "canonical": "lowest-common-ancestor",
+      "concept": "recursive LCA search",
+      "matcher_reachable": true,
+      "problem": "P19",
+      "qclass": "PB",
+      "register": "prose",
+      "role": "primary_fit",
+      "structure": "tree",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "binary-lifting"
+      ],
+      "canonical": "binary-lifting",
+      "concept": "binary lifting for repeated queries",
+      "matcher_reachable": true,
+      "problem": "P19",
+      "qclass": "PB",
+      "register": "prose",
+      "role": "alternative",
+      "structure": "tree",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "dp-lis"
+      ],
+      "canonical": "dp-lis",
+      "concept": "patience-sorting LIS with binary search",
+      "matcher_reachable": false,
+      "problem": "P20",
+      "qclass": "PB",
+      "register": "prose",
+      "role": "primary_fit",
+      "structure": "dp",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "dp-n-squared"
+      ],
+      "canonical": "dp-n-squared",
+      "concept": "quadratic DP with predecessor",
+      "matcher_reachable": false,
+      "problem": "P20",
+      "qclass": "PB",
+      "register": "prose",
+      "role": "alternative",
+      "structure": "dp",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "subsets-generation"
+      ],
+      "canonical": "subsets-generation",
+      "concept": "include/exclude recursion",
+      "matcher_reachable": true,
+      "problem": "P21",
+      "qclass": "PB",
+      "register": "prose",
+      "role": "primary_fit",
+      "structure": "recursion-backtracking",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "bitmask-enumeration"
+      ],
+      "canonical": "bitmask-enumeration",
+      "concept": "bitmask enumeration of subsets",
+      "matcher_reachable": true,
+      "problem": "P21",
+      "qclass": "PB",
+      "register": "prose",
+      "role": "alternative",
+      "structure": "array",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "sliding-window-maximum",
+        "monotonic-deque"
+      ],
+      "canonical": "sliding-window-maximum",
+      "concept": "monotonic deque of candidates",
+      "matcher_reachable": true,
+      "problem": "P22",
+      "qclass": "PB",
+      "register": "prose",
+      "role": "primary_fit",
+      "structure": "queue",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "heap-based-window"
+      ],
+      "canonical": "heap-based-window",
+      "concept": "heap with lazy deletion",
+      "matcher_reachable": true,
+      "problem": "P22",
+      "qclass": "PB",
+      "register": "prose",
+      "role": "alternative",
+      "structure": "queue",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "uf-cycle-detection"
+      ],
+      "canonical": "uf-cycle-detection",
+      "concept": "union-find cycle detection",
+      "matcher_reachable": false,
+      "problem": "P23",
+      "qclass": "PB",
+      "register": "prose",
+      "role": "primary_fit",
+      "structure": "disjoint-set",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "union-find-connectivity",
+        "uf-dynamic-connectivity"
+      ],
+      "canonical": "union-find-connectivity",
+      "concept": "union-find connectivity",
+      "matcher_reachable": true,
+      "problem": "P23",
+      "qclass": "PB",
+      "register": "prose",
+      "role": "alternative",
+      "structure": "graph",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "two-heaps-median"
+      ],
+      "canonical": "two-heaps-median",
+      "concept": "two balanced heaps",
+      "matcher_reachable": true,
+      "problem": "P24",
+      "qclass": "PB",
+      "register": "prose",
+      "role": "primary_fit",
+      "structure": "heap",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "sorted-array-with-binary-insert"
+      ],
+      "canonical": "sorted-array-with-binary-insert",
+      "concept": "sorted array with binary insert",
+      "matcher_reachable": true,
+      "problem": "P24",
+      "qclass": "PB",
+      "register": "prose",
+      "role": "alternative",
+      "structure": "array",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "sliding-window-variable"
+      ],
+      "canonical": "sliding-window-variable",
+      "concept": "variable sliding window",
+      "matcher_reachable": true,
+      "problem": "P25",
+      "qclass": "TK",
+      "register": "token",
+      "role": "primary_fit",
+      "structure": "array",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "prefix-sum-with-hashmap"
+      ],
+      "canonical": "prefix-sum-with-hashmap",
+      "concept": "prefix sum with hashmap",
+      "matcher_reachable": true,
+      "problem": "P25",
+      "qclass": "TK",
+      "register": "token",
+      "role": "alternative",
+      "structure": "hashmap",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "kmp-string-matching"
+      ],
+      "canonical": "kmp-string-matching",
+      "concept": "KMP failure function",
+      "matcher_reachable": true,
+      "problem": "P26",
+      "qclass": "TK",
+      "register": "token",
+      "role": "primary_fit",
+      "structure": "string",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "z-function"
+      ],
+      "canonical": "z-function",
+      "concept": "Z-function",
+      "matcher_reachable": true,
+      "problem": "P26",
+      "qclass": "TK",
+      "register": "token",
+      "role": "alternative",
+      "structure": "string",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "rabin-karp",
+        "rolling-hash"
+      ],
+      "canonical": "rabin-karp",
+      "concept": "Rabin-Karp / rolling hash",
+      "matcher_reachable": true,
+      "problem": "P26",
+      "qclass": "TK",
+      "register": "token",
+      "role": "alternative",
+      "structure": "string",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "flood-fill"
+      ],
+      "canonical": "flood-fill",
+      "concept": "flood fill",
+      "matcher_reachable": true,
+      "problem": "P27",
+      "qclass": "TK",
+      "register": "token",
+      "role": "primary_fit",
+      "structure": "graph",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "union-find-connectivity"
+      ],
+      "canonical": "union-find-connectivity",
+      "concept": "union-find over cells",
+      "matcher_reachable": true,
+      "problem": "P27",
+      "qclass": "TK",
+      "register": "token",
+      "role": "alternative",
+      "structure": "graph",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "binary-search-on-answer"
+      ],
+      "canonical": "binary-search-on-answer",
+      "concept": "binary search on the answer",
+      "matcher_reachable": true,
+      "problem": "P28",
+      "qclass": "TK",
+      "register": "token",
+      "role": "primary_fit",
+      "structure": "array",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "greedy"
+      ],
+      "canonical": "greedy",
+      "concept": "greedy feasibility check",
+      "matcher_reachable": true,
+      "problem": "P28",
+      "qclass": "TK",
+      "register": "token",
+      "role": "alternative",
+      "structure": "array",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "segment-tree"
+      ],
+      "canonical": "segment-tree",
+      "concept": "segment tree",
+      "matcher_reachable": true,
+      "problem": "P29",
+      "qclass": "TK",
+      "register": "token",
+      "role": "primary_fit",
+      "structure": "tree",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "fenwick-tree"
+      ],
+      "canonical": "fenwick-tree",
+      "concept": "Fenwick / BIT",
+      "matcher_reachable": true,
+      "problem": "P29",
+      "qclass": "TK",
+      "register": "token",
+      "role": "alternative",
+      "structure": "tree",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "sqrt-decomposition"
+      ],
+      "canonical": "sqrt-decomposition",
+      "concept": "sqrt decomposition",
+      "matcher_reachable": true,
+      "problem": "P29",
+      "qclass": "TK",
+      "register": "token",
+      "role": "alternative",
+      "structure": "array",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "dijkstra"
+      ],
+      "canonical": "dijkstra",
+      "concept": "Dijkstra with priority queue",
+      "matcher_reachable": true,
+      "problem": "P30",
+      "qclass": "TK",
+      "register": "token",
+      "role": "primary_fit",
+      "structure": "heap",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "bellman-ford"
+      ],
+      "canonical": "bellman-ford",
+      "concept": "Bellman-Ford",
+      "matcher_reachable": true,
+      "problem": "P30",
+      "qclass": "TK",
+      "register": "token",
+      "role": "alternative",
+      "structure": "graph",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "dutch-national-flag"
+      ],
+      "canonical": "dutch-national-flag",
+      "concept": "Dutch national flag",
+      "matcher_reachable": true,
+      "problem": "P31",
+      "qclass": "TK",
+      "register": "token",
+      "role": "primary_fit",
+      "structure": "array",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "counting-sort"
+      ],
+      "canonical": "counting-sort",
+      "concept": "counting sort",
+      "matcher_reachable": true,
+      "problem": "P31",
+      "qclass": "TK",
+      "register": "token",
+      "role": "alternative",
+      "structure": "array",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "edit-distance"
+      ],
+      "canonical": "edit-distance",
+      "concept": "edit distance DP",
+      "matcher_reachable": true,
+      "problem": "P32",
+      "qclass": "TK",
+      "register": "token",
+      "role": "primary_fit",
+      "structure": "dp",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "longest-common-subsequence"
+      ],
+      "canonical": "longest-common-subsequence",
+      "concept": "LCS DP",
+      "matcher_reachable": true,
+      "problem": "P32",
+      "qclass": "TK",
+      "register": "token",
+      "role": "alternative",
+      "structure": "dp",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "grouping-by-key"
+      ],
+      "canonical": "grouping-by-key",
+      "concept": "group by canonical key",
+      "matcher_reachable": true,
+      "problem": "P33",
+      "qclass": "TK",
+      "register": "token",
+      "role": "primary_fit",
+      "structure": "hashmap",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "sorting-then-grouping"
+      ],
+      "canonical": "sorting-then-grouping",
+      "concept": "sort then group",
+      "matcher_reachable": true,
+      "problem": "P33",
+      "qclass": "TK",
+      "register": "token",
+      "role": "alternative",
+      "structure": "array",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "kruskal-mst"
+      ],
+      "canonical": "kruskal-mst",
+      "concept": "Kruskal MST",
+      "matcher_reachable": true,
+      "problem": "P34",
+      "qclass": "TK",
+      "register": "token",
+      "role": "primary_fit",
+      "structure": "graph",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "prim-mst"
+      ],
+      "canonical": "prim-mst",
+      "concept": "Prim MST",
+      "matcher_reachable": true,
+      "problem": "P34",
+      "qclass": "TK",
+      "register": "token",
+      "role": "alternative",
+      "structure": "graph",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [],
+      "canonical": "reservoir-sampling",
+      "concept": "reservoir sampling",
+      "problem": "P35",
+      "qclass": "CE",
+      "register": "prose",
+      "role": "primary_fit",
+      "structure": "__absent__",
+      "verdict": "A"
+    },
+    {
+      "acceptable_ids": [],
+      "canonical": "boyer-moore-majority-vote",
+      "concept": "Boyer-Moore majority vote (O(1) space)",
+      "problem": "P36",
+      "qclass": "CE",
+      "register": "prose",
+      "role": "primary_fit",
+      "structure": "__absent__",
+      "verdict": "A"
+    },
+    {
+      "acceptable_ids": [
+        "frequency-aggregation"
+      ],
+      "canonical": "frequency-aggregation",
+      "concept": "hash frequency count (O(n) space, not the space-optimal mechanism)",
+      "problem": "P36",
+      "qclass": "CE",
+      "register": "prose",
+      "role": "constraint_alternative",
+      "structure": "hashmap (embedded)",
+      "verdict": "B"
+    },
+    {
+      "acceptable_ids": [],
+      "canonical": "a-star-search",
+      "concept": "A* heuristic search",
+      "problem": "P37",
+      "qclass": "CE",
+      "register": "prose",
+      "role": "primary_fit",
+      "structure": "__absent__",
+      "verdict": "A"
+    },
+    {
+      "acceptable_ids": [
+        "dijkstra"
+      ],
+      "canonical": "dijkstra",
+      "concept": "Dijkstra (uninformed, correct but not heuristic-guided)",
+      "matcher_reachable": true,
+      "problem": "P37",
+      "qclass": "CE",
+      "register": "prose",
+      "role": "constraint_alternative",
+      "structure": "heap",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [],
+      "canonical": "ternary-search",
+      "concept": "ternary search on a unimodal function",
+      "problem": "P38",
+      "qclass": "CE",
+      "register": "prose",
+      "role": "primary_fit",
+      "structure": "__absent__",
+      "verdict": "A"
+    },
+    {
+      "acceptable_ids": [
+        "binary-search-on-answer"
+      ],
+      "canonical": "binary-search-on-answer",
+      "concept": "binary search on answer (monotonic feasibility, not unimodal extremum)",
+      "problem": "P38",
+      "qclass": "CE",
+      "register": "prose",
+      "role": "constraint_alternative",
+      "structure": "array (embedded)",
+      "verdict": "B"
+    },
+    {
+      "acceptable_ids": [],
+      "canonical": "fisher-yates-shuffle",
+      "concept": "Fisher-Yates shuffle",
+      "problem": "P39",
+      "qclass": "CE",
+      "register": "token",
+      "role": "primary_fit",
+      "structure": "__absent__",
+      "verdict": "A"
+    },
+    {
+      "acceptable_ids": [
+        "prefix-sum"
+      ],
+      "canonical": "difference-array",
+      "concept": "difference array (range-add via boundary marks)",
+      "problem": "P40",
+      "qclass": "CE",
+      "register": "prose",
+      "role": "primary_fit",
+      "structure": "array (embedded)",
+      "verdict": "B"
+    },
+    {
+      "acceptable_ids": [
+        "fenwick-tree"
+      ],
+      "canonical": "fenwick-tree",
+      "concept": "Fenwick tree with range update",
+      "matcher_reachable": true,
+      "problem": "P40",
+      "qclass": "CE",
+      "register": "prose",
+      "role": "alternative",
+      "structure": "tree",
+      "verdict": "E"
+    },
+    {
+      "acceptable_ids": [
+        "segment-tree"
+      ],
+      "canonical": "segment-tree",
+      "concept": "segment tree with lazy range add",
+      "matcher_reachable": true,
+      "problem": "P40",
+      "qclass": "CE",
+      "register": "prose",
+      "role": "alternative",
+      "structure": "tree",
+      "verdict": "E"
+    }
+  ],
+  "spec_id": "mnemos-Gmetric-v1",
+  "status": "FROZEN",
+  "story": "story-63e99042",
+  "title": "Frozen blind algorithm/DS-selection retrieval scorecard for the Mnemos retrofit"
+}

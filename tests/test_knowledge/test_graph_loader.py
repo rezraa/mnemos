@@ -96,13 +96,10 @@ class TestGraphLoaderParity:
         # All JSON alternatives must be present in graph alternatives.
         assert ids_j.issubset(ids_g)
 
-    def test_match_structural_signals(self, graph_loader, json_loader):
-        signals = ["sorted input with pair satisfying arithmetic constraint"]
-        matches_g = graph_loader.match_structural_signals(signals)
-        matches_j = json_loader.match_structural_signals(signals)
-        assert len(matches_g) == len(matches_j)
-        if matches_g:
-            assert matches_g[0]["rule"]["id"] == matches_j[0]["rule"]["id"]
+    # test_match_structural_signals RETIRED at S6 (story-24ba71ef): the matcher was
+    # deleted from BOTH loaders, so the dual-loader parity it checked no longer
+    # exists. The KEPT primitives' parity (get_alternatives above, filter_by_constraints
+    # below, compact_index) stays asserted. Coverage delta: -1 matcher parity test.
 
     def test_filter_by_constraints(self, graph_loader, json_loader):
         patterns = [
@@ -140,18 +137,22 @@ class TestToolsGraphMode:
 
     def test_plan_algorithm_graph(self, graph_db):
         _, conn = graph_db
+        from mnemos.knowledge.loader import _signal_id
         from mnemos.tools.plan_algorithm import plan_algorithm
 
+        # New contract: matched_signal_ids -> hydrate -> recommendations (graph mode).
         result = plan_algorithm(
-            problem="find two numbers that sum to target",
-            structural_signals=[
-                "Unsorted input with pair satisfying arithmetic constraint"
+            problem="cheapest route in a weighted graph",
+            matched_signal_ids=[
+                _signal_id("weighted-graph-shortest-path"),
+                _signal_id("greedy-nearest-unvisited-expansion"),
             ],
             conn=conn,
         )
         assert isinstance(result, dict)
-        assert "matched_rules" in result
-        assert len(result["matched_rules"]) > 0
+        assert "matched_rules" not in result
+        assert result["retrieval_state"] == "hit"
+        assert "dijkstra" in [r["pattern_id"] for r in result["recommendations"]]
 
     def test_review_complexity_graph(self, graph_db):
         _, conn = graph_db

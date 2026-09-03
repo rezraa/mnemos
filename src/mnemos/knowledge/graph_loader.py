@@ -17,6 +17,7 @@ from typing import Any
 
 from mnemos.knowledge.loader import (
     _COMPLEXITY_RANK,
+    _SignalEngine,
     _rank,
 )
 
@@ -24,12 +25,14 @@ _KNOWLEDGE_DIR = Path(__file__).parent
 _PREFIX = "mnemos:"
 
 
-class GraphKnowledgeLoader:
+class GraphKnowledgeLoader(_SignalEngine):
     """KnowledgeLoader backed by Kuzu/LadybugDB.
 
-    Pulls all patterns, rules, and edges from the graph on init and builds
+    Pulls all patterns and edges from the graph on init and builds
     the same in-memory indices as KnowledgeLoader. After init, no more DB
-    calls for reads.
+    calls for reads. Inherits the ONE Shape-C signal-index retrieval engine
+    (:class:`_SignalEngine`) over the shared ``self._pattern_index`` -- the same
+    engine the JSON loader uses, no duplicate engine code.
     """
 
     def __init__(self, conn: Any, knowledge_dir: Path | None = None) -> None:
@@ -55,12 +58,13 @@ class GraphKnowledgeLoader:
         # Pull everything from the graph and build indices
         self._pattern_index: dict[str, tuple[str, dict]] = {}
         self._structure_index: dict[str, dict] = {}
-        self._rule_signal_index: dict[str, dict] = {}
-        self._rules: list[dict] = []
 
         self._load_patterns()
-        self._load_rules()
         self._load_alternatives()
+
+        # Shape-C signal index (from patterns' structural_signals), same engine
+        # as the JSON loader. Built at load so a hash collision fails CLOSED here.
+        self._build_signal_index()
 
     # ------------------------------------------------------------------
     # Graph loading (runs once on init)
@@ -105,6 +109,7 @@ class GraphKnowledgeLoader:
             bare_id = self._strip(graph_id)
             complexity = self._parse_json(complexity_s, {})
             signals = self._parse_json(signals_s, [])
+            constraints = self._parse_json(constraints_s, {})
             data = self._parse_json(data_s, {})
 
             pat = {
@@ -112,6 +117,13 @@ class GraphKnowledgeLoader:
                 "name": name,
                 "complexity": complexity,
                 "structural_signals": signals,
+                # KEEP the graph's constraints column: the query already selects
+                # p.constraints, but the built pattern used to drop it, so the
+                # graph loader diverged from the JSON loader (whose patterns carry
+                # constraints from structures.json). filter_by_constraints and the
+                # Shape-C complexity gate read this field -- dropping it silently
+                # degraded graph-mode retrieval. Drift repaired (story-79321e96).
+                "constraints": constraints,
                 "applies_when": data.get("applies_when", []),
                 "avoid_when": data.get("avoid_when", []),
                 "alternatives": [],  # filled in by _load_alternatives
@@ -133,36 +145,6 @@ class GraphKnowledgeLoader:
         for struct_id, patterns in by_structure.items():
             if struct_id in self._structure_index:
                 self._structure_index[struct_id]["patterns"] = patterns
-
-    def _load_rules(self) -> None:
-        """Pull all mnemos rules from graph, build signal index."""
-        result = self._conn.execute(
-            "MATCH (r:rules) WHERE r.domain = 'mnemos' "
-            "RETURN r.id, r.signal, r.recommended_pattern, r.priority, r.data "
-            "ORDER BY r.id"
-        )
-
-        while result.has_next():
-            row = result.get_next()
-            graph_id, signal, rec_pattern, priority, data_s = row
-
-            bare_id = self._strip(graph_id)
-            data = self._parse_json(data_s, {})
-
-            rule = {
-                "id": bare_id,
-                "structural_signal": signal,
-                "recommended_pattern": self._strip(rec_pattern) if rec_pattern else "",
-                "recommended_structure": data.get("recommended_structure", ""),
-                "alternatives": data.get("alternatives", []),
-                "code_indicators": data.get("code_indicators", []),
-                "constraints": data.get("constraints", {}),
-            }
-
-            self._rules.append(rule)
-            norm_signal = signal.lower().strip()
-            if norm_signal:
-                self._rule_signal_index[norm_signal] = rule
 
     def _load_alternatives(self) -> None:
         """Pull alternative edges and attach to patterns."""
@@ -315,51 +297,6 @@ class GraphKnowledgeLoader:
                 "structure": structure_id,
                 "structural_signals": pat.get("structural_signals", []),
             })
-        return results
-
-    # ------------------------------------------------------------------
-    # Structural matching — same logic as KnowledgeLoader
-    # ------------------------------------------------------------------
-
-    def match_structural_signals(self, signals: list[str]) -> list[dict]:
-        if not signals:
-            return []
-
-        results: list[dict] = []
-        seen_rule_ids: set[str] = set()
-
-        for signal in signals:
-            signal_lower = signal.lower().strip()
-            if not signal_lower:
-                continue
-
-            for rule_signal, rule in self._rule_signal_index.items():
-                if rule["id"] in seen_rule_ids:
-                    continue
-
-                if signal_lower in rule_signal or rule_signal in signal_lower:
-                    seen_rule_ids.add(rule["id"])
-
-                    rec_pattern_id = rule.get("recommended_pattern", "")
-                    rec_pattern = self.get_pattern(rec_pattern_id)
-
-                    alt_ids = rule.get("alternatives", [])
-                    alternatives = []
-                    for alt_id in alt_ids:
-                        alt_pat = self.get_pattern(alt_id)
-                        if alt_pat:
-                            alternatives.append(alt_pat)
-                        else:
-                            alternatives.append({"id": alt_id, "name": alt_id})
-
-                    results.append({
-                        "rule": rule,
-                        "signal": signal,
-                        "recommended_pattern": rec_pattern,
-                        "recommended_structure": rule.get("recommended_structure", ""),
-                        "alternatives": alternatives,
-                    })
-
         return results
 
     # ------------------------------------------------------------------

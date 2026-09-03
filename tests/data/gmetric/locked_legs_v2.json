@@ -1,0 +1,63 @@
+{
+  "LEG_1_primary_delta": {
+    "delta_bar": 0.25,
+    "engine_min_covered_at_10": 47,
+    "engine_min_recall_at_10": 0.6006,
+    "equivalently": "engine covers >= 47 of 77 E-golds (baseline 27 + 20)",
+    "rule": "recall@10(engine) - recall@10(baseline=0.3506) >= 0.25",
+    "why": "The PB+TK problem-language/token gap the baseline scores 0 on is 47/77 of the set; recovering ~40% of the headroom is a clearly-not-noise win."
+  },
+  "LEG_2_design_works_floor": {
+    "engine_min_covered_at_10": 47,
+    "equivalently": "engine covers >= 47 of 77 E-golds",
+    "floor": 0.6,
+    "rule": "recall@10(engine) >= 0.6",
+    "why": "Establishes the new path surfaces a majority of what is reachable, not merely that it beats a matcher that is near-zero off its own idiom."
+  },
+  "LEG_3_distribution_wins": {
+    "min_problems_ge_baseline": 35,
+    "n_problems": 40,
+    "rule": "engine covered@10 >= baseline covered@10 on >= 35 of 40 problems",
+    "why": "Guards against a win concentrated in a few problems AND against regressing the 12 PA problems the matcher already covers. Because PA is already maxed, the LEG_1 delta can only be earned in PB/TK/CE -- the win is forced to land in the target classes."
+  },
+  "baseline_snapshot": {
+    "by_qclass_at_10": {
+      "CE": {
+        "covered": 0,
+        "of": 3,
+        "recall": 0.0
+      },
+      "PA": {
+        "covered": 27,
+        "of": 27,
+        "recall": 1.0
+      },
+      "PB": {
+        "covered": 0,
+        "of": 25,
+        "recall": 0.0
+      },
+      "TK": {
+        "covered": 0,
+        "of": 22,
+        "recall": 0.0
+      }
+    },
+    "covered_at_10": 27,
+    "denominator_E_golds": 77,
+    "not_a_strawman": "PA (rule-prose) baseline = 27/27 = 1.0; the matcher answers its own idiom perfectly.",
+    "recall_at_10": 0.3506
+  },
+  "ceilings_for_interpretation": {
+    "content_coverage_E_over_total": 0.9059,
+    "engine_content_ceiling": "~1.0 of the 77 E-golds: every E-gold's acceptable_ids are real patterns reachable by a full-canon signal index (not bounded by the 107/179 rule wiring).",
+    "matcher_reachable_ceiling_recall": 0.8831
+  },
+  "is_the_bar_for": "S1 engine (Shape-C signal-index port). S0 sets this bar; it does not run the engine.",
+  "re_freeze": "On corpus/benchmark drift (any pinned hash changes) re-freeze v1->v2; the v1 E-set must stay covered@10 by the engine (eviction FAILS).",
+  "set_after": "baseline_matcher_pinned.json (legs calibrated from the measured baseline, never before)",
+  "spec_id": "mnemos-Gmetric-v1-locked-legs",
+  "status": "LOCKED",
+  "story": "story-63e99042",
+  "verdict_rule": "PASS = LEG_1 AND LEG_2 AND LEG_3. Any one failing = NOT a pass; return to council."
+}

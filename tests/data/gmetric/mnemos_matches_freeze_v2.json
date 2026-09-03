@@ -1,0 +1,13 @@
+{
+  "hash_algo": "sha256",
+  "pins": {
+    "complexities.json": "0a162d4a852ac57518b750b15bff235df1c7b337a62802fd093d664f866f6f01",
+    "decision_rules.json": "088cf57ce8d1b70366bd93ff20d9b902be91eac7e3ccfa733bd51615c8263caf",
+    "mnemos_matches_v2.json": "5a3377dbe84a26740510301743f7ba88dd10189836b2668e809e6c08fb3b8ec2",
+    "problems_blind_v2.json": "c42b84d1f54d0e51b3a9f722ee55cb116091252e77a62a534767499b977ec17e",
+    "structures.json": "779a4a2fe42948bc65b286ff9d1d91f0113cf79bd7d540d6b93663624a03fa00"
+  },
+  "spec_id": "mnemos-Gmetric-v1-recognizer-freeze",
+  "story": "story-79321e96",
+  "what": "S1 trust root: pins the frozen recognition snapshot + the corpus files it derives from. Separate from the S0 freeze_manifest.json (which grade._verify_substrate holds to an exact 5-pin set). Regenerating this manifest is the only way to move a pin -- a visible, reviewable act."
+}

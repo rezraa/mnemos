@@ -1,0 +1,207 @@
+{
+  "before_tuned_scalar": {
+    "context": {},
+    "current": {
+      "complexity": "O(n log n)",
+      "pattern": "dijkstra",
+      "target": "O(n)"
+    },
+    "filtered_out": [],
+    "memory": {},
+    "suggestions": [
+      {
+        "complexity": {
+          "space": "O(V)",
+          "time": "O(V*E)"
+        },
+        "ds": "graph",
+        "improvement": "O(n log n) -> O(V*E)",
+        "name": "Bellman-Ford",
+        "pattern_id": "bellman-ford",
+        "score": 1.0,
+        "structure_id": "graph",
+        "warnings": [],
+        "when_better": [
+          "graph has negative edge weights (use Bellman-Ford)",
+          "graph is unweighted (use BFS)",
+          "all-pairs needed (use Floyd-Warshall)"
+        ]
+      },
+      {
+        "complexity": {
+          "space": "O(V)",
+          "time": "O(V+E)"
+        },
+        "ds": "queue",
+        "improvement": "O(n log n) -> O(V+E)",
+        "name": "BFS Traversal",
+        "pattern_id": "bfs-traversal",
+        "score": 1.0,
+        "structure_id": "queue",
+        "warnings": [],
+        "when_better": [
+          "graph has negative edge weights (use Bellman-Ford)",
+          "graph is unweighted (use BFS)",
+          "all-pairs needed (use Floyd-Warshall)"
+        ]
+      },
+      {
+        "complexity": {
+          "space": "O(V)",
+          "time": "O(V+E)"
+        },
+        "ds": "queue",
+        "improvement": "O(n log n) -> O(V+E)",
+        "name": "0-1 BFS (Deque-Based)",
+        "pattern_id": "zero-one-bfs",
+        "score": 1.0,
+        "structure_id": "queue",
+        "warnings": [],
+        "when_better": [
+          "graph has negative edge weights (use Bellman-Ford)",
+          "graph is unweighted (use BFS)",
+          "all-pairs needed (use Floyd-Warshall)"
+        ]
+      },
+      {
+        "complexity": {
+          "space": "O(V)",
+          "time": "O(V+E)"
+        },
+        "ds": "graph",
+        "improvement": "O(n log n) -> O(V+E)",
+        "name": "BFS Shortest Path (Unweighted)",
+        "pattern_id": "bfs-shortest-unweighted",
+        "score": 1.0,
+        "structure_id": "graph",
+        "warnings": [],
+        "when_better": [
+          "graph has negative edge weights (use Bellman-Ford)",
+          "graph is unweighted (use BFS)",
+          "all-pairs needed (use Floyd-Warshall)"
+        ]
+      },
+      {
+        "complexity": {
+          "space": "O(V)",
+          "time": "O(V*E) worst, O(E) average in practice"
+        },
+        "ds": "graph",
+        "improvement": "O(n log n) -> O(V*E) worst, O(E) average in practice",
+        "name": "SPFA (Shortest Path Faster Algorithm)",
+        "pattern_id": "spfa",
+        "score": 1.0,
+        "structure_id": "graph",
+        "warnings": [],
+        "when_better": [
+          "graph has negative edge weights (use Bellman-Ford)",
+          "graph is unweighted (use BFS)",
+          "all-pairs needed (use Floyd-Warshall)"
+        ]
+      }
+    ]
+  },
+  "before_with_n_constraint": {
+    "context": {},
+    "current": {
+      "complexity": "O(n log n)",
+      "pattern": "dijkstra",
+      "structure": "heap",
+      "target": "O(n)"
+    },
+    "filtered_out": [],
+    "memory": {},
+    "suggestions": [
+      {
+        "complexity": {
+          "space": "O(V)",
+          "time": "O(V*E)"
+        },
+        "ds": "graph",
+        "improvement": "O(n log n) -> O(V*E)",
+        "name": "Bellman-Ford",
+        "pattern_id": "bellman-ford",
+        "score": 1.0,
+        "structure_id": "graph",
+        "warnings": [],
+        "when_better": [
+          "graph has negative edge weights (use Bellman-Ford)",
+          "graph is unweighted (use BFS)",
+          "all-pairs needed (use Floyd-Warshall)"
+        ]
+      },
+      {
+        "complexity": {
+          "space": "O(V)",
+          "time": "O(V+E)"
+        },
+        "ds": "queue",
+        "improvement": "O(n log n) -> O(V+E)",
+        "name": "BFS Traversal",
+        "pattern_id": "bfs-traversal",
+        "score": 1.0,
+        "structure_id": "queue",
+        "warnings": [],
+        "when_better": [
+          "graph has negative edge weights (use Bellman-Ford)",
+          "graph is unweighted (use BFS)",
+          "all-pairs needed (use Floyd-Warshall)"
+        ]
+      },
+      {
+        "complexity": {
+          "space": "O(V)",
+          "time": "O(V+E)"
+        },
+        "ds": "queue",
+        "improvement": "O(n log n) -> O(V+E)",
+        "name": "0-1 BFS (Deque-Based)",
+        "pattern_id": "zero-one-bfs",
+        "score": 1.0,
+        "structure_id": "queue",
+        "warnings": [],
+        "when_better": [
+          "graph has negative edge weights (use Bellman-Ford)",
+          "graph is unweighted (use BFS)",
+          "all-pairs needed (use Floyd-Warshall)"
+        ]
+      },
+      {
+        "complexity": {
+          "space": "O(V)",
+          "time": "O(V+E)"
+        },
+        "ds": "graph",
+        "improvement": "O(n log n) -> O(V+E)",
+        "name": "BFS Shortest Path (Unweighted)",
+        "pattern_id": "bfs-shortest-unweighted",
+        "score": 1.0,
+        "structure_id": "graph",
+        "warnings": [],
+        "when_better": [
+          "graph has negative edge weights (use Bellman-Ford)",
+          "graph is unweighted (use BFS)",
+          "all-pairs needed (use Floyd-Warshall)"
+        ]
+      },
+      {
+        "complexity": {
+          "space": "O(V)",
+          "time": "O(V*E) worst, O(E) average in practice"
+        },
+        "ds": "graph",
+        "improvement": "O(n log n) -> O(V*E) worst, O(E) average in practice",
+        "name": "SPFA (Shortest Path Faster Algorithm)",
+        "pattern_id": "spfa",
+        "score": 1.0,
+        "structure_id": "graph",
+        "warnings": [],
+        "when_better": [
+          "graph has negative edge weights (use Bellman-Ford)",
+          "graph is unweighted (use BFS)",
+          "all-pairs needed (use Floyd-Warshall)"
+        ]
+      }
+    ]
+  }
+}

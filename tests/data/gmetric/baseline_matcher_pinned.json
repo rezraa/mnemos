@@ -1,0 +1,1233 @@
+{
+  "RESULT_baseline": {
+    "by_qclass": {
+      "CE": {
+        "10": {
+          "covered": 0,
+          "of": 3,
+          "recall": 0.0
+        },
+        "5": {
+          "covered": 0,
+          "of": 3,
+          "recall": 0.0
+        }
+      },
+      "PA": {
+        "10": {
+          "covered": 27,
+          "of": 27,
+          "recall": 1.0
+        },
+        "5": {
+          "covered": 27,
+          "of": 27,
+          "recall": 1.0
+        }
+      },
+      "PB": {
+        "10": {
+          "covered": 0,
+          "of": 25,
+          "recall": 0.0
+        },
+        "5": {
+          "covered": 0,
+          "of": 25,
+          "recall": 0.0
+        }
+      },
+      "TK": {
+        "10": {
+          "covered": 0,
+          "of": 22,
+          "recall": 0.0
+        },
+        "5": {
+          "covered": 0,
+          "of": 22,
+          "recall": 0.0
+        }
+      }
+    },
+    "by_register": {
+      "prose": {
+        "10": {
+          "covered": 27,
+          "of": 55,
+          "recall": 0.4909
+        },
+        "5": {
+          "covered": 27,
+          "of": 55,
+          "recall": 0.4909
+        }
+      },
+      "token": {
+        "10": {
+          "covered": 0,
+          "of": 22,
+          "recall": 0.0
+        },
+        "5": {
+          "covered": 0,
+          "of": 22,
+          "recall": 0.0
+        }
+      }
+    },
+    "by_structure": {
+      "array": {
+        "10": {
+          "covered": 6,
+          "of": 20,
+          "recall": 0.3
+        },
+        "5": {
+          "covered": 6,
+          "of": 20,
+          "recall": 0.3
+        }
+      },
+      "disjoint-set": {
+        "10": {
+          "covered": 0,
+          "of": 1,
+          "recall": 0.0
+        },
+        "5": {
+          "covered": 0,
+          "of": 1,
+          "recall": 0.0
+        }
+      },
+      "dp": {
+        "10": {
+          "covered": 3,
+          "of": 7,
+          "recall": 0.4286
+        },
+        "5": {
+          "covered": 3,
+          "of": 7,
+          "recall": 0.4286
+        }
+      },
+      "graph": {
+        "10": {
+          "covered": 5,
+          "of": 12,
+          "recall": 0.4167
+        },
+        "5": {
+          "covered": 5,
+          "of": 12,
+          "recall": 0.4167
+        }
+      },
+      "hashmap": {
+        "10": {
+          "covered": 4,
+          "of": 7,
+          "recall": 0.5714
+        },
+        "5": {
+          "covered": 4,
+          "of": 7,
+          "recall": 0.5714
+        }
+      },
+      "hashset": {
+        "10": {
+          "covered": 2,
+          "of": 3,
+          "recall": 0.6667
+        },
+        "5": {
+          "covered": 2,
+          "of": 3,
+          "recall": 0.6667
+        }
+      },
+      "heap": {
+        "10": {
+          "covered": 2,
+          "of": 6,
+          "recall": 0.3333
+        },
+        "5": {
+          "covered": 2,
+          "of": 6,
+          "recall": 0.3333
+        }
+      },
+      "linked-list": {
+        "10": {
+          "covered": 1,
+          "of": 1,
+          "recall": 1.0
+        },
+        "5": {
+          "covered": 1,
+          "of": 1,
+          "recall": 1.0
+        }
+      },
+      "queue": {
+        "10": {
+          "covered": 0,
+          "of": 2,
+          "recall": 0.0
+        },
+        "5": {
+          "covered": 0,
+          "of": 2,
+          "recall": 0.0
+        }
+      },
+      "recursion-backtracking": {
+        "10": {
+          "covered": 1,
+          "of": 2,
+          "recall": 0.5
+        },
+        "5": {
+          "covered": 1,
+          "of": 2,
+          "recall": 0.5
+        }
+      },
+      "stack": {
+        "10": {
+          "covered": 2,
+          "of": 3,
+          "recall": 0.6667
+        },
+        "5": {
+          "covered": 2,
+          "of": 3,
+          "recall": 0.6667
+        }
+      },
+      "string": {
+        "10": {
+          "covered": 0,
+          "of": 6,
+          "recall": 0.0
+        },
+        "5": {
+          "covered": 0,
+          "of": 6,
+          "recall": 0.0
+        }
+      },
+      "tree": {
+        "10": {
+          "covered": 1,
+          "of": 7,
+          "recall": 0.1429
+        },
+        "5": {
+          "covered": 1,
+          "of": 7,
+          "recall": 0.1429
+        }
+      }
+    },
+    "covered": {
+      "10": 27,
+      "5": 27
+    },
+    "denominator_E_golds": 77,
+    "method": "baseline_match_structural_signals",
+    "per_problem": {
+      "P01": {
+        "grades": {
+          "10": {
+            "covered": 3,
+            "covered_golds": [
+              "binary-search",
+              "single-pass-complement-lookup",
+              "two-pointer-convergent"
+            ],
+            "of": 3
+          },
+          "5": {
+            "covered": 3,
+            "covered_golds": [
+              "binary-search",
+              "single-pass-complement-lookup",
+              "two-pointer-convergent"
+            ],
+            "of": 3
+          }
+        },
+        "n_gold_E": 3,
+        "qclass": "PA",
+        "ranked_top10": [
+          "two-pointer-convergent",
+          "single-pass-complement-lookup",
+          "binary-search"
+        ],
+        "register": "prose"
+      },
+      "P02": {
+        "grades": {
+          "10": {
+            "covered": 3,
+            "covered_golds": [
+              "counting-array",
+              "frequency-aggregation",
+              "trie-frequency"
+            ],
+            "of": 3
+          },
+          "5": {
+            "covered": 3,
+            "covered_golds": [
+              "counting-array",
+              "frequency-aggregation",
+              "trie-frequency"
+            ],
+            "of": 3
+          }
+        },
+        "n_gold_E": 3,
+        "qclass": "PA",
+        "ranked_top10": [
+          "frequency-aggregation",
+          "counting-array",
+          "trie-frequency"
+        ],
+        "register": "prose"
+      },
+      "P03": {
+        "grades": {
+          "10": {
+            "covered": 2,
+            "covered_golds": [
+              "balanced-delimiters",
+              "counter-for-single-type"
+            ],
+            "of": 2
+          },
+          "5": {
+            "covered": 2,
+            "covered_golds": [
+              "balanced-delimiters",
+              "counter-for-single-type"
+            ],
+            "of": 2
+          }
+        },
+        "n_gold_E": 2,
+        "qclass": "PA",
+        "ranked_top10": [
+          "balanced-delimiters",
+          "counter-for-single-type"
+        ],
+        "register": "prose"
+      },
+      "P04": {
+        "grades": {
+          "10": {
+            "covered": 2,
+            "covered_golds": [
+              "dfs-graph-traversal",
+              "topological-sort"
+            ],
+            "of": 2
+          },
+          "5": {
+            "covered": 2,
+            "covered_golds": [
+              "dfs-graph-traversal",
+              "topological-sort"
+            ],
+            "of": 2
+          }
+        },
+        "n_gold_E": 2,
+        "qclass": "PA",
+        "ranked_top10": [
+          "topological-sort",
+          "dfs-graph-traversal"
+        ],
+        "register": "prose"
+      },
+      "P05": {
+        "grades": {
+          "10": {
+            "covered": 3,
+            "covered_golds": [
+              "heap-top-k",
+              "quick-select",
+              "sorting"
+            ],
+            "of": 3
+          },
+          "5": {
+            "covered": 3,
+            "covered_golds": [
+              "heap-top-k",
+              "quick-select",
+              "sorting"
+            ],
+            "of": 3
+          }
+        },
+        "n_gold_E": 3,
+        "qclass": "PA",
+        "ranked_top10": [
+          "heap-top-k",
+          "quick-select",
+          "sorting"
+        ],
+        "register": "prose"
+      },
+      "P06": {
+        "grades": {
+          "10": {
+            "covered": 2,
+            "covered_golds": [
+              "bfs-shortest-unweighted",
+              "dijkstra"
+            ],
+            "of": 2
+          },
+          "5": {
+            "covered": 2,
+            "covered_golds": [
+              "bfs-shortest-unweighted",
+              "dijkstra"
+            ],
+            "of": 2
+          }
+        },
+        "n_gold_E": 2,
+        "qclass": "PA",
+        "ranked_top10": [
+          "bfs-shortest-unweighted",
+          "dijkstra",
+          "zero-one-bfs",
+          "bellman-ford",
+          "spfa"
+        ],
+        "register": "prose"
+      },
+      "P07": {
+        "grades": {
+          "10": {
+            "covered": 2,
+            "covered_golds": [
+              "knapsack-01",
+              "subsets-generation"
+            ],
+            "of": 2
+          },
+          "5": {
+            "covered": 2,
+            "covered_golds": [
+              "knapsack-01",
+              "subsets-generation"
+            ],
+            "of": 2
+          }
+        },
+        "n_gold_E": 2,
+        "qclass": "PA",
+        "ranked_top10": [
+          "knapsack-01",
+          "subsets-generation"
+        ],
+        "register": "prose"
+      },
+      "P08": {
+        "grades": {
+          "10": {
+            "covered": 2,
+            "covered_golds": [
+              "edit-distance",
+              "longest-common-subsequence"
+            ],
+            "of": 2
+          },
+          "5": {
+            "covered": 2,
+            "covered_golds": [
+              "edit-distance",
+              "longest-common-subsequence"
+            ],
+            "of": 2
+          }
+        },
+        "n_gold_E": 2,
+        "qclass": "PA",
+        "ranked_top10": [
+          "longest-common-subsequence",
+          "edit-distance"
+        ],
+        "register": "prose"
+      },
+      "P09": {
+        "grades": {
+          "10": {
+            "covered": 2,
+            "covered_golds": [
+              "hashset-membership",
+              "ll-fast-slow-pointers"
+            ],
+            "of": 2
+          },
+          "5": {
+            "covered": 2,
+            "covered_golds": [
+              "hashset-membership",
+              "ll-fast-slow-pointers"
+            ],
+            "of": 2
+          }
+        },
+        "n_gold_E": 2,
+        "qclass": "PA",
+        "ranked_top10": [
+          "ll-fast-slow-pointers",
+          "hashset-membership"
+        ],
+        "register": "prose"
+      },
+      "P10": {
+        "grades": {
+          "10": {
+            "covered": 2,
+            "covered_golds": [
+              "merge-intervals",
+              "sweep-line"
+            ],
+            "of": 2
+          },
+          "5": {
+            "covered": 2,
+            "covered_golds": [
+              "merge-intervals",
+              "sweep-line"
+            ],
+            "of": 2
+          }
+        },
+        "n_gold_E": 2,
+        "qclass": "PA",
+        "ranked_top10": [
+          "merge-intervals",
+          "sweep-line"
+        ],
+        "register": "prose"
+      },
+      "P11": {
+        "grades": {
+          "10": {
+            "covered": 2,
+            "covered_golds": [
+              "hashset-membership",
+              "trie-prefix-tree"
+            ],
+            "of": 2
+          },
+          "5": {
+            "covered": 2,
+            "covered_golds": [
+              "hashset-membership",
+              "trie-prefix-tree"
+            ],
+            "of": 2
+          }
+        },
+        "n_gold_E": 2,
+        "qclass": "PA",
+        "ranked_top10": [
+          "trie-prefix-tree",
+          "hashset-membership",
+          "binary-search"
+        ],
+        "register": "prose"
+      },
+      "P12": {
+        "grades": {
+          "10": {
+            "covered": 2,
+            "covered_golds": [
+              "dfs-graph-traversal",
+              "union-find-connectivity"
+            ],
+            "of": 2
+          },
+          "5": {
+            "covered": 2,
+            "covered_golds": [
+              "dfs-graph-traversal",
+              "union-find-connectivity"
+            ],
+            "of": 2
+          }
+        },
+        "n_gold_E": 2,
+        "qclass": "PA",
+        "ranked_top10": [
+          "union-find-connectivity",
+          "dfs-graph-traversal",
+          "bfs-traversal"
+        ],
+        "register": "prose"
+      },
+      "P13": {
+        "grades": {
+          "10": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 3
+          },
+          "5": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 3
+          }
+        },
+        "n_gold_E": 3,
+        "qclass": "PB",
+        "ranked_top10": [],
+        "register": "prose"
+      },
+      "P14": {
+        "grades": {
+          "10": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 3
+          },
+          "5": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 3
+          }
+        },
+        "n_gold_E": 3,
+        "qclass": "PB",
+        "ranked_top10": [],
+        "register": "prose"
+      },
+      "P15": {
+        "grades": {
+          "10": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 2
+          },
+          "5": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 2
+          }
+        },
+        "n_gold_E": 2,
+        "qclass": "PB",
+        "ranked_top10": [],
+        "register": "prose"
+      },
+      "P16": {
+        "grades": {
+          "10": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 2
+          },
+          "5": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 2
+          }
+        },
+        "n_gold_E": 2,
+        "qclass": "PB",
+        "ranked_top10": [],
+        "register": "prose"
+      },
+      "P17": {
+        "grades": {
+          "10": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 2
+          },
+          "5": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 2
+          }
+        },
+        "n_gold_E": 2,
+        "qclass": "PB",
+        "ranked_top10": [],
+        "register": "prose"
+      },
+      "P18": {
+        "grades": {
+          "10": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 1
+          },
+          "5": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 1
+          }
+        },
+        "n_gold_E": 1,
+        "qclass": "PB",
+        "ranked_top10": [],
+        "register": "prose"
+      },
+      "P19": {
+        "grades": {
+          "10": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 2
+          },
+          "5": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 2
+          }
+        },
+        "n_gold_E": 2,
+        "qclass": "PB",
+        "ranked_top10": [],
+        "register": "prose"
+      },
+      "P20": {
+        "grades": {
+          "10": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 2
+          },
+          "5": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 2
+          }
+        },
+        "n_gold_E": 2,
+        "qclass": "PB",
+        "ranked_top10": [],
+        "register": "prose"
+      },
+      "P21": {
+        "grades": {
+          "10": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 2
+          },
+          "5": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 2
+          }
+        },
+        "n_gold_E": 2,
+        "qclass": "PB",
+        "ranked_top10": [],
+        "register": "prose"
+      },
+      "P22": {
+        "grades": {
+          "10": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 2
+          },
+          "5": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 2
+          }
+        },
+        "n_gold_E": 2,
+        "qclass": "PB",
+        "ranked_top10": [],
+        "register": "prose"
+      },
+      "P23": {
+        "grades": {
+          "10": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 2
+          },
+          "5": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 2
+          }
+        },
+        "n_gold_E": 2,
+        "qclass": "PB",
+        "ranked_top10": [],
+        "register": "prose"
+      },
+      "P24": {
+        "grades": {
+          "10": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 2
+          },
+          "5": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 2
+          }
+        },
+        "n_gold_E": 2,
+        "qclass": "PB",
+        "ranked_top10": [],
+        "register": "prose"
+      },
+      "P25": {
+        "grades": {
+          "10": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 2
+          },
+          "5": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 2
+          }
+        },
+        "n_gold_E": 2,
+        "qclass": "TK",
+        "ranked_top10": [],
+        "register": "token"
+      },
+      "P26": {
+        "grades": {
+          "10": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 3
+          },
+          "5": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 3
+          }
+        },
+        "n_gold_E": 3,
+        "qclass": "TK",
+        "ranked_top10": [],
+        "register": "token"
+      },
+      "P27": {
+        "grades": {
+          "10": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 2
+          },
+          "5": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 2
+          }
+        },
+        "n_gold_E": 2,
+        "qclass": "TK",
+        "ranked_top10": [],
+        "register": "token"
+      },
+      "P28": {
+        "grades": {
+          "10": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 2
+          },
+          "5": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 2
+          }
+        },
+        "n_gold_E": 2,
+        "qclass": "TK",
+        "ranked_top10": [],
+        "register": "token"
+      },
+      "P29": {
+        "grades": {
+          "10": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 3
+          },
+          "5": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 3
+          }
+        },
+        "n_gold_E": 3,
+        "qclass": "TK",
+        "ranked_top10": [],
+        "register": "token"
+      },
+      "P30": {
+        "grades": {
+          "10": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 2
+          },
+          "5": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 2
+          }
+        },
+        "n_gold_E": 2,
+        "qclass": "TK",
+        "ranked_top10": [],
+        "register": "token"
+      },
+      "P31": {
+        "grades": {
+          "10": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 2
+          },
+          "5": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 2
+          }
+        },
+        "n_gold_E": 2,
+        "qclass": "TK",
+        "ranked_top10": [],
+        "register": "token"
+      },
+      "P32": {
+        "grades": {
+          "10": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 2
+          },
+          "5": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 2
+          }
+        },
+        "n_gold_E": 2,
+        "qclass": "TK",
+        "ranked_top10": [],
+        "register": "token"
+      },
+      "P33": {
+        "grades": {
+          "10": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 2
+          },
+          "5": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 2
+          }
+        },
+        "n_gold_E": 2,
+        "qclass": "TK",
+        "ranked_top10": [],
+        "register": "token"
+      },
+      "P34": {
+        "grades": {
+          "10": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 2
+          },
+          "5": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 2
+          }
+        },
+        "n_gold_E": 2,
+        "qclass": "TK",
+        "ranked_top10": [],
+        "register": "token"
+      },
+      "P35": {
+        "grades": {
+          "10": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 0
+          },
+          "5": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 0
+          }
+        },
+        "n_gold_E": 0,
+        "qclass": "CE",
+        "ranked_top10": [],
+        "register": "prose"
+      },
+      "P36": {
+        "grades": {
+          "10": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 0
+          },
+          "5": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 0
+          }
+        },
+        "n_gold_E": 0,
+        "qclass": "CE",
+        "ranked_top10": [],
+        "register": "prose"
+      },
+      "P37": {
+        "grades": {
+          "10": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 1
+          },
+          "5": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 1
+          }
+        },
+        "n_gold_E": 1,
+        "qclass": "CE",
+        "ranked_top10": [],
+        "register": "prose"
+      },
+      "P38": {
+        "grades": {
+          "10": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 0
+          },
+          "5": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 0
+          }
+        },
+        "n_gold_E": 0,
+        "qclass": "CE",
+        "ranked_top10": [],
+        "register": "prose"
+      },
+      "P39": {
+        "grades": {
+          "10": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 0
+          },
+          "5": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 0
+          }
+        },
+        "n_gold_E": 0,
+        "qclass": "CE",
+        "ranked_top10": [],
+        "register": "token"
+      },
+      "P40": {
+        "grades": {
+          "10": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 2
+          },
+          "5": {
+            "covered": 0,
+            "covered_golds": [],
+            "of": 2
+          }
+        },
+        "n_gold_E": 2,
+        "qclass": "CE",
+        "ranked_top10": [],
+        "register": "prose"
+      }
+    },
+    "recall": {
+      "10": 0.3506,
+      "5": 0.3506
+    }
+  },
+  "baseline_covered10_by_problem": {
+    "P01": 3,
+    "P02": 3,
+    "P03": 2,
+    "P04": 2,
+    "P05": 3,
+    "P06": 2,
+    "P07": 2,
+    "P08": 2,
+    "P09": 2,
+    "P10": 2,
+    "P11": 2,
+    "P12": 2,
+    "P13": 0,
+    "P14": 0,
+    "P15": 0,
+    "P16": 0,
+    "P17": 0,
+    "P18": 0,
+    "P19": 0,
+    "P20": 0,
+    "P21": 0,
+    "P22": 0,
+    "P23": 0,
+    "P24": 0,
+    "P25": 0,
+    "P26": 0,
+    "P27": 0,
+    "P28": 0,
+    "P29": 0,
+    "P30": 0,
+    "P31": 0,
+    "P32": 0,
+    "P33": 0,
+    "P34": 0,
+    "P35": 0,
+    "P36": 0,
+    "P37": 0,
+    "P38": 0,
+    "P39": 0,
+    "P40": 0
+  },
+  "captured_by": "Mnemos",
+  "captured_utc": "2026-09-02T00:52:07Z",
+  "determinism": {
+    "fresh_loader_runs": 3,
+    "note": "byte-identical across 3 fresh KnowledgeLoader instances. The reproducibility invariant is THIS result_core_sha256 (stable across PYTHONHASHSEED flips and fresh loaders), NOT the sha256 of this file, which carries captured_utc and changes on every re-pin.",
+    "result_core_sha256": "af035c0aa02ef3fc41c451e4a68208145b44c36998b05f06c07172f70f124af2"
+  },
+  "method_note": "BASELINE ranked output = match_structural_signals(query) -> recommended_pattern + alternatives per matched rule, deduped, ordered. recommended_structure is a structure id and is excluded; no structure id appears in any gold acceptable_id -- verified at freeze (build_gmetric_v1 asserts struct_ids & gold_acc_ids == frozenset()).",
+  "spec_id": "mnemos-Gmetric-v1-baseline-capture",
+  "story": "story-63e99042",
+  "substrate_self_certification": {
+    "checks": {
+      "complexities.json": {
+        "cur": "0a162d4a852ac57518b750b15bff235df1c7b337a62802fd093d664f866f6f01",
+        "match": true,
+        "pin": "0a162d4a852ac57518b750b15bff235df1c7b337a62802fd093d664f866f6f01"
+      },
+      "decision_rules.json": {
+        "cur": "1c95838f740e2a21151254d268f47bd5bea80d88d66165617386535cb0700e74",
+        "match": true,
+        "pin": "1c95838f740e2a21151254d268f47bd5bea80d88d66165617386535cb0700e74"
+      },
+      "gmetric_v1.json": {
+        "cur": "31867426755653837e0f10dc00f490b35f2e4b4472bd9c49bf6cb93a19a8d3f5",
+        "match": true,
+        "pin": "31867426755653837e0f10dc00f490b35f2e4b4472bd9c49bf6cb93a19a8d3f5"
+      },
+      "problems_blind_v1.json": {
+        "cur": "c42b84d1f54d0e51b3a9f722ee55cb116091252e77a62a534767499b977ec17e",
+        "match": true,
+        "pin": "c42b84d1f54d0e51b3a9f722ee55cb116091252e77a62a534767499b977ec17e"
+      },
+      "structures.json": {
+        "cur": "ccd18b0be3a0820399c27dae69d38f796cf9ee07b3afbf2ed4c41b97c7aa7ed0",
+        "match": true,
+        "pin": "ccd18b0be3a0820399c27dae69d38f796cf9ee07b3afbf2ed4c41b97c7aa7ed0"
+      }
+    },
+    "trust_root": "freeze_manifest.json"
+  },
+  "three_meters_never_conflated": {
+    "meter_1_recall": {
+      "10": 0.3506,
+      "5": 0.3506
+    },
+    "meter_2_content_coverage": {
+      "content_coverage_E_over_total": 0.9059,
+      "content_coverage_by_qclass": {
+        "CE": {
+          "A": 5,
+          "B": 3,
+          "E": 3,
+          "coverage_E_over_total": 0.2727,
+          "total": 11
+        },
+        "PA": {
+          "A": 0,
+          "B": 0,
+          "E": 27,
+          "coverage_E_over_total": 1.0,
+          "total": 27
+        },
+        "PB": {
+          "A": 0,
+          "B": 0,
+          "E": 25,
+          "coverage_E_over_total": 1.0,
+          "total": 25
+        },
+        "TK": {
+          "A": 0,
+          "B": 0,
+          "E": 22,
+          "coverage_E_over_total": 1.0,
+          "total": 22
+        }
+      },
+      "definition": "Does the gold concept EXIST in the 179-pattern canon, by DIRECT corpus check? E=standalone pattern (or naming/mechanism variant); B=embedded/borderline only; A=absent. This answers Q5 and is independent of any retrieval method (m-0364c120: a miss is not a content gap).",
+      "pooled_number_warning": "The pooled 0.9059 mixes mainstream selection (PA/PB/TK) with deliberately-probed canon-edge cases (CE). Read the by_qclass split, not the pool (m-e8ccb163).",
+      "tally": {
+        "A_absent": 5,
+        "B_borderline": 3,
+        "E_exists": 77
+      },
+      "total_golds": 85
+    },
+    "meter_3_matcher_reachable_ceiling": {
+      "baseline_recall_ceiling": 0.8831,
+      "benchmark_E_golds_matcher_reachable": 68,
+      "benchmark_E_golds_total": 77,
+      "corpus_pattern_count": 179,
+      "definition": "Ceiling on what the CURRENT matcher could ever retrieve. Corpus-wide: a pattern is reachable iff some rule names it as recommended_pattern or alternative. An E-gold whose acceptable_ids are all unreachable is a baseline retrieval-miss by construction, NOT a content gap.",
+      "structure_count": 18,
+      "structures_with_reachable_pattern": 13,
+      "unreachable_patterns": 72,
+      "wired_patterns": 107
+    }
+  },
+  "what_this_is": "Pinned CURRENT-matcher (match_structural_signals) baseline over the frozen mnemos-Gmetric-v1 set. This is the number the S1 engine must beat on the SAME queries + corpus. NOT a strawman: the PA class feeds rule-prose queries the matcher was built to answer."
+}

@@ -27,50 +27,14 @@ def test_loads_patterns(loader: KnowledgeLoader):
 
 
 # ------------------------------------------------------------------
-# match_structural_signals — exact substring matching
+# match_structural_signals unit tests RETIRED at S6 (story-24ba71ef)
 # ------------------------------------------------------------------
-
-def test_match_structural_signals_exact(loader: KnowledgeLoader):
-    """An exact signal should match the corresponding decision rule."""
-    results = loader.match_structural_signals(["unsorted input with pair"])
-    assert len(results) > 0, "Expected a match for 'unsorted input with pair'"
-
-    first = results[0]
-    assert "rule" in first
-    assert "recommended_pattern" in first
-    assert first["recommended_pattern"] is not None
-
-
-def test_match_structural_signals_substring(loader: KnowledgeLoader):
-    """A partial signal should still match via substring."""
-    results = loader.match_structural_signals(["sorted input with pair"])
-    assert len(results) > 0, "Expected a match for 'sorted input with pair'"
-
-
-def test_match_structural_signals_no_match(loader: KnowledgeLoader):
-    """A completely unrelated signal should return empty."""
-    results = loader.match_structural_signals(["quantum entanglement teleporter"])
-    assert len(results) == 0
-
-
-def test_match_structural_signals_multiple(loader: KnowledgeLoader):
-    """Multiple signals should match multiple rules."""
-    results = loader.match_structural_signals([
-        "unsorted input with pair",
-        "shortest path in weighted graph",
-    ])
-    assert len(results) >= 2, "Expected matches for both signals"
-    rule_ids = {r["rule"]["id"] for r in results}
-    assert "rule-unsorted-pair-search" in rule_ids
-    assert "rule-shortest-path-weighted" in rule_ids
-
-
-def test_match_structural_signals_returns_alternatives(loader: KnowledgeLoader):
-    """Matched rules should include resolved alternatives."""
-    results = loader.match_structural_signals(["unsorted input with pair"])
-    assert len(results) > 0
-    alts = results[0].get("alternatives", [])
-    assert len(alts) > 0, "Expected alternatives for this rule"
+# The legacy exact-substring matcher was deleted from KnowledgeLoader; the
+# signal-index hydrate engine is the sole retrieval path (covered by
+# test_signal_engine.py and the tool tests). The five tests here exercised the
+# deleted method only. Coverage delta: -5 matcher-behaviour tests; the KEPT
+# primitives get_alternatives (test_get_alternatives, below) and
+# filter_by_constraints (below) retain their own tests -- no other coverage lost.
 
 
 # ------------------------------------------------------------------

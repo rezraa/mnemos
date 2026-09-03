@@ -1,0 +1,13 @@
+{
+  "hash_algo": "sha256",
+  "pins": {
+    "complexities.json": "0a162d4a852ac57518b750b15bff235df1c7b337a62802fd093d664f866f6f01",
+    "decision_rules.json": "1c95838f740e2a21151254d268f47bd5bea80d88d66165617386535cb0700e74",
+    "gmetric_v1.json": "31867426755653837e0f10dc00f490b35f2e4b4472bd9c49bf6cb93a19a8d3f5",
+    "problems_blind_v1.json": "c42b84d1f54d0e51b3a9f722ee55cb116091252e77a62a534767499b977ec17e",
+    "structures.json": "ccd18b0be3a0820399c27dae69d38f796cf9ee07b3afbf2ed4c41b97c7aa7ed0"
+  },
+  "spec_id": "mnemos-Gmetric-v1-freeze-manifest",
+  "story": "story-63e99042",
+  "what": "External trust root for the frozen metric. Pins every artifact whose bytes define the outcome gate: the blind problems, the scored concept/alias map + recall denominator (gmetric_v1.json), and the three loaded corpus snapshots. The grader verifies the on-disk substrate against THESE pins, never against a pin stored inside gmetric_v1.json (which it grades against -- that would be circular, CWE-345). Regenerating this manifest is the only way to move a pin, and it is a visible, reviewable change in version control."
+}

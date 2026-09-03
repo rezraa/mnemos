@@ -1,0 +1,639 @@
+{
+  "authored_by": "Mnemos",
+  "corpus_snapshot_sha256": {
+    "complexities.json": "0a162d4a852ac57518b750b15bff235df1c7b337a62802fd093d664f866f6f01",
+    "decision_rules.json": "1c95838f740e2a21151254d268f47bd5bea80d88d66165617386535cb0700e74",
+    "structures.json": "ccd18b0be3a0820399c27dae69d38f796cf9ee07b3afbf2ed4c41b97c7aa7ed0"
+  },
+  "matches": {
+    "P01": [
+      "sig-03ea24216a7d",
+      "sig-2f290f1f4b55",
+      "sig-409193b35f18",
+      "sig-5bf83f274d1f",
+      "sig-76b4d32d255a",
+      "sig-7a874a56d372",
+      "sig-7f378b60c873",
+      "sig-8b465d68d324",
+      "sig-c6b8825aa5be",
+      "sig-c6f2766820ed",
+      "sig-d947eac65051",
+      "sig-e8d1f8215916",
+      "sig-e9c5b83f0be6",
+      "sig-f41730393b0c",
+      "sig-fd2e30a9236e"
+    ],
+    "P02": [
+      "sig-1bf756371fd4",
+      "sig-217f8231a69a",
+      "sig-64d01d586b54",
+      "sig-cca21ebb48fa",
+      "sig-ee68ab6b8ce3"
+    ],
+    "P03": [
+      "sig-12f9b7b4622c",
+      "sig-4e51a97a2b84",
+      "sig-8e710d297961"
+    ],
+    "P04": [
+      "sig-433d2437bc9c",
+      "sig-61ce12cd55cb",
+      "sig-81bff01d82bf"
+    ],
+    "P05": [
+      "sig-0dbbc0d8193f"
+    ],
+    "P06": [
+      "sig-03e41f276b04",
+      "sig-065af4b6872d",
+      "sig-1375b6773e70",
+      "sig-13c42749154b",
+      "sig-1616e3689db4",
+      "sig-34367549e588",
+      "sig-4bb42dbc5a44",
+      "sig-6a2e5feb52f1",
+      "sig-835e0d4dbd56",
+      "sig-9304e7fdbcf8",
+      "sig-96aac1f0006c"
+    ],
+    "P07": [
+      "sig-4fd43bd1f046",
+      "sig-524c83f41a2e",
+      "sig-6b998a9a2904",
+      "sig-7d36e950e896",
+      "sig-81bff01d82bf",
+      "sig-8ffacc7dc3d0",
+      "sig-f41730393b0c"
+    ],
+    "P08": [
+      "sig-5606fb7b60e3",
+      "sig-6f533e0db93d",
+      "sig-7991547d4b15",
+      "sig-bd1e2af5b8b6",
+      "sig-c6f2766820ed",
+      "sig-e9c5b83f0be6"
+    ],
+    "P09": [
+      "sig-09c0c4afb316",
+      "sig-1c7f57bb31c5",
+      "sig-b05ab56d0c69",
+      "sig-b3b4f57bd59a",
+      "sig-dea2f14887dc"
+    ],
+    "P10": [
+      "sig-37806d292696",
+      "sig-409193b35f18",
+      "sig-6b998a9a2904",
+      "sig-a39c5c4d30b9",
+      "sig-f07455758d78"
+    ],
+    "P11": [
+      "sig-40925683b371",
+      "sig-4fc4bea61160"
+    ],
+    "P12": [
+      "sig-0c1dbf227256",
+      "sig-1122d228a84c",
+      "sig-3765d384a5fa",
+      "sig-7423915f8e37",
+      "sig-7c5a7e91ee32",
+      "sig-8b208f3f8150",
+      "sig-bd306ad06d6d"
+    ],
+    "P13": [
+      "sig-03ea24216a7d",
+      "sig-060caf376336",
+      "sig-69e435bbb001",
+      "sig-6cb7b5c44f86",
+      "sig-71a40e4e0d08",
+      "sig-75ba04e23461",
+      "sig-7e9ef297c48f",
+      "sig-a4c76b270f2c",
+      "sig-f41730393b0c"
+    ],
+    "P14": [
+      "sig-9128d253fd51",
+      "sig-c3a9a0356dc0",
+      "sig-e59f5a36bbb6"
+    ],
+    "P15": [
+      "sig-03d6ce19461f",
+      "sig-03e41f276b04",
+      "sig-0eee206c70ce",
+      "sig-1616e3689db4",
+      "sig-34367549e588",
+      "sig-3e3a3131cf88",
+      "sig-448369e35d48",
+      "sig-4bb42dbc5a44",
+      "sig-613f473b641f",
+      "sig-7c5a7e91ee32",
+      "sig-835e0d4dbd56",
+      "sig-847da8d216e0",
+      "sig-8d407457b735",
+      "sig-9304e7fdbcf8",
+      "sig-96aac1f0006c",
+      "sig-9bca8d5736ce",
+      "sig-a4d3af54d8a2",
+      "sig-cc41e666956f",
+      "sig-e6e9a83c39cc",
+      "sig-fa22c9e5bdf6"
+    ],
+    "P16": [
+      "sig-03ea24216a7d",
+      "sig-69e435bbb001",
+      "sig-75ba04e23461",
+      "sig-7e9ef297c48f",
+      "sig-82be594fdaad",
+      "sig-c90d4a554729",
+      "sig-e6728470c713",
+      "sig-f41730393b0c",
+      "sig-fd2e30a9236e"
+    ],
+    "P17": [
+      "sig-a4c76b270f2c"
+    ],
+    "P18": [
+      "sig-b8e75880510e",
+      "sig-c44fca2fcdc7"
+    ],
+    "P19": [
+      "sig-0eee206c70ce",
+      "sig-34367549e588",
+      "sig-be0d923f328d"
+    ],
+    "P20": [
+      "sig-61e3ba34db65",
+      "sig-7991547d4b15",
+      "sig-7f378b60c873",
+      "sig-8b465d68d324",
+      "sig-a4c76b270f2c",
+      "sig-bd1e2af5b8b6",
+      "sig-e8d1f8215916"
+    ],
+    "P21": [
+      "sig-15995faf4403",
+      "sig-19a6ec46f006",
+      "sig-8c902ab013ec",
+      "sig-903077005102",
+      "sig-acd73cacf97c",
+      "sig-f8feaa3a4eef"
+    ],
+    "P22": [
+      "sig-477118327316",
+      "sig-547930ed3220",
+      "sig-71a40e4e0d08",
+      "sig-7c6e4537ecf4",
+      "sig-b1195044c0de"
+    ],
+    "P23": [
+      "sig-09c0c4afb316",
+      "sig-0c1dbf227256",
+      "sig-40b4f8d0a08f",
+      "sig-613f473b641f",
+      "sig-7423915f8e37",
+      "sig-7c5a7e91ee32",
+      "sig-98bb52fa4a4a",
+      "sig-9bca8d5736ce",
+      "sig-a61838c922e5",
+      "sig-b05ab56d0c69"
+    ],
+    "P24": [
+      "sig-1cca7ff8b9c0",
+      "sig-2fa7d0c12797",
+      "sig-409193b35f18",
+      "sig-6f533e0db93d",
+      "sig-dd551e49611c"
+    ],
+    "P25": [
+      "sig-03ea24216a7d",
+      "sig-7199b5b235cb",
+      "sig-75ba04e23461",
+      "sig-7c6e4537ecf4",
+      "sig-7e9ef297c48f",
+      "sig-b1195044c0de"
+    ],
+    "P26": [
+      "sig-2164012fcdab",
+      "sig-698722c0f4a3",
+      "sig-7bf702fc51d5",
+      "sig-87c9c9e75aa5",
+      "sig-9d5dbf33acde",
+      "sig-d1645b78f3f6",
+      "sig-d42df8f1dc84",
+      "sig-d6eecaa61b3d",
+      "sig-e7a7f061ca9a",
+      "sig-f725edee8031"
+    ],
+    "P27": [
+      "sig-9a366d0025f3",
+      "sig-fb68502d370a"
+    ],
+    "P28": [
+      "sig-2944c8a8913f",
+      "sig-61e3ba34db65",
+      "sig-71a40e4e0d08",
+      "sig-7f378b60c873",
+      "sig-8b465d68d324",
+      "sig-e8d1f8215916"
+    ],
+    "P29": [
+      "sig-0ac65c43392e",
+      "sig-292f2c638066",
+      "sig-61a7217589cc",
+      "sig-69c8628d1d01",
+      "sig-8c36c392fe76",
+      "sig-a39c5c4d30b9",
+      "sig-a7c46fc8f8a2",
+      "sig-af29a9ea2e06",
+      "sig-bcf0f4d24d08",
+      "sig-d90181d52636",
+      "sig-e6728470c713"
+    ],
+    "P30": [
+      "sig-03d6ce19461f",
+      "sig-03e41f276b04",
+      "sig-1616e3689db4",
+      "sig-34367549e588",
+      "sig-3e3a3131cf88",
+      "sig-448369e35d48",
+      "sig-4bb42dbc5a44",
+      "sig-835e0d4dbd56",
+      "sig-9304e7fdbcf8",
+      "sig-96aac1f0006c",
+      "sig-e6e9a83c39cc"
+    ],
+    "P31": [
+      "sig-118cfc8d007c",
+      "sig-4897c85f7d3d",
+      "sig-4afbcb069e1f"
+    ],
+    "P32": [
+      "sig-02dc634f7d27",
+      "sig-12020b40b5b2",
+      "sig-ad20694dfe8f",
+      "sig-df30521f6162",
+      "sig-fa22c9e5bdf6"
+    ],
+    "P33": [
+      "sig-42f53f459f76",
+      "sig-6619b0c4f1a1",
+      "sig-84b18e68566d",
+      "sig-f6a21e766961"
+    ],
+    "P34": [
+      "sig-374fae6951f5",
+      "sig-424616f6facf",
+      "sig-613f473b641f",
+      "sig-6cfe5a467f6e",
+      "sig-7423915f8e37",
+      "sig-847da8d216e0",
+      "sig-98bb52fa4a4a"
+    ],
+    "P35": [],
+    "P36": [
+      "sig-1627f7adadd8"
+    ],
+    "P37": [
+      "sig-03e41f276b04",
+      "sig-1616e3689db4",
+      "sig-4bb42dbc5a44",
+      "sig-835e0d4dbd56",
+      "sig-9304e7fdbcf8",
+      "sig-96aac1f0006c"
+    ],
+    "P38": [
+      "sig-7f378b60c873",
+      "sig-8b465d68d324",
+      "sig-e8d1f8215916"
+    ],
+    "P39": [
+      "sig-479ebed4279e"
+    ],
+    "P40": [
+      "sig-af29a9ea2e06",
+      "sig-bcf0f4d24d08",
+      "sig-d90181d52636",
+      "sig-e6728470c713",
+      "sig-f725edee8031",
+      "sig-fd2e30a9236e"
+    ]
+  },
+  "matches_by_signal_text": {
+    "P01": [
+      "contiguous-subarray-satisfying-constraint",
+      "parallel-scan-two-sorted-lists",
+      "sort-two-collections-then-two-pointer-merge",
+      "sorted-input-with-pair-search",
+      "fixed-gap-two-pointer",
+      "static-sorted-collection-with-lookups",
+      "dp-with-binary-search-optimization",
+      "all-suffixes-sorted-for-binary-search",
+      "binary-constraints-pairwise",
+      "combine-two-sorted-sequences",
+      "sorted-input-with-target-lookup",
+      "patience-sorting-with-binary-search",
+      "merge-two-sorted-sequences",
+      "subarray-sum-target-with-negative-values",
+      "cumulative-sum-difference-lookup"
+    ],
+    "P02": [
+      "element-to-count-mapping",
+      "frequency-based-decisions",
+      "string-key-frequency-counting",
+      "frequency-based-rearrangement",
+      "count-occurrences-of-each-element"
+    ],
+    "P03": [
+      "push-on-open-pop-on-close",
+      "stack-empty-means-balanced",
+      "nested-open-close-matching"
+    ],
+    "P04": [
+      "process-tasks-with-cooldown-constraints",
+      "dependency-ordering-in-DAG",
+      "select-items-with-weight-capacity-constraint"
+    ],
+    "P05": [
+      "maintain-k-smallest-or-largest"
+    ],
+    "P06": [
+      "shortest-path-with-negative-weights",
+      "make-array-monotone-minimum-cost",
+      "first-visit-is-shortest",
+      "queue-based-breadth-first",
+      "weighted-graph-shortest-path",
+      "augmenting-path-in-two-sided-graph",
+      "shortest-path-negative-weights-fast-in-practice",
+      "advance-first-pointer-n-steps",
+      "all-pairs-shortest-paths",
+      "shortest-path-in-unweighted-graph",
+      "shortest-path-in-uniform-cost-graph"
+    ],
+    "P07": [
+      "stable-sort-needed-for-bounded-values",
+      "divisible-items-maximize-value-density",
+      "select-non-overlapping-intervals-maximizing-weight",
+      "knapsack-with-item-dependencies",
+      "select-items-with-weight-capacity-constraint",
+      "sort-by-value-weight-ratio",
+      "subarray-sum-target-with-negative-values"
+    ],
+    "P08": [
+      "two-sequence-alignment",
+      "combine-or-compare-two-collections",
+      "find-longest-strictly-increasing-subsequence",
+      "longest-palindromic-subsequence",
+      "combine-two-sorted-sequences",
+      "merge-two-sorted-sequences"
+    ],
+    "P09": [
+      "cycle-detection-in-sequence",
+      "two-pass-linked-list-traversal",
+      "detect-negative-cycles",
+      "undo-redo-via-doubly-linked-list",
+      "reverse-linked-list-via-stack"
+    ],
+    "P10": [
+      "sort-by-start-then-merge",
+      "sort-two-collections-then-two-pointer-merge",
+      "select-non-overlapping-intervals-maximizing-weight",
+      "find-all-intervals-overlapping-point-or-range",
+      "interval-endpoint-comparison"
+    ],
+    "P11": [
+      "prefix-based-search-and-autocomplete",
+      "word-frequency-with-prefix-queries"
+    ],
+    "P12": [
+      "component-counting-as-edges-arrive",
+      "strongly-connected-components-two-pass",
+      "connected-component-discovery",
+      "edge-connects-same-component-means-cycle",
+      "two-edge-connected-components",
+      "probabilistic-set-membership",
+      "strongly-connected-components"
+    ],
+    "P13": [
+      "contiguous-subarray-satisfying-constraint",
+      "running-sum-with-reset",
+      "subarray-sum-via-difference",
+      "carry-running-sum-as-parameter",
+      "minimize-the-maximum-value",
+      "maximum-contiguous-subarray-aggregate",
+      "contiguous-subarray-of-fixed-length",
+      "find-longest-run-of-consecutive-integers",
+      "subarray-sum-target-with-negative-values"
+    ],
+    "P14": [
+      "longest-repeated-substring",
+      "palindrome-substring-enumeration",
+      "center-expansion-outward"
+    ],
+    "P15": [
+      "priority-queue-distance-ordering",
+      "shortest-path-with-negative-weights",
+      "split-point-where-paths-diverge",
+      "weighted-graph-shortest-path",
+      "augmenting-path-in-two-sided-graph",
+      "dense-graph-distance-matrix",
+      "priority-queue-for-edge-selection",
+      "shortest-path-negative-weights-fast-in-practice",
+      "greedy-add-cheapest-non-cycle-edge",
+      "two-edge-connected-components",
+      "all-pairs-shortest-paths",
+      "always-add-cheapest-edge-to-tree",
+      "edge-removal-disconnects-graph",
+      "shortest-path-in-unweighted-graph",
+      "shortest-path-in-uniform-cost-graph",
+      "each-node-has-one-outgoing-edge",
+      "flow-network-with-edge-costs",
+      "graph-with-0-and-1-edge-weights",
+      "priority-queue-slope-representation",
+      "minimum-distance-between-any-two-points"
+    ],
+    "P16": [
+      "contiguous-subarray-satisfying-constraint",
+      "subarray-sum-via-difference",
+      "maximum-contiguous-subarray-aggregate",
+      "contiguous-subarray-of-fixed-length",
+      "prefix-to-count-mapping",
+      "path-sum-via-euler-tour-prefix-sum",
+      "prefix-sum-with-point-updates",
+      "subarray-sum-target-with-negative-values",
+      "cumulative-sum-difference-lookup"
+    ],
+    "P17": [
+      "find-longest-run-of-consecutive-integers"
+    ],
+    "P18": [
+      "next-greater-or-smaller-element",
+      "push-next-element-from-extracted-sequence"
+    ],
+    "P19": [
+      "split-point-where-paths-diverge",
+      "augmenting-path-in-two-sided-graph",
+      "find-deepest-shared-ancestor"
+    ],
+    "P20": [
+      "search-by-comparing-with-node-value",
+      "find-longest-strictly-increasing-subsequence",
+      "dp-with-binary-search-optimization",
+      "all-suffixes-sorted-for-binary-search",
+      "find-longest-run-of-consecutive-integers",
+      "longest-palindromic-subsequence",
+      "patience-sorting-with-binary-search"
+    ],
+    "P21": [
+      "enumerate-all-subsets-via-bitmask",
+      "choose-k-from-n-elements",
+      "power-set-generation",
+      "bitmask-subset-operations",
+      "include-or-exclude-each-element",
+      "subset-represented-as-bitmask"
+    ],
+    "P22": [
+      "maintain-decreasing-deque-of-candidates",
+      "monotonic-elimination-of-candidates",
+      "minimize-the-maximum-value",
+      "sliding-window-min-max-via-deque",
+      "sliding-window-extremum-via-heap"
+    ],
+    "P23": [
+      "cycle-detection-in-sequence",
+      "component-counting-as-edges-arrive",
+      "process-edges-one-by-one",
+      "greedy-add-cheapest-non-cycle-edge",
+      "edge-connects-same-component-means-cycle",
+      "two-edge-connected-components",
+      "union-find-for-cycle-detection",
+      "each-node-has-one-outgoing-edge",
+      "relax-all-edges-V-1-times",
+      "detect-negative-cycles"
+    ],
+    "P24": [
+      "balance-sizes-for-O(1)-median",
+      "split-into-two-halves-and-combine",
+      "sort-two-collections-then-two-pointer-merge",
+      "combine-or-compare-two-collections",
+      "streaming-median-computation"
+    ],
+    "P25": [
+      "contiguous-subarray-satisfying-constraint",
+      "distinct-element-constraint-in-window",
+      "maximum-contiguous-subarray-aggregate",
+      "sliding-window-min-max-via-deque",
+      "contiguous-subarray-of-fixed-length",
+      "sliding-window-extremum-via-heap"
+    ],
+    "P26": [
+      "pair-matching-via-hash",
+      "failure-function-prefix-matching",
+      "pattern-occurrence-in-text",
+      "multi-pattern-hash-matching",
+      "rolling-hash-window-comparison",
+      "slide-pattern-over-text",
+      "multi-pattern-string-matching",
+      "multiple-pattern-queries-on-same-text",
+      "pattern-matching-via-concatenation",
+      "prefix-matching-at-every-position"
+    ],
+    "P27": [
+      "propagate-to-same-value-neighbors",
+      "connected-region-in-grid"
+    ],
+    "P28": [
+      "monotonic-feasibility-over-answer-space",
+      "search-by-comparing-with-node-value",
+      "minimize-the-maximum-value",
+      "dp-with-binary-search-optimization",
+      "all-suffixes-sorted-for-binary-search",
+      "patience-sorting-with-binary-search"
+    ],
+    "P29": [
+      "block-decomposition-for-range-queries",
+      "idempotent-operation-range-query",
+      "lca-reduced-to-range-minimum-query",
+      "static-range-minimum-maximum-query",
+      "O(log n)-query-and-update",
+      "find-all-intervals-overlapping-point-or-range",
+      "try-all-split-points-in-range",
+      "range-query-with-point-or-range-updates",
+      "divide-range-into-segments",
+      "immutable-array-O1-range-query",
+      "prefix-sum-with-point-updates"
+    ],
+    "P30": [
+      "priority-queue-distance-ordering",
+      "shortest-path-with-negative-weights",
+      "weighted-graph-shortest-path",
+      "augmenting-path-in-two-sided-graph",
+      "dense-graph-distance-matrix",
+      "priority-queue-for-edge-selection",
+      "shortest-path-negative-weights-fast-in-practice",
+      "all-pairs-shortest-paths",
+      "shortest-path-in-unweighted-graph",
+      "shortest-path-in-uniform-cost-graph",
+      "priority-queue-slope-representation"
+    ],
+    "P31": [
+      "three-way-in-place-partitioning",
+      "three-region-boundary-tracking",
+      "in-place-partitioning"
+    ],
+    "P32": [
+      "minimum-operations-to-transform-sequence",
+      "insert-delete-replace-transitions",
+      "uniform-insert-delete-logic",
+      "implicit-treap-sequence-operations",
+      "minimum-distance-between-any-two-points"
+    ],
+    "P33": [
+      "equivalence-class-partitioning",
+      "sort-by-key-then-group-consecutive-equals",
+      "canonical-form-as-map-key",
+      "classify-elements-by-derived-key"
+    ],
+    "P34": [
+      "merge-k-sorted-lists-via-divide-and-conquer",
+      "minimum-spanning-tree-via-sorted-edges",
+      "greedy-add-cheapest-non-cycle-edge",
+      "median-tracking-via-sorted-array",
+      "edge-connects-same-component-means-cycle",
+      "always-add-cheapest-edge-to-tree",
+      "union-find-for-cycle-detection"
+    ],
+    "P35": [],
+    "P36": [
+      "constant-time-substring-comparison"
+    ],
+    "P37": [
+      "shortest-path-with-negative-weights",
+      "weighted-graph-shortest-path",
+      "shortest-path-negative-weights-fast-in-practice",
+      "all-pairs-shortest-paths",
+      "shortest-path-in-unweighted-graph",
+      "shortest-path-in-uniform-cost-graph"
+    ],
+    "P38": [
+      "dp-with-binary-search-optimization",
+      "all-suffixes-sorted-for-binary-search",
+      "patience-sorting-with-binary-search"
+    ],
+    "P39": [
+      "in-place-permutation-generation"
+    ],
+    "P40": [
+      "range-query-with-point-or-range-updates",
+      "divide-range-into-segments",
+      "immutable-array-O1-range-query",
+      "prefix-sum-with-point-updates",
+      "prefix-matching-at-every-position",
+      "cumulative-sum-difference-lookup"
+    ]
+  },
+  "n_problems": 40,
+  "recognition_rule": "signal matched iff (query + authored SHAPE working-memory) overlaps its text by >= 2 stemmed content tokens, OR query == signal_text (TK exact leg). SHAPE is a gold-blind restatement of each problem's shape; the mechanical matcher picks ids, so SHAPE cannot encode a pattern id. Audit matches_by_signal_text against problems_blind.",
+  "spec_id": "mnemos-Gmetric-v1-recognizer",
+  "story": "story-79321e96",
+  "what": "FROZEN gold-blind recognition {problem_id -> matched signal_ids} that bridges each frozen benchmark query to the Shape-C hydrate path. The LLM-stand-in for the benchmark (production uses a live LLM). Produced by mnemos_engine_bench.recognize over problems_blind + the signal index; independent of gmetric's acceptable_ids (never read here)."
+}

@@ -1,13 +1,14 @@
 # Copyright (c) 2026 Reza Malik. Licensed under the Apache License, Version 2.0.
 """Mnemos MCP Server — Algorithmic Reasoning Memory for LLMs.
 
-Uses FastMCP's decorator-based tool registration to expose five tools:
+Uses FastMCP's decorator-based tool registration to expose six tools:
 
     plan_algorithm      — recommend algorithm + DS for agent-identified signals
     review_complexity   — assess feasibility of agent-detected complexity
     suggest_refactor    — suggest alternatives given agent's diagnosis
     log_decision        — log an algorithmic decision to memory
     bootstrap_context   — store codebase context for project-aware recommendations
+    get_signal_index    — deterministic Shape-C signal index (problem-language retrieval)
 """
 
 from __future__ import annotations
@@ -40,6 +41,7 @@ from mnemos.tools.review_complexity import review_complexity as _review_complexi
 from mnemos.tools.suggest_refactor import suggest_refactor as _suggest_refactor
 from mnemos.tools.log_decision import log_decision as _log_decision
 from mnemos.tools.bootstrap_context import bootstrap_context as _bootstrap_context
+from mnemos.tools.get_signal_index import get_signal_index as _get_signal_index
 
 # ---------------------------------------------------------------------------
 # Server
@@ -55,32 +57,36 @@ mcp = FastMCP("mnemos", instructions="Algorithmic Reasoning Memory for LLMs")
 @mcp.tool()
 def plan_algorithm(
     problem: str,
-    structural_signals: Union[list[str], str],
+    matched_signal_ids: Union[list[str], str],
     constraints: Union[dict, str, None] = None,
-    structures: Union[list[str], str, None] = None,
     project_id: str | None = None,
+    k: int = 10,
 ) -> dict:
-    """Recommend algorithm + DS based on structural signals and constraints.
+    """Recommend algorithm + DS for a problem's matched signals via the Shape-C engine.
 
-    The agent reads the problem, identifies structural signals, and passes them here.
-    This tool matches signals against decision_rules.json, retrieves knowledge
-    slices, and filters by constraints.
+    The agent recognises the problem's structural signals against ``get_signal_index``
+    and passes their ids here. This tool hydrates them into ranked algorithm/DS
+    candidates, EXCLUDES the complexity-infeasible ones for the given input size, and
+    reasons fit over each candidate's own fields. The prose ``structural_signals``
+    param is retired (no alias shim): its replacement is a different vocabulary.
 
     Args:
-        problem: Structural description of the problem from the agent.
-        structural_signals: Agent-identified signals, e.g. ["unsorted-pair-search"].
-        constraints: Optional dict with keys like n, input_size, space.
-        structures: Agent's guess of relevant structures, e.g. ["hashmap"].
-        project_id: Optional project ID for codebase context filtering.
+        problem: The problem's north-star sentence (context/telemetry only).
+        matched_signal_ids: Signal ids recognised against get_signal_index.
+        constraints: Optional dict — n/input_size drive the feasibility exclusion;
+            space/target_complexity add further exclusions.
+        project_id: Optional project ID for empirical-memory context.
+        k: Number of ranked candidates to retrieve (engine-clamped to 1..50).
 
-    Returns tight JSON: matched_rules[], knowledge{}, consider[], filtered_out[], context{}, memory{}
+    Returns tight JSON: recommendations[], filtered_out[], retrieval_state,
+    unmatched[], dangling[], context{}, memory{}, constraints_analyzed{}.
     """
     return _plan_algorithm(
         problem,
-        structural_signals=_coerce(structural_signals, list),
+        matched_signal_ids=_coerce(matched_signal_ids, list),
         constraints=_coerce(constraints, dict),
-        structures=_coerce(structures, list),
         project_id=project_id,
+        k=k,
     )
 
 
@@ -89,30 +95,42 @@ def review_complexity(
     detected_pattern: str | None = None,
     detected_structures: Union[list[str], str, None] = None,
     detected_complexity: str | None = None,
+    matched_signal_ids: Union[list[str], str, None] = None,
     constraints: Union[dict, str, None] = None,
     project_id: str | None = None,
+    k: int = 10,
 ) -> dict:
-    """Review complexity based on the agent's analysis of code.
+    """Review complexity based on the agent's analysis of code, via the Shape-C engine.
 
-    The agent reads the code, identifies the pattern and estimates complexity.
-    This tool checks feasibility against constraints, finds alternatives, and
-    checks memory for regressions.
+    The agent reads the code, identifies the pattern and estimates complexity, and
+    recognises the problem's structural signals against ``get_signal_index``. This
+    tool reasons the FEASIBILITY of the detected complexity against constraints and
+    hydrates the recognised signals into candidate structures/algorithms — surfacing
+    the complexity-feasible BETTER OPTIONS (excluding the infeasible ones into
+    filtered_out) and checking empirical memory for regressions.
 
     Args:
         detected_pattern: Pattern the agent found, e.g. "nested-loop".
         detected_structures: Structures the agent found, e.g. ["array"].
         detected_complexity: Complexity the agent estimated, e.g. "O(n^2)".
-        constraints: Optional dict with keys like n, input_size, space.
+        matched_signal_ids: Signal ids recognised against get_signal_index (drives
+            the retrieval of better options).
+        constraints: Optional dict with keys like n, input_size, space, target_complexity.
         project_id: Optional project ID for codebase context.
+        k: Number of candidates to retrieve (engine-clamped to 1..50).
 
-    Returns: detected{}, feasibility{}, alternatives[], structure_info{}, context{}, memory{}
+    Returns tight JSON: detected{}, feasibility{}, alternatives[], filtered_out[],
+    structure_info{}, retrieval_state, unmatched[], dangling[], context{}, memory{},
+    constraints_analyzed{}.
     """
     return _review_complexity(
         detected_pattern=detected_pattern,
         detected_structures=_coerce(detected_structures, list),
         detected_complexity=detected_complexity,
+        matched_signal_ids=_coerce(matched_signal_ids, list),
         constraints=_coerce(constraints, dict),
         project_id=project_id,
+        k=k,
     )
 
 
@@ -211,6 +229,19 @@ def bootstrap_context(
         patterns_found=_coerce(patterns_found, list),
         runtime_constraints=_coerce(runtime_constraints, list),
     )
+
+
+@mcp.tool()
+def get_signal_index() -> dict:
+    """Return the deterministic Shape-C signal index for problem-language retrieval.
+
+    Read-only. Each entry is {signal_id, signal_text, pattern_ids}. The agent
+    recognises a problem's structural signals against this view and (in S3-S5)
+    passes the matched signal ids to the retrieval engine. Sorted + byte-stable.
+
+    Returns: {signals: [{signal_id, signal_text, pattern_ids}], count: int}
+    """
+    return _get_signal_index()
 
 
 # ---------------------------------------------------------------------------

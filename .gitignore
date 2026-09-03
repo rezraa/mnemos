@@ -19,6 +19,7 @@ env/
 .DS_Store
 tests/benchmarks/results/*.json
 PLAN.md
+docs/
 .mcp.json
 .claude/settings.json
 .claude/settings.local.json
