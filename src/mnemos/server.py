@@ -235,11 +235,13 @@ def bootstrap_context(
 def get_signal_index() -> dict:
     """Return the deterministic Shape-C signal index for problem-language retrieval.
 
-    Read-only. Each entry is {signal_id, signal_text, pattern_ids}. The agent
-    recognises a problem's structural signals against this view and (in S3-S5)
-    passes the matched signal ids to the retrieval engine. Sorted + byte-stable.
+    Read-only, in the uniform nested container (one corpus-named group; a future
+    corpus is a new group behind this same tool). Each entry is {signal_id,
+    signal_text, pattern_ids}. The agent recognises a problem's structural signals
+    against this view and passes the matched signal ids to the retrieval engine.
+    Sorted + byte-stable.
 
-    Returns: {signals: [{signal_id, signal_text, pattern_ids}], count: int}
+    Returns: {pattern_signals: [{signal_id, signal_text, pattern_ids}]}
     """
     return _get_signal_index()
 
