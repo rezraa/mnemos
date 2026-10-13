@@ -109,7 +109,7 @@ class TestOutputContract:
         top = res["alternatives"][0]
         assert top["rank"] == 1
         # reasoning is over the pattern's OWN fields
-        assert set(top["fit"]) == {"complexity", "applies_when", "avoid_when", "constraints"}
+        assert set(top["fit"]) == {"complexity", "use_when", "avoid_when", "constraints"}
         # votes are transparent integers, never a tuned float score
         r = top["retrieval"]
         assert isinstance(r["score"], int) and isinstance(r["direct_votes"], int)
@@ -150,7 +150,7 @@ class TestRedAnchorAndBar2:
         assert "reason" not in BAR2_PIN["husk_feasible_no_constraints"]["feasibility"]
         # alternatives are non-empty retrieved candidates, each reasoned over own fields
         assert res["alternatives"]
-        assert all(set(a["fit"]) == {"complexity", "applies_when", "avoid_when", "constraints"}
+        assert all(set(a["fit"]) == {"complexity", "use_when", "avoid_when", "constraints"}
                    for a in res["alternatives"])
 
     def test_bar2_delta_alternatives_before_zero_after_nonzero(self):

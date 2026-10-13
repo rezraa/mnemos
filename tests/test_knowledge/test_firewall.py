@@ -16,6 +16,7 @@ coeus.*/othrys.* (the titan-decoupling firewall). This module proves both halves
 from __future__ import annotations
 
 import ast
+import json
 import sys
 from pathlib import Path
 
@@ -119,14 +120,43 @@ class TestCoeusParity:
                 frozen["a"] = 1
 
     def test_facet_primitives_parity(self, c) -> None:
+        """Mnemos dispatches on the catalogue KIND where Coeus names ``team_size``;
+        under a catalogue declaring Coeus's keys (team_size int_range, scale enum with
+        the ``any`` wildcard) the two predicates agree on every case."""
+        from mnemos.knowledge.facet_catalogue_mirror import validate_catalogue
+
         cases_range = ["1-5", "3", "50+", "garbage", ""]
-        assert [m._parse_team_range(x) for x in cases_range] == \
+        assert [m._parse_int_range(x) for x in cases_range] == \
                [c._parse_team_range(x) for x in cases_range]
-        facet, cons = {"team_size": "1-10", "scale": "startup"}, {"team_size": "3", "scale": "startup"}
-        assert m.facet_matches(facet, cons) == c.facet_matches(facet, cons) is True
-        assert m.facet_matches(facet, {"team_size": "3"}) == c.facet_matches(facet, {"team_size": "3"}) is False
+        coeus_keys = validate_catalogue({"domain": "coeus", "facets": {
+            "team_size": {"kind": "int_range", "description": "People on the team."},
+            "scale": {"kind": "enum", "description": "Scale.",
+                      "values": {"startup": "Small.", "growth": "Growing."},
+                      "wildcard": {"value": "any", "description": "Any scale."}},
+        }})
+        facets = [{"team_size": "1-10", "scale": "startup"}, {"team_size": "20+"},
+                  {"scale": "any"}, {"scale": " Startup "}, {"team_size": "x"}, {}]
+        constraint_sets = [{"team_size": "3", "scale": "startup"}, {"team_size": "3"},
+                           {"scale": "growth"}, {"team_size": "25"}, {}]
+        for facet in facets:
+            for cons in constraint_sets:
+                assert m.facet_matches(facet, cons, coeus_keys) == c.facet_matches(facet, cons), \
+                    (facet, cons)
         mixed = ["free text", {"team_size": "1-5"}]
         assert m.split_conditions(mixed) == c.split_conditions(mixed)
+
+    def test_compact_signal_view_parity(self, c) -> None:
+        """The mirror emits the reference's exact bytes: on a synthetic view with a
+        multi-owner signal and unsorted input, and on Mnemos's own loader view."""
+        synthetic = [
+            {"signal_id": "s3", "signal_text": "three", "pattern_ids": ["z", "a"]},
+            {"signal_id": "s1", "signal_text": "one", "pattern_ids": ["z"]},
+            {"signal_id": "s2", "signal_text": "two", "pattern_ids": ["a", "m"]},
+        ]
+        real = m.KnowledgeLoader().get_signal_index()
+        for view in (synthetic, real, []):
+            assert json.dumps(m.compact_signal_view(view, "pattern_ids")) == \
+                   json.dumps(c.compact_signal_view(view, "pattern_ids"))
 
     def test_hydrate_envelope_contract_parity(self, c) -> None:
         """Behavioural parity of the OUTPUT CONTRACT: coeus's engine on coeus's
@@ -144,6 +174,6 @@ class TestCoeusParity:
         assert type(cr).__name__ == type(mr).__name__ == "RetrievalResult"
         if cr.patterns and mr.patterns:
             assert set(cr.patterns[0]["retrieval"]) == set(mr.patterns[0]["retrieval"]) == \
-                   {"score", "direct_votes", "propagated_votes", "seed"}
+                   {"score", "direct_votes", "propagated_votes", "seed", "use_when_fit"}
             assert isinstance(cr.votes[cr.patterns[0]["id"]], int)
             assert isinstance(mr.votes[mr.patterns[0]["id"]], int)

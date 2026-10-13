@@ -1,6 +1,10 @@
 # Copyright (c) 2026 Reza Malik. Licensed under the Apache License, Version 2.0.
 """Tests for KnowledgeLoader."""
 
+import json
+import shutil
+from pathlib import Path
+
 import pytest
 
 from mnemos.knowledge.loader import KnowledgeLoader, _rank
@@ -130,7 +134,7 @@ def test_get_compact_index(loader: KnowledgeLoader):
     assert "structure" in first
     assert "structural_signals" in first
     # Should NOT have full pattern details
-    assert "applies_when" not in first
+    assert "use_when" not in first
     assert "alternatives" not in first
 
 
@@ -162,6 +166,24 @@ def test_get_alternatives(loader: KnowledgeLoader):
     assert "id" in first_alt
     assert "name" in first_alt
     assert "when_better" in first_alt
+
+
+def test_when_better_falls_back_to_alternative_use_when(tmp_path):
+    """A pattern with no avoid_when explains its alternatives by their use_when.
+
+    No shipped pattern has an empty avoid_when, so the fallback is exercised on a
+    corpus copy with one pattern's avoid_when cleared, loaded from disk as in production.
+    """
+    src = Path(KnowledgeLoader()._dir)
+    data = json.loads((src / "structures.json").read_text(encoding="utf-8"))
+    pats = {p["id"]: p for s in data["structures"] for p in s["patterns"]}
+    pat = next(p for p in pats.values() if p.get("alternatives") and p["alternatives"][0] in pats)
+    pat["avoid_when"] = []
+    (tmp_path / "structures.json").write_text(json.dumps(data), encoding="utf-8")
+    shutil.copy(src / "complexities.json", tmp_path / "complexities.json")
+
+    first = KnowledgeLoader(knowledge_dir=tmp_path).get_alternatives(pat["id"])[0]
+    assert first["when_better"] == pats[pat["alternatives"][0]]["use_when"][:2] != []
 
 
 def test_get_structure_by_id(loader: KnowledgeLoader):

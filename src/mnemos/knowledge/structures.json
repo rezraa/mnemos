@@ -60,11 +60,14 @@
             "target sum",
             "pair search"
           ],
-          "applies_when": [
+          "use_when": [
             "input is sorted or has monotonic property",
             "searching for pair satisfying a constraint",
             "checking symmetry from both ends",
-            "need to eliminate candidates from extremes"
+            "need to eliminate candidates from extremes",
+            {
+              "input_order": "sorted"
+            }
           ],
           "avoid_when": [
             "input is unsorted and sorting would lose information",
@@ -98,7 +101,7 @@
             "in-place",
             "O(1) space"
           ],
-          "applies_when": [
+          "use_when": [
             "need in-place removal or partitioning",
             "slow pointer marks write position, fast scans",
             "elements pass/fail a filter condition",
@@ -132,7 +135,7 @@
             "rolling sum",
             "sliding average"
           ],
-          "applies_when": [
+          "use_when": [
             "window size is given or determined",
             "need aggregate (sum, max, count) over fixed-length subarray",
             "can compute next window by adding right and removing left"
@@ -166,15 +169,21 @@
             "at most k",
             "minimum length"
           ],
-          "applies_when": [
+          "use_when": [
             "find longest/shortest contiguous subarray meeting a condition",
             "window expands to explore, contracts to satisfy constraint",
-            "condition can be checked incrementally"
+            "condition can be checked incrementally",
+            {
+              "value_sign": "non_negative"
+            }
           ],
           "avoid_when": [
             "non-contiguous elements contribute",
             "constraint requires global context, not local window",
-            "elements can be negative and constraint involves sums"
+            "elements can be negative and constraint involves sums",
+            {
+              "value_sign": "may_be_negative"
+            }
           ],
           "complexity": {
             "time": "O(n)",
@@ -201,11 +210,14 @@
             "first/last occurrence",
             "minimize/maximize"
           ],
-          "applies_when": [
+          "use_when": [
             "input is sorted",
             "searching for exact value or boundary",
             "answer has monotonic property (all true then all false)",
-            "minimizing/maximizing over a searchable range"
+            "minimizing/maximizing over a searchable range",
+            {
+              "input_order": "sorted"
+            }
           ],
           "avoid_when": [
             "input is unsorted and cannot be sorted",
@@ -238,14 +250,23 @@
             "multiple queries",
             "static array"
           ],
-          "applies_when": [
+          "use_when": [
             "multiple range sum queries on static array",
             "need O(1) subarray sum after O(n) precomputation",
-            "subarray sum equals target (with hashmap for negative values)"
+            "subarray sum equals target (with hashmap for negative values)",
+            {
+              "updates": "static"
+            },
+            {
+              "query_shape": "range_or_order"
+            }
           ],
           "avoid_when": [
             "array is frequently modified between queries",
-            "single query only (just iterate)"
+            "single query only (just iterate)",
+            {
+              "updates": "dynamic"
+            }
           ],
           "complexity": {
             "time": "O(n) build, O(1) query",
@@ -275,10 +296,13 @@
             "negative values",
             "running sum"
           ],
-          "applies_when": [
+          "use_when": [
             "find maximum sum contiguous subarray",
             "local decision: extend current subarray or start new",
-            "values can be negative"
+            "values can be negative",
+            {
+              "value_sign": "may_be_negative"
+            }
           ],
           "avoid_when": [
             "need the actual subarray indices (need slight modification)",
@@ -310,7 +334,7 @@
             "three-way partition",
             "low/mid/high"
           ],
-          "applies_when": [
+          "use_when": [
             "partition array into exactly three groups",
             "elements have three categories (low, mid, high)",
             "must be in-place and single pass"
@@ -345,14 +369,17 @@
             "schedule",
             "meeting rooms"
           ],
-          "applies_when": [
+          "use_when": [
             "input is a collection of intervals that may overlap",
             "need to merge, insert, or find gaps between intervals",
             "scheduling or range consolidation"
           ],
           "avoid_when": [
             "intervals are points, not ranges",
-            "need dynamic interval updates (use interval tree)"
+            "need dynamic interval updates (use interval tree)",
+            {
+              "updates": "dynamic"
+            }
           ],
           "complexity": {
             "time": "O(n log n)",
@@ -379,7 +406,7 @@
             "find duplicate",
             "first missing positive"
           ],
-          "applies_when": [
+          "use_when": [
             "values are in range [1, n] or [0, n-1]",
             "find missing, duplicate, or first missing positive",
             "O(1) space required for finding missing/duplicate"
@@ -406,7 +433,7 @@
             "triple-reversal-technique",
             "rotate-subarray-by-k-positions"
           ],
-          "applies_when": [
+          "use_when": [
             "rotate array by k positions in-place",
             "rearrange segments of array"
           ],
@@ -431,7 +458,7 @@
             "partial-partitioning",
             "expected-linear-selection"
           ],
-          "applies_when": [
+          "use_when": [
             "find kth smallest/largest element",
             "O(n) expected time acceptable",
             "full sort is unnecessary"
@@ -474,7 +501,7 @@
             "threshold",
             "binary search on answer"
           ],
-          "applies_when": [
+          "use_when": [
             "minimize the maximum or maximize the minimum of some metric",
             "answer space is monotonic — if D is feasible then D-1 is also feasible",
             "feasibility for a given answer can be checked efficiently (O(N) or O(N log N))"
@@ -514,7 +541,7 @@
             "knapsack with large capacity",
             "two halves"
           ],
-          "applies_when": [
+          "use_when": [
             "N is moderate (20-40) making 2^N too slow but 2^(N/2) feasible",
             "item values/weights too large for pseudo-polynomial DP",
             "problem involves selecting a subset to optimize a metric",
@@ -543,7 +570,7 @@
             "sorting-then-sequential-selection",
             "exchange-argument-provable"
           ],
-          "applies_when": [
+          "use_when": [
             "greedy choice property: local optimum leads to global optimum",
             "optimal substructure without overlapping subproblems",
             "activity selection, fractional knapsack, Huffman coding"
@@ -571,15 +598,21 @@
             "single-pass-existence-check",
             "predicate-based-first-match"
           ],
-          "applies_when": [
+          "use_when": [
             "data is unsorted and one-time lookup needed",
             "dataset is small (n < 100)",
-            "searching for first element satisfying a predicate"
+            "searching for first element satisfying a predicate",
+            {
+              "input_order": "unsorted"
+            }
           ],
           "avoid_when": [
             "data is sorted (use binary search)",
             "repeated queries on same dataset (build hashmap or sort first)",
-            "large dataset where O(n) per query is too slow"
+            "large dataset where O(n) per query is too slow",
+            {
+              "input_order": "sorted"
+            }
           ],
           "complexity": {
             "time": "O(n)",
@@ -599,7 +632,7 @@
             "stable-sort-needed-for-bounded-values",
             "frequency-based-rearrangement"
           ],
-          "applies_when": [
+          "use_when": [
             "integer keys in small bounded range k where k is O(n)",
             "stability required",
             "as subroutine inside radix sort"
@@ -627,7 +660,7 @@
             "multi-pass-stable-sort-by-digit",
             "linear-time-integer-sort"
           ],
-          "applies_when": [
+          "use_when": [
             "integer or fixed-length string keys",
             "range too large for counting sort but digits are bounded",
             "need stable O(d*(n+k)) sort where d=digits, k=base"
@@ -655,7 +688,7 @@
             "state-compression-iteration",
             "power-set-generation"
           ],
-          "applies_when": [
+          "use_when": [
             "n <= 20-22 and need all subsets",
             "bitmask DP (TSP in O(n^2 * 2^n))",
             "SOS (Sum over Subsets) DP"
@@ -683,15 +716,27 @@
             "offline-range-queries-with-reordering",
             "sqrt-n-blocks"
           ],
-          "applies_when": [
+          "use_when": [
             "offline range queries where add/remove is O(1)",
             "problems where segment tree merge is hard (count distinct, mode)",
-            "simpler alternative to persistent data structures"
+            "simpler alternative to persistent data structures",
+            {
+              "arrival": "batch"
+            },
+            {
+              "query_shape": "range_or_order"
+            }
           ],
           "avoid_when": [
             "online queries required (Mo's is offline)",
             "segment tree or BIT solves it in O(n log n + Q log n)",
-            "updates between queries needed"
+            "updates between queries needed",
+            {
+              "arrival": "streaming"
+            },
+            {
+              "updates": "dynamic"
+            }
           ],
           "complexity": {
             "time": "O((n + Q) * sqrt(n))",
@@ -713,7 +758,7 @@
             "power-of-two-check",
             "bitmask-subset-operations"
           ],
-          "applies_when": [
+          "use_when": [
             "find single missing/duplicate number in O(1) space via XOR",
             "power-of-2 check: n > 0 && (n & (n-1)) == 0",
             "isolate/clear lowest set bit, count set bits"
@@ -742,7 +787,7 @@
             "interval-overlap-counting",
             "geometric-event-processing"
           ],
-          "applies_when": [
+          "use_when": [
             "interval scheduling, counting overlaps at any point",
             "line segment intersection detection (Bentley-Ottmann)",
             "rectangle union area/perimeter",
@@ -751,7 +796,10 @@
           "avoid_when": [
             "simple interval merge suffices (greedy sort-and-merge is simpler)",
             "no natural ordering axis",
-            "online/streaming events arriving out of order"
+            "online/streaming events arriving out of order",
+            {
+              "arrival": "streaming"
+            }
           ],
           "complexity": {
             "time": "O(n log n)",
@@ -771,7 +819,7 @@
             "ordering-enables-efficient-processing",
             "prerequisite-sorting-step"
           ],
-          "applies_when": [
+          "use_when": [
             "need ordered data for subsequent operations",
             "finding duplicates, grouping neighbors",
             "enabling binary search or two-pointer techniques"
@@ -779,7 +827,10 @@
           "avoid_when": [
             "already sorted",
             "order doesn't help the problem",
-            "hashmap gives O(n) without sorting"
+            "hashmap gives O(n) without sorting",
+            {
+              "input_order": "sorted"
+            }
           ],
           "complexity": {
             "time": "O(n log n)",
@@ -799,15 +850,21 @@
             "all-pairs-check",
             "quadratic-scan"
           ],
-          "applies_when": [
+          "use_when": [
             "n is small (< 5000)",
             "need to check all pairs",
-            "no exploitable structure (unsorted, no monotonicity)"
+            "no exploitable structure (unsorted, no monotonicity)",
+            {
+              "input_order": "unsorted"
+            }
           ],
           "avoid_when": [
             "n > 10000",
             "sorted/monotonic structure exists",
-            "single-pass or hash-based approach works"
+            "single-pass or hash-based approach works",
+            {
+              "input_order": "sorted"
+            }
           ],
           "complexity": {
             "time": "O(n^2)",
@@ -828,14 +885,26 @@
             "read-heavy-sorted-data",
             "predecessor-successor-queries"
           ],
-          "applies_when": [
+          "use_when": [
             "read-heavy workload on sorted data",
             "rarely insert or delete",
-            "need floor/ceiling/rank queries"
+            "need floor/ceiling/rank queries",
+            {
+              "input_order": "sorted"
+            },
+            {
+              "updates": "static"
+            },
+            {
+              "query_shape": "range_or_order"
+            }
           ],
           "avoid_when": [
             "frequent insertions (use balanced BST)",
-            "data changes dynamically"
+            "data changes dynamically",
+            {
+              "updates": "dynamic"
+            }
           ],
           "complexity": {
             "time": "O(log n) search, O(n) insert",
@@ -855,7 +924,7 @@
             "small-collection-sorted-insert",
             "median-tracking-via-sorted-array"
           ],
-          "applies_when": [
+          "use_when": [
             "small collection needing sorted order",
             "alternative to heap for median tracking on small n"
           ],
@@ -880,7 +949,7 @@
             "copy-then-rearrange",
             "non-in-place-transformation"
           ],
-          "applies_when": [
+          "use_when": [
             "in-place constraint not required",
             "simpler logic with separate output array"
           ],
@@ -905,10 +974,16 @@
             "small-integer-membership-check",
             "visited-marking"
           ],
-          "applies_when": [
+          "use_when": [
             "elements are small non-negative integers in bounded range",
             "O(1) membership check needed",
-            "marking visited nodes in graph traversal"
+            "marking visited nodes in graph traversal",
+            {
+              "value_sign": "non_negative"
+            },
+            {
+              "query_shape": "point"
+            }
           ],
           "avoid_when": [
             "elements are large or sparse (use hashset)",
@@ -930,7 +1005,7 @@
             "sort-to-bring-duplicates-adjacent",
             "consecutive-element-detection-after-sort"
           ],
-          "applies_when": [
+          "use_when": [
             "detect duplicates by sorting then checking neighbors",
             "find consecutive sequences after sorting"
           ],
@@ -955,7 +1030,7 @@
             "sort-by-key-then-group-consecutive-equals",
             "ordered-grouping"
           ],
-          "applies_when": [
+          "use_when": [
             "need groups by value in sorted order",
             "no hash function available",
             "want deterministic ordering"
@@ -981,13 +1056,16 @@
             "sort-two-collections-then-two-pointer-merge",
             "set-intersection-via-sorting"
           ],
-          "applies_when": [
+          "use_when": [
             "set intersection/union/difference on sortable data",
             "both arrays can be sorted"
           ],
           "avoid_when": [
             "hashset is faster for single operation",
-            "arrays already sorted (just use two pointers)"
+            "arrays already sorted (just use two pointers)",
+            {
+              "input_order": "sorted"
+            }
           ],
           "complexity": {
             "time": "O(n log n + m log m)",
@@ -1007,13 +1085,19 @@
             "intersection-of-sorted-arrays",
             "parallel-scan-two-sorted-lists"
           ],
-          "applies_when": [
+          "use_when": [
             "both arrays already sorted",
-            "intersection/union/merge of two sorted sequences"
+            "intersection/union/merge of two sorted sequences",
+            {
+              "input_order": "sorted"
+            }
           ],
           "avoid_when": [
             "arrays not sorted (sort first or use hashset)",
-            "single array problem"
+            "single array problem",
+            {
+              "input_order": "unsorted"
+            }
           ],
           "complexity": {
             "time": "O(n + m)",
@@ -1032,7 +1116,7 @@
             "split-array-find-max-crossing-subarray",
             "recursive-max-subarray"
           ],
-          "applies_when": [
+          "use_when": [
             "pedagogical D&C example",
             "parallel computing where D&C parallelizes well",
             "2D max subarray extensions"
@@ -1040,7 +1124,10 @@
           "avoid_when": [
             "standard 1D max subarray (Kadane's is O(n))",
             "memory is tight (recursion stack)",
-            "streaming/online setting"
+            "streaming/online setting",
+            {
+              "arrival": "streaming"
+            }
           ],
           "complexity": {
             "time": "O(n log n)",
@@ -1068,7 +1155,7 @@
             "rotating calipers",
             "boundary points"
           ],
-          "applies_when": [
+          "use_when": [
             "find convex hull of 2D point set",
             "farthest pair of points (rotating calipers on hull)",
             "geometric optimization (max area triangle, min enclosing shape)"
@@ -1076,7 +1163,10 @@
           "avoid_when": [
             "3D convex hull needed (different algorithms)",
             "online/streaming points (use online convex hull)",
-            "only need closest pair (simpler algorithms exist)"
+            "only need closest pair (simpler algorithms exist)",
+            {
+              "arrival": "streaming"
+            }
           ],
           "complexity": {
             "time": "O(N log N)",
@@ -1102,7 +1192,7 @@
             "Euclidean distance",
             "point set"
           ],
-          "applies_when": [
+          "use_when": [
             "find minimum Euclidean distance between N points in 2D",
             "spatial clustering",
             "collision detection preprocessing"
@@ -1110,7 +1200,10 @@
           "avoid_when": [
             "need nearest neighbor for many query points (use KD-tree)",
             "dynamic point sets",
-            "higher dimensions (strip constant grows exponentially)"
+            "higher dimensions (strip constant grows exponentially)",
+            {
+              "updates": "dynamic"
+            }
           ],
           "complexity": {
             "time": "O(N log N)",
@@ -1139,7 +1232,7 @@
             "coprime",
             "divisibility"
           ],
-          "applies_when": [
+          "use_when": [
             "generate all primes up to N (~10^7 practical limit)",
             "precompute smallest prime factor for factorization",
             "bulk prime checking for many numbers"
@@ -1175,7 +1268,7 @@
             "coprime count",
             "complementary counting"
           ],
-          "applies_when": [
+          "use_when": [
             "count elements in union of overlapping sets",
             "derangements (permutations with no fixed points)",
             "count integers coprime to set of primes",
@@ -1239,14 +1332,20 @@
             "failure-function-prefix-matching",
             "avoid-re-scanning-matched-prefix"
           ],
-          "applies_when": [
+          "use_when": [
             "find all occurrences of pattern in text",
             "pattern has repeating prefix structure",
-            "need O(n+m) guaranteed time"
+            "need O(n+m) guaranteed time",
+            {
+              "exactness": "exact"
+            }
           ],
           "avoid_when": [
             "pattern is very short (brute force is fine)",
-            "need approximate matching (use edit distance)"
+            "need approximate matching (use edit distance)",
+            {
+              "exactness": "approximate"
+            }
           ],
           "complexity": {
             "time": "O(n+m)",
@@ -1269,14 +1368,20 @@
             "multi-pattern-search",
             "substring-fingerprinting"
           ],
-          "applies_when": [
+          "use_when": [
             "search for multiple patterns simultaneously",
             "need probabilistic fast substring matching",
-            "detecting repeated substrings"
+            "detecting repeated substrings",
+            {
+              "exactness": "approximate"
+            }
           ],
           "avoid_when": [
             "single pattern search (KMP is deterministic)",
-            "hash collisions are unacceptable"
+            "hash collisions are unacceptable",
+            {
+              "exactness": "exact"
+            }
           ],
           "complexity": {
             "time": "O(n+m) average",
@@ -1298,7 +1403,7 @@
             "character-comparison-from-ends",
             "in-place-string-reversal"
           ],
-          "applies_when": [
+          "use_when": [
             "check palindrome",
             "reverse string in-place (char array)",
             "compare characters from both ends"
@@ -1324,7 +1429,7 @@
             "center-expansion-outward",
             "odd-and-even-length-centers"
           ],
-          "applies_when": [
+          "use_when": [
             "find longest palindromic substring",
             "count palindromic substrings",
             "need all palindromes centered at each position"
@@ -1350,7 +1455,7 @@
             "avoid-repeated-concatenation",
             "mutable-buffer-building"
           ],
-          "applies_when": [
+          "use_when": [
             "building result string character by character",
             "many string concatenations in a loop",
             "need O(n) total construction"
@@ -1375,7 +1480,7 @@
             "naive-pattern-search",
             "slide-pattern-over-text"
           ],
-          "applies_when": [
+          "use_when": [
             "pattern is short",
             "single search needed",
             "no preprocessing justified"
@@ -1402,7 +1507,7 @@
             "palindrome-radius-array",
             "symmetry-based-expansion"
           ],
-          "applies_when": [
+          "use_when": [
             "find longest palindromic substring in O(n)",
             "compute palindrome radius at every position",
             "count all palindromic substrings"
@@ -1429,7 +1534,7 @@
             "dictionary-matching-automaton",
             "simultaneous-keyword-search"
           ],
-          "applies_when": [
+          "use_when": [
             "search for multiple fixed patterns simultaneously",
             "dictionary/keyword matching (spam filters, DNA search)",
             "guaranteed worst-case linear-time matching"
@@ -1437,7 +1542,10 @@
           "avoid_when": [
             "single pattern (KMP is simpler)",
             "patterns change frequently (automaton must be rebuilt)",
-            "patterns are regexes not fixed strings"
+            "patterns are regexes not fixed strings",
+            {
+              "updates": "dynamic"
+            }
           ],
           "complexity": {
             "time": "O(m*k + n + z) where m=total pattern length, k=alphabet, z=matches",
@@ -1460,7 +1568,7 @@
             "palindromic-substring-counting",
             "interval-dp-on-palindromes"
           ],
-          "applies_when": [
+          "use_when": [
             "longest palindromic subsequence (not contiguous)",
             "count palindromic subsequences",
             "palindrome partitioning"
@@ -1486,7 +1594,7 @@
             "accumulate-parts-then-join",
             "avoid-quadratic-concatenation"
           ],
-          "applies_when": [
+          "use_when": [
             "building string from many parts",
             "avoiding O(n^2) repeated immutable concatenation"
           ],
@@ -1518,14 +1626,17 @@
             "string search",
             "occurrences of pattern"
           ],
-          "applies_when": [
+          "use_when": [
             "pattern matching (concatenate pattern$text, compute Z-array)",
             "string compression / smallest repeating unit detection",
             "counting distinct substrings"
           ],
           "avoid_when": [
             "multiple pattern matching (use Aho-Corasick)",
-            "approximate matching (use rolling hash)"
+            "approximate matching (use rolling hash)",
+            {
+              "exactness": "approximate"
+            }
           ],
           "complexity": {
             "time": "O(N)",
@@ -1555,7 +1666,7 @@
             "string hashing",
             "content chunking"
           ],
-          "applies_when": [
+          "use_when": [
             "comparing many substrings for equality in O(1)",
             "counting distinct substrings",
             "file chunking / content-defined chunking"
@@ -1563,7 +1674,10 @@
           "avoid_when": [
             "guaranteed correctness required (hash collisions exist)",
             "single pattern matching (KMP/Z-function are deterministic)",
-            "adversarial inputs (use double hashing with large primes)"
+            "adversarial inputs (use double hashing with large primes)",
+            {
+              "exactness": "exact"
+            }
           ],
           "complexity": {
             "time": "O(N) preprocess, O(1) per query",
@@ -1593,11 +1707,14 @@
             "suffix",
             "common substring of two strings"
           ],
-          "applies_when": [
+          "use_when": [
             "multiple substring queries on same text",
             "counting distinct substrings",
             "longest repeated substring, longest common substring",
-            "online text indexing"
+            "online text indexing",
+            {
+              "arrival": "streaming"
+            }
           ],
           "avoid_when": [
             "single pattern match (KMP/Z-function suffices)",
@@ -1666,7 +1783,7 @@
             "need original indices",
             "complement"
           ],
-          "applies_when": [
+          "use_when": [
             "find pair of elements satisfying arithmetic constraint",
             "complement = target - current can be precomputed",
             "single pass needed with O(1) lookup"
@@ -1674,7 +1791,10 @@
           "avoid_when": [
             "input is sorted (two pointers is O(1) space)",
             "need all pairs, not just first",
-            "constraint is not decomposable into complement"
+            "constraint is not decomposable into complement",
+            {
+              "input_order": "sorted"
+            }
           ],
           "complexity": {
             "time": "O(n)",
@@ -1702,7 +1822,7 @@
             "anagram",
             "top k frequent"
           ],
-          "applies_when": [
+          "use_when": [
             "need to count occurrences of each element",
             "decisions based on frequency (top-k, mode, threshold)",
             "anagram detection via frequency comparison"
@@ -1736,7 +1856,7 @@
             "canonical form",
             "equivalence classes"
           ],
-          "applies_when": [
+          "use_when": [
             "group elements sharing a computed property",
             "canonical form can represent equivalence classes",
             "e.g., sorted character sequence groups anagrams"
@@ -1762,10 +1882,13 @@
             "store-previously-seen-indices",
             "fast-position-retrieval"
           ],
-          "applies_when": [
+          "use_when": [
             "need to look up index/position of previously seen element",
             "mapping values to their most recent index",
-            "tracking element positions for constraint checking"
+            "tracking element positions for constraint checking",
+            {
+              "query_shape": "point"
+            }
           ],
           "avoid_when": [
             "values are in small range (use array)",
@@ -1788,7 +1911,7 @@
             "key-is-input-state-value-is-result",
             "avoid-redundant-computation"
           ],
-          "applies_when": [
+          "use_when": [
             "function called with same inputs repeatedly",
             "overlapping subproblems in recursion",
             "expensive computation with cacheable results"
@@ -1822,14 +1945,20 @@
             "prefix sum",
             "count subarrays"
           ],
-          "applies_when": [
+          "use_when": [
             "find subarrays summing to target k",
             "array contains negative numbers",
-            "need count of all qualifying subarrays"
+            "need count of all qualifying subarrays",
+            {
+              "value_sign": "may_be_negative"
+            }
           ],
           "avoid_when": [
             "all values are positive (sliding window works)",
-            "need actual subarray boundaries, not just count"
+            "need actual subarray boundaries, not just count",
+            {
+              "value_sign": "non_negative"
+            }
           ],
           "complexity": {
             "time": "O(n)",
@@ -1849,7 +1978,7 @@
             "frequency-maintenance-on-expand-shrink",
             "distinct-element-constraint-in-window"
           ],
-          "applies_when": [
+          "use_when": [
             "sliding window needs to track element frequencies",
             "constraint involves distinct count or frequency match",
             "e.g., at most K distinct, minimum window containing all"
@@ -1875,10 +2004,13 @@
             "integer-frequency-via-direct-indexing",
             "small-range-frequency-counter"
           ],
-          "applies_when": [
+          "use_when": [
             "keys are non-negative integers in small range",
             "faster than hashmap for bounded integer keys",
-            "frequency counting for characters (ASCII range)"
+            "frequency counting for characters (ASCII range)",
+            {
+              "value_sign": "non_negative"
+            }
           ],
           "avoid_when": [
             "keys are large, sparse, or non-integer",
@@ -1901,13 +2033,19 @@
             "word-frequency-with-prefix-queries",
             "string-key-frequency-counting"
           ],
-          "applies_when": [
+          "use_when": [
             "counting word frequencies with prefix-based queries needed",
-            "dictionary with prefix search + frequency"
+            "dictionary with prefix search + frequency",
+            {
+              "query_shape": "prefix"
+            }
           ],
           "avoid_when": [
             "no prefix queries needed (hashmap is simpler)",
-            "small number of words"
+            "small number of words",
+            {
+              "query_shape": "point"
+            }
           ],
           "complexity": {
             "time": "O(m) per word where m = word length",
@@ -1962,15 +2100,24 @@
             "duplicate-detection",
             "seen-element-tracking"
           ],
-          "applies_when": [
+          "use_when": [
             "need fast membership testing",
             "detect duplicates in a stream",
-            "track visited states"
+            "track visited states",
+            {
+              "query_shape": "point"
+            },
+            {
+              "arrival": "streaming"
+            }
           ],
           "avoid_when": [
             "need count of occurrences (use hashmap)",
             "need ordering (use treeset)",
-            "elements are in small range (use boolean array)"
+            "elements are in small range (use boolean array)",
+            {
+              "query_shape": "range_or_order"
+            }
           ],
           "complexity": {
             "time": "O(1) per operation",
@@ -1990,14 +2137,20 @@
             "start-of-sequence-detection",
             "expand-from-sequence-boundary"
           ],
-          "applies_when": [
+          "use_when": [
             "find longest consecutive sequence in unsorted array",
             "O(n) time required (sorting is O(n log n))",
-            "check if x-1 not in set to find sequence starts"
+            "check if x-1 not in set to find sequence starts",
+            {
+              "input_order": "unsorted"
+            }
           ],
           "avoid_when": [
             "input is already sorted (just scan)",
-            "need the actual sequence elements in order"
+            "need the actual sequence elements in order",
+            {
+              "input_order": "sorted"
+            }
           ],
           "complexity": {
             "time": "O(n)",
@@ -2016,7 +2169,7 @@
             "find-common-or-exclusive-elements",
             "symmetric-difference-for-missing"
           ],
-          "applies_when": [
+          "use_when": [
             "find common elements between collections",
             "find elements in one but not another",
             "merge collections removing duplicates"
@@ -2043,15 +2196,24 @@
             "false-positives-acceptable",
             "space-efficient-existence-check"
           ],
-          "applies_when": [
+          "use_when": [
             "space is critical and false positives are acceptable",
             "pre-filter before expensive lookup",
-            "large dataset membership testing"
+            "large dataset membership testing",
+            {
+              "exactness": "approximate"
+            },
+            {
+              "query_shape": "point"
+            }
           ],
           "avoid_when": [
             "false positives are unacceptable",
             "need to delete elements (use cuckoo filter)",
-            "need exact count or retrieval"
+            "need exact count or retrieval",
+            {
+              "exactness": "exact"
+            }
           ],
           "complexity": {
             "time": "O(k) per query where k = hash functions",
@@ -2070,10 +2232,13 @@
             "probabilistic-membership-with-deletion",
             "space-efficient-filter-with-delete"
           ],
-          "applies_when": [
+          "use_when": [
             "need deletion support without extra space",
             "target FPR <= 3% (more space-efficient than Bloom)",
-            "fast lookups with good cache locality"
+            "fast lookups with good cache locality",
+            {
+              "exactness": "approximate"
+            }
           ],
           "avoid_when": [
             "need union/intersection of filters (Bloom supports bitwise ops)",
@@ -2149,7 +2314,7 @@
             "fast and slow",
             "Floyd's"
           ],
-          "applies_when": [
+          "use_when": [
             "detect cycle in linked list or sequence",
             "find middle node without knowing length",
             "find cycle entry point",
@@ -2176,7 +2341,7 @@
             "three-pointer-prev-curr-next",
             "iterative-or-recursive-flip"
           ],
-          "applies_when": [
+          "use_when": [
             "reverse entire list or sublist",
             "palindrome check on linked list",
             "reorder list (reverse second half, interleave)"
@@ -2202,13 +2367,19 @@
             "compare-heads-and-advance",
             "sentinel-node-for-result"
           ],
-          "applies_when": [
+          "use_when": [
             "merge two or more sorted linked lists",
-            "merge step of merge sort on linked list"
+            "merge step of merge sort on linked list",
+            {
+              "input_order": "sorted"
+            }
           ],
           "avoid_when": [
             "lists are unsorted",
-            "need merge of many lists (use heap)"
+            "need merge of many lists (use heap)",
+            {
+              "input_order": "unsorted"
+            }
           ],
           "complexity": {
             "time": "O(n+m)",
@@ -2227,7 +2398,7 @@
             "avoid-null-check-for-head",
             "uniform-insert-delete-logic"
           ],
-          "applies_when": [
+          "use_when": [
             "head might change during operations",
             "deletion or insertion at head needs special handling",
             "building a new list from scratch"
@@ -2252,7 +2423,7 @@
             "advance-first-pointer-n-steps",
             "both-pointers-move-together"
           ],
-          "applies_when": [
+          "use_when": [
             "find or remove nth node from end",
             "need element at known distance from tail",
             "single pass required"
@@ -2277,7 +2448,7 @@
             "reconnect-sublists-after-partition",
             "maintain-relative-order"
           ],
-          "applies_when": [
+          "use_when": [
             "partition list around a pivot value",
             "separate odd/even positioned nodes",
             "stable partition preserving order"
@@ -2301,7 +2472,7 @@
             "reverse-linked-list-via-stack",
             "collect-then-reverse"
           ],
-          "applies_when": [
+          "use_when": [
             "need to reverse linked list with simple logic",
             "O(n) space is acceptable"
           ],
@@ -2325,7 +2496,7 @@
             "find-length-then-traverse-to-position",
             "two-pass-linked-list-traversal"
           ],
-          "applies_when": [
+          "use_when": [
             "need to find nth from end or middle",
             "simpler logic than fast-slow pointers"
           ],
@@ -2350,7 +2521,7 @@
             "undo-redo-via-doubly-linked-list",
             "bidirectional-history-navigation"
           ],
-          "applies_when": [
+          "use_when": [
             "browser history, text editor undo/redo",
             "need bidirectional traversal of history",
             "O(1) undo and redo"
@@ -2415,7 +2586,7 @@
             "valid",
             "nested"
           ],
-          "applies_when": [
+          "use_when": [
             "validate matching brackets/parentheses/tags",
             "nested structure validation",
             "delimiter pairing"
@@ -2449,7 +2620,7 @@
             "stock span",
             "histogram"
           ],
-          "applies_when": [
+          "use_when": [
             "find next/previous greater/smaller element",
             "histogram-type problems (largest rectangle)",
             "temperature/stock span problems",
@@ -2484,7 +2655,7 @@
             "infix",
             "RPN"
           ],
-          "applies_when": [
+          "use_when": [
             "evaluate mathematical expressions",
             "convert infix to postfix (RPN)",
             "handle operator precedence and parentheses"
@@ -2510,7 +2681,7 @@
             "push-action-pop-to-undo",
             "path-simplification"
           ],
-          "applies_when": [
+          "use_when": [
             "undo last operation",
             "simplify path by processing components",
             "decode nested encoded strings",
@@ -2537,7 +2708,7 @@
             "auxiliary-stack-tracking-extremes",
             "push-current-min-alongside-value"
           ],
-          "applies_when": [
+          "use_when": [
             "need O(1) min/max in addition to O(1) push/pop",
             "sliding minimum/maximum over LIFO access pattern"
           ],
@@ -2561,7 +2732,7 @@
             "avoid-recursion-stack-overflow",
             "push-children-in-reverse-order"
           ],
-          "applies_when": [
+          "use_when": [
             "DFS on deep structures (avoid stack overflow)",
             "need iterative control over traversal",
             "tree/graph traversal without recursion"
@@ -2586,7 +2757,7 @@
             "single-bracket-balance-via-counter",
             "parenthesis-count-validation"
           ],
-          "applies_when": [
+          "use_when": [
             "only one type of bracket to validate",
             "count open vs close",
             "O(1) space possible"
@@ -2612,7 +2783,7 @@
             "operator-precedence-by-nesting",
             "LL-grammar-parsing"
           ],
-          "applies_when": [
+          "use_when": [
             "parsing expressions with operator precedence",
             "LL(1) or LL(k) grammars",
             "hand-written parser that's easy to extend"
@@ -2638,7 +2809,7 @@
             "depth-first-search-via-call-stack",
             "natural-recursion-for-tree-graph"
           ],
-          "applies_when": [
+          "use_when": [
             "tree/graph traversal where recursion depth is manageable",
             "backtracking problems",
             "cleaner code than explicit stack"
@@ -2663,7 +2834,7 @@
             "sliding-window-min-max-via-deque",
             "monotonic-invariant-in-double-ended-queue"
           ],
-          "applies_when": [
+          "use_when": [
             "sliding window maximum/minimum",
             "maintaining monotonic order for O(1) access to extremum in window"
           ],
@@ -2724,16 +2895,22 @@
             "shortest-path-in-unweighted-graph",
             "level-order-processing"
           ],
-          "applies_when": [
+          "use_when": [
             "find shortest path in unweighted graph/grid",
             "process nodes level by level",
             "find nearest target",
-            "explore all nodes at distance k before k+1"
+            "explore all nodes at distance k before k+1",
+            {
+              "graph_weighting": "unweighted"
+            }
           ],
           "avoid_when": [
             "graph is weighted (use Dijkstra)",
             "need all paths, not just shortest",
-            "memory constrained and graph is wide (DFS uses less)"
+            "memory constrained and graph is wide (DFS uses less)",
+            {
+              "graph_weighting": "weighted"
+            }
           ],
           "complexity": {
             "time": "O(V+E)",
@@ -2753,14 +2930,17 @@
             "initialize-queue-with-all-sources",
             "distance-propagation-from-nearest-source"
           ],
-          "applies_when": [
+          "use_when": [
             "compute distance from nearest source for all cells",
             "multiple starting points expand simultaneously",
             "rotten oranges / nearest gate type problems"
           ],
           "avoid_when": [
             "single source (regular BFS)",
-            "weighted distances"
+            "weighted distances",
+            {
+              "graph_weighting": "weighted"
+            }
           ],
           "complexity": {
             "time": "O(V+E)",
@@ -2791,7 +2971,7 @@
             "cooldown",
             "interleave"
           ],
-          "applies_when": [
+          "use_when": [
             "schedule tasks with cooldown between same-type tasks",
             "minimize total time or idle slots",
             "rearrange elements with distance constraint"
@@ -2825,7 +3005,7 @@
             "deque",
             "monotonic"
           ],
-          "applies_when": [
+          "use_when": [
             "find maximum/minimum in every window of size k",
             "need O(n) total time for all windows",
             "maintain ordered candidates as window slides"
@@ -2852,14 +3032,23 @@
             "push-front-for-zero-weight",
             "push-back-for-one-weight"
           ],
-          "applies_when": [
+          "use_when": [
             "shortest path with only 0 and 1 weights",
             "binary cost grid/graph",
-            "deque replaces priority queue"
+            "deque replaces priority queue",
+            {
+              "graph_weighting": "zero_one"
+            }
           ],
           "avoid_when": [
             "weights are uniform (use regular BFS)",
-            "weights are arbitrary (use Dijkstra)"
+            "weights are arbitrary (use Dijkstra)",
+            {
+              "graph_weighting": "unweighted"
+            },
+            {
+              "graph_weighting": "weighted"
+            }
           ],
           "complexity": {
             "time": "O(V+E)",
@@ -2881,7 +3070,7 @@
             "sliding-window-extremum-via-heap",
             "lazy-deletion-heap-for-window"
           ],
-          "applies_when": [
+          "use_when": [
             "sliding window max/min when deque is hard to implement",
             "need k-th largest in window"
           ],
@@ -2906,7 +3095,7 @@
             "scheduling-by-computed-priority",
             "formula-based-ordering"
           ],
-          "applies_when": [
+          "use_when": [
             "task scheduling with deadlines and penalties",
             "priority computed by formula (e.g., processing time / weight)"
           ],
@@ -2969,10 +3158,13 @@
             "k smallest",
             "k most frequent"
           ],
-          "applies_when": [
+          "use_when": [
             "find k largest or smallest elements",
             "streaming data, k is much smaller than n",
-            "need sorted top-k output"
+            "need sorted top-k output",
+            {
+              "arrival": "streaming"
+            }
           ],
           "avoid_when": [
             "k is close to n (just sort)",
@@ -2996,14 +3188,23 @@
             "always-extract-smallest-across-heads",
             "push-next-element-from-extracted-sequence"
           ],
-          "applies_when": [
+          "use_when": [
             "merge k sorted lists/arrays into one",
             "external sort merge phase",
-            "k sorted streams"
+            "k sorted streams",
+            {
+              "input_order": "sorted"
+            },
+            {
+              "arrival": "streaming"
+            }
           ],
           "avoid_when": [
             "k = 2 (direct two-pointer merge is simpler)",
-            "sequences are unsorted"
+            "sequences are unsorted",
+            {
+              "input_order": "unsorted"
+            }
           ],
           "complexity": {
             "time": "O(n log k)",
@@ -3029,14 +3230,20 @@
             "running median",
             "balance two halves"
           ],
-          "applies_when": [
+          "use_when": [
             "find median from data stream",
             "maintain running median",
-            "balance two halves of sorted data"
+            "balance two halves of sorted data",
+            {
+              "arrival": "streaming"
+            }
           ],
           "avoid_when": [
             "static data (just sort once)",
-            "need other percentiles (use more complex structure)"
+            "need other percentiles (use more complex structure)",
+            {
+              "arrival": "batch"
+            }
           ],
           "complexity": {
             "time": "O(log n) per insert, O(1) median",
@@ -3062,15 +3269,27 @@
             "minimum cost",
             "non-negative weights"
           ],
-          "applies_when": [
+          "use_when": [
             "shortest path in weighted graph with non-negative edges",
             "single source shortest path",
-            "need minimum cost path"
+            "need minimum cost path",
+            {
+              "graph_weighting": "weighted"
+            },
+            {
+              "value_sign": "non_negative"
+            }
           ],
           "avoid_when": [
             "graph has negative edge weights (use Bellman-Ford)",
             "graph is unweighted (use BFS)",
-            "all-pairs needed (use Floyd-Warshall)"
+            "all-pairs needed (use Floyd-Warshall)",
+            {
+              "value_sign": "may_be_negative"
+            },
+            {
+              "graph_weighting": "unweighted"
+            }
           ],
           "complexity": {
             "time": "O((V+E) log V)",
@@ -3092,9 +3311,12 @@
             "merge-k-sorted-lists-via-divide-and-conquer",
             "pairwise-merge-reduction"
           ],
-          "applies_when": [
+          "use_when": [
             "merge k sorted lists when heap implementation is complex",
-            "naturally parallel merge process"
+            "naturally parallel merge process",
+            {
+              "input_order": "sorted"
+            }
           ],
           "avoid_when": [
             "k-way heap merge is simpler and has same complexity",
@@ -3148,10 +3370,13 @@
             "sorted-order-from-BST",
             "visit-after-left-subtree"
           ],
-          "applies_when": [
+          "use_when": [
             "get BST elements in sorted order",
             "find kth smallest in BST",
-            "validate BST property"
+            "validate BST property",
+            {
+              "query_shape": "range_or_order"
+            }
           ],
           "avoid_when": [
             "need level-by-level processing (use BFS)"
@@ -3177,7 +3402,7 @@
             "process-node-before-children",
             "serialization-order"
           ],
-          "applies_when": [
+          "use_when": [
             "serialize tree",
             "copy/clone tree structure",
             "process parent before children"
@@ -3204,7 +3429,7 @@
             "process-children-before-parent",
             "bottom-up-computation"
           ],
-          "applies_when": [
+          "use_when": [
             "compute value from children (height, size, sum)",
             "delete tree (free children first)",
             "evaluate expression tree"
@@ -3231,7 +3456,7 @@
             "queue-based-breadth-first",
             "track-level-boundaries"
           ],
-          "applies_when": [
+          "use_when": [
             "process nodes by level (zigzag, right view, averages)",
             "find minimum depth (first leaf found = answer)",
             "serialize level by level"
@@ -3259,14 +3484,26 @@
             "left-if-smaller-right-if-larger",
             "maintained-ordering-invariant"
           ],
-          "applies_when": [
+          "use_when": [
             "ordered dynamic set operations",
             "predecessor/successor queries",
-            "range queries on sorted data"
+            "range queries on sorted data",
+            {
+              "updates": "dynamic"
+            },
+            {
+              "query_shape": "range_or_order"
+            }
           ],
           "avoid_when": [
             "data is static (sorted array + binary search is simpler)",
-            "need O(1) lookup (use hashmap)"
+            "need O(1) lookup (use hashmap)",
+            {
+              "updates": "static"
+            },
+            {
+              "query_shape": "point"
+            }
           ],
           "complexity": {
             "time": "O(h) per operation",
@@ -3275,7 +3512,7 @@
           "constraints": "balanced BST gives O(log n); skewed gives O(n)",
           "alternatives": [
             "sorted-array-binary-search",
-            "hashmap"
+            "index-mapping"
           ]
         },
         {
@@ -3293,7 +3530,7 @@
             "shared ancestor",
             "path divergence"
           ],
-          "applies_when": [
+          "use_when": [
             "find lowest common ancestor of two nodes",
             "in BST: compare values to find split point",
             "in binary tree: recursive search returning found nodes"
@@ -3319,7 +3556,7 @@
             "root-identification-from-preorder",
             "partition-inorder-around-root"
           ],
-          "applies_when": [
+          "use_when": [
             "reconstruct tree from inorder + preorder/postorder",
             "deserialize tree from specific format"
           ],
@@ -3343,7 +3580,7 @@
             "carry-running-sum-as-parameter",
             "check-condition-at-leaf"
           ],
-          "applies_when": [
+          "use_when": [
             "check if root-to-leaf path sums to target",
             "find all root-to-leaf paths with target sum",
             "maximum path sum (through any path)"
@@ -3376,7 +3613,7 @@
             "balanced check",
             "subtree sum"
           ],
-          "applies_when": [
+          "use_when": [
             "compute height or depth of tree",
             "check if tree is balanced",
             "compute diameter (max left_height + right_height)"
@@ -3401,7 +3638,7 @@
             "use-null-markers-for-missing-children",
             "preorder-with-null-sentinel"
           ],
-          "applies_when": [
+          "use_when": [
             "serialize tree for storage or transmission",
             "deep copy via serialize/deserialize",
             "compare tree structures via string comparison"
@@ -3433,14 +3670,20 @@
             "word dictionary",
             "starts with"
           ],
-          "applies_when": [
+          "use_when": [
             "prefix-based search or autocomplete",
             "word dictionary with prefix queries",
-            "counting words with common prefix"
+            "counting words with common prefix",
+            {
+              "query_shape": "prefix"
+            }
           ],
           "avoid_when": [
             "exact match only (hashset is simpler)",
-            "very long strings with no shared prefixes"
+            "very long strings with no shared prefixes",
+            {
+              "query_shape": "point"
+            }
           ],
           "complexity": {
             "time": "O(m) per operation, m = word length",
@@ -3467,14 +3710,26 @@
             "dynamic",
             "many queries and updates"
           ],
-          "applies_when": [
+          "use_when": [
             "range sum/min/max queries with updates",
             "dynamic array with frequent queries and updates",
-            "interval-based aggregation"
+            "interval-based aggregation",
+            {
+              "updates": "dynamic"
+            },
+            {
+              "query_shape": "range_or_order"
+            }
           ],
           "avoid_when": [
             "static array (prefix sum is simpler)",
-            "only point queries (direct array access)"
+            "only point queries (direct array access)",
+            {
+              "updates": "static"
+            },
+            {
+              "query_shape": "point"
+            }
           ],
           "complexity": {
             "time": "O(log n) query/update",
@@ -3496,15 +3751,24 @@
             "binary-indexed-tree",
             "lowbit-parent-traversal"
           ],
-          "applies_when": [
+          "use_when": [
             "prefix sum queries with point updates",
             "simpler implementation than segment tree",
-            "cumulative frequency tables"
+            "cumulative frequency tables",
+            {
+              "updates": "dynamic"
+            },
+            {
+              "query_shape": "range_or_order"
+            }
           ],
           "avoid_when": [
             "need range updates (use lazy segment tree)",
             "need min/max queries (segment tree)",
-            "static data (prefix sum array)"
+            "static data (prefix sum array)",
+            {
+              "updates": "static"
+            }
           ],
           "complexity": {
             "time": "O(log n) query/update",
@@ -3526,15 +3790,27 @@
             "kth-ancestor-query",
             "log-n-jumps-in-tree"
           ],
-          "applies_when": [
+          "use_when": [
             "online LCA queries on static tree",
             "k-th ancestor queries",
-            "path aggregate queries (max edge, sum on path)"
+            "path aggregate queries (max edge, sum on path)",
+            {
+              "arrival": "streaming"
+            },
+            {
+              "updates": "static"
+            }
           ],
           "avoid_when": [
             "need O(1) per query (use Euler tour + sparse table)",
             "offline batch queries (Tarjan's is O(n + Q))",
-            "dynamic trees (use link-cut trees)"
+            "dynamic trees (use link-cut trees)",
+            {
+              "arrival": "batch"
+            },
+            {
+              "updates": "dynamic"
+            }
           ],
           "complexity": {
             "time": "O(n log n) preprocess, O(log n) per query",
@@ -3553,15 +3829,21 @@
             "lca-reduced-to-range-minimum-query",
             "euler-tour-depth-array"
           ],
-          "applies_when": [
+          "use_when": [
             "many LCA queries where O(1) per query matters",
             "problem naturally reduces to RMQ",
-            "static tree with no structural changes"
+            "static tree with no structural changes",
+            {
+              "updates": "static"
+            }
           ],
           "avoid_when": [
             "dynamic trees",
             "also need k-th ancestor (binary lifting is more natural)",
-            "path aggregate queries (use HLD)"
+            "path aggregate queries (use HLD)",
+            {
+              "updates": "dynamic"
+            }
           ],
           "complexity": {
             "time": "O(n log n) preprocess (sparse table), O(1) per query",
@@ -3580,15 +3862,24 @@
             "dynamic-interval-overlap-queries",
             "find-all-intervals-overlapping-point-or-range"
           ],
-          "applies_when": [
+          "use_when": [
             "find all intervals overlapping a query interval/point",
             "intervals inserted/deleted dynamically",
-            "scheduling conflict detection"
+            "scheduling conflict detection",
+            {
+              "updates": "dynamic"
+            },
+            {
+              "query_shape": "range_or_order"
+            }
           ],
           "avoid_when": [
             "static intervals (sweep line is simpler)",
             "only need range-sum/range-min on points (segment tree)",
-            "non-overlapping sorted intervals (binary search)"
+            "non-overlapping sorted intervals (binary search)",
+            {
+              "updates": "static"
+            }
           ],
           "complexity": {
             "time": "O(log n) insert/delete/query-one, O(k log n) query-all",
@@ -3607,13 +3898,16 @@
             "path-sum-via-euler-tour-prefix-sum",
             "subtree-aggregate-via-in-out-times"
           ],
-          "applies_when": [
+          "use_when": [
             "subtree sum/count queries after Euler tour flattening",
             "path sum using LCA: sum(root,u) + sum(root,v) - 2*sum(root,lca)"
           ],
           "avoid_when": [
             "need point updates (use BIT/segment tree on Euler tour)",
-            "tree changes structure dynamically"
+            "tree changes structure dynamically",
+            {
+              "updates": "dynamic"
+            }
           ],
           "complexity": {
             "time": "O(n) preprocess, O(1) per query",
@@ -3633,15 +3927,21 @@
             "floor-ceiling-queries",
             "ordered-iteration-over-keys"
           ],
-          "applies_when": [
+          "use_when": [
             "need keys in sorted order",
             "floor/ceiling/lower_bound/upper_bound queries",
             "min/max key access",
-            "range-based operations"
+            "range-based operations",
+            {
+              "query_shape": "range_or_order"
+            }
           ],
           "avoid_when": [
             "only need lookup/insert/delete without ordering (hashmap is O(1))",
-            "keys not comparable"
+            "keys not comparable",
+            {
+              "query_shape": "point"
+            }
           ],
           "complexity": {
             "time": "O(log n) per operation",
@@ -3660,7 +3960,7 @@
             "inorder-traversal-without-stack-or-recursion",
             "threaded-binary-tree-traversal"
           ],
-          "applies_when": [
+          "use_when": [
             "O(1) space tree traversal required",
             "memory extremely constrained",
             "in-order traversal without recursion"
@@ -3697,15 +3997,24 @@
             "no updates",
             "immutable"
           ],
-          "applies_when": [
+          "use_when": [
             "immutable array with many range min/max/gcd queries",
             "need O(1) per query (faster than segment tree's O(log n))",
-            "LCA reduction to RMQ"
+            "LCA reduction to RMQ",
+            {
+              "updates": "static"
+            },
+            {
+              "query_shape": "range_or_order"
+            }
           ],
           "avoid_when": [
             "array values change between queries (use segment tree)",
             "range sum queries (use prefix sums)",
-            "memory constrained (O(N log N) space)"
+            "memory constrained (O(N log N) space)",
+            {
+              "updates": "dynamic"
+            }
           ],
           "complexity": {
             "time": "O(N log N) build, O(1) query for idempotent ops",
@@ -3736,7 +4045,7 @@
             "range reverse",
             "rope"
           ],
-          "applies_when": [
+          "use_when": [
             "need split/merge as BST primitives",
             "implicit treap for sequence operations (insert/delete at position, range reverse, range queries)",
             "competitive programming where simplicity matters"
@@ -3804,14 +4113,20 @@
             "unweighted",
             "grid"
           ],
-          "applies_when": [
+          "use_when": [
             "shortest path in unweighted graph",
             "minimum moves/steps to reach target",
-            "all edges have equal weight"
+            "all edges have equal weight",
+            {
+              "graph_weighting": "unweighted"
+            }
           ],
           "avoid_when": [
             "edges have different weights",
-            "need all shortest paths (modify BFS to continue)"
+            "need all shortest paths (modify BFS to continue)",
+            {
+              "graph_weighting": "weighted"
+            }
           ],
           "complexity": {
             "time": "O(V+E)",
@@ -3833,7 +4148,7 @@
             "backtrack-when-stuck",
             "connected-component-discovery"
           ],
-          "applies_when": [
+          "use_when": [
             "enumerate connected components",
             "detect cycles",
             "path existence check",
@@ -3868,14 +4183,20 @@
             "course schedule",
             "DAG"
           ],
-          "applies_when": [
+          "use_when": [
             "order tasks with dependencies",
             "course schedule / build order",
-            "DAG processing order"
+            "DAG processing order",
+            {
+              "graph_direction": "directed"
+            }
           ],
           "avoid_when": [
             "graph has cycles (no valid topological order)",
-            "graph is undirected"
+            "graph is undirected",
+            {
+              "graph_direction": "undirected"
+            }
           ],
           "complexity": {
             "time": "O(V+E)",
@@ -3902,15 +4223,24 @@
             "add edges",
             "are connected"
           ],
-          "applies_when": [
+          "use_when": [
             "dynamic connectivity: are two nodes connected?",
             "count connected components as edges are added",
             "cycle detection in undirected graph",
-            "Kruskal's MST"
+            "Kruskal's MST",
+            {
+              "updates": "dynamic"
+            },
+            {
+              "graph_direction": "undirected"
+            }
           ],
           "avoid_when": [
             "need to split/disconnect components",
-            "static graph (BFS/DFS is simpler)"
+            "static graph (BFS/DFS is simpler)",
+            {
+              "updates": "static"
+            }
           ],
           "complexity": {
             "time": "O(alpha(n)) per operation",
@@ -3939,7 +4269,7 @@
             "grid",
             "4-directional"
           ],
-          "applies_when": [
+          "use_when": [
             "fill connected region in grid",
             "count islands / connected regions",
             "paint bucket tool behavior"
@@ -3970,14 +4300,20 @@
             "negative edges",
             "detect negative cycle"
           ],
-          "applies_when": [
+          "use_when": [
             "shortest path with negative edge weights",
             "detect negative cycles",
-            "at most k edges constraint"
+            "at most k edges constraint",
+            {
+              "value_sign": "may_be_negative"
+            }
           ],
           "avoid_when": [
             "all weights non-negative (Dijkstra is faster)",
-            "dense graph (Floyd-Warshall may be simpler)"
+            "dense graph (Floyd-Warshall may be simpler)",
+            {
+              "value_sign": "non_negative"
+            }
           ],
           "complexity": {
             "time": "O(V*E)",
@@ -3998,15 +4334,21 @@
             "bellman-ford-with-queue-optimization",
             "shortest-path-negative-weights-fast-in-practice"
           ],
-          "applies_when": [
+          "use_when": [
             "shortest path with negative edges (practical speedup over Bellman-Ford)",
             "sparse graphs where most relaxations are unnecessary",
-            "competitive programming where SPFA is fast enough in practice"
+            "competitive programming where SPFA is fast enough in practice",
+            {
+              "value_sign": "may_be_negative"
+            }
           ],
           "avoid_when": [
             "worst case O(V*E) same as Bellman-Ford — can be adversarially slow",
             "non-negative weights (Dijkstra is better)",
-            "need guaranteed worst-case performance"
+            "need guaranteed worst-case performance",
+            {
+              "value_sign": "non_negative"
+            }
           ],
           "complexity": {
             "time": "O(V*E) worst, O(E) average in practice",
@@ -4028,7 +4370,7 @@
             "dynamic-programming-on-intermediate-vertices",
             "dense-graph-distance-matrix"
           ],
-          "applies_when": [
+          "use_when": [
             "all-pairs shortest paths",
             "small graph (V up to ~500)",
             "detect negative cycles (diagonal < 0)"
@@ -4055,14 +4397,20 @@
             "DFS-with-low-link-values",
             "stack-based-component-collection"
           ],
-          "applies_when": [
+          "use_when": [
             "find strongly connected components in directed graph",
             "2-SAT problem",
-            "condensation graph construction"
+            "condensation graph construction",
+            {
+              "graph_direction": "directed"
+            }
           ],
           "avoid_when": [
             "undirected graph (use regular DFS for components)",
-            "only need connectivity, not strong connectivity"
+            "only need connectivity, not strong connectivity",
+            {
+              "graph_direction": "undirected"
+            }
           ],
           "complexity": {
             "time": "O(V+E)",
@@ -4087,7 +4435,7 @@
             "connect all nodes",
             "minimum cost edges"
           ],
-          "applies_when": [
+          "use_when": [
             "find minimum spanning tree",
             "sparse graph (E << V^2)",
             "edges are naturally given as list"
@@ -4113,7 +4461,7 @@
             "always-add-cheapest-edge-to-tree",
             "priority-queue-for-edge-selection"
           ],
-          "applies_when": [
+          "use_when": [
             "minimum spanning tree on dense graph",
             "graph given as adjacency matrix/list",
             "need to grow tree incrementally"
@@ -4139,14 +4487,17 @@
             "no-odd-length-cycles",
             "two-group-assignment"
           ],
-          "applies_when": [
+          "use_when": [
             "check if graph is bipartite",
             "two-group assignment problem",
             "detect odd-length cycles"
           ],
           "avoid_when": [
             "directed graph (bipartite is for undirected)",
-            "need more than 2 colors"
+            "need more than 2 colors",
+            {
+              "graph_direction": "directed"
+            }
           ],
           "complexity": {
             "time": "O(V+E)",
@@ -4174,16 +4525,22 @@
             "one winner per slot",
             "one slot per bidder"
           ],
-          "applies_when": [
+          "use_when": [
             "assign N items from group A to N items in group B with costs",
             "each item assigned to exactly one other (1-to-1)",
             "maximize total value or minimize total cost of assignments",
-            "greedy highest-value-first fails because it blocks better global assignments"
+            "greedy highest-value-first fails because it blocks better global assignments",
+            {
+              "graph_weighting": "weighted"
+            }
           ],
           "avoid_when": [
             "unweighted matching (use Hopcroft-Karp instead)",
             "not a bipartite structure",
-            "N > 1000 (O(N^3) becomes slow)"
+            "N > 1000 (O(N^3) becomes slow)",
+            {
+              "graph_weighting": "unweighted"
+            }
           ],
           "complexity": {
             "time": "O(N^3)",
@@ -4204,16 +4561,22 @@
             "one-to-one-assignment-feasibility",
             "augmenting-path-in-two-sided-graph"
           ],
-          "applies_when": [
+          "use_when": [
             "find maximum cardinality matching in bipartite graph",
             "check if perfect matching exists (feasibility)",
             "binary search on answer + matching feasibility check",
-            "unweighted 1-to-1 assignment"
+            "unweighted 1-to-1 assignment",
+            {
+              "graph_weighting": "unweighted"
+            }
           ],
           "avoid_when": [
             "matching has weights/costs (use Hungarian algorithm)",
             "graph is not bipartite",
-            "simple greedy matching suffices (e.g., all items compatible)"
+            "simple greedy matching suffices (e.g., all items compatible)",
+            {
+              "graph_weighting": "weighted"
+            }
           ],
           "complexity": {
             "time": "O(E * sqrt(V))",
@@ -4234,7 +4597,7 @@
             "assignment-with-capacities-and-costs",
             "generalized-matching-with-weights"
           ],
-          "applies_when": [
+          "use_when": [
             "assignment problem where items have capacities > 1",
             "flow network with both capacities and per-unit costs",
             "generalized bipartite matching with weights and capacities"
@@ -4271,11 +4634,14 @@
             "total latency",
             "longest path"
           ],
-          "applies_when": [
+          "use_when": [
             "DAG where independent branches execute in parallel",
             "parent waits for ALL children to complete (slowest child is bottleneck)",
             "find total completion time = longest path, not shortest",
-            "project scheduling / critical path method (CPM)"
+            "project scheduling / critical path method (CPM)",
+            {
+              "graph_direction": "directed"
+            }
           ],
           "avoid_when": [
             "graph has cycles (not a DAG)",
@@ -4299,15 +4665,21 @@
             "strongly-connected-components-two-pass",
             "scc-via-transpose-graph"
           ],
-          "applies_when": [
+          "use_when": [
             "find all SCCs in directed graph",
             "build condensation DAG for further processing (2-SAT)",
-            "conceptual simplicity matters"
+            "conceptual simplicity matters",
+            {
+              "graph_direction": "directed"
+            }
           ],
           "avoid_when": [
             "undirected graph (use connected components)",
             "cannot store transpose graph (memory constrained)",
-            "Tarjan's single-pass is preferred for efficiency"
+            "Tarjan's single-pass is preferred for efficiency",
+            {
+              "graph_direction": "undirected"
+            }
           ],
           "complexity": {
             "time": "O(V+E)",
@@ -4325,7 +4697,7 @@
             "depth-first-exploration",
             "explore-as-deep-as-possible-first"
           ],
-          "applies_when": [
+          "use_when": [
             "cycle detection, topological sort, connected components",
             "pathfinding where any path suffices (not shortest)",
             "backtracking and exhaustive search"
@@ -4361,7 +4733,7 @@
             "network",
             "bandwidth"
           ],
-          "applies_when": [
+          "use_when": [
             "find maximum flow from source to sink",
             "minimum cut problems (max-flow = min-cut)",
             "bipartite matching at scale (O(E*sqrt(V)) on unit networks)"
@@ -4397,7 +4769,7 @@
             "disconnect",
             "critical node"
           ],
-          "applies_when": [
+          "use_when": [
             "find critical nodes whose removal disconnects the graph",
             "network reliability analysis",
             "infrastructure single-point-of-failure detection"
@@ -4405,7 +4777,10 @@
           "avoid_when": [
             "directed graphs (use SCC algorithms)",
             "need edge criticality not vertex (use bridge finding)",
-            "graph is already known to be 2-connected"
+            "graph is already known to be 2-connected",
+            {
+              "graph_direction": "directed"
+            }
           ],
           "complexity": {
             "time": "O(V+E)",
@@ -4433,7 +4808,7 @@
             "critical link",
             "disconnect edge"
           ],
-          "applies_when": [
+          "use_when": [
             "find critical edges whose removal disconnects the graph",
             "network link vulnerability analysis",
             "2-edge-connected component decomposition"
@@ -4441,7 +4816,13 @@
           "avoid_when": [
             "directed graphs",
             "need vertex criticality (use articulation points)",
-            "dynamic graph with edge insertions"
+            "dynamic graph with edge insertions",
+            {
+              "graph_direction": "directed"
+            },
+            {
+              "updates": "dynamic"
+            }
           ],
           "complexity": {
             "time": "O(V+E)",
@@ -4469,7 +4850,7 @@
             "route covering all roads",
             "edge traversal"
           ],
-          "applies_when": [
+          "use_when": [
             "visit every edge exactly once (Eulerian path/circuit)",
             "route optimization (mail delivery, snow plowing)",
             "de Bruijn sequence construction"
@@ -4505,7 +4886,7 @@
             "pairwise constraints",
             "mutual exclusion"
           ],
-          "applies_when": [
+          "use_when": [
             "boolean formula with exactly 2 literals per clause",
             "binary choices with pairwise constraints",
             "scheduling with mutual exclusions or forced implications"
@@ -4542,7 +4923,7 @@
             "permutation cycle",
             "rho-shaped"
           ],
-          "applies_when": [
+          "use_when": [
             "each state has unique successor (f: V -> V)",
             "find where you end up after K steps (binary lifting)",
             "detect cycles in iterated functions",
@@ -4551,7 +4932,10 @@
           "avoid_when": [
             "nodes have multiple outgoing edges (general graph)",
             "need shortest paths",
-            "successor function changes over time"
+            "successor function changes over time",
+            {
+              "updates": "dynamic"
+            }
           ],
           "complexity": {
             "time": "O(N log N) build, O(log N) per query",
@@ -4579,7 +4963,7 @@
             "sweep line geometry",
             "active set"
           ],
-          "applies_when": [
+          "use_when": [
             "line segment intersection detection (Bentley-Ottmann)",
             "area of union of rectangles",
             "closest pair via sweep with active set",
@@ -4588,7 +4972,10 @@
           "avoid_when": [
             "higher dimensions (sweep generalizes poorly)",
             "global geometric structure needed (use Voronoi)",
-            "dynamic point insertions (use KD-tree)"
+            "dynamic point insertions (use KD-tree)",
+            {
+              "updates": "dynamic"
+            }
           ],
           "complexity": {
             "time": "O(N log N) typical, O((N+K) log N) for K intersections",
@@ -4635,14 +5022,23 @@
             "component-counting-as-edges-arrive",
             "merge-groups-incrementally"
           ],
-          "applies_when": [
+          "use_when": [
             "edges arrive one at a time",
             "need to answer 'are x and y connected?' dynamically",
-            "count components after each edge"
+            "count components after each edge",
+            {
+              "arrival": "streaming"
+            },
+            {
+              "updates": "dynamic"
+            }
           ],
           "avoid_when": [
             "edges can be removed (need link-cut tree)",
-            "graph is static (BFS/DFS is simpler)"
+            "graph is static (BFS/DFS is simpler)",
+            {
+              "updates": "static"
+            }
           ],
           "complexity": {
             "time": "O(alpha(n)) per operation",
@@ -4661,14 +5057,20 @@
             "undirected-graph-cycle-check",
             "process-edges-one-by-one"
           ],
-          "applies_when": [
+          "use_when": [
             "detect cycle in undirected graph",
             "redundant connection finding",
-            "minimum spanning tree validation"
+            "minimum spanning tree validation",
+            {
+              "graph_direction": "undirected"
+            }
           ],
           "avoid_when": [
             "directed graph (use DFS three-color)",
-            "need to find the actual cycle path"
+            "need to find the actual cycle path",
+            {
+              "graph_direction": "directed"
+            }
           ],
           "complexity": {
             "time": "O(E * alpha(V))",
@@ -4715,15 +5117,21 @@
             "reduce-expensive-lookups",
             "probabilistic-first-pass"
           ],
-          "applies_when": [
+          "use_when": [
             "need to quickly reject non-members before expensive check",
             "memory is constrained and false positives are acceptable",
-            "large set with infrequent positive lookups"
+            "large set with infrequent positive lookups",
+            {
+              "exactness": "approximate"
+            }
           ],
           "avoid_when": [
             "false positives are unacceptable",
             "need deletion support (use counting bloom filter)",
-            "set is small enough for exact membership"
+            "set is small enough for exact membership",
+            {
+              "exactness": "exact"
+            }
           ],
           "complexity": {
             "time": "O(k) per operation",
@@ -4774,10 +5182,13 @@
             "probabilistic-balance-without-rotation",
             "range-scan-at-bottom-level"
           ],
-          "applies_when": [
+          "use_when": [
             "need ordered set/map with concurrent access",
             "simpler implementation than balanced BST",
-            "range queries needed"
+            "range queries needed",
+            {
+              "query_shape": "range_or_order"
+            }
           ],
           "avoid_when": [
             "deterministic worst-case needed (use balanced BST)",
@@ -4833,7 +5244,7 @@
             "large-node-size-matching-page",
             "database-index-structure"
           ],
-          "applies_when": [
+          "use_when": [
             "data too large for memory (disk-based)",
             "database indexing",
             "file system metadata"
@@ -4860,10 +5271,13 @@
             "append-then-compact",
             "level-based-compaction"
           ],
-          "applies_when": [
+          "use_when": [
             "write-heavy workloads (logging, time-series, event sourcing)",
             "sequential I/O throughput matters",
-            "used in LevelDB, RocksDB, Cassandra, HBase"
+            "used in LevelDB, RocksDB, Cassandra, HBase",
+            {
+              "updates": "dynamic"
+            }
           ],
           "avoid_when": [
             "read-heavy workloads (B-tree is faster)",
@@ -4919,10 +5333,13 @@
             "oldest-data-overwritten",
             "producer-consumer-ring"
           ],
-          "applies_when": [
+          "use_when": [
             "fixed-size buffer for streaming data",
             "moving average or recent history window",
-            "producer-consumer with bounded buffer"
+            "producer-consumer with bounded buffer",
+            {
+              "arrival": "streaming"
+            }
           ],
           "avoid_when": [
             "need unbounded growth (use dynamic array/deque)",
@@ -4934,7 +5351,7 @@
           },
           "constraints": "k = buffer capacity; head and tail pointers wrap around",
           "alternatives": [
-            "queue",
+            "sliding-window-fixed",
             "monotonic-deque"
           ]
         }
@@ -4973,14 +5390,17 @@
             "repeated-substring-via-LCP",
             "multiple-pattern-queries-on-same-text"
           ],
-          "applies_when": [
+          "use_when": [
             "many substring queries on same text",
             "find longest repeated substring",
             "find number of distinct substrings"
           ],
           "avoid_when": [
             "single pattern search (KMP is simpler)",
-            "text changes frequently (rebuild is expensive)"
+            "text changes frequently (rebuild is expensive)",
+            {
+              "updates": "dynamic"
+            }
           ],
           "complexity": {
             "time": "O(n log n) build, O(m log n) query",
@@ -4999,15 +5419,24 @@
             "sorted-suffixes-for-substring-operations",
             "suffix-based-string-indexing"
           ],
-          "applies_when": [
+          "use_when": [
             "multiple substring searches on fixed text",
             "LCP queries",
-            "text is fixed and patterns vary"
+            "text is fixed and patterns vary",
+            {
+              "updates": "static"
+            }
           ],
           "avoid_when": [
             "text changes frequently",
             "single pattern search (use KMP)",
-            "need prefix search (use trie)"
+            "need prefix search (use trie)",
+            {
+              "updates": "dynamic"
+            },
+            {
+              "query_shape": "prefix"
+            }
           ],
           "complexity": {
             "time": "O(n log n) build, O(m log n) per query",
@@ -5046,7 +5475,7 @@
             "compute-on-demand-and-store",
             "natural-recursive-decomposition"
           ],
-          "applies_when": [
+          "use_when": [
             "recursive solution has overlapping subproblems",
             "not all subproblems need to be solved",
             "natural recursive formulation exists"
@@ -5081,7 +5510,7 @@
             "optimal",
             "overlapping"
           ],
-          "applies_when": [
+          "use_when": [
             "all subproblems need to be solved",
             "want to avoid recursion overhead",
             "space optimization by keeping only last row/column"
@@ -5108,7 +5537,7 @@
             "exponential-state-space-over-small-set",
             "transition-by-adding-one-element"
           ],
-          "applies_when": [
+          "use_when": [
             "set size <= 20 (2^20 = ~1M states)",
             "TSP or assignment problems",
             "subset enumeration with memoization"
@@ -5142,7 +5571,7 @@
             "partition equal",
             "capacity"
           ],
-          "applies_when": [
+          "use_when": [
             "select items with weight/cost constraint",
             "each item used at most once",
             "maximize total value under capacity"
@@ -5177,7 +5606,7 @@
             "common subsequence",
             "transform string"
           ],
-          "applies_when": [
+          "use_when": [
             "find longest common subsequence of two sequences",
             "diff computation",
             "minimum edit to make sequences equal"
@@ -5203,10 +5632,13 @@
             "insert-delete-replace-transitions",
             "2D-table-with-three-predecessors"
           ],
-          "applies_when": [
+          "use_when": [
             "minimum edits to transform one string to another",
             "spell check / fuzzy matching",
-            "sequence alignment"
+            "sequence alignment",
+            {
+              "exactness": "approximate"
+            }
           ],
           "avoid_when": [
             "only need to check if edit distance <= k (optimized approaches exist)",
@@ -5229,7 +5661,7 @@
             "try-all-split-points-in-range",
             "merge-cost-or-partition-cost"
           ],
-          "applies_when": [
+          "use_when": [
             "optimal strategy for merging/splitting contiguous ranges",
             "matrix chain multiplication",
             "burst balloons, stone merging"
@@ -5255,7 +5687,7 @@
             "digit-by-digit-construction",
             "tight-bound-flag"
           ],
-          "applies_when": [
+          "use_when": [
             "count numbers in [L, R] satisfying digit properties",
             "digit sum constraints",
             "numbers without certain digit patterns"
@@ -5281,7 +5713,7 @@
             "root-subtree-recurrence",
             "combine-children-results-at-parent"
           ],
-          "applies_when": [
+          "use_when": [
             "optimize over tree structure",
             "independent subproblems at children",
             "max path sum, tree diameter, house robber III"
@@ -5321,7 +5753,7 @@
             "holding vs not holding",
             "multiple states per position"
           ],
-          "applies_when": [
+          "use_when": [
             "problem has well-defined states and transitions",
             "stock trading with constraints (cooldown, fee, k transactions)",
             "finite automaton behavior"
@@ -5347,7 +5779,7 @@
             "patience-sorting-with-binary-search",
             "dp-with-binary-search-optimization"
           ],
-          "applies_when": [
+          "use_when": [
             "find length of longest increasing subsequence",
             "subsequence ordering problems",
             "envelope nesting / chain problems"
@@ -5382,7 +5814,7 @@
             "all-or-nothing",
             "coupled items"
           ],
-          "applies_when": [
+          "use_when": [
             "items belong to groups/bundles where taking one means taking all",
             "each group has a combined weight and combined value (possibly with bonus)",
             "individual items can be taken freely, but grouped items are all-or-nothing",
@@ -5419,7 +5851,7 @@
             "non-overlapping",
             "deadline"
           ],
-          "applies_when": [
+          "use_when": [
             "select non-overlapping intervals to maximize total profit/weight",
             "each interval has a value (not all equal)",
             "greedy sort-by-end fails because intervals have different weights"
@@ -5447,7 +5879,7 @@
             "coin-change-rod-cutting",
             "capacity-fill-with-repeats"
           ],
-          "applies_when": [
+          "use_when": [
             "items can be used multiple times (coin change, rod cutting)",
             "capacity W is small enough for DP"
           ],
@@ -5473,7 +5905,7 @@
             "divisible-items-maximize-value-density",
             "sort-by-value-weight-ratio"
           ],
-          "applies_when": [
+          "use_when": [
             "items are divisible/fractional",
             "maximize value within capacity"
           ],
@@ -5498,7 +5930,7 @@
             "quadratic-dp-comparing-all-pairs",
             "dp-with-predecessor-check"
           ],
-          "applies_when": [
+          "use_when": [
             "n <= 5000",
             "need to reconstruct actual subsequence (easier with DP array)",
             "counting number of LIS",
@@ -5524,7 +5956,7 @@
             "try-all-possibilities-exhaustively",
             "no-pruning-full-search"
           ],
-          "applies_when": [
+          "use_when": [
             "n is very small",
             "need to verify correctness of optimized solution",
             "no exploitable structure"
@@ -5558,7 +5990,7 @@
             "quadrilateral inequality",
             "minimize partition cost"
           ],
-          "applies_when": [
+          "use_when": [
             "DP recurrence dp[i][j] = min over k {dp[i-1][k-1] + C(k,j)}",
             "optimal split points are monotone non-decreasing",
             "cost function satisfies quadrilateral inequality"
@@ -5594,7 +6026,7 @@
             "interval cost",
             "quadrilateral inequality"
           ],
-          "applies_when": [
+          "use_when": [
             "interval DP: dp[i][j] = min over k {dp[i][k] + dp[k+1][j] + C(i,j)}",
             "cost satisfies monotonicity and quadrilateral inequality",
             "optimal BST, matrix chain-like, cutting problems"
@@ -5630,7 +6062,7 @@
             "convex DP",
             "slope changes"
           ],
-          "applies_when": [
+          "use_when": [
             "DP values form piecewise-linear convex function",
             "transitions add |x-c| or take prefix/suffix minima",
             "make array non-decreasing with minimum cost"
@@ -5666,7 +6098,7 @@
             "historical state",
             "time travel query"
           ],
-          "applies_when": [
+          "use_when": [
             "need access to multiple versions of data structure simultaneously",
             "k-th smallest element in range [L,R]",
             "offline versioning: query as if only first i updates happened"
@@ -5721,7 +6153,7 @@
             "power set",
             "enumerate"
           ],
-          "applies_when": [
+          "use_when": [
             "generate all subsets",
             "feature selection / combination enumeration",
             "subset with constraints (sum, size)"
@@ -5748,7 +6180,7 @@
             "swap-or-used-array-approach",
             "n!-total-permutations"
           ],
-          "applies_when": [
+          "use_when": [
             "generate all permutations",
             "arrangement / ordering problems",
             "small n (n! grows fast)"
@@ -5774,7 +6206,7 @@
             "order-does-not-matter",
             "start-index-prevents-duplicates"
           ],
-          "applies_when": [
+          "use_when": [
             "choose k elements from n",
             "combination sum with reuse or no-reuse",
             "enumeration with size constraint"
@@ -5800,7 +6232,7 @@
             "grid-filling-with-rules",
             "incremental-constraint-checking"
           ],
-          "applies_when": [
+          "use_when": [
             "N-Queens, Sudoku solver",
             "constraint propagation with backtracking",
             "valid placement at each step"
@@ -5815,7 +6247,7 @@
           },
           "constraints": "prune early: check constraints before recursing",
           "alternatives": [
-            "dp",
+            "state-compression-bitmask",
             "greedy"
           ]
         },
@@ -5827,7 +6259,7 @@
             "solve-recursively-then-merge",
             "reduction-by-constant-factor"
           ],
-          "applies_when": [
+          "use_when": [
             "problem decomposes into independent subproblems",
             "merge sort, quick sort paradigm",
             "subproblems do not overlap (otherwise use DP)"
@@ -5853,7 +6285,7 @@
             "explore-choices-with-pruning",
             "try-and-undo-decisions"
           ],
-          "applies_when": [
+          "use_when": [
             "constraint satisfaction (N-Queens, Sudoku)",
             "combinatorial search with pruning",
             "problem has choices that can be undone"
@@ -5879,7 +6311,7 @@
             "lexicographically-next-arrangement",
             "in-place-permutation-generation"
           ],
-          "applies_when": [
+          "use_when": [
             "generate permutations in lexicographic order",
             "need only the next permutation",
             "std::next_permutation equivalent"
@@ -5917,7 +6349,7 @@
             "pile",
             "stones"
           ],
-          "applies_when": [
+          "use_when": [
             "two-player impartial game with perfect information",
             "games decomposable into independent sub-games (XOR Grundy values)",
             "Nim and Nim variants"

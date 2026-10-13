@@ -101,7 +101,7 @@ class TestOutputContract:
         assert res["retrieval_state"] == HIT
         top = res["suggestions"][0]
         assert top["rank"] == 1
-        assert set(top["fit"]) == {"complexity", "applies_when", "avoid_when", "constraints"}
+        assert set(top["fit"]) == {"complexity", "use_when", "avoid_when", "constraints"}
         r = top["retrieval"]
         assert isinstance(r["score"], int) and isinstance(r["direct_votes"], int)
         assert all(not isinstance(v, float) for v in r.values())

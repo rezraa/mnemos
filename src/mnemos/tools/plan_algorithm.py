@@ -12,26 +12,31 @@ dict, it:
    never a husk. This replaces the retired ``match_structural_signals`` substring
    pass, which returned EMPTY on problem-language (measured: 0/25 PB, 0/22 TK on the
    frozen benchmark) — the whole reason for the retrofit.
-2. GATES by complexity FEASIBILITY, not by a facet: ``kb.filter_by_constraints``
-   EXCLUDES every retrieved pattern whose OWN time/space complexity exceeds the
-   input_size_guidelines for the given ``n`` (the excluded set survives as
-   ``filtered_out`` — the Mnemos-specific gate output Coeus's ``is_gated`` sink has
-   no analogue for), then re-ranks the survivors faster-first when a size constraint
-   governs. No facet sink, no tuned scalar — the corpus carries no ``avoid_when``
-   facet dicts (that gate is dormant here; feasibility is the live gate).
+2. GATES through the shared ``_gate_and_rank``: complexity FEASIBILITY EXCLUDES
+   every retrieved pattern whose OWN time/space complexity exceeds the caller's
+   bounds (surfaced as ``filtered_out`` — the Mnemos-specific gate output Coeus's
+   ``is_gated`` sink has no analogue for); the problem-trait facet gate SINKS a
+   pattern whose own ``avoid_when`` facet the caller's stated traits satisfy
+   (kept, marked ``gated``); survivors re-rank faster-first when a size constraint
+   governs. Hydrate already broke equal-vote ties by ``use_when`` fit under the
+   same traits. No tuned scalar.
 3. REASONS fit over each retrieved pattern's OWN fields (``complexity`` /
-   ``applies_when`` / ``avoid_when`` / ``constraints``) — no decision-rule layer, no
+   ``use_when`` / ``avoid_when`` / ``constraints``) — no decision-rule layer, no
    hardcoded table — and annotates known regressions from empirical memory
    (``check_regression``, unchanged). Empirical memory is a side annotation only: it
    NEVER re-orders the recommendations, so the ranking is memory-independent and the
    BAR-1 recall floor is reproducible regardless of the memory store's contents.
 
 OUTPUT CONTRACT (matched_rules is gone; the new shape is asserted by the tool tests):
-    recommendations   ranked candidates, each with its own-field ``fit`` + ``retrieval`` votes
+    recommendations   ranked candidates, each with its own-field ``fit``, ``retrieval`` votes
+                      (incl. ``use_when_fit``) and ``gated`` (sunk by its own avoid_when facet)
     filtered_out      patterns excluded by the complexity-feasibility gate, with the reason
     retrieval_state   the hydrate envelope state (hit/low_confidence/no_match/dangling)
     unmatched         matched signal ids the index did not recognise
     dangling          referenced pattern ids that did not resolve to a corpus pattern
+    unknown_constraints  only when a constraints key is undeclared: {keys, declared}
+    invalid_constraint_values  only when a declared key's value is not allowed (not
+                      applied): {spelling: {value, reason, allowed | example}}
     context / memory  project codebase context + empirical-memory annotations (kept)
 Everything else on the surface (``constraints_analyzed`` echo, the emitted event) is
 ARTIFACT — diagnostic, not part of the guarantee.
@@ -45,11 +50,13 @@ from __future__ import annotations
 
 from typing import Any
 
-from mnemos.knowledge.loader import DANGLING, NO_MATCH, _rank
+from mnemos.knowledge.loader import DANGLING, NO_MATCH
 from mnemos.tools._shared import (
     _MAX_MATCHED_SIGNALS,
     _bounded_constraints,
+    _checked_constraints,
     _fit,
+    _gate_and_rank,
     emit_event,
     get_knowledge,
     get_memory,
@@ -142,6 +149,7 @@ def plan_algorithm(
     # than raising (the server wrapper coerces JSON-string args; this guards the rest).
     matched_signal_ids = list(matched_signal_ids) if isinstance(matched_signal_ids, (list, tuple)) else []
     constraints = _bounded_constraints(constraints if isinstance(constraints, dict) else {})
+    gate_values, notices = _checked_constraints(constraints)
     try:
         k = int(k)
     except (TypeError, ValueError):
@@ -152,11 +160,12 @@ def plan_algorithm(
 
     # 1. RETRIEVE — one hydrate call; the caller-boundary cap is non-amplifying
     #    (the engine's _SEED_CAP already bounds fan-out downstream of it).
-    res = kb.hydrate(matched_signal_ids[:_MAX_MATCHED_SIGNALS], k=k)
+    res = kb.hydrate(matched_signal_ids[:_MAX_MATCHED_SIGNALS], k=k, constraints=gate_values)
     envelope = {
         "retrieval_state": res.state,
         "unmatched": list(res.unmatched_signals),
         "dangling": list(res.dangling),
+        **notices,
     }
 
     # Project context is candidate-independent — computed once, present on every path.
@@ -182,33 +191,11 @@ def plan_algorithm(
         })
         return result
 
-    # 3. GATE — complexity-feasibility EXCLUSION over each pattern's OWN complexity
-    #    (kb.filter_by_constraints, the LIVE Mnemos gate), then faster-first re-rank
-    #    of the survivors when a SIZE constraint governs. With no constraints the
-    #    survivors keep hydrate's proven integer-vote order (so the BAR-1 recall
-    #    floor reproduces the engine exactly). Deterministic total-order key
-    #    (complexity rank, hydrate index) — no tuned scalar, no float.
-    if constraints:
-        survivors, removed = kb.filter_by_constraints(list(res.patterns), constraints)
-    else:
-        survivors, removed = list(res.patterns), []
-
-    if constraints.get("n") is not None or constraints.get("input_size") is not None:
-        order = sorted(
-            range(len(survivors)),
-            key=lambda i: (_rank((survivors[i].get("complexity") or {}).get("time", "")), i),
-        )
-        survivors = [survivors[i] for i in order]
-
-    filtered_out = [
-        {
-            "pattern_id": r.get("id", ""),
-            "pattern_name": r.get("name", r.get("id", "")),
-            "complexity": dict(r.get("complexity") or {}),
-            "reason": r.get("filter_reason", ""),
-        }
-        for r in removed
-    ]
+    # 3. GATE — _gate_and_rank: complexity-feasibility EXCLUSION, the trait-facet
+    #    SINK, then faster-first within each tier when a SIZE constraint governs. With
+    #    no constraints the survivors keep hydrate's integer-vote order (so the BAR-1
+    #    recall floor reproduces the engine exactly).
+    survivors, gated_ids, filtered_out = _gate_and_rank(kb, res.patterns, constraints, gate_values)
 
     # 4. REASON — one recommendation per survivor over its OWN fields (_fit); resolve
     #    the parent structure as the data-structure (ds) the recommendation names.
@@ -223,6 +210,7 @@ def plan_algorithm(
             "structure_id": parent.get("structure_id", "") if parent else "",
             "fit": _fit(p),
             "retrieval": dict(p["retrieval"]),   # plain dict for the output surface
+            "gated": pid in gated_ids,
         })
 
     result = {

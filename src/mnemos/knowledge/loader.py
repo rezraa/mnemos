@@ -16,7 +16,13 @@ import json
 from dataclasses import dataclass, field
 from pathlib import Path
 
+from mnemos.knowledge.facet_catalogue_mirror import load_catalogue, resolve_constraints
+
 _KNOWLEDGE_DIR = Path(__file__).parent
+
+# The declared caller-constraint vocabulary. It ships beside the corpus (not in the
+# graph), so both loader modes gate against the same catalogue.
+FACET_CATALOGUE = load_catalogue()
 
 # ---------------------------------------------------------------------------
 # Complexity ranking — lower index = faster.
@@ -171,15 +177,13 @@ def deep_freeze(obj: object) -> object:
     return obj
 
 
-def _parse_team_range(token: object) -> tuple[float, float] | None:
-    """Parse a ``team_size`` token (``"1-5"``, ``"50+"``, ``"3"``) into ``(lo, hi)``.
+def _parse_int_range(token: object) -> tuple[float, float] | None:
+    """Parse an ``int_range`` token (``"1-5"``, ``"50+"``, ``"3"``) into ``(lo, hi)``.
 
     Pure string arithmetic -- no regex, no eval on caller input. Returns ``None``
     for anything unparseable so the gate can fail OPEN (never demote on a token it
-    cannot read). Ported from Coeus as part of the facet gate; DORMANT on the
-    Mnemos corpus (no pattern carries facet dicts in its ``avoid_when``), but kept
-    faithful so the semantic-parity drift test holds and S3-S5 tool retrofits have
-    the primitive ready.
+    cannot read). Mirrors Coeus's ``_parse_team_range``; Mnemos dispatches to it by
+    the catalogue kind rather than by one key name.
     """
     s = str(token).strip()
     if not s:
@@ -196,16 +200,27 @@ def _parse_team_range(token: object) -> tuple[float, float] | None:
         return None
 
 
-def facet_matches(facet: dict, constraints: dict) -> bool:
+def _normalised(value: object) -> str:
+    return str(value).strip().lower()
+
+
+def facet_matches(facet: dict, constraints: dict, catalogue=FACET_CATALOGUE) -> bool:
     """Does one structured facet hold under the caller's *constraints*?
 
-    The single facet-matching predicate (one source of truth, not one copy per
-    reader). A facet is an AND of conditions; it matches only when the constraints
-    confirm *every* key: ``team_size`` by numeric range overlap, every other key by
-    categorical exact match (case/whitespace-normalised, never substring). Pure
-    comparison -- no ``eval``/regex on caller input; an unspecified or unreadable
-    key yields ``False`` (fail open, never demote on unconfirmed input). Ported
-    from Coeus; DORMANT on the Mnemos corpus (facet gate ready for S3-S5).
+    The single facet-matching predicate (one source of truth for the gate and the
+    ranker). A facet is an AND of conditions; it matches only when the constraints
+    confirm *every* key, compared by the key's declared catalogue kind:
+
+    * the key's declared wildcard (``"any"``) -- any value the constraints give;
+    * ``int_range`` -- numeric range overlap (``"1-15"`` vs ``"3"``);
+    * every other kind -- categorical exact match (case/whitespace-normalised, never
+      substring).
+
+    Pure comparison -- no ``eval``/regex on caller input. A key the constraints do
+    not state (wildcard included: an unstated key confirms nothing), or a range
+    neither side can parse, yields ``False`` (fail open, never gate or credit on
+    unconfirmed input). *constraints* are expected already resolved by
+    :func:`resolve_constraints`, so a synonym never reaches this lookup.
     """
     if not isinstance(facet, dict) or not facet:
         return False
@@ -213,13 +228,17 @@ def facet_matches(facet: dict, constraints: dict) -> bool:
         cval = constraints.get(key)
         if cval is None:
             return False
-        if key == "team_size":
-            fr, cr = _parse_team_range(fval), _parse_team_range(cval)
+        spec = catalogue.specs.get(key)
+        wildcard = spec.wildcard[0] if spec is not None and spec.wildcard is not None else None
+        if wildcard is not None and _normalised(fval) == _normalised(wildcard):
+            continue
+        if spec is not None and spec.kind == "int_range":
+            fr, cr = _parse_int_range(fval), _parse_int_range(cval)
             if fr is None or cr is None:
                 return False
             if not (fr[0] <= cr[1] and cr[0] <= fr[1]):
                 return False
-        elif str(cval).strip().lower() != str(fval).strip().lower():
+        elif _normalised(cval) != _normalised(fval):
             return False
     return True
 
@@ -230,8 +249,7 @@ def split_conditions(items: list | None) -> tuple[list[str], list[dict]]:
     These lists mix free-text condition strings (for LLM recognition) and
     structured facet dicts (for deterministic gating). Any reader dispatches on
     element type through this one helper. Single pass; tolerates ``None``. Returns
-    ``(text_conditions, facet_constraints)``. Ported from Coeus; on the Mnemos
-    corpus the facet half is always empty (DORMANT).
+    ``(text_conditions, facet_constraints)``. Ported from Coeus.
     """
     texts: list[str] = []
     facets: list[dict] = []
@@ -240,19 +258,56 @@ def split_conditions(items: list | None) -> tuple[list[str], list[dict]]:
     return texts, facets
 
 
+def _facets_held(pattern: dict, field_name: str, constraints: dict) -> int:
+    """How many of *pattern*'s own ``field_name`` facets hold under *constraints*."""
+    if not constraints:
+        return 0
+    _, facets = split_conditions(pattern.get(field_name))
+    return sum(facet_matches(f, constraints) for f in facets)
+
+
 def is_gated(pattern: dict, constraints: dict) -> bool:
     """Is *pattern* gated by its OWN ``avoid_when`` facets under *constraints*?
 
-    Reasoning over the pattern's own field, not a hardcoded detector. Ported from
-    Coeus as the deterministic facet gate; DORMANT on the Mnemos corpus (no
-    pattern carries an ``avoid_when`` facet dict), so it always returns ``False``
-    here. The complexity gate that IS live on Mnemos is
-    :meth:`KnowledgeLoader.filter_by_constraints` (input-size feasibility).
+    The deterministic facet gate: a pattern whose own ``avoid_when`` carries a
+    facet the caller's stated traits satisfy is in tension with the problem and
+    sinks below the ungated candidates (kept, never removed). Reasoning over the
+    pattern's own field, not a hardcoded detector. The complexity gate that
+    EXCLUDES is :meth:`_SignalEngine.filter_by_constraints` (input-size
+    feasibility); this one only reorders.
     """
-    if not constraints:
-        return False
-    _, facets = split_conditions(pattern.get("avoid_when"))
-    return any(facet_matches(f, constraints) for f in facets)
+    return _facets_held(pattern, "avoid_when", constraints) > 0
+
+
+def use_when_fit(pattern: dict, constraints: dict) -> int:
+    """The integer count of *pattern*'s OWN ``use_when`` facets *constraints* satisfy.
+
+    The ranker's trait-fit key: among candidates the vote key cannot separate, the
+    one whose own ``use_when`` names the caller's situation more often ranks first.
+    A count, never a weight -- auditable, and zero without constraints.
+    """
+    return _facets_held(pattern, "use_when", constraints)
+
+
+def compact_signal_view(view: list[dict], id_key: str) -> dict[str, dict[str, str]]:
+    """Project a loader signal-index *view* into the compact recognition shape.
+
+    *view* is a ``get_signal_index()`` list of ``{signal_id, signal_text, <id_key>}``
+    entries; *id_key* names the owner-id list (``pattern_ids`` here). Returns
+    ``{owner_id: {signal_id: signal_text}}`` with owners and each owner's signals in
+    sorted id order, so the result is a pure function of the view's content (not its
+    order) and serialises to the same bytes on every call. A signal with several
+    owners appears under each of them.
+
+    Mirrors the reference ``coeus.knowledge.loader.compact_signal_view``: readers
+    invert every Titan's view with one flatten, so the shape must be identical across
+    Titans (held by the parity case in tests/test_knowledge/test_firewall.py).
+    """
+    grouped: dict[str, dict[str, str]] = {}
+    for entry in view:
+        for owner in entry[id_key]:
+            grouped.setdefault(owner, {})[entry["signal_id"]] = entry["signal_text"]
+    return {owner: dict(sorted(grouped[owner].items())) for owner in sorted(grouped)}
 
 
 class _SignalEngine:
@@ -262,8 +317,9 @@ class _SignalEngine:
     ``GraphKnowledgeLoader`` (Kuzu) each build the shared ``self._pattern_index``
     (``pattern_id -> (structure_id, pattern)``) in ``__init__`` and then call
     :meth:`_build_signal_index`; every method below reads only that shared
-    attribute, so there is exactly ONE copy of the engine (no duplicate engine
-    code across the two loaders).
+    attribute (and ``self._max_n_for_complexity``, which each loader also builds),
+    so there is exactly ONE copy of the engine (no duplicate engine code across
+    the two loaders).
     """
 
     # ------------------------------------------------------------------
@@ -366,6 +422,7 @@ class _SignalEngine:
         matched_signal_ids: list[str],
         k: int = 10,
         fan_out: bool = True,
+        constraints: dict | None = None,
     ) -> RetrievalResult:
         """Hydrate matched signals into ranked patterns, in the four-state envelope.
 
@@ -379,8 +436,12 @@ class _SignalEngine:
           over a two-tier composite key: direct-vote tier (a directly-matched
           seed outranks every propagated-only neighbour), then the pre-fan-out
           direct-vote count within the seed tier (accumulated vote score for
-          propagated-only neighbours), then pattern id ascending -- deterministic
-          throughout.
+          propagated-only neighbours), then pattern id ascending;
+        * orders the selected k by that key, then :func:`use_when_fit` under
+          *constraints* (a tie-break only: it never crosses a vote and never
+          changes which patterns are selected), then pattern id ascending --
+          deterministic throughout. *constraints* are the caller's traits already
+          resolved by :func:`resolve_constraints`.
 
         Bounded by two ceilings: ``_SEED_CAP`` before fan-out and ``_TOPK_CAP``
         after. Votes are transparent integer counts, never a tuned score.
@@ -434,15 +495,26 @@ class _SignalEngine:
         #    regardless of score, so no zero-direct-vote hub can evict a gold
         #    seed under the k cap; and seeds rank by direct-vote count, not
         #    accumulated score, so fan-out cannot re-order the seed tier.
+        def vote_key(kv: tuple[str, int]) -> tuple[bool, int]:
+            return (kv[0] in direct_votes,
+                    direct_votes[kv[0]] if kv[0] in direct_votes else kv[1])
+
         ordered = sorted(scores.items())
-        top = heapq.nlargest(
-            k,
-            ordered,
-            key=lambda kv: (
-                kv[0] in direct_votes,
-                direct_votes[kv[0]] if kv[0] in direct_votes else kv[1],
-            ),
-        )
+        top = heapq.nlargest(k, ordered, key=vote_key)
+
+        # 5b. Trait fit orders WITHIN an equal vote key, after selection: votes alone
+        #     decide which k patterns are retrieved, so traits re-order the retrieved
+        #     set but never change it. The sort is stable, so full ties keep the
+        #     pattern-id-ascending order nlargest produced.
+        fit = {
+            pid: use_when_fit(pat, constraints or {})
+            for pid, _ in top
+            if (pat := self._lookup_pattern(pid)) is not None
+        }
+        # Confidence is the vote leader's score, taken before the fit re-order so
+        # traits can move rank but never the envelope state.
+        lead_score = next((score for pid, score in top if pid in fit), 0)
+        top.sort(key=lambda kv: (vote_key(kv), fit.get(kv[0], 0)), reverse=True)
 
         # 6. Hydrate the winners into the envelope; never emit a husk. Each pattern
         #    is deep-frozen at this boundary: a shallow ``{**pat}`` would alias the
@@ -464,6 +536,7 @@ class _SignalEngine:
                     "direct_votes": direct,
                     "propagated_votes": score - direct,
                     "seed": pid in direct_votes,
+                    "use_when_fit": fit[pid],
                 },
             }))
             votes[pid] = score
@@ -476,12 +549,11 @@ class _SignalEngine:
                 unmatched_signals=sorted(set(unmatched)),
                 reason="hydrated pattern ids did not resolve to corpus patterns",
             )
-        top_score = patterns[0]["retrieval"]["score"]
-        if top_score >= _CONFIDENCE_FLOOR:
+        if lead_score >= _CONFIDENCE_FLOOR:
             state, reason = HIT, ""
         else:
             state = LOW_CONFIDENCE
-            reason = f"best score {top_score} below confidence floor {_CONFIDENCE_FLOOR}"
+            reason = f"best score {lead_score} below confidence floor {_CONFIDENCE_FLOOR}"
         return RetrievalResult(
             state=state,
             patterns=patterns,
@@ -490,6 +562,104 @@ class _SignalEngine:
             unmatched_signals=sorted(set(unmatched)),
             reason=reason,
         )
+
+
+    def get_alternatives(self, pattern_id: str) -> list[dict]:
+        """Find alternatives for *pattern_id* with ``when_better`` reasoning.
+
+        Returns a list of ``{id, name, when_better, complexity}`` dicts. The hints
+        are prose only: ``split_conditions`` keeps a facet dict out of the text.
+        """
+        entry = self._pattern_index.get(pattern_id)
+        if entry is None:
+            return []
+
+        _, pat = entry
+        own_avoid, _ = split_conditions(pat.get("avoid_when"))
+        results: list[dict] = []
+        for alt_id in pat.get("alternatives", []):
+            alt_entry = self._pattern_index.get(alt_id)
+            if alt_entry is None:
+                results.append({"id": alt_id, "name": alt_id, "when_better": None, "complexity": None})
+                continue
+            _, alt_pat = alt_entry
+            alt_use, _ = split_conditions(alt_pat.get("use_when"))
+            when_better_hints = list(own_avoid) if own_avoid else alt_use[:2]
+            results.append({
+                "id": alt_pat["id"],
+                "name": alt_pat.get("name", alt_pat["id"]),
+                "when_better": when_better_hints or None,
+                "complexity": alt_pat.get("complexity"),
+            })
+        return results
+
+    # ------------------------------------------------------------------
+    # Constraint filtering — the complexity-feasibility gate (both modes)
+    # ------------------------------------------------------------------
+
+    def filter_by_constraints(
+        self,
+        patterns: list[dict],
+        constraints: dict,
+    ) -> tuple[list[dict], list[dict]]:
+        """Filter patterns by complexity feasibility under the caller's constraints.
+
+        Reads only what :func:`resolve_constraints` resolves against the facet
+        catalogue, so every spelling (key or synonym) and every allowed value comes
+        from the catalogue and a value it does not allow is never applied:
+            - ``n`` (int): max input size, checked against ``input_size_guidelines``
+            - ``space`` (complexity class): max space complexity
+            - ``target_complexity`` (complexity class): max time complexity
+
+        Args:
+            patterns: Pattern dicts (each with ``complexity`` ``time``/``space``).
+            constraints: The caller's constraints, as supplied.
+
+        Returns:
+            (surviving, filtered_out) where each filtered_out entry has
+            a ``filter_reason`` key explaining why it was removed.
+        """
+        resolved = resolve_constraints(FACET_CATALOGUE, constraints).values
+        n = resolved.get("n")
+        max_space = resolved.get("space")
+        target_complexity = resolved.get("target_complexity")
+
+        surviving: list[dict] = []
+        filtered_out: list[dict] = []
+
+        for pat in patterns:
+            complexity = pat.get("complexity", {})
+            time_str = complexity.get("time", "") if isinstance(complexity, dict) else ""
+            space_str = complexity.get("space", "") if isinstance(complexity, dict) else ""
+
+            reason = None
+
+            # --- input_size filter (data-driven from JSON) ---
+            if n is not None and time_str:
+                time_rank_val = _rank(time_str)
+                tier_key = _COMPLEXITY_RANK[time_rank_val] if time_rank_val < len(_COMPLEXITY_RANK) else None
+                max_n = self._max_n_for_complexity.get(tier_key, 0) if tier_key else 0
+                if n > max_n:
+                    reason = f"{time_str} infeasible for n={n:,}"
+
+            # --- space filter ---
+            if reason is None and max_space and space_str:
+                if _rank(space_str) > _rank(max_space):
+                    reason = f"space {space_str} exceeds max {max_space}"
+
+            # --- target complexity filter ---
+            if reason is None and target_complexity and time_str:
+                if _rank(time_str) > _rank(target_complexity):
+                    reason = f"{time_str} exceeds target {target_complexity}"
+
+            if reason:
+                entry = dict(pat)
+                entry["filter_reason"] = reason
+                filtered_out.append(entry)
+            else:
+                surviving.append(pat)
+
+        return surviving, filtered_out
 
 
 class KnowledgeLoader(_SignalEngine):
@@ -584,45 +754,6 @@ class KnowledgeLoader(_SignalEngine):
                 patterns.append(entry)
         return patterns
 
-    def get_alternatives(self, pattern_id: str) -> list[dict]:
-        """Find alternatives for *pattern_id* with ``when_better`` reasoning.
-
-        Returns a list of ``{id, name, when_better, complexity}`` dicts.
-        """
-        entry = self._pattern_index.get(pattern_id)
-        if entry is None:
-            return []
-
-        _, pat = entry
-        alt_ids: list[str] = pat.get("alternatives", [])
-        results: list[dict] = []
-
-        for alt_id in alt_ids:
-            alt_entry = self._pattern_index.get(alt_id)
-            if alt_entry is None:
-                results.append({"id": alt_id, "name": alt_id, "when_better": None, "complexity": None})
-                continue
-
-            _, alt_pat = alt_entry
-
-            when_better_hints: list[str] = []
-            original_avoid = pat.get("avoid_when", [])
-            if original_avoid:
-                when_better_hints.extend(original_avoid)
-            else:
-                when_better_hints.extend(alt_pat.get("applies_when", [])[:2])
-
-            results.append(
-                {
-                    "id": alt_pat["id"],
-                    "name": alt_pat.get("name", alt_pat["id"]),
-                    "when_better": when_better_hints or None,
-                    "complexity": alt_pat.get("complexity"),
-                }
-            )
-
-        return results
-
     def get_complexity(self, data_structure: str, operation: str) -> dict | None:
         """Direct lookup of a data-structure operation complexity."""
         ds = self._ds_operations.get(data_structure)
@@ -671,73 +802,6 @@ class KnowledgeLoader(_SignalEngine):
                     "structural_signals": pat.get("structural_signals", []),
                 })
         return results
-
-    # ------------------------------------------------------------------
-    # Constraint filtering — data-driven from complexities.json
-    # ------------------------------------------------------------------
-
-    def filter_by_constraints(
-        self,
-        patterns: list[dict],
-        constraints: dict,
-    ) -> tuple[list[dict], list[dict]]:
-        """Filter patterns by constraints using input_size_guidelines from JSON.
-
-        Args:
-            patterns: List of pattern dicts (each must have ``complexity``
-                with ``time`` and/or ``space`` keys).
-            constraints: Dict with optional keys:
-                - ``n`` or ``input_size`` (int): max input size
-                - ``space`` (str): max space complexity, e.g. "O(1)"
-                - ``target_complexity`` (str): max time complexity desired
-
-        Returns:
-            (surviving, filtered_out) where each filtered_out entry has
-            a ``filter_reason`` key explaining why it was removed.
-        """
-        n = constraints.get("n") or constraints.get("input_size")
-        max_space = constraints.get("space")
-        target_complexity = constraints.get("target_complexity")
-
-        surviving: list[dict] = []
-        filtered_out: list[dict] = []
-
-        for pat in patterns:
-            complexity = pat.get("complexity", {})
-            if isinstance(complexity, str):
-                complexity = {}
-            time_str = complexity.get("time", "") if isinstance(complexity, dict) else ""
-            space_str = complexity.get("space", "") if isinstance(complexity, dict) else ""
-
-            reason = None
-
-            # --- input_size filter (data-driven from JSON) ---
-            if n is not None and isinstance(n, (int, float)) and time_str:
-                n = int(n)
-                time_rank_val = _rank(time_str)
-                tier_key = _COMPLEXITY_RANK[time_rank_val] if time_rank_val < len(_COMPLEXITY_RANK) else None
-                max_n = self._max_n_for_complexity.get(tier_key, 0) if tier_key else 0
-                if n > max_n:
-                    reason = f"{time_str} infeasible for n={n:,}"
-
-            # --- space filter ---
-            if reason is None and max_space and space_str:
-                if _rank(space_str) > _rank(max_space):
-                    reason = f"space {space_str} exceeds max {max_space}"
-
-            # --- target complexity filter ---
-            if reason is None and target_complexity and time_str:
-                if _rank(time_str) > _rank(target_complexity):
-                    reason = f"{time_str} exceeds target {target_complexity}"
-
-            if reason:
-                entry = dict(pat)
-                entry["filter_reason"] = reason
-                filtered_out.append(entry)
-            else:
-                surviving.append(pat)
-
-        return surviving, filtered_out
 
     # ------------------------------------------------------------------
     # Complexity ranking helper (public, for use by _shared.py)

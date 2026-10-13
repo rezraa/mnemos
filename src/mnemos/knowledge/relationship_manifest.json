@@ -1,0 +1,30 @@
+{
+  "domain": "mnemos",
+  "node_groups": {
+    "patterns": { "id_scope": "domain", "verbatim_id": false },
+    "rules": { "id_scope": "domain", "verbatim_id": false }
+  },
+  "field_edges": [
+    {
+      "field": "alternatives",
+      "type": "alternative",
+      "on": "patterns",
+      "target_scope": "domain"
+    },
+    {
+      "field": "recommended_pattern",
+      "type": "triggers",
+      "on": "rules",
+      "target_scope": "domain"
+    }
+  ],
+  "explicit_edges": [],
+  "provenance": {
+    "domain": "mnemos",
+    "source_agent": "mnemos",
+    "source_tool": "import",
+    "origin": "relationship_manifest",
+    "query": "",
+    "signals": []
+  }
+}

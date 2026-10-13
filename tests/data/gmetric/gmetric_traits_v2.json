@@ -1,0 +1,61 @@
+{
+  "spec_id": "mnemos-Gmetric-v2-traits",
+  "story": "story-c2df6429",
+  "traits": {
+    "P01": {
+      "input_order": "sorted"
+    },
+    "P04": {
+      "graph_direction": "directed"
+    },
+    "P06": {
+      "graph_weighting": "unweighted"
+    },
+    "P11": {
+      "query_shape": "prefix"
+    },
+    "P12": {
+      "arrival": "streaming",
+      "graph_direction": "undirected",
+      "updates": "dynamic"
+    },
+    "P13": {
+      "value_sign": "may_be_negative"
+    },
+    "P15": {
+      "graph_weighting": "weighted",
+      "value_sign": "non_negative"
+    },
+    "P16": {
+      "value_sign": "may_be_negative"
+    },
+    "P17": {
+      "input_order": "unsorted"
+    },
+    "P22": {
+      "arrival": "streaming"
+    },
+    "P23": {
+      "arrival": "streaming",
+      "graph_direction": "undirected",
+      "updates": "dynamic"
+    },
+    "P24": {
+      "arrival": "streaming"
+    },
+    "P29": {
+      "query_shape": "range_or_order",
+      "updates": "dynamic"
+    },
+    "P30": {
+      "graph_weighting": "weighted"
+    },
+    "P35": {
+      "arrival": "streaming"
+    },
+    "P40": {
+      "arrival": "batch"
+    }
+  },
+  "what": "Oracle-style problem traits for the frozen gmetric v2 problems, stated only where the frozen query text states the trait (never read from golds). Authored after the corpus facets and frozen before the guard was measured. Problems absent here state no trait."
+}

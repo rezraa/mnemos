@@ -74,7 +74,9 @@ def plan_algorithm(
         problem: The problem's north-star sentence (context/telemetry only).
         matched_signal_ids: Signal ids recognised against get_signal_index.
         constraints: Optional dict — n/input_size drive the feasibility exclusion;
-            space/target_complexity add further exclusions.
+            space/target_complexity add further exclusions; problem traits (updates, arrival, input_order, query_shape, exactness,
+            value_sign, graph_direction, graph_weighting) reorder candidates their
+            own facets favour or avoid; allowed values are the facet catalogue's.
         project_id: Optional project ID for empirical-memory context.
         k: Number of ranked candidates to retrieve (engine-clamped to 1..50).
 
@@ -115,7 +117,10 @@ def review_complexity(
         detected_complexity: Complexity the agent estimated, e.g. "O(n^2)".
         matched_signal_ids: Signal ids recognised against get_signal_index (drives
             the retrieval of better options).
-        constraints: Optional dict with keys like n, input_size, space, target_complexity.
+        constraints: Optional dict with keys like n, input_size, space, target_complexity;
+            problem traits (updates, arrival, input_order, query_shape, exactness,
+            value_sign, graph_direction, graph_weighting) reorder candidates their
+            own facets favour or avoid; allowed values are the facet catalogue's.
         project_id: Optional project ID for codebase context.
         k: Number of candidates to retrieve (engine-clamped to 1..50).
 
@@ -153,7 +158,10 @@ def suggest_refactor(
         current_structure: Current DS, e.g. "array".
         current_complexity: Current complexity, e.g. "O(n^2)".
         target_complexity: Desired complexity, e.g. "O(n)".
-        constraints: Optional dict with keys like n, input_size, space.
+        constraints: Optional dict with keys like n, input_size, space;
+            problem traits (updates, arrival, input_order, query_shape, exactness,
+            value_sign, graph_direction, graph_weighting) reorder candidates their
+            own facets favour or avoid; allowed values are the facet catalogue's.
         project_id: Optional project ID for codebase context.
     """
     return _suggest_refactor(
@@ -236,12 +244,13 @@ def get_signal_index() -> dict:
     """Return the deterministic Shape-C signal index for problem-language retrieval.
 
     Read-only, in the uniform nested container (one corpus-named group; a future
-    corpus is a new group behind this same tool). Each entry is {signal_id,
-    signal_text, pattern_ids}. The agent recognises a problem's structural signals
-    against this view and passes the matched signal ids to the retrieval engine.
+    corpus is a new group behind this same tool). Signals are keyed by their owning
+    pattern; a signal owned by several patterns appears under each. The agent
+    recognises a problem's structural signals against this view and passes the
+    matched signal ids as matched_signal_ids to plan_algorithm / review_complexity.
     Sorted + byte-stable.
 
-    Returns: {pattern_signals: [{signal_id, signal_text, pattern_ids}]}
+    Returns: {pattern_signals: {pattern_id: {signal_id: signal_text}}}
     """
     return _get_signal_index()
 

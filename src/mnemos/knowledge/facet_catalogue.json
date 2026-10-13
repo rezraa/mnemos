@@ -1,0 +1,173 @@
+{
+  "domain": "mnemos",
+  "facets": {
+    "n": {
+      "kind": "int_range",
+      "description": "Input size: the largest n the solution must handle. Excludes patterns whose time complexity is infeasible at that n under the input-size guideline.",
+      "synonyms": [
+        "input_size"
+      ]
+    },
+    "space": {
+      "kind": "complexity_class",
+      "description": "Space budget: the most extra memory allowed. Excludes patterns whose own space complexity is above it.",
+      "values": {
+        "O(1)": "Extra memory at most constant, independent of n; in-place.",
+        "O(log n)": "Extra memory at most logarithmic in n.",
+        "O(sqrt(n))": "Extra memory at most proportional to the square root of n.",
+        "O(n)": "Extra memory at most linear in n.",
+        "O(n log n)": "Extra memory at most n log n.",
+        "O(n * sqrt(n))": "Extra memory at most n times the square root of n.",
+        "O(n^2)": "Extra memory at most quadratic in n.",
+        "O(n^2 log n)": "Extra memory at most n squared times log n.",
+        "O(n^3)": "Extra memory at most cubic in n.",
+        "O(2^n)": "Extra memory at most exponential in n.",
+        "O(n!)": "Extra memory at most factorial in n.",
+        "O(n^n)": "Extra memory at most n to the power n."
+      }
+    },
+    "target_complexity": {
+      "kind": "complexity_class",
+      "description": "Time target: the slowest time complexity acceptable. Excludes patterns whose own time complexity is above it.",
+      "values": {
+        "O(1)": "Time at most O(1): Constant time — mathematical formula or direct lookup; feasible at any n.",
+        "O(log n)": "Time at most O(log n): Binary search, balanced BST operations; handles enormous inputs; feasible up to n = 1,000,000,000,000.",
+        "O(sqrt(n))": "Time at most O(sqrt(n)): Square root decomposition; trial division; feasible up to n = 1,000,000,000,000.",
+        "O(n)": "Time at most O(n): Single pass — linear scan, two pointers, sliding window, counting sort; feasible up to n = 100,000,000.",
+        "O(n log n)": "Time at most O(n log n): Sorting-based solutions; divide and conquer; feasible up to n = 10,000,000.",
+        "O(n * sqrt(n))": "Time at most O(n * sqrt(n)): Mo's algorithm, some block decomposition; feasible up to n = 100,000.",
+        "O(n^2)": "Time at most O(n^2): Nested loops — brute force pairs, simple DP, 2D matrix traversal; feasible up to n = 10,000.",
+        "O(n^2 log n)": "Time at most O(n^2 log n): Sorting within quadratic loop; feasible up to n = 5,000.",
+        "O(n^3)": "Time at most O(n^3): Triple nested loops — Floyd-Warshall, interval DP, matrix multiplication; feasible up to n = 500.",
+        "O(2^n)": "Time at most O(2^n): Subset enumeration, bitmask DP; feasible up to n = 25.",
+        "O(n!)": "Time at most O(n!): Permutation generation, brute-force TSP; feasible up to n = 12.",
+        "O(n^n)": "Time at most O(n^n): Unrestricted backtracking; almost never acceptable; feasible up to n = 8."
+      }
+    },
+    "updates": {
+      "kind": "enum",
+      "description": "Problem trait: whether the data changes while it is being queried.",
+      "values": {
+        "static": "Built once and never modified while it is queried.",
+        "dynamic": "Elements are inserted, deleted or modified between queries."
+      },
+      "wildcard": {
+        "value": "any",
+        "description": "Either: the data may or may not change between queries."
+      },
+      "synonyms": [
+        "update_pattern",
+        "mutability"
+      ]
+    },
+    "arrival": {
+      "kind": "enum",
+      "description": "Problem trait: whether all input (and queries) is available up front or arrives over time and must be answered online.",
+      "values": {
+        "batch": "All input and queries are known before processing starts (offline).",
+        "streaming": "Input or queries arrive one at a time and each must be handled as it arrives (online)."
+      },
+      "wildcard": {
+        "value": "any",
+        "description": "Either arrival mode."
+      },
+      "synonyms": [
+        "data_arrival"
+      ]
+    },
+    "input_order": {
+      "kind": "enum",
+      "description": "Problem trait: whether the input sequence is already sorted.",
+      "values": {
+        "sorted": "The input is already in sorted (or monotonic) order.",
+        "unsorted": "The input has no useful order."
+      },
+      "wildcard": {
+        "value": "any",
+        "description": "Either order."
+      },
+      "synonyms": [
+        "input_state",
+        "sortedness"
+      ]
+    },
+    "query_shape": {
+      "kind": "enum",
+      "description": "Problem trait: what each query asks of the data.",
+      "values": {
+        "point": "Exact-key lookup or membership test; no ordering or range needed.",
+        "range_or_order": "Range aggregates or order queries: range sums/min/max, floor/ceiling, predecessor/successor, rank, sorted iteration.",
+        "prefix": "String-prefix queries such as prefix search or autocomplete."
+      },
+      "wildcard": {
+        "value": "any",
+        "description": "Any query shape."
+      },
+      "synonyms": [
+        "query_type"
+      ]
+    },
+    "exactness": {
+      "kind": "enum",
+      "description": "Problem trait: whether every answer must be exactly correct or an approximate answer is acceptable.",
+      "values": {
+        "exact": "Every answer must be correct: no false positives, no near matches.",
+        "approximate": "Approximate answers are acceptable: probabilistic false positives or near (fuzzy) matches."
+      },
+      "wildcard": {
+        "value": "any",
+        "description": "Either exactness requirement."
+      },
+      "synonyms": [
+        "accuracy"
+      ]
+    },
+    "value_sign": {
+      "kind": "enum",
+      "description": "Problem trait: whether the numeric values (array elements or edge weights) can be negative.",
+      "values": {
+        "non_negative": "Every value is zero or positive.",
+        "may_be_negative": "Values may be negative."
+      },
+      "wildcard": {
+        "value": "any",
+        "description": "Either sign."
+      },
+      "synonyms": [
+        "sign"
+      ]
+    },
+    "graph_direction": {
+      "kind": "enum",
+      "description": "Problem trait: whether the graph's edges are directed.",
+      "values": {
+        "directed": "Edges have a direction (u to v differs from v to u).",
+        "undirected": "Edges connect both ways."
+      },
+      "wildcard": {
+        "value": "any",
+        "description": "Either direction."
+      },
+      "synonyms": [
+        "edge_direction"
+      ]
+    },
+    "graph_weighting": {
+      "kind": "enum",
+      "description": "Problem trait: whether the graph's edges carry weights or costs.",
+      "values": {
+        "unweighted": "Every edge counts the same (equal weight).",
+        "zero_one": "Every edge weight is either 0 or 1.",
+        "weighted": "Edges carry arbitrary weights or costs."
+      },
+      "wildcard": {
+        "value": "any",
+        "description": "Any weighting."
+      },
+      "synonyms": [
+        "edge_weights",
+        "weighting"
+      ]
+    }
+  }
+}

@@ -8,9 +8,8 @@ Locks the ported engine (mirror of coeus.knowledge.loader, story-19e9ceb1):
 * hydrate returns the four-state fail-closed envelope over the ``alternatives``
   edge, deep-frozen, no husk; the DANGLING state is exercised by a CONSTRUCTED
   index->absent-pattern fixture (council REVISE R2: seeds always resolve and
-  patterns are never empty on the real corpus, so the natural dangling
-  ``alternatives`` populate the dangling FIELD on a HIT/LOW_CONFIDENCE envelope,
-  NOT the DANGLING state);
+  patterns are never empty, so a dangling ``alternatives`` entry populates the
+  dangling FIELD on a HIT/LOW_CONFIDENCE envelope, NOT the DANGLING state);
 * the engine lives ONCE as ``_SignalEngine`` + module free-fns, inherited by BOTH
   loaders, and the graph loader now KEEPS the ``constraints`` field (drift repaired)
   -- proven against a constructed tmp_path Kuzu DB, never the live othrys.db.
@@ -193,26 +192,29 @@ class TestHydrateStates:
         assert res.votes == {}
         assert "__absent_pattern__" in res.dangling
 
-    def test_natural_dangling_edges_populate_field_not_state(self, kb: KnowledgeLoader) -> None:
-        """The 3 real dangling ``alternatives`` (edges to structure ids absent from
-        the pattern index) surface in the dangling FIELD on a NON-DANGLING envelope
-        -- the seed resolves, so state stays HIT/LOW_CONFIDENCE (council R2)."""
-        cases = {
-            "binary-search-tree-ops": "hashmap",
-            "circular-buffer-streaming": "queue",
-            "constraint-satisfaction": "dp",
-        }
-        seen: set[str] = set()
-        for src, absent_struct in cases.items():
-            pat = kb.get_pattern(src)
-            assert absent_struct in pat["alternatives"]
-            assert kb._lookup_pattern(absent_struct) is None  # it is a structure id, not a pattern
-            sig = _signal_id(pat["structural_signals"][0])
-            res = kb.hydrate([sig], k=10)
+    def test_a_dangling_alternative_populates_field_not_state(self, kb: KnowledgeLoader, tmp_path) -> None:
+        """An ``alternatives`` entry naming an id absent from the pattern index (a
+        structure id) surfaces in the dangling FIELD on a NON-DANGLING envelope -- the
+        seed resolves, so state stays HIT/LOW_CONFIDENCE (council R2). The shipped
+        corpus has none (its three structure-id alternatives were repointed to the
+        pattern each one's prose names), so the case is built on a corpus copy."""
+        data = json.loads((KDIR / "structures.json").read_text(encoding="utf-8"))
+        cases = {"binary-search-tree-ops": "hashmap", "circular-buffer-streaming": "queue",
+                 "constraint-satisfaction": "dp"}
+        for pat in (p for s in data["structures"] for p in s["patterns"]):
+            if pat["id"] in cases:
+                assert kb._lookup_pattern(cases[pat["id"]]) is None  # a structure id, not a pattern
+                pat["alternatives"].append(cases[pat["id"]])
+        (tmp_path / "structures.json").write_text(json.dumps(data), encoding="utf-8")
+        (tmp_path / "complexities.json").write_bytes((KDIR / "complexities.json").read_bytes())
+        broken = KnowledgeLoader(knowledge_dir=tmp_path)
+        for src, absent in cases.items():
+            sig = _signal_id(broken.get_pattern(src)["structural_signals"][0])
+            res = broken.hydrate([sig], k=10)
             assert res.state in (HIT, LOW_CONFIDENCE)       # NOT the DANGLING state
-            assert absent_struct in res.dangling            # but surfaced in the field
-            seen.add(absent_struct)
-        assert seen == {"hashmap", "queue", "dp"}           # all three exercised
+            assert absent in res.dangling                   # but surfaced in the field
+        shipped = {p["id"] for p in kb.get_all_patterns()}
+        assert all(t in shipped for p in kb.get_all_patterns() for t in p["alternatives"])
 
     def test_fanout_is_over_alternatives(self, kb: KnowledgeLoader) -> None:
         """A propagated (zero-direct-vote) neighbour must be a seed's ``alternatives``
@@ -280,7 +282,7 @@ class TestHydrateInvariants:
 
 
 # ==========================================================================
-# Free-function primitives (deep_freeze) + facet gate (ported, DORMANT)
+# Free-function primitives (deep_freeze) + facet gate
 # ==========================================================================
 
 class TestPrimitives:
@@ -293,22 +295,22 @@ class TestPrimitives:
         src["a"].append(99)                 # mutating the source must not touch the copy
         assert 99 not in frozen["a"]
 
-    def test_facet_gate_dormant_on_mnemos_corpus(self, kb: KnowledgeLoader) -> None:
-        """The ported facet gate is DORMANT: no Mnemos pattern carries an avoid_when
-        facet dict, so is_gated is always False (the LIVE gate is filter_by_constraints)."""
+    def test_facet_gate_never_fires_on_keys_the_corpus_does_not_name(self, kb: KnowledgeLoader) -> None:
+        """Fail open: constraints naming no corpus facet key gate and lift nothing."""
         for pat in kb.get_all_patterns():
             assert L.is_gated(pat, {"team_size": "1", "scale": "startup_mvp"}) is False
+            assert L.use_when_fit(pat, {"team_size": "1", "scale": "startup_mvp"}) == 0
 
     def test_split_conditions_partitions_by_type(self) -> None:
         texts, facets = L.split_conditions(["free text", {"team_size": "1-5"}, "more text"])
         assert texts == ["free text", "more text"]
         assert facets == [{"team_size": "1-5"}]
 
-    def test_parse_team_range(self) -> None:
-        assert L._parse_team_range("1-5") == (1, 5)
-        assert L._parse_team_range("3") == (3, 3)
-        assert L._parse_team_range("50+")[0] == 50
-        assert L._parse_team_range("garbage") is None
+    def test_parse_int_range(self) -> None:
+        assert L._parse_int_range("1-5") == (1, 5)
+        assert L._parse_int_range("3") == (3, 3)
+        assert L._parse_int_range("50+")[0] == 50
+        assert L._parse_int_range("garbage") is None
 
 
 # ==========================================================================
@@ -339,7 +341,7 @@ def _build_graph_db(tmp_path, kuzu, subset_structs):
         for p in s.get("patterns", []):
             allpat[p["id"]] = (s["id"], p)
     for pid, (sid, p) in allpat.items():
-        data = {"applies_when": p.get("applies_when", []), "avoid_when": p.get("avoid_when", [])}
+        data = {"use_when": p.get("use_when", []), "avoid_when": p.get("avoid_when", [])}
         conn.execute(
             "CREATE (p:patterns {id:'mnemos:%s', name:'%s', category:'%s', complexity:'%s', "
             "signals:'%s', constraints:'%s', data:'%s', domain:'mnemos'})" % (
@@ -389,6 +391,14 @@ class TestDualLoader:
         assert dg["constraints"] == dj["constraints"]
         # NO graph pattern is missing the field
         assert all("constraints" in p for p in gl.get_all_patterns())
+
+    def test_graph_loader_reads_use_when(self, graph_conn) -> None:
+        """Graph patterns carry the blob's use_when, equal to the JSON loader's."""
+        from mnemos.knowledge.graph_loader import GraphKnowledgeLoader
+        gl = GraphKnowledgeLoader(graph_conn)
+        jl = KnowledgeLoader()
+        for pg in gl.get_all_patterns():
+            assert pg["use_when"] == jl.get_pattern(pg["id"])["use_when"] != []
 
     def test_graph_engine_hydrates(self, graph_conn) -> None:
         from mnemos.knowledge.graph_loader import GraphKnowledgeLoader

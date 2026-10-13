@@ -103,7 +103,13 @@ class TestOutputContract:
         top = res["recommendations"][0]
         assert top["rank"] == 1
         # reasoning is over the pattern's OWN fields
-        assert set(top["fit"]) == {"complexity", "applies_when", "avoid_when", "constraints"}
+        assert set(top["fit"]) == {"complexity", "use_when", "avoid_when", "constraints"}
+        # fit carries the corpus's own use_when TEXT, not an empty default; its
+        # problem-trait facet dicts stay out of the prose list
+        own = KnowledgeLoader().get_pattern(top["pattern_id"])
+        own_text = [c for c in own["use_when"] if isinstance(c, str)]
+        assert top["fit"]["use_when"] == own_text != []
+        assert len(own_text) < len(own["use_when"])       # dijkstra carries facets
         # votes are transparent integers, never a tuned float score
         r = top["retrieval"]
         assert isinstance(r["score"], int) and isinstance(r["direct_votes"], int)

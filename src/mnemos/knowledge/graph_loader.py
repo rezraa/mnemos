@@ -15,11 +15,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-from mnemos.knowledge.loader import (
-    _COMPLEXITY_RANK,
-    _SignalEngine,
-    _rank,
-)
+from mnemos.knowledge.loader import _SignalEngine, _rank
 
 _KNOWLEDGE_DIR = Path(__file__).parent
 _PREFIX = "mnemos:"
@@ -124,7 +120,7 @@ class GraphKnowledgeLoader(_SignalEngine):
                 # Shape-C complexity gate read this field -- dropping it silently
                 # degraded graph-mode retrieval. Drift repaired (story-79321e96).
                 "constraints": constraints,
-                "applies_when": data.get("applies_when", []),
+                "use_when": data.get("use_when", []),
                 "avoid_when": data.get("avoid_when", []),
                 "alternatives": [],  # filled in by _load_alternatives
             }
@@ -230,39 +226,6 @@ class GraphKnowledgeLoader(_SignalEngine):
             patterns.append(entry)
         return patterns
 
-    def get_alternatives(self, pattern_id: str) -> list[dict]:
-        entry = self._pattern_index.get(pattern_id)
-        if entry is None:
-            return []
-
-        _, pat = entry
-        alt_ids: list[str] = pat.get("alternatives", [])
-        results: list[dict] = []
-
-        for alt_id in alt_ids:
-            alt_entry = self._pattern_index.get(alt_id)
-            if alt_entry is None:
-                results.append({"id": alt_id, "name": alt_id, "when_better": None, "complexity": None})
-                continue
-
-            _, alt_pat = alt_entry
-
-            when_better_hints: list[str] = []
-            original_avoid = pat.get("avoid_when", [])
-            if original_avoid:
-                when_better_hints.extend(original_avoid)
-            else:
-                when_better_hints.extend(alt_pat.get("applies_when", [])[:2])
-
-            results.append({
-                "id": alt_pat["id"],
-                "name": alt_pat.get("name", alt_pat["id"]),
-                "when_better": when_better_hints or None,
-                "complexity": alt_pat.get("complexity"),
-            })
-
-        return results
-
     def get_complexity(self, data_structure: str, operation: str) -> dict | None:
         ds = self._ds_operations.get(data_structure)
         if ds is None:
@@ -298,56 +261,6 @@ class GraphKnowledgeLoader(_SignalEngine):
                 "structural_signals": pat.get("structural_signals", []),
             })
         return results
-
-    # ------------------------------------------------------------------
-    # Constraint filtering — pure logic, same as KnowledgeLoader
-    # ------------------------------------------------------------------
-
-    def filter_by_constraints(
-        self,
-        patterns: list[dict],
-        constraints: dict,
-    ) -> tuple[list[dict], list[dict]]:
-        n = constraints.get("n") or constraints.get("input_size")
-        max_space = constraints.get("space")
-        target_complexity = constraints.get("target_complexity")
-
-        surviving: list[dict] = []
-        filtered_out: list[dict] = []
-
-        for pat in patterns:
-            complexity = pat.get("complexity", {})
-            if isinstance(complexity, str):
-                complexity = {}
-            time_str = complexity.get("time", "") if isinstance(complexity, dict) else ""
-            space_str = complexity.get("space", "") if isinstance(complexity, dict) else ""
-
-            reason = None
-
-            if n is not None and isinstance(n, (int, float)) and time_str:
-                n = int(n)
-                time_rank_val = _rank(time_str)
-                tier_key = _COMPLEXITY_RANK[time_rank_val] if time_rank_val < len(_COMPLEXITY_RANK) else None
-                max_n = self._max_n_for_complexity.get(tier_key, 0) if tier_key else 0
-                if n > max_n:
-                    reason = f"{time_str} infeasible for n={n:,}"
-
-            if reason is None and max_space and space_str:
-                if _rank(space_str) > _rank(max_space):
-                    reason = f"space {space_str} exceeds max {max_space}"
-
-            if reason is None and target_complexity and time_str:
-                if _rank(time_str) > _rank(target_complexity):
-                    reason = f"{time_str} exceeds target {target_complexity}"
-
-            if reason:
-                entry = dict(pat)
-                entry["filter_reason"] = reason
-                filtered_out.append(entry)
-            else:
-                surviving.append(pat)
-
-        return surviving, filtered_out
 
     def max_feasible_complexity_rank(self, n: int) -> int:
         best_rank = 0

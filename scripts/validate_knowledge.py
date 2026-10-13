@@ -7,7 +7,7 @@ Checks:
 1. Referential integrity (pattern IDs in decision_rules exist in structures)
 2. Complexity format (all use Big-O notation)
 3. Every structure has at least one pattern
-4. Every pattern has structural_signals and applies_when
+4. Every pattern has structural_signals and use_when
 5. Warns about patterns missing avoid_when or alternatives
 6. Cross-checks alternatives point to valid patterns
 7. Reports errors and warnings with exit code
@@ -162,11 +162,10 @@ def validate_structures(data: dict, report: ValidationReport) -> dict[str, set[s
                     f"Pattern '{pid}' in '{sid}' missing 'structural_signals'"
                 )
 
-            # Check applies_when
-            applies = pattern.get("applies_when", [])
-            if not applies:
+            # Check use_when
+            if not pattern.get("use_when"):
                 report.error(
-                    f"Pattern '{pid}' in '{sid}' missing 'applies_when'"
+                    f"Pattern '{pid}' in '{sid}' missing 'use_when'"
                 )
 
             # Warn about missing avoid_when

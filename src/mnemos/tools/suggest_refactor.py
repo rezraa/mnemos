@@ -17,12 +17,12 @@ edge, so the candidate set IS the related patterns the corpus records for it.
    replaces the retired exact-id ``get_alternatives`` + secondary ``get_structure``
    scan, whose flat 1.0/0.7 ``score`` was a tuned scalar with no retrieval signal
    behind it (the measured husk).
-2. GATE — complexity FEASIBILITY with the target: ``kb.filter_by_constraints`` with
-   ``target_complexity`` folded in EXCLUDES every candidate whose OWN time/space
-   exceeds the target (or the input-size guideline for ``n``); the excluded set
-   surfaces as ``filtered_out`` and the survivors are re-ranked faster-first when a
-   size constraint governs. No facet sink, no tuned scalar (the ``avoid_when`` facet
-   gate is dormant on this corpus; complexity feasibility is the live gate).
+2. GATE — the shared ``_gate_and_rank`` with ``target_complexity`` folded in:
+   complexity FEASIBILITY EXCLUDES every candidate whose OWN time/space exceeds the
+   target (or the input-size guideline for ``n``), surfacing as ``filtered_out``;
+   the problem-trait facet gate SINKS a candidate whose own ``avoid_when`` facet the
+   caller's stated traits satisfy (kept, marked ``gated``); survivors re-rank
+   faster-first when a size constraint governs. No tuned scalar.
 3. REASON — the SHARED alternatives-fan-out (``_alternatives_fan_out``, the same
    primitive ``review_complexity`` drives): one suggestion per surviving candidate
    over its OWN fields (``_fit``), the current pattern excluded from its own
@@ -38,11 +38,14 @@ edge, so the candidate set IS the related patterns the corpus records for it.
 
 OUTPUT CONTRACT (the tuned-scalar husk is gone; the new shape is asserted by the tool tests):
     current           the agent's own diagnosis, echoed
-    suggestions       strictly-better candidates with own-field ``fit`` + ``retrieval`` votes + ``improvement``
+    suggestions       strictly-better candidates with own-field ``fit`` + ``retrieval`` votes + ``gated`` + ``improvement``
     filtered_out      candidates excluded by the complexity-feasibility / target gate
     retrieval_state   the hydrate envelope state (hit/low_confidence/no_match/dangling)
     unmatched         seeded signal ids the index did not recognise
     dangling          referenced pattern ids that did not resolve to a corpus pattern
+    unknown_constraints  only when a constraints key is undeclared: {keys, declared}
+    invalid_constraint_values  only when a declared key's value is not allowed (not
+                      applied): {spelling: {value, reason, allowed | example}}
     context / memory  project codebase context + empirical-memory annotations (KEPT)
 ``constraints_analyzed`` echoes the bounded constraints (diagnostic artifact).
 
@@ -53,12 +56,14 @@ from __future__ import annotations
 
 from typing import Any
 
-from mnemos.knowledge.loader import DANGLING, NO_MATCH, _rank
+from mnemos.knowledge.loader import DANGLING, NO_MATCH
 from mnemos.tools._shared import (
     _MAX_MATCHED_SIGNALS,
     _alternatives_fan_out,
     _bounded_constraints,
+    _checked_constraints,
     _context_block,
+    _gate_and_rank,
     emit_event,
     get_knowledge,
     get_memory,
@@ -148,6 +153,12 @@ def suggest_refactor(
     # Fail-safe at the caller boundary: a malformed payload coerces cleanly rather
     # than raising (the server wrapper coerces JSON-string args; this guards the rest).
     constraints = _bounded_constraints(constraints if isinstance(constraints, dict) else {})
+    # target_complexity folds into the gate constraints, so it is resolved and
+    # reported with them.
+    gate = dict(constraints)
+    if target_complexity:
+        gate["target_complexity"] = target_complexity
+    gate_values, notices = _checked_constraints(gate)
     try:
         k = int(k)
     except (TypeError, ValueError):
@@ -174,11 +185,12 @@ def suggest_refactor(
     #    ``alternatives`` edge. The caller-boundary cap is non-amplifying (the engine's
     #    _SEED_CAP already bounds fan-out downstream of it).
     seed_signal_ids = kb.signal_ids_for(current_pattern) if current_pattern else []
-    res = kb.hydrate(seed_signal_ids[:_MAX_MATCHED_SIGNALS], k=k)
+    res = kb.hydrate(seed_signal_ids[:_MAX_MATCHED_SIGNALS], k=k, constraints=gate_values)
     envelope = {
         "retrieval_state": res.state,
         "unmatched": list(res.unmatched_signals),
         "dangling": list(res.dangling),
+        **notices,
     }
 
     # 2. Fail closed: an unknown/signal-less seed (no_match) or an unresolvable
@@ -208,36 +220,11 @@ def suggest_refactor(
     # the caller is refactoring away from (which by definition exceeds the target).
     candidates = [p for p in res.patterns if p["id"] != current_pattern]
 
-    # 3. GATE — complexity-feasibility EXCLUSION with target_complexity folded into the
-    #    constraints (kb.filter_by_constraints, the LIVE Mnemos gate): a candidate whose
-    #    OWN complexity exceeds the target (or the input-size guideline for n) is
-    #    excluded into filtered_out. Then faster-first re-rank of the survivors when a
-    #    SIZE constraint governs; with none, the hydrate vote order is preserved.
-    #    Deterministic total-order key (complexity rank, hydrate index) — no float.
-    gate = dict(constraints)
-    if target_complexity:
-        gate["target_complexity"] = target_complexity
-    if gate:
-        survivors, removed = kb.filter_by_constraints(candidates, gate)
-    else:
-        survivors, removed = candidates, []
-
-    if gate.get("n") is not None or gate.get("input_size") is not None:
-        order = sorted(
-            range(len(survivors)),
-            key=lambda i: (_rank((survivors[i].get("complexity") or {}).get("time", "")), i),
-        )
-        survivors = [survivors[i] for i in order]
-
-    filtered_out = [
-        {
-            "pattern_id": r.get("id", ""),
-            "pattern_name": r.get("name", r.get("id", "")),
-            "complexity": dict(r.get("complexity") or {}),
-            "reason": r.get("filter_reason", ""),
-        }
-        for r in removed
-    ]
+    # 3. GATE — _gate_and_rank with target_complexity folded into the constraints:
+    #    complexity-feasibility EXCLUSION into filtered_out, the trait-facet SINK, then
+    #    faster-first within each tier when a SIZE constraint governs; with none, the
+    #    hydrate vote order is preserved.
+    survivors, gated_ids, filtered_out = _gate_and_rank(kb, candidates, gate, gate_values)
 
     # 4. REASON — the shared alternatives-fan-out with only_better=True: the current
     #    pattern is excluded from its own alternatives, each surviving candidate is
@@ -245,7 +232,7 @@ def suggest_refactor(
     #    than the current complexity are kept (the "only if actually better" rank),
     #    each carrying its improvement delta.
     suggestions = _alternatives_fan_out(
-        kb, survivors, current_complexity, current_pattern, only_better=True,
+        kb, survivors, gated_ids, current_complexity, current_pattern, only_better=True,
     )
 
     result = {

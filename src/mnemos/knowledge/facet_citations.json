@@ -1,0 +1,1771 @@
+{
+  "domain": "mnemos",
+  "what": "Provenance for every structured facet in structures.json: each facet normalises one line of the same pattern's own use_when, avoid_when or constraints text, quoted verbatim in cites.line. patterns_reviewed lists every pattern whose text was read for problem traits, faceted or not. A drift test binds both lists to the corpus.",
+  "patterns_reviewed": [
+    "two-pointer-convergent",
+    "two-pointer-same-direction",
+    "sliding-window-fixed",
+    "sliding-window-variable",
+    "binary-search",
+    "prefix-sum",
+    "kadanes-algorithm",
+    "dutch-national-flag",
+    "merge-intervals",
+    "cyclic-sort",
+    "in-place-rotation",
+    "quick-select",
+    "binary-search-on-answer",
+    "meet-in-middle",
+    "greedy",
+    "linear-scan",
+    "counting-sort",
+    "radix-sort",
+    "bitmask-enumeration",
+    "sqrt-decomposition",
+    "bit-manipulation",
+    "sweep-line",
+    "sorting",
+    "brute-force-nested-loop",
+    "sorted-array-binary-search",
+    "sorted-array-with-binary-insert",
+    "extra-array-copy",
+    "boolean-array",
+    "sorting-then-scanning",
+    "sorting-then-grouping",
+    "sorting-then-merging",
+    "two-pointer-on-sorted",
+    "divide-and-conquer-max-subarray",
+    "convex-hull",
+    "closest-pair-of-points",
+    "sieve-of-eratosthenes",
+    "inclusion-exclusion",
+    "kmp-string-matching",
+    "rabin-karp",
+    "two-pointer-string",
+    "expand-around-center",
+    "string-builder-accumulation",
+    "brute-force-matching",
+    "manachers-algorithm",
+    "aho-corasick",
+    "dp-palindromic",
+    "join-to-string",
+    "z-function",
+    "rolling-hash",
+    "suffix-automaton",
+    "single-pass-complement-lookup",
+    "frequency-aggregation",
+    "grouping-by-key",
+    "index-mapping",
+    "cache-lookup",
+    "prefix-sum-with-hashmap",
+    "sliding-window-with-map",
+    "counting-array",
+    "trie-frequency",
+    "hashset-membership",
+    "longest-consecutive-sequence",
+    "set-algebra-operations",
+    "bloom-filter",
+    "cuckoo-filter",
+    "ll-fast-slow-pointers",
+    "ll-reversal",
+    "ll-merge-sorted",
+    "ll-dummy-sentinel",
+    "ll-nth-from-end",
+    "ll-partition",
+    "stack-based-reversal",
+    "two-pass-length-first",
+    "doubly-linked-list-history",
+    "balanced-delimiters",
+    "monotonic-stack",
+    "expression-evaluation",
+    "undo-operations",
+    "min-max-stack",
+    "dfs-explicit-stack",
+    "counter-for-single-type",
+    "recursive-descent-parser",
+    "recursive-dfs",
+    "monotonic-deque",
+    "bfs-traversal",
+    "multi-source-bfs",
+    "task-scheduling",
+    "sliding-window-maximum",
+    "zero-one-bfs",
+    "heap-based-window",
+    "greedy-formula",
+    "heap-top-k",
+    "heap-merge-k-sorted",
+    "two-heaps-median",
+    "dijkstra",
+    "divide-and-conquer-merge",
+    "dfs-inorder",
+    "dfs-preorder",
+    "dfs-postorder",
+    "bfs-level-order",
+    "binary-search-tree-ops",
+    "lowest-common-ancestor",
+    "tree-construction",
+    "path-sum-accumulation",
+    "tree-depth-height",
+    "tree-serialization",
+    "trie-prefix-tree",
+    "segment-tree",
+    "fenwick-tree",
+    "binary-lifting",
+    "euler-tour-rmq",
+    "interval-tree",
+    "prefix-sum-on-tree",
+    "treemap",
+    "morris-traversal",
+    "sparse-table",
+    "treap",
+    "bfs-shortest-unweighted",
+    "dfs-graph-traversal",
+    "topological-sort",
+    "union-find-connectivity",
+    "flood-fill",
+    "bellman-ford",
+    "spfa",
+    "floyd-warshall",
+    "tarjan-scc",
+    "kruskal-mst",
+    "prim-mst",
+    "bipartite-check",
+    "hungarian-algorithm",
+    "bipartite-matching",
+    "min-cost-max-flow",
+    "topological-sort-longest-path",
+    "kosaraju-scc",
+    "dfs-traversal",
+    "dinics-max-flow",
+    "articulation-points",
+    "bridge-finding",
+    "eulerian-path",
+    "two-sat",
+    "functional-graph",
+    "geometric-sweep-line",
+    "uf-dynamic-connectivity",
+    "uf-cycle-detection",
+    "bloom-pre-filter",
+    "skip-list-ordered-ops",
+    "b-tree-disk-optimized",
+    "lsm-tree",
+    "circular-buffer-streaming",
+    "suffix-array-substring-search",
+    "suffix-array",
+    "memoization-top-down",
+    "tabulation-bottom-up",
+    "state-compression-bitmask",
+    "knapsack-01",
+    "longest-common-subsequence",
+    "edit-distance",
+    "interval-dp",
+    "digit-dp",
+    "dp-on-trees",
+    "state-machine-dp",
+    "dp-lis",
+    "knapsack-grouped",
+    "weighted-interval-dp",
+    "unbounded-knapsack",
+    "greedy-fractional",
+    "dp-n-squared",
+    "brute-force-enumeration",
+    "dc-dp-optimization",
+    "knuth-dp-optimization",
+    "slope-trick",
+    "persistent-segment-tree",
+    "subsets-generation",
+    "permutations-generation",
+    "combinations-generation",
+    "constraint-satisfaction",
+    "divide-and-conquer",
+    "backtracking",
+    "next-permutation-iterative",
+    "sprague-grundy"
+  ],
+  "facets": [
+    {
+      "pattern": "two-pointer-convergent",
+      "field": "use_when",
+      "facet": {
+        "input_order": "sorted"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "input is sorted or has monotonic property"
+      }
+    },
+    {
+      "pattern": "sliding-window-variable",
+      "field": "avoid_when",
+      "facet": {
+        "value_sign": "may_be_negative"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "elements can be negative and constraint involves sums"
+      }
+    },
+    {
+      "pattern": "sliding-window-variable",
+      "field": "use_when",
+      "facet": {
+        "value_sign": "non_negative"
+      },
+      "cites": {
+        "field": "constraints",
+        "line": "elements must be non-negative for sum-based constraints; use prefix-sum + hashmap for negative values"
+      }
+    },
+    {
+      "pattern": "binary-search",
+      "field": "use_when",
+      "facet": {
+        "input_order": "sorted"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "input is sorted"
+      }
+    },
+    {
+      "pattern": "prefix-sum",
+      "field": "use_when",
+      "facet": {
+        "updates": "static"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "multiple range sum queries on static array"
+      }
+    },
+    {
+      "pattern": "prefix-sum",
+      "field": "use_when",
+      "facet": {
+        "query_shape": "range_or_order"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "multiple range sum queries on static array"
+      }
+    },
+    {
+      "pattern": "prefix-sum",
+      "field": "avoid_when",
+      "facet": {
+        "updates": "dynamic"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "array is frequently modified between queries"
+      }
+    },
+    {
+      "pattern": "kadanes-algorithm",
+      "field": "use_when",
+      "facet": {
+        "value_sign": "may_be_negative"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "values can be negative"
+      }
+    },
+    {
+      "pattern": "merge-intervals",
+      "field": "avoid_when",
+      "facet": {
+        "updates": "dynamic"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "need dynamic interval updates (use interval tree)"
+      }
+    },
+    {
+      "pattern": "linear-scan",
+      "field": "use_when",
+      "facet": {
+        "input_order": "unsorted"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "data is unsorted and one-time lookup needed"
+      }
+    },
+    {
+      "pattern": "linear-scan",
+      "field": "avoid_when",
+      "facet": {
+        "input_order": "sorted"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "data is sorted (use binary search)"
+      }
+    },
+    {
+      "pattern": "sqrt-decomposition",
+      "field": "use_when",
+      "facet": {
+        "arrival": "batch"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "offline range queries where add/remove is O(1)"
+      }
+    },
+    {
+      "pattern": "sqrt-decomposition",
+      "field": "use_when",
+      "facet": {
+        "query_shape": "range_or_order"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "offline range queries where add/remove is O(1)"
+      }
+    },
+    {
+      "pattern": "sqrt-decomposition",
+      "field": "avoid_when",
+      "facet": {
+        "arrival": "streaming"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "online queries required (Mo's is offline)"
+      }
+    },
+    {
+      "pattern": "sqrt-decomposition",
+      "field": "avoid_when",
+      "facet": {
+        "updates": "dynamic"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "updates between queries needed"
+      }
+    },
+    {
+      "pattern": "sweep-line",
+      "field": "avoid_when",
+      "facet": {
+        "arrival": "streaming"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "online/streaming events arriving out of order"
+      }
+    },
+    {
+      "pattern": "sorting",
+      "field": "avoid_when",
+      "facet": {
+        "input_order": "sorted"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "already sorted"
+      }
+    },
+    {
+      "pattern": "brute-force-nested-loop",
+      "field": "use_when",
+      "facet": {
+        "input_order": "unsorted"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "no exploitable structure (unsorted, no monotonicity)"
+      }
+    },
+    {
+      "pattern": "brute-force-nested-loop",
+      "field": "avoid_when",
+      "facet": {
+        "input_order": "sorted"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "sorted/monotonic structure exists"
+      }
+    },
+    {
+      "pattern": "sorted-array-binary-search",
+      "field": "use_when",
+      "facet": {
+        "input_order": "sorted"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "read-heavy workload on sorted data"
+      }
+    },
+    {
+      "pattern": "sorted-array-binary-search",
+      "field": "use_when",
+      "facet": {
+        "updates": "static"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "rarely insert or delete"
+      }
+    },
+    {
+      "pattern": "sorted-array-binary-search",
+      "field": "use_when",
+      "facet": {
+        "query_shape": "range_or_order"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "need floor/ceiling/rank queries"
+      }
+    },
+    {
+      "pattern": "sorted-array-binary-search",
+      "field": "avoid_when",
+      "facet": {
+        "updates": "dynamic"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "data changes dynamically"
+      }
+    },
+    {
+      "pattern": "boolean-array",
+      "field": "use_when",
+      "facet": {
+        "value_sign": "non_negative"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "elements are small non-negative integers in bounded range"
+      }
+    },
+    {
+      "pattern": "boolean-array",
+      "field": "use_when",
+      "facet": {
+        "query_shape": "point"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "O(1) membership check needed"
+      }
+    },
+    {
+      "pattern": "sorting-then-merging",
+      "field": "avoid_when",
+      "facet": {
+        "input_order": "sorted"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "arrays already sorted (just use two pointers)"
+      }
+    },
+    {
+      "pattern": "two-pointer-on-sorted",
+      "field": "use_when",
+      "facet": {
+        "input_order": "sorted"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "both arrays already sorted"
+      }
+    },
+    {
+      "pattern": "two-pointer-on-sorted",
+      "field": "avoid_when",
+      "facet": {
+        "input_order": "unsorted"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "arrays not sorted (sort first or use hashset)"
+      }
+    },
+    {
+      "pattern": "divide-and-conquer-max-subarray",
+      "field": "avoid_when",
+      "facet": {
+        "arrival": "streaming"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "streaming/online setting"
+      }
+    },
+    {
+      "pattern": "convex-hull",
+      "field": "avoid_when",
+      "facet": {
+        "arrival": "streaming"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "online/streaming points (use online convex hull)"
+      }
+    },
+    {
+      "pattern": "closest-pair-of-points",
+      "field": "avoid_when",
+      "facet": {
+        "updates": "dynamic"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "dynamic point sets"
+      }
+    },
+    {
+      "pattern": "kmp-string-matching",
+      "field": "use_when",
+      "facet": {
+        "exactness": "exact"
+      },
+      "cites": {
+        "field": "constraints",
+        "line": "exact matching only"
+      }
+    },
+    {
+      "pattern": "kmp-string-matching",
+      "field": "avoid_when",
+      "facet": {
+        "exactness": "approximate"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "need approximate matching (use edit distance)"
+      }
+    },
+    {
+      "pattern": "rabin-karp",
+      "field": "use_when",
+      "facet": {
+        "exactness": "approximate"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "need probabilistic fast substring matching"
+      }
+    },
+    {
+      "pattern": "rabin-karp",
+      "field": "avoid_when",
+      "facet": {
+        "exactness": "exact"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "hash collisions are unacceptable"
+      }
+    },
+    {
+      "pattern": "aho-corasick",
+      "field": "avoid_when",
+      "facet": {
+        "updates": "dynamic"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "patterns change frequently (automaton must be rebuilt)"
+      }
+    },
+    {
+      "pattern": "z-function",
+      "field": "avoid_when",
+      "facet": {
+        "exactness": "approximate"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "approximate matching (use rolling hash)"
+      }
+    },
+    {
+      "pattern": "rolling-hash",
+      "field": "avoid_when",
+      "facet": {
+        "exactness": "exact"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "guaranteed correctness required (hash collisions exist)"
+      }
+    },
+    {
+      "pattern": "edit-distance",
+      "field": "use_when",
+      "facet": {
+        "exactness": "approximate"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "spell check / fuzzy matching"
+      }
+    },
+    {
+      "pattern": "suffix-automaton",
+      "field": "use_when",
+      "facet": {
+        "arrival": "streaming"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "online text indexing"
+      }
+    },
+    {
+      "pattern": "single-pass-complement-lookup",
+      "field": "avoid_when",
+      "facet": {
+        "input_order": "sorted"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "input is sorted (two pointers is O(1) space)"
+      }
+    },
+    {
+      "pattern": "index-mapping",
+      "field": "use_when",
+      "facet": {
+        "query_shape": "point"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "need to look up index/position of previously seen element"
+      }
+    },
+    {
+      "pattern": "prefix-sum-with-hashmap",
+      "field": "use_when",
+      "facet": {
+        "value_sign": "may_be_negative"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "array contains negative numbers"
+      }
+    },
+    {
+      "pattern": "prefix-sum-with-hashmap",
+      "field": "avoid_when",
+      "facet": {
+        "value_sign": "non_negative"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "all values are positive (sliding window works)"
+      }
+    },
+    {
+      "pattern": "counting-array",
+      "field": "use_when",
+      "facet": {
+        "value_sign": "non_negative"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "keys are non-negative integers in small range"
+      }
+    },
+    {
+      "pattern": "trie-frequency",
+      "field": "use_when",
+      "facet": {
+        "query_shape": "prefix"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "counting word frequencies with prefix-based queries needed"
+      }
+    },
+    {
+      "pattern": "trie-frequency",
+      "field": "avoid_when",
+      "facet": {
+        "query_shape": "point"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "no prefix queries needed (hashmap is simpler)"
+      }
+    },
+    {
+      "pattern": "hashset-membership",
+      "field": "use_when",
+      "facet": {
+        "query_shape": "point"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "need fast membership testing"
+      }
+    },
+    {
+      "pattern": "hashset-membership",
+      "field": "use_when",
+      "facet": {
+        "arrival": "streaming"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "detect duplicates in a stream"
+      }
+    },
+    {
+      "pattern": "hashset-membership",
+      "field": "avoid_when",
+      "facet": {
+        "query_shape": "range_or_order"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "need ordering (use treeset)"
+      }
+    },
+    {
+      "pattern": "longest-consecutive-sequence",
+      "field": "use_when",
+      "facet": {
+        "input_order": "unsorted"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "find longest consecutive sequence in unsorted array"
+      }
+    },
+    {
+      "pattern": "longest-consecutive-sequence",
+      "field": "avoid_when",
+      "facet": {
+        "input_order": "sorted"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "input is already sorted (just scan)"
+      }
+    },
+    {
+      "pattern": "bloom-filter",
+      "field": "use_when",
+      "facet": {
+        "exactness": "approximate"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "space is critical and false positives are acceptable"
+      }
+    },
+    {
+      "pattern": "bloom-filter",
+      "field": "use_when",
+      "facet": {
+        "query_shape": "point"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "large dataset membership testing"
+      }
+    },
+    {
+      "pattern": "bloom-filter",
+      "field": "avoid_when",
+      "facet": {
+        "exactness": "exact"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "false positives are unacceptable"
+      }
+    },
+    {
+      "pattern": "cuckoo-filter",
+      "field": "use_when",
+      "facet": {
+        "exactness": "approximate"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "target FPR <= 3% (more space-efficient than Bloom)"
+      }
+    },
+    {
+      "pattern": "ll-merge-sorted",
+      "field": "use_when",
+      "facet": {
+        "input_order": "sorted"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "merge two or more sorted linked lists"
+      }
+    },
+    {
+      "pattern": "ll-merge-sorted",
+      "field": "avoid_when",
+      "facet": {
+        "input_order": "unsorted"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "lists are unsorted"
+      }
+    },
+    {
+      "pattern": "heap-top-k",
+      "field": "use_when",
+      "facet": {
+        "arrival": "streaming"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "streaming data, k is much smaller than n"
+      }
+    },
+    {
+      "pattern": "heap-merge-k-sorted",
+      "field": "use_when",
+      "facet": {
+        "input_order": "sorted"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "k sorted streams"
+      }
+    },
+    {
+      "pattern": "heap-merge-k-sorted",
+      "field": "use_when",
+      "facet": {
+        "arrival": "streaming"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "k sorted streams"
+      }
+    },
+    {
+      "pattern": "heap-merge-k-sorted",
+      "field": "avoid_when",
+      "facet": {
+        "input_order": "unsorted"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "sequences are unsorted"
+      }
+    },
+    {
+      "pattern": "two-heaps-median",
+      "field": "use_when",
+      "facet": {
+        "arrival": "streaming"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "find median from data stream"
+      }
+    },
+    {
+      "pattern": "two-heaps-median",
+      "field": "avoid_when",
+      "facet": {
+        "arrival": "batch"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "static data (just sort once)"
+      }
+    },
+    {
+      "pattern": "dijkstra",
+      "field": "use_when",
+      "facet": {
+        "graph_weighting": "weighted"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "shortest path in weighted graph with non-negative edges"
+      }
+    },
+    {
+      "pattern": "dijkstra",
+      "field": "use_when",
+      "facet": {
+        "value_sign": "non_negative"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "shortest path in weighted graph with non-negative edges"
+      }
+    },
+    {
+      "pattern": "dijkstra",
+      "field": "avoid_when",
+      "facet": {
+        "value_sign": "may_be_negative"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "graph has negative edge weights (use Bellman-Ford)"
+      }
+    },
+    {
+      "pattern": "dijkstra",
+      "field": "avoid_when",
+      "facet": {
+        "graph_weighting": "unweighted"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "graph is unweighted (use BFS)"
+      }
+    },
+    {
+      "pattern": "divide-and-conquer-merge",
+      "field": "use_when",
+      "facet": {
+        "input_order": "sorted"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "merge k sorted lists when heap implementation is complex"
+      }
+    },
+    {
+      "pattern": "dfs-inorder",
+      "field": "use_when",
+      "facet": {
+        "query_shape": "range_or_order"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "get BST elements in sorted order"
+      }
+    },
+    {
+      "pattern": "binary-search-tree-ops",
+      "field": "use_when",
+      "facet": {
+        "updates": "dynamic"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "ordered dynamic set operations"
+      }
+    },
+    {
+      "pattern": "binary-search-tree-ops",
+      "field": "use_when",
+      "facet": {
+        "query_shape": "range_or_order"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "ordered dynamic set operations"
+      }
+    },
+    {
+      "pattern": "binary-search-tree-ops",
+      "field": "avoid_when",
+      "facet": {
+        "updates": "static"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "data is static (sorted array + binary search is simpler)"
+      }
+    },
+    {
+      "pattern": "binary-search-tree-ops",
+      "field": "avoid_when",
+      "facet": {
+        "query_shape": "point"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "need O(1) lookup (use hashmap)"
+      }
+    },
+    {
+      "pattern": "trie-prefix-tree",
+      "field": "use_when",
+      "facet": {
+        "query_shape": "prefix"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "prefix-based search or autocomplete"
+      }
+    },
+    {
+      "pattern": "trie-prefix-tree",
+      "field": "avoid_when",
+      "facet": {
+        "query_shape": "point"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "exact match only (hashset is simpler)"
+      }
+    },
+    {
+      "pattern": "segment-tree",
+      "field": "use_when",
+      "facet": {
+        "updates": "dynamic"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "range sum/min/max queries with updates"
+      }
+    },
+    {
+      "pattern": "segment-tree",
+      "field": "use_when",
+      "facet": {
+        "query_shape": "range_or_order"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "range sum/min/max queries with updates"
+      }
+    },
+    {
+      "pattern": "segment-tree",
+      "field": "avoid_when",
+      "facet": {
+        "updates": "static"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "static array (prefix sum is simpler)"
+      }
+    },
+    {
+      "pattern": "segment-tree",
+      "field": "avoid_when",
+      "facet": {
+        "query_shape": "point"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "only point queries (direct array access)"
+      }
+    },
+    {
+      "pattern": "fenwick-tree",
+      "field": "use_when",
+      "facet": {
+        "updates": "dynamic"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "prefix sum queries with point updates"
+      }
+    },
+    {
+      "pattern": "fenwick-tree",
+      "field": "use_when",
+      "facet": {
+        "query_shape": "range_or_order"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "prefix sum queries with point updates"
+      }
+    },
+    {
+      "pattern": "fenwick-tree",
+      "field": "avoid_when",
+      "facet": {
+        "updates": "static"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "static data (prefix sum array)"
+      }
+    },
+    {
+      "pattern": "binary-lifting",
+      "field": "use_when",
+      "facet": {
+        "arrival": "streaming"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "online LCA queries on static tree"
+      }
+    },
+    {
+      "pattern": "binary-lifting",
+      "field": "use_when",
+      "facet": {
+        "updates": "static"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "online LCA queries on static tree"
+      }
+    },
+    {
+      "pattern": "binary-lifting",
+      "field": "avoid_when",
+      "facet": {
+        "arrival": "batch"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "offline batch queries (Tarjan's is O(n + Q))"
+      }
+    },
+    {
+      "pattern": "binary-lifting",
+      "field": "avoid_when",
+      "facet": {
+        "updates": "dynamic"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "dynamic trees (use link-cut trees)"
+      }
+    },
+    {
+      "pattern": "euler-tour-rmq",
+      "field": "use_when",
+      "facet": {
+        "updates": "static"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "static tree with no structural changes"
+      }
+    },
+    {
+      "pattern": "euler-tour-rmq",
+      "field": "avoid_when",
+      "facet": {
+        "updates": "dynamic"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "dynamic trees"
+      }
+    },
+    {
+      "pattern": "interval-tree",
+      "field": "use_when",
+      "facet": {
+        "updates": "dynamic"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "intervals inserted/deleted dynamically"
+      }
+    },
+    {
+      "pattern": "interval-tree",
+      "field": "use_when",
+      "facet": {
+        "query_shape": "range_or_order"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "find all intervals overlapping a query interval/point"
+      }
+    },
+    {
+      "pattern": "interval-tree",
+      "field": "avoid_when",
+      "facet": {
+        "updates": "static"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "static intervals (sweep line is simpler)"
+      }
+    },
+    {
+      "pattern": "prefix-sum-on-tree",
+      "field": "avoid_when",
+      "facet": {
+        "updates": "dynamic"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "need point updates (use BIT/segment tree on Euler tour)"
+      }
+    },
+    {
+      "pattern": "treemap",
+      "field": "use_when",
+      "facet": {
+        "query_shape": "range_or_order"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "need keys in sorted order"
+      }
+    },
+    {
+      "pattern": "treemap",
+      "field": "avoid_when",
+      "facet": {
+        "query_shape": "point"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "only need lookup/insert/delete without ordering (hashmap is O(1))"
+      }
+    },
+    {
+      "pattern": "sparse-table",
+      "field": "use_when",
+      "facet": {
+        "updates": "static"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "immutable array with many range min/max/gcd queries"
+      }
+    },
+    {
+      "pattern": "sparse-table",
+      "field": "use_when",
+      "facet": {
+        "query_shape": "range_or_order"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "immutable array with many range min/max/gcd queries"
+      }
+    },
+    {
+      "pattern": "sparse-table",
+      "field": "avoid_when",
+      "facet": {
+        "updates": "dynamic"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "array values change between queries (use segment tree)"
+      }
+    },
+    {
+      "pattern": "bfs-shortest-unweighted",
+      "field": "use_when",
+      "facet": {
+        "graph_weighting": "unweighted"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "shortest path in unweighted graph"
+      }
+    },
+    {
+      "pattern": "bfs-shortest-unweighted",
+      "field": "avoid_when",
+      "facet": {
+        "graph_weighting": "weighted"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "edges have different weights"
+      }
+    },
+    {
+      "pattern": "topological-sort",
+      "field": "use_when",
+      "facet": {
+        "graph_direction": "directed"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "DAG processing order"
+      }
+    },
+    {
+      "pattern": "topological-sort",
+      "field": "avoid_when",
+      "facet": {
+        "graph_direction": "undirected"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "graph is undirected"
+      }
+    },
+    {
+      "pattern": "union-find-connectivity",
+      "field": "use_when",
+      "facet": {
+        "updates": "dynamic"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "dynamic connectivity: are two nodes connected?"
+      }
+    },
+    {
+      "pattern": "union-find-connectivity",
+      "field": "use_when",
+      "facet": {
+        "graph_direction": "undirected"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "cycle detection in undirected graph"
+      }
+    },
+    {
+      "pattern": "union-find-connectivity",
+      "field": "avoid_when",
+      "facet": {
+        "updates": "static"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "static graph (BFS/DFS is simpler)"
+      }
+    },
+    {
+      "pattern": "bellman-ford",
+      "field": "use_when",
+      "facet": {
+        "value_sign": "may_be_negative"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "shortest path with negative edge weights"
+      }
+    },
+    {
+      "pattern": "bellman-ford",
+      "field": "avoid_when",
+      "facet": {
+        "value_sign": "non_negative"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "all weights non-negative (Dijkstra is faster)"
+      }
+    },
+    {
+      "pattern": "spfa",
+      "field": "use_when",
+      "facet": {
+        "value_sign": "may_be_negative"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "shortest path with negative edges (practical speedup over Bellman-Ford)"
+      }
+    },
+    {
+      "pattern": "spfa",
+      "field": "avoid_when",
+      "facet": {
+        "value_sign": "non_negative"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "non-negative weights (Dijkstra is better)"
+      }
+    },
+    {
+      "pattern": "tarjan-scc",
+      "field": "use_when",
+      "facet": {
+        "graph_direction": "directed"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "find strongly connected components in directed graph"
+      }
+    },
+    {
+      "pattern": "tarjan-scc",
+      "field": "avoid_when",
+      "facet": {
+        "graph_direction": "undirected"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "undirected graph (use regular DFS for components)"
+      }
+    },
+    {
+      "pattern": "bipartite-check",
+      "field": "avoid_when",
+      "facet": {
+        "graph_direction": "directed"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "directed graph (bipartite is for undirected)"
+      }
+    },
+    {
+      "pattern": "hungarian-algorithm",
+      "field": "use_when",
+      "facet": {
+        "graph_weighting": "weighted"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "assign N items from group A to N items in group B with costs"
+      }
+    },
+    {
+      "pattern": "hungarian-algorithm",
+      "field": "avoid_when",
+      "facet": {
+        "graph_weighting": "unweighted"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "unweighted matching (use Hopcroft-Karp instead)"
+      }
+    },
+    {
+      "pattern": "bipartite-matching",
+      "field": "use_when",
+      "facet": {
+        "graph_weighting": "unweighted"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "unweighted 1-to-1 assignment"
+      }
+    },
+    {
+      "pattern": "bipartite-matching",
+      "field": "avoid_when",
+      "facet": {
+        "graph_weighting": "weighted"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "matching has weights/costs (use Hungarian algorithm)"
+      }
+    },
+    {
+      "pattern": "topological-sort-longest-path",
+      "field": "use_when",
+      "facet": {
+        "graph_direction": "directed"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "DAG where independent branches execute in parallel"
+      }
+    },
+    {
+      "pattern": "kosaraju-scc",
+      "field": "use_when",
+      "facet": {
+        "graph_direction": "directed"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "find all SCCs in directed graph"
+      }
+    },
+    {
+      "pattern": "kosaraju-scc",
+      "field": "avoid_when",
+      "facet": {
+        "graph_direction": "undirected"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "undirected graph (use connected components)"
+      }
+    },
+    {
+      "pattern": "articulation-points",
+      "field": "avoid_when",
+      "facet": {
+        "graph_direction": "directed"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "directed graphs (use SCC algorithms)"
+      }
+    },
+    {
+      "pattern": "bridge-finding",
+      "field": "avoid_when",
+      "facet": {
+        "graph_direction": "directed"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "directed graphs"
+      }
+    },
+    {
+      "pattern": "bridge-finding",
+      "field": "avoid_when",
+      "facet": {
+        "updates": "dynamic"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "dynamic graph with edge insertions"
+      }
+    },
+    {
+      "pattern": "functional-graph",
+      "field": "avoid_when",
+      "facet": {
+        "updates": "dynamic"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "successor function changes over time"
+      }
+    },
+    {
+      "pattern": "geometric-sweep-line",
+      "field": "avoid_when",
+      "facet": {
+        "updates": "dynamic"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "dynamic point insertions (use KD-tree)"
+      }
+    },
+    {
+      "pattern": "bfs-traversal",
+      "field": "use_when",
+      "facet": {
+        "graph_weighting": "unweighted"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "find shortest path in unweighted graph/grid"
+      }
+    },
+    {
+      "pattern": "bfs-traversal",
+      "field": "avoid_when",
+      "facet": {
+        "graph_weighting": "weighted"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "graph is weighted (use Dijkstra)"
+      }
+    },
+    {
+      "pattern": "multi-source-bfs",
+      "field": "avoid_when",
+      "facet": {
+        "graph_weighting": "weighted"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "weighted distances"
+      }
+    },
+    {
+      "pattern": "zero-one-bfs",
+      "field": "use_when",
+      "facet": {
+        "graph_weighting": "zero_one"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "shortest path with only 0 and 1 weights"
+      }
+    },
+    {
+      "pattern": "zero-one-bfs",
+      "field": "avoid_when",
+      "facet": {
+        "graph_weighting": "unweighted"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "weights are uniform (use regular BFS)"
+      }
+    },
+    {
+      "pattern": "zero-one-bfs",
+      "field": "avoid_when",
+      "facet": {
+        "graph_weighting": "weighted"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "weights are arbitrary (use Dijkstra)"
+      }
+    },
+    {
+      "pattern": "uf-dynamic-connectivity",
+      "field": "use_when",
+      "facet": {
+        "arrival": "streaming"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "edges arrive one at a time"
+      }
+    },
+    {
+      "pattern": "uf-dynamic-connectivity",
+      "field": "use_when",
+      "facet": {
+        "updates": "dynamic"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "need to answer 'are x and y connected?' dynamically"
+      }
+    },
+    {
+      "pattern": "uf-dynamic-connectivity",
+      "field": "avoid_when",
+      "facet": {
+        "updates": "static"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "graph is static (BFS/DFS is simpler)"
+      }
+    },
+    {
+      "pattern": "uf-cycle-detection",
+      "field": "use_when",
+      "facet": {
+        "graph_direction": "undirected"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "detect cycle in undirected graph"
+      }
+    },
+    {
+      "pattern": "uf-cycle-detection",
+      "field": "avoid_when",
+      "facet": {
+        "graph_direction": "directed"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "directed graph (use DFS three-color)"
+      }
+    },
+    {
+      "pattern": "bloom-pre-filter",
+      "field": "use_when",
+      "facet": {
+        "exactness": "approximate"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "memory is constrained and false positives are acceptable"
+      }
+    },
+    {
+      "pattern": "bloom-pre-filter",
+      "field": "avoid_when",
+      "facet": {
+        "exactness": "exact"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "false positives are unacceptable"
+      }
+    },
+    {
+      "pattern": "skip-list-ordered-ops",
+      "field": "use_when",
+      "facet": {
+        "query_shape": "range_or_order"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "range queries needed"
+      }
+    },
+    {
+      "pattern": "lsm-tree",
+      "field": "use_when",
+      "facet": {
+        "updates": "dynamic"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "write-heavy workloads (logging, time-series, event sourcing)"
+      }
+    },
+    {
+      "pattern": "circular-buffer-streaming",
+      "field": "use_when",
+      "facet": {
+        "arrival": "streaming"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "fixed-size buffer for streaming data"
+      }
+    },
+    {
+      "pattern": "suffix-array-substring-search",
+      "field": "avoid_when",
+      "facet": {
+        "updates": "dynamic"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "text changes frequently (rebuild is expensive)"
+      }
+    },
+    {
+      "pattern": "suffix-array",
+      "field": "use_when",
+      "facet": {
+        "updates": "static"
+      },
+      "cites": {
+        "field": "use_when",
+        "line": "text is fixed and patterns vary"
+      }
+    },
+    {
+      "pattern": "suffix-array",
+      "field": "avoid_when",
+      "facet": {
+        "updates": "dynamic"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "text changes frequently"
+      }
+    },
+    {
+      "pattern": "suffix-array",
+      "field": "avoid_when",
+      "facet": {
+        "query_shape": "prefix"
+      },
+      "cites": {
+        "field": "avoid_when",
+        "line": "need prefix search (use trie)"
+      }
+    }
+  ]
+}
